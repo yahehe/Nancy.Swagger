@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ADD1E494-A985-4F8D-911B-E487D4B3159E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nancy.Swagger</RootNamespace>
+    <AssemblyName>Nancy.Swagger</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>96045cb1</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiDeclaration\Api.cs" />
+    <Compile Include="DataType.cs" />
+    <Compile Include="ApiDeclaration\HttpMethod.cs" />
+    <Compile Include="Items.cs" />
+    <Compile Include="ApiDeclaration\Model.cs" />
+    <Compile Include="ApiDeclaration\ModelProperty.cs" />
+    <Compile Include="ApiDeclaration\Operation.cs" />
+    <Compile Include="ApiDeclaration\Parameter.cs" />
+    <Compile Include="ApiDeclaration\ParameterType.cs" />
+    <Compile Include="ApiDeclaration\ResponseMessage.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ApiDeclaration\ApiDeclaration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Attributes\RequiredAttribute.cs" />
+    <Compile Include="ResourceListing\Authorization.cs" />
+    <Compile Include="ResourceListing\AuthorizationCodeGrantFlow.cs" />
+    <Compile Include="ResourceListing\AuthorizationType.cs" />
+    <Compile Include="ResourceListing\GrantTypes.cs" />
+    <Compile Include="ResourceListing\ImplicitGrantFlow.cs" />
+    <Compile Include="ResourceListing\Info.cs" />
+    <Compile Include="ResourceListing\LoginEndpoint.cs" />
+    <Compile Include="ResourceListing\OAuth2Scope.cs" />
+    <Compile Include="ResourceListing\PassType.cs" />
+    <Compile Include="ResourceListing\Resource.cs" />
+    <Compile Include="ResourceListing\ResourceListing.cs" />
+    <Compile Include="ResourceListing\TokenEndpoint.cs" />
+    <Compile Include="ResourceListing\TokenRequestEndpoint.cs" />
+    <Compile Include="SwaggerPrimitive.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
