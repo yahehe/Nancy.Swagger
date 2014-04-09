@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -49,29 +50,34 @@ namespace Nancy.Swagger.ResourceListing
         /// The type of the authorization scheme.
         /// </summary>
         [Required]
+        [JsonProperty("type")]
         public AuthorizationType Type { get; set; }
 
         /// <summary>
         /// Denotes how the API key must be passed.
         /// </summary>
         [Required]
+        [JsonProperty("passAs")]
         public PassType PassAs { get; set; }
 
         /// <summary>
         /// The name of the header or query parameter to be used when passing the API key.
         /// </summary>
         [Required]
+        [JsonProperty("keyname")]
         public string Keyname { get; set; }
 
         /// <summary>
         /// A list of supported OAuth2 scopes.
         /// </summary>
+        [JsonProperty("scopes")]
         public IEnumerable<OAuth2Scope> Scopes { get; set; }
 
         /// <summary>
         /// Detailed information about the grant types supported by the oauth2 authorization scheme.
         /// </summary>
         [Required]
+        [JsonProperty("grantTypes")]
         public GrantTypes GrantTypes { get; set; }
     }
 }

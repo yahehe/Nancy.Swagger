@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
@@ -23,6 +24,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// The type of the parameter (that is, the location of the parameter in the request).
         /// </summary>
         [Required]
+        [JsonProperty("paramType")]
         public ParameterType ParamType { get; set; }
 
         /// <summary>
@@ -33,11 +35,13 @@ namespace Nancy.Swagger.ApiDeclaration
         /// Parameter names are case sensitive.
         /// </remarks>
         [Required]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
         /// <summary>
         /// A brief description of this parameter.
         /// </summary>
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -47,6 +51,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// <remarks>
         /// The field MUST be included if <see cref="ParamType"/> is <see cref="ParameterType.Path"/> and MUST have the value true.
         /// </remarks>
+        [JsonProperty("required")]
         public bool? Required { get; set; }
 
         /// <summary>
@@ -56,6 +61,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// <remarks>
         /// The field may be used only if <see cref="ParamType"/> is <see cref="ParameterType.Query"/>, <see cref="ParameterType.Header"/> or <see cref="ParameterType.Path"/>.
         /// </remarks>
+        [JsonProperty("allowMultiple")]
         public bool? AllowMultiple { get; set; }
     }
 }

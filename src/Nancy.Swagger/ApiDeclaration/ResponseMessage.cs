@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
@@ -23,17 +24,20 @@ namespace Nancy.Swagger.ApiDeclaration
         /// The HTTP status code returned.
         /// </summary>
         [Required]
+        [JsonProperty("code")]
         public int Code { get; set; }
 
         /// <summary>
         /// The explanation for the status code.
         /// </summary>
         [Required]
+        [JsonProperty("message")]
         public string Message { get; set; }
 
         /// <summary>
         /// The return type for the given response.
         /// </summary>
+        [JsonProperty("responseModel")]
         public string ResponseModel { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -25,11 +26,13 @@ namespace Nancy.Swagger.ResourceListing
         /// The value SHOULD be in a relative (URL) path format.
         /// </remarks>
         [Required]
+        [JsonProperty("path")]
         public string Path { get; set; }
 
         /// <summary>
         /// A short description of the resource.
         /// </summary>
+        [JsonProperty("description")]
         public string Description { get; set; }
     }
 }

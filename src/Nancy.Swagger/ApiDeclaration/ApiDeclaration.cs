@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Nancy.Swagger.Attributes;
 using Nancy.Swagger.ResourceListing;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
@@ -167,11 +168,13 @@ namespace Nancy.Swagger.ApiDeclaration
         /// The value MUST be an existing Swagger specification version.
         /// </remarks>
         [Required]
+        [JsonProperty("swaggerVersion")]
         public string SwaggerVersion { get; set; }
 
         /// <summary>
         /// Provides the version of the application API.
         /// </summary>
+        [JsonProperty("apiVersion")]
         public string ApiVersion { get; set; }
 
         /// <summary>
@@ -182,6 +185,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// so the URL for serving the API cannot always be derived from the URL serving the API specification.
         /// </summary>
         [Required]
+        [JsonProperty("basePath")]
         public Uri BasePath { get; set; }
 
         /// <summary>
@@ -190,30 +194,35 @@ namespace Nancy.Swagger.ApiDeclaration
         /// <remarks>
         /// The value MUST precede with a forward slash ("/").
         /// </remarks>
+        [JsonProperty("resourcePath")]
         public string ResourcePath { get; set; }
 
         /// <summary>
         /// A list of the APIs exposed on this resource.
         /// </summary>
         [Required]
+        [JsonProperty("apis")]
         public IEnumerable<Api> Apis { get; set; }
 
         /// <summary>
         /// A list of the models available to this resource. 
         /// Note that these need to be exposed separately for each API Declaration.
         /// </summary>
+        [JsonProperty("models")]
         public IDictionary<string, Model> Models { get; set; }
 
         /// <summary>
         /// A list of MIME types the APIs on this resource can produce. 
         /// This is global to all APIs but can be overridden on specific API calls.
         /// </summary>
+        [JsonProperty("produces")]
         public IEnumerable<string> Produces { get; set; }
 
         /// <summary>
         /// A list of MIME types the APIs on this resource can consume. 
         /// This is global to all APIs but can be overridden on specific API calls.
         /// </summary>
+        [JsonProperty("consumes")]
         public IEnumerable<string> Consumes { get; set; }
 
         /// <summary>
@@ -221,6 +230,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// Individual operations may override this setting. 
         /// If there are multiple authorization schemes described here, it means they're all applied.
         /// </summary>
+        [JsonProperty("authorizations")]
         public IDictionary<string, Authorization> Authorizations { get; set; } 
     }
 }

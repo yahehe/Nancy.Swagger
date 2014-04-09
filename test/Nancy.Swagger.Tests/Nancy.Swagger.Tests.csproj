@@ -47,10 +47,14 @@
     <Reference Include="xunit">
       <HintPath>..\..\packages\xunit.1.9.2\lib\net20\xunit.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.extensions">
+      <HintPath>..\..\packages\xunit.extensions.1.9.2\lib\net20\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="JsonPropertyConventionTestAttribute.cs" />
     <Compile Include="JsonPropertyConventionTests.cs" />
-    <Compile Include="Exceptions\MissingJsonPropertyAttributeException.cs" />
+    <Compile Include="MemberInfoExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

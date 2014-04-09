@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
@@ -22,6 +23,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// <summary>
         /// A brief description of this property.
         /// </summary>
+        [JsonProperty("description")]
         public string Description { get; set; }
     }
 }

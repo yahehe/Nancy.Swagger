@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger
 {
@@ -28,11 +29,13 @@ namespace Nancy.Swagger
         /// <remarks>
         /// The value MUST be one of the Primitves, array or a model's id.
         /// </remarks>
+        [JsonProperty("type")]
         public string Type { get; set; }
 
         /// <summary>
         /// Fine-tuned primitive type definition.
         /// </summary>
+        [JsonProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -41,6 +44,7 @@ namespace Nancy.Swagger
         /// <remarks>
         /// The value MUST be a model's id.
         /// </remarks>
-        public string Ref { get; set; } // TODO: Should be $ref
+        [JsonProperty("$ref")]
+        public string Ref { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
@@ -90,11 +91,13 @@ namespace Nancy.Swagger.ApiDeclaration
         /// The value SHOULD be in a relative (URL) path format.
         /// </remarks>
         [Required]
+        [JsonProperty("path")]
         public string Path { get; set; }
 
         /// <summary>
         /// A short description of the resource.
         /// </summary>
+        [JsonProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -104,6 +107,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// There MUST NOT be more than one Operation Object per method in the array.
         /// </remarks>
         [Required]
+        [JsonProperty("operations")]
         public IEnumerable<Operation> Operations { get; set; }
     }
 }

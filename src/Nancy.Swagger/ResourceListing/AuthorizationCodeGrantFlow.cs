@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -27,12 +28,14 @@ namespace Nancy.Swagger.ResourceListing
         /// The token request endpoint definition.
         /// </summary>
         [Required]
+        [JsonProperty("tokenRequestEndpoint")]
         public TokenRequestEndpoint TokenRequestEndpoint { get; set; }
 
         /// <summary>
         /// The token endpoint definition.
         /// </summary>
         [Required]
+        [JsonProperty("tokenEndpoint")]
         public TokenEndpoint TokenEndpoint { get; set; }
     }
 }

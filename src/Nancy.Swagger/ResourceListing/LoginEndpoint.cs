@@ -1,5 +1,6 @@
 using System;
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -20,6 +21,7 @@ namespace Nancy.Swagger.ResourceListing
         /// The URL of the authorization endpoint for the implicit grant flow.
         /// </summary>
         [Required]
+        [JsonProperty("url")]
         public Uri Url { get; set; }
     }
 }

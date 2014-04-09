@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -34,11 +35,13 @@ namespace Nancy.Swagger.ResourceListing
         /// <summary>
         /// The Implicit Grant flow definition.
         /// </summary>
+        [JsonProperty("implicit")]
         public ImplicitGrantFlow Implicit { get; set; }
 
         /// <summary>
         /// The Authorization Code Grant flow definition.
         /// </summary>
+        [JsonProperty("authorization_code")]
         public AuthorizationCodeGrantFlow AuthorizationCode { get; set; }
     }
 }

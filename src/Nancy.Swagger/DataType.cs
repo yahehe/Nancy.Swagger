@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger
 {
@@ -13,6 +14,7 @@ namespace Nancy.Swagger
         /// The value MUST be one of the Primitves, array or a model's id.
         /// </remarks>
         [Required] // TODO: Only if Ref is null
+        [JsonProperty("type")]
         public string Type { get; set; }
 
         /// <summary>
@@ -22,11 +24,13 @@ namespace Nancy.Swagger
         /// The value MUST be a model's id.
         /// </remarks>
         [Required] // TODO: Only if Type is null
-        public string Ref { get; set; } // TODO: Should be $ref
+        [JsonProperty("$ref")]
+        public string Ref { get; set; }
 
         /// <summary>
         /// Fine-tuned primitive type definition.
         /// </summary>
+        [JsonProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -35,6 +39,7 @@ namespace Nancy.Swagger
         /// <remarks>
         /// The value type MUST conform with the primitive's type value.
         /// </remarks>
+        [JsonProperty("defaultValue")]
         public object DefaultValue { get; set; }
 
         /// <summary>
@@ -44,6 +49,7 @@ namespace Nancy.Swagger
         /// If this field is used in conjunction with the defaultValue field, 
         /// then the default value MUST be one of the values defined in the enum.
         /// </remarks>
+        [JsonProperty("enum")]
         public IEnumerable<string> Enum { get; set; }
 
         /// <summary>
@@ -53,13 +59,15 @@ namespace Nancy.Swagger
         /// If this field is used in conjunction with the defaultValue field, 
         /// then the default value MUST be higher than or equal to this value.
         /// </remarks>
-        public long Minimum { get; set; }
+        [JsonProperty("minimum")]
+        public long? Minimum { get; set; }
 
         /// <summary>
         /// The maximum valid value for the type, inclusive. If this field is used in conjunction with the defaultValue field, 
         /// then the default value MUST be lower than or equal to this value.
         /// </summary>
-        public long Maximum { get; set; }
+        [JsonProperty("maximum")]
+        public long? Maximum { get; set; }
 
         /// <summary>
         /// The type definition of the values in the container. 
@@ -68,12 +76,14 @@ namespace Nancy.Swagger
         /// A container MAY NOT be nested in another container.
         /// </remarks>
         [Required]
+        [JsonProperty("items")]
         public Items Items { get; set; }
 
         /// <summary>
         /// A flag to note whether the container allows duplicate values or not. 
         /// If the value is set to <c>true</c>, then the array acts as a set.
         /// </summary>
-        public bool UniqueItems { get; set; }
+        [JsonProperty("uniqueItems")]
+        public bool? UniqueItems { get; set; }
     }
 }

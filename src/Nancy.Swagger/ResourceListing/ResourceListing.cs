@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -85,17 +86,20 @@ namespace Nancy.Swagger.ResourceListing
         /// The value MUST be an existing Swagger specification version.
         /// </remarks>
         [Required]
+        [JsonProperty("swaggerVersion")]
         public string SwaggerVersion { get; set; }
 
         /// <summary>
         /// Lists the resources to be described by this specification implementation.
         /// </summary>
         [Required]
+        [JsonProperty("apis")]
         public IEnumerable<Resource> Apis { get; set; }
 
         /// <summary>
         /// Provides the version of the application API.
         /// </summary>
+        [JsonProperty("apiVersion")]
         public string ApiVersion { get; set; }
 
         /// <summary>
@@ -103,11 +107,13 @@ namespace Nancy.Swagger.ResourceListing
         /// The metadata can be used by the clients if needed, 
         /// and can be presented in the Swagger-UI for convenience.
         /// </summary>
+        [JsonProperty("info")]
         public Info Info { get; set; }
 
         /// <summary>
         /// Provides information about the the authorization schemes allowed on his API.
         /// </summary>
+        [JsonProperty("authorizations")]
         public IDictionary<string, Authorization> Authorizations { get; set; }
     }
 }

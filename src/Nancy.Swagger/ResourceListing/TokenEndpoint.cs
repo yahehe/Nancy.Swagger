@@ -1,5 +1,6 @@
 using System;
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -21,11 +22,13 @@ namespace Nancy.Swagger.ResourceListing
         /// The URL of the token endpoint for the authentication code grant flow.
         /// </summary>
         [Required]
+        [JsonProperty("url")]
         public Uri Url { get; set; }
 
         /// <summary>
         /// An optional alternative name to standard "access_token" OAuth2 parameter.
         /// </summary>
+        [JsonProperty("tokenName")]
         public string TokenName { get; set; }
     }
 }

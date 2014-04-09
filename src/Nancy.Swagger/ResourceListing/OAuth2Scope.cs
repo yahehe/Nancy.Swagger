@@ -1,4 +1,5 @@
 using Nancy.Swagger.Attributes;
+using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ResourceListing
 {
@@ -20,11 +21,13 @@ namespace Nancy.Swagger.ResourceListing
         /// The name of the scope.
         /// </summary>
         [Required]
+        [JsonProperty("scope")]
         public string Scope { get; set; }
 
         /// <summary>
         /// A short description of the scope.
         /// </summary>
+        [JsonProperty("description")]
         public string Description { get; set; }
     }
 }
