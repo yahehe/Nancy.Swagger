@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Nancy.Swagger.Attributes;
 
 namespace Nancy.Swagger.ResourceListing
@@ -16,7 +15,7 @@ namespace Nancy.Swagger.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [PublicAPI]
+    [SwaggerDto]
     public class ImplicitGrantFlow
     {
         /// <summary>

@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Nancy.Swagger.Attributes;
 
 namespace Nancy.Swagger
 {
-    [PublicAPI]
+    [SwaggerDto]
     public class DataType
     {
         /// <summary>

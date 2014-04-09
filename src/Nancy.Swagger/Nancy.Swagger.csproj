@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiDeclaration\Api.cs" />
+    <Compile Include="Attributes\SwaggerDtoAttribute.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="ApiDeclaration\HttpMethod.cs" />
     <Compile Include="Items.cs" />

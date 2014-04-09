@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+using Nancy.Swagger.Attributes;
 
 namespace Nancy.Swagger
 {
@@ -19,7 +19,7 @@ namespace Nancy.Swagger
     /// }
     /// </code>
     /// </example>
-    [PublicAPI]
+    [SwaggerDto]
     public class Items
     {
         /// <summary>

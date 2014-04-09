@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Nancy.Swagger.Attributes;
 
 namespace Nancy.Swagger.ApiDeclaration
@@ -17,7 +16,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [PublicAPI]
+    [SwaggerDto]
     public class ResponseMessage
     {
         /// <summary>

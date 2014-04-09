@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using Nancy.Swagger.Attributes;
 using Nancy.Swagger.ResourceListing;
 
@@ -158,7 +157,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [PublicAPI]
+    [SwaggerDto]
     public class ApiDeclaration
     {
         /// <summary>
