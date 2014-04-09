@@ -11,6 +11,12 @@ namespace Nancy.Swagger.Tests
 {
     public class JsonPropertyConventionTests
     {
+        /// <summary>
+        /// Checks that all (public) properties of all types marked with the <see cref="SwaggerDtoAttribute"/>
+        /// has explicitly defined a <see cref="JsonPropertyAttribute"/> with <see cref="JsonPropertyAttribute.PropertyName"/>.
+        /// This allows us to rename properties on the DTOs without worrying about breaking the Swagger JSON schema.
+        /// </summary>
+        /// <param name="property">The property to test.</param>
         [JsonPropertyConventionTestAttribute]
         public void SwaggerDtoPropertiesShouldHaveJsonPropertyAttribute(PropertyInfo property)
         {
