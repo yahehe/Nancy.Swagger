@@ -7,6 +7,12 @@ namespace Nancy.Swagger.Tests
 {
     public static class MemberInfoExtensions
     {
+        public static bool IsDefined<TAttribute>(this MemberInfo memberInfo, bool inherit = true)
+            where TAttribute : Attribute
+        {
+            return memberInfo.IsDefined(typeof(TAttribute), inherit);
+        }
+
         public static TAttribute GetCustomAttribute<TAttribute>(this MemberInfo memberInfo, bool inherit = true)
             where TAttribute : Attribute
         {

@@ -52,7 +52,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JsonPropertyConventionTestAttribute.cs" />
     <Compile Include="JsonPropertyConventionTests.cs" />
     <Compile Include="MemberInfoExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
