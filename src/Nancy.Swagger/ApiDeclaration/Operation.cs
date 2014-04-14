@@ -43,7 +43,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// </code>
     /// </example>
     [SwaggerDto]
-    public class Operation
+    public class Operation : DataType
     {
         /// <summary>
         /// The HTTP method required to invoke this operation.

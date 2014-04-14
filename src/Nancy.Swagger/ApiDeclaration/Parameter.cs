@@ -18,7 +18,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// </code>
     /// </example>
     [SwaggerDto]
-    public class Parameter
+    public class Parameter : DataType
     {
         /// <summary>
         /// The type of the parameter (that is, the location of the parameter in the request).

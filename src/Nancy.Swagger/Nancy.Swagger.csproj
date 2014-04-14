@@ -70,7 +70,7 @@
     <Compile Include="ResourceListing\ResourceListing.cs" />
     <Compile Include="ResourceListing\TokenEndpoint.cs" />
     <Compile Include="ResourceListing\TokenRequestEndpoint.cs" />
-    <Compile Include="SwaggerPrimitive.cs" />
+    <Compile Include="Primitive.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

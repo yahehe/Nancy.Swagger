@@ -73,7 +73,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// </summary>
         [Required]
         [JsonProperty("properties")]
-        public IEnumerable<ModelProperty> Properties { get; set; }
+        public IDictionary<string, ModelProperty> Properties { get; set; }
 
         /// <summary>
         /// List of the model ids that inherit from this model. 
