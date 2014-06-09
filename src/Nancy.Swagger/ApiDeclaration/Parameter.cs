@@ -1,8 +1,10 @@
-using Nancy.Swagger.Attributes;
-using Newtonsoft.Json;
-
 namespace Nancy.Swagger.ApiDeclaration
 {
+    using Nancy.Swagger.Attributes;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     /// <summary>
     /// The Parameter Object describes a single parameter to be sent in an operation and maps to the parameters field in the Operation Object.
     /// </summary>
@@ -25,6 +27,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// </summary>
         [Required]
         [JsonProperty("paramType")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ParameterType ParamType { get; set; }
 
         /// <summary>
@@ -49,17 +52,17 @@ namespace Nancy.Swagger.ApiDeclaration
         /// If this field is not included, it is equivalent to adding this field with the value false.
         /// </summary>
         /// <remarks>
-        /// The field MUST be included if <see cref="ParamType"/> is <see cref="ParameterType.Path"/> and MUST have the value true.
+        /// The field MUST be included if <see cref="ParamType"/> is <see cref="ParameterType.path"/> and MUST have the value true.
         /// </remarks>
         [JsonProperty("required")]
         public bool? Required { get; set; }
 
         /// <summary>
-        /// Another way to allow multiple values for a <see cref="ParameterType.Query"/> parameter. 
+        /// Another way to allow multiple values for a <see cref="ParameterType.query"/> parameter. 
         /// If used, the query parameter may accept comma-separated values. 
         /// </summary>
         /// <remarks>
-        /// The field may be used only if <see cref="ParamType"/> is <see cref="ParameterType.Query"/>, <see cref="ParameterType.Header"/> or <see cref="ParameterType.Path"/>.
+        /// The field may be used only if <see cref="ParamType"/> is <see cref="ParameterType.query"/>, <see cref="ParameterType.header"/> or <see cref="ParameterType.path"/>.
         /// </remarks>
         [JsonProperty("allowMultiple")]
         public bool? AllowMultiple { get; set; }

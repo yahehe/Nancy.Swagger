@@ -5,16 +5,16 @@ namespace Nancy.Swagger.ApiDeclaration
     [PublicAPI]
     public enum HttpMethod
     {
-        Get,
+        GET,
 
-        Post,
+        POST,
 
-        Put,
+        PUT,
 
-        Patch,
+        PATCH,
 
-        Delete,
+        DELETE,
 
-        Options
+        OPTIONS
     }
 }

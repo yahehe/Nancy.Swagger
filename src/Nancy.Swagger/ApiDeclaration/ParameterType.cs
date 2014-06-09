@@ -5,14 +5,14 @@ namespace Nancy.Swagger.ApiDeclaration
     [PublicAPI]
     public enum ParameterType
     {
-        Path,
+        path,
 
-        Query,
+        query,
 
-        Body,
+        body,
 
-        Header,
+        header,
 
-        Form
+        form
     }
 }
