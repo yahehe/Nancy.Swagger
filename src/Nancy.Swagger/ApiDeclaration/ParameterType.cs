@@ -2,17 +2,24 @@ using JetBrains.Annotations;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
+    using System.Runtime.Serialization;
+
     [PublicAPI]
     public enum ParameterType
     {
-        path,
+        [EnumMember(Value = "path")]
+        Path,
 
-        query,
+        [EnumMember(Value = "query")]
+        Query,
 
-        body,
+        [EnumMember(Value = "body")]
+        Body,
 
-        header,
+        [EnumMember(Value = "header")]
+        Header,
 
-        form
+        [EnumMember(Value = "form")]
+        Form
     }
 }

@@ -2,19 +2,27 @@ using JetBrains.Annotations;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
+    using System.Runtime.Serialization;
+
     [PublicAPI]
     public enum HttpMethod
     {
-        GET,
+        [EnumMember(Value = "GET")]
+        Get,
 
-        POST,
+        [EnumMember(Value = "POST")]
+        Post,
 
-        PUT,
+        [EnumMember(Value = "PUT")]
+        Put,
 
-        PATCH,
+        [EnumMember(Value = "PATCH")]
+        Patch,
 
-        DELETE,
+        [EnumMember(Value = "DELETE")]
+        Delete,
 
-        OPTIONS
+        [EnumMember(Value = "OPTIONS")]
+        Options
     }
 }
