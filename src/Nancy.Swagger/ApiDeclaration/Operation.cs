@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
+    using Newtonsoft.Json.Converters;
+
     /// <summary>
     /// The Operation Object describes a single operation on a path.
     /// </summary>
@@ -50,6 +52,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// </summary>
         [Required]
         [JsonProperty("method")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public HttpMethod Method { get; set; }
 
         /// <summary>

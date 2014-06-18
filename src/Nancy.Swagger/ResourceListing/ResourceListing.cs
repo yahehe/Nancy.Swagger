@@ -78,6 +78,12 @@ namespace Nancy.Swagger.ResourceListing
     [SwaggerDto]
     public class ResourceListing
     {
+        public ResourceListing()
+        {
+            this.SwaggerVersion = "1.2"; // TODO: Specify this centrally
+            this.Apis = new Resource[0];
+        }
+
         /// <summary>
         /// Specifies the Swagger Specification version being used.
         /// It can be used by the Swagger UI and other clients to interpret the API listing. 

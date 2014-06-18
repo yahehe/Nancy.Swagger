@@ -1,8 +1,10 @@
-using Nancy.Swagger.Attributes;
-using Newtonsoft.Json;
-
 namespace Nancy.Swagger.ApiDeclaration
 {
+    using Nancy.Swagger.Attributes;
+
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     /// <summary>
     /// The Parameter Object describes a single parameter to be sent in an operation and maps to the parameters field in the Operation Object.
     /// </summary>
@@ -25,6 +27,7 @@ namespace Nancy.Swagger.ApiDeclaration
         /// </summary>
         [Required]
         [JsonProperty("paramType")]
+        [JsonConverter(typeof(StringEnumConverter))]
         public ParameterType ParamType { get; set; }
 
         /// <summary>

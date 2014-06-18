@@ -161,6 +161,12 @@ namespace Nancy.Swagger.ApiDeclaration
     [SwaggerDto]
     public class ApiDeclaration
     {
+        public ApiDeclaration()
+        {
+            this.Apis = new Api[0];
+            this.SwaggerVersion = "1.2"; // TODO: Specify this centrally
+        }
+
         /// <summary>
         /// Gets or sets the swagger version.
         /// </summary>
