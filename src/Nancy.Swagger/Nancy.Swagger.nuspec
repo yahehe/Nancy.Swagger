@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Nancy.Swagger</id>
+    <version>$version$</version>
+    <title>Nancy.Swagger</title>
+    <authors>khellang</authors>
+    <owners>khellang</owners>
+    <licenseUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/khellang/Nancy.Swagger</projectUrl>
+    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Generated API documentation for Nancy using Swagger.</description>
+    <copyright>Copyright © Kristian Hellang 2014</copyright>
+    <tags>Nancy Swagger</tags>
+  </metadata>
+</package>
