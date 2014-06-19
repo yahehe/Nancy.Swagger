@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Nancy.Routing;
@@ -9,8 +10,6 @@ using Newtonsoft.Json;
 
 namespace Nancy.Swagger.Modules
 {
-    using System.Collections.Generic;
-
     public class SwaggerModule : NancyModule
     {
         public SwaggerModule(IRouteCacheProvider routeCacheProvider)
