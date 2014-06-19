@@ -1,9 +1,9 @@
-﻿namespace Nancy.Swagger
+﻿using System.Collections.Generic;
+
+using Nancy.Swagger.ApiDeclaration;
+
+namespace Nancy.Swagger
 {
-    using System.Collections.Generic;
-
-    using Nancy.Swagger.ApiDeclaration;
-
     /// <summary>
     /// Holds all the Swagger metadata pertaining to a specific route.
     /// </summary>
@@ -14,10 +14,10 @@
         /// </summary>
         public SwaggerRouteData()
         {
-            this.OperationParameters = new List<Parameter>();
-            this.OperationResponseMessages = new List<ResponseMessage>();
-            this.OperationProduces = new List<string>();
-            this.OperationConsumes = new List<string>();
+            OperationParameters = new List<Parameter>();
+            OperationResponseMessages = new List<ResponseMessage>();
+            OperationProduces = new List<string>();
+            OperationConsumes = new List<string>();
         }
 
         public string ResourcePath { get; set; }

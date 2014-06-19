@@ -1,9 +1,9 @@
-﻿namespace Nancy.Swagger
+﻿using System;
+
+using Nancy.Swagger.ApiDeclaration;
+
+namespace Nancy.Swagger
 {
-    using System;
-
-    using Nancy.Swagger.ApiDeclaration;
-
     /// <summary>
     /// Helper class for configuring an instance of <see cref="SwaggerRouteData"/>.
     /// </summary>
@@ -17,7 +17,7 @@
         /// <param name="apiPath">The path for the API.</param>
         public SwaggerRouteDataBuilder(string operationNickName, HttpMethod method, string apiPath)
         {
-            this.Data = new SwaggerRouteData
+            Data = new SwaggerRouteData
                 {
                     OperationNickname = operationNickName,
                     OperationMethod = method,
@@ -37,7 +37,7 @@
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder ResourcePath(string resourcePath)
         {
-            this.Data.ResourcePath = resourcePath;
+            Data.ResourcePath = resourcePath;
 
             return this;
         }
@@ -49,7 +49,7 @@
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder Summary(string summary)
         {
-            this.Data.OperationSummary = summary;
+            Data.OperationSummary = summary;
 
             return this;
         }
@@ -61,7 +61,7 @@
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder Notes(string notes)
         {
-            this.Data.OperationNotes = notes;
+            Data.OperationNotes = notes;
 
             return this;
         }
@@ -82,10 +82,13 @@
             bool allowMultiple = false,
             T defaultValue = default(T))
         {
+            var primitive = Primitive.FromType(typeof(T));
+
             var param = new Parameter
                 {
                     Name = name,
-                    Type = ToSwaggerType(typeof(T)),
+                    Type = primitive.Type,
+                    Format = primitive.Format,
                     ParamType = ParameterType.Query,
                     Description = description,
                     Required = required,
@@ -93,34 +96,9 @@
                     DefaultValue = defaultValue
                 };
 
-            this.Data.OperationParameters.Add(param);
+            Data.OperationParameters.Add(param);
 
             return this;
-        }
-
-        private static string ToSwaggerType(Type type)
-        {
-            if (type == typeof(int) || type == typeof(long))
-            {
-                return "integer";
-            }
-
-            if (type == typeof(float) || type == typeof(double))
-            {
-                return "number";
-            }
-
-            if (type == typeof(bool))
-            {
-                return "boolean";
-            }
-
-            if (type == typeof(string) || type == typeof(byte) || type == typeof(DateTime))
-            {
-                return "string";
-            }
-
-            throw new NotSupportedException("The specified type could not be converted to a Swagger primitive.");
         }
     }
 }

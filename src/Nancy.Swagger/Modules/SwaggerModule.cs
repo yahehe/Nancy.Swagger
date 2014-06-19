@@ -1,18 +1,18 @@
-﻿namespace Nancy.Swagger.Modules
+﻿using System;
+using System.Linq;
+
+using Nancy.Routing;
+using Nancy.Swagger.ApiDeclaration;
+using Nancy.Swagger.ResourceListing;
+
+using Newtonsoft.Json;
+
+namespace Nancy.Swagger.Modules
 {
-    using System;
-    using System.Linq;
-
-    using Nancy.Routing;
-    using Nancy.Swagger.ApiDeclaration;
-    using Nancy.Swagger.ResourceListing;
-
-    using Newtonsoft.Json;
-
     public class SwaggerModule : NancyModule
     {
         public SwaggerModule(IRouteCacheProvider routeCacheProvider)
-            : base("api-docs") // TODO: Make the base path configurable
+            : base(SwaggerConfig.ResourceListingPath)
         {
             this.Get["/"] = _ =>
             {
@@ -21,7 +21,7 @@
                     .RetrieveMetadata<SwaggerRouteData>()
                     .OfType<SwaggerRouteData>(); // filter nulls
 
-                var resourceListing = new ResourceListing
+                var resourceListing = new ResourceListing.ResourceListing
                 {
                     Apis = metadata
                         .Select(d => d.ResourcePath)
@@ -41,7 +41,7 @@
                     .OfType<SwaggerRouteData>() // filter nulls
                     .Where(d => d.ResourcePath == path);
 
-                var apiDeclaration = new ApiDeclaration
+                var apiDeclaration = new ApiDeclaration.ApiDeclaration
                 {
                     BasePath = new Uri("/", UriKind.Relative),
                     Apis =

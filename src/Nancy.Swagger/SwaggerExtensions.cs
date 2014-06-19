@@ -1,10 +1,10 @@
-﻿namespace Nancy.Swagger
+﻿using System;
+
+using Nancy.Routing;
+using Nancy.Swagger.ApiDeclaration;
+
+namespace Nancy.Swagger
 {
-    using System;
-
-    using Nancy.Routing;
-    using Nancy.Swagger.ApiDeclaration;
-
     public static class SwaggerExtensions
     {
         /// <summary>
