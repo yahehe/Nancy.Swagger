@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger", "src\Nancy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger.Tests", "test\Nancy.Swagger.Tests\Nancy.Swagger.Tests.csproj", "{FDA8C5B7-E1E0-4235-80F9-54E4C141CED7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger.Model", "src\Swagger.Model\Swagger.Model.csproj", "{140262C2-A8BE-4C8F-9A2F-B848EF396B91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger.Model.Tests", "test\Swagger.Model.Tests\Swagger.Model.Tests.csproj", "{CBA30969-FBF7-468F-AB3E-4045F36B0939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{FDA8C5B7-E1E0-4235-80F9-54E4C141CED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDA8C5B7-E1E0-4235-80F9-54E4C141CED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDA8C5B7-E1E0-4235-80F9-54E4C141CED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{140262C2-A8BE-4C8F-9A2F-B848EF396B91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{140262C2-A8BE-4C8F-9A2F-B848EF396B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{140262C2-A8BE-4C8F-9A2F-B848EF396B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{140262C2-A8BE-4C8F-9A2F-B848EF396B91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA30969-FBF7-468F-AB3E-4045F36B0939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA30969-FBF7-468F-AB3E-4045F36B0939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA30969-FBF7-468F-AB3E-4045F36B0939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA30969-FBF7-468F-AB3E-4045F36B0939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

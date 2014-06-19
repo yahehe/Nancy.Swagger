@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Nancy.Routing;
-using Nancy.Swagger.ApiDeclaration;
+using Swagger.Model;
+using Swagger.Model.ApiDeclaration;
 
 namespace Nancy.Swagger
 {

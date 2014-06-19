@@ -4,14 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ADD1E494-A985-4F8D-911B-E487D4B3159E}</ProjectGuid>
+    <ProjectGuid>{140262C2-A8BE-4C8F-9A2F-B848EF396B91}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nancy.Swagger</RootNamespace>
-    <AssemblyName>Nancy.Swagger</AssemblyName>
+    <RootNamespace>Swagger.Model</RootNamespace>
+    <AssemblyName>Swagger.Model</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>1da1a2d7</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>ab30fb86</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,8 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>BasicCorrectnessRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,43 +35,57 @@
       <HintPath>..\..\packages\JetBrainsAnnotations.Fody.1.0.2\Lib\JetBrains.Annotations.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Nancy">
-      <HintPath>..\..\packages\Nancy.0.23.0\lib\net40\Nancy.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\etc\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Modules\SwaggerModule.cs" />
+    <Compile Include="ApiDeclaration\Api.cs" />
+    <Compile Include="ApiDeclaration\ApiDeclaration.cs" />
+    <Compile Include="ApiDeclaration\HttpMethod.cs" />
+    <Compile Include="ApiDeclaration\Model.cs" />
+    <Compile Include="ApiDeclaration\ModelProperty.cs" />
+    <Compile Include="ApiDeclaration\Operation.cs" />
+    <Compile Include="ApiDeclaration\Parameter.cs" />
+    <Compile Include="ApiDeclaration\ParameterType.cs" />
+    <Compile Include="ApiDeclaration\ResponseMessage.cs" />
+    <Compile Include="Attributes\RequiredAttribute.cs" />
+    <Compile Include="Attributes\SwaggerDataAttribute.cs" />
+    <Compile Include="DataType.cs" />
+    <Compile Include="Items.cs" />
+    <Compile Include="Primitive.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SwaggerConfig.cs" />
-    <Compile Include="SwaggerExtensions.cs" />
-    <Compile Include="SwaggerParameterData.cs" />
-    <Compile Include="SwaggerRouteData.cs" />
-    <Compile Include="SwaggerRouteDataBuilder.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Swagger.Model\Swagger.Model.csproj">
-      <Project>{140262c2-a8be-4c8f-9a2f-b848ef396b91}</Project>
-      <Name>Swagger.Model</Name>
-    </ProjectReference>
+    <Compile Include="ResourceListing\Authorization.cs" />
+    <Compile Include="ResourceListing\AuthorizationCodeGrantFlow.cs" />
+    <Compile Include="ResourceListing\AuthorizationType.cs" />
+    <Compile Include="ResourceListing\GrantTypes.cs" />
+    <Compile Include="ResourceListing\ImplicitGrantFlow.cs" />
+    <Compile Include="ResourceListing\Info.cs" />
+    <Compile Include="ResourceListing\LoginEndpoint.cs" />
+    <Compile Include="ResourceListing\OAuth2Scope.cs" />
+    <Compile Include="ResourceListing\PassType.cs" />
+    <Compile Include="ResourceListing\Resource.cs" />
+    <Compile Include="ResourceListing\ResourceListing.cs" />
+    <Compile Include="ResourceListing\TokenEndpoint.cs" />
+    <Compile Include="ResourceListing\TokenRequestEndpoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\packages\Fody.1.24.0\build\Fody.targets" Condition="Exists('..\..\packages\Fody.1.24.0\build\Fody.targets')" />

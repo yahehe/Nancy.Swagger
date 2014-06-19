@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Nancy.Routing;
-using Nancy.Swagger.ApiDeclaration;
-using Nancy.Swagger.ResourceListing;
-
 using Newtonsoft.Json;
+using Swagger.Model.ApiDeclaration;
+using Swagger.Model.ResourceListing;
 
 namespace Nancy.Swagger.Modules
 {
@@ -22,7 +21,7 @@ namespace Nancy.Swagger.Modules
                     .RetrieveMetadata<SwaggerRouteData>()
                     .OfType<SwaggerRouteData>(); // filter nulls
 
-                var resourceListing = new ResourceListing.ResourceListing
+                var resourceListing = new ResourceListing
                 {
                     Apis = metadata
                         .Select(d => d.ResourcePath)
@@ -42,7 +41,7 @@ namespace Nancy.Swagger.Modules
                     .OfType<SwaggerRouteData>() // filter nulls
                     .Where(d => d.ResourcePath == path);
 
-                var apiDeclaration = new ApiDeclaration.ApiDeclaration
+                var apiDeclaration = new ApiDeclaration
                 {
                     BasePath = new Uri("/", UriKind.Relative),
                     Apis =

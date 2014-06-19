@@ -1,7 +1,7 @@
 ﻿using System;
 
 using Nancy.Responses.Negotiation;
-using Nancy.Swagger.ApiDeclaration;
+using Swagger.Model.ApiDeclaration;
 
 namespace Nancy.Swagger
 {
