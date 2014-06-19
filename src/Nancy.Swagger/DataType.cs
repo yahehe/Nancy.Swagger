@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Nancy.Swagger
 {
-    [SwaggerDto]
+    [SwaggerData]
     public class DataType
     {
         /// <summary>

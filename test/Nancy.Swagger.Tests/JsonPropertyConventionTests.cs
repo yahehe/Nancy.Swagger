@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Nancy.Swagger.Attributes;
 using Newtonsoft.Json;
 using Should;
@@ -12,36 +14,62 @@ namespace Nancy.Swagger.Tests
     public class JsonPropertyConventionTests
     {
         /// <summary>
-        /// Checks that all (public) properties of all types marked with the <see cref="SwaggerDtoAttribute"/>
-        /// has explicitly defined a <see cref="JsonPropertyAttribute"/> with <see cref="JsonPropertyAttribute.PropertyName"/>.
-        /// This allows us to rename properties on the DTOs without worrying about breaking the Swagger JSON schema.
+        /// Checks that all public properties and fields of types marked with the <see cref="SwaggerDataAttribute"/>
+        /// has explicitly defined a <see cref="JsonPropertyAttribute"/> or <see cref="EnumMemberAttribute"/>.
+        /// This allows us to rename properties and enum values without worrying about breaking the Swagger JSON schema.
         /// </summary>
-        /// <param name="property">The property to test.</param>
+        /// <param name="member">The member to test.</param>
         [JsonPropertyConventionTestAttribute]
-        public void SwaggerDtoPropertiesShouldHaveJsonPropertyAttribute(PropertyInfo property)
+        public void SwaggerDtoPropertiesShouldHaveJsonPropertyAttribute(MemberInfo member)
         {
-            var attribute = property.GetCustomAttribute<JsonPropertyAttribute>();
+            var jsonProperty = member.GetCustomAttribute<JsonPropertyAttribute>();
+            if (jsonProperty != null)
+            {
+                jsonProperty.PropertyName.ShouldNotBeNull();
+            }
 
-            attribute.ShouldNotBeNull();
-            attribute.PropertyName.ShouldNotBeNull();
+            var enumMember = member.GetCustomAttribute<EnumMemberAttribute>();
+            if (enumMember != null)
+            {
+                enumMember.Value.ShouldNotBeNull();
+            }
         }
 
         private class JsonPropertyConventionTestAttribute : TheoryAttribute
         {
             protected override IEnumerable<ITestCommand> EnumerateTestCommands(IMethodInfo method)
             {
-                return typeof(SwaggerDtoAttribute).Assembly.GetTypes()
-                    .Where(type => type.IsDefined<SwaggerDtoAttribute>())
-                    .SelectMany(type => type.GetProperties())
-                    .Select(property => new JsonPropertyTestCommand(method, property));
+                return typeof (SwaggerDataAttribute).Assembly.GetTypes()
+                    .Where(type => type.IsDefined<SwaggerDataAttribute>())
+                    .SelectMany(GetMemberInfo)
+                    .GroupBy(GetDisplayName)
+                    .Select(x => x.First())
+                    .Select(member => new JsonPropertyTestCommand(method, member));
+            }
+
+            private static IEnumerable<MemberInfo> GetMemberInfo(Type type)
+            {
+                if (type.IsEnum)
+                {
+                    return type.GetFields(BindingFlags.Public | BindingFlags.Static);
+                }
+
+                return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            }
+
+            private static string GetDisplayName(MemberInfo member)
+            {
+                return member.DeclaringType != null 
+                    ? string.Join(".", member.DeclaringType.Name, member.Name) 
+                    : member.Name;
             }
 
             private class JsonPropertyTestCommand : TheoryCommand
             {
-                public JsonPropertyTestCommand(IMethodInfo testMethod, PropertyInfo property)
-                    : base(testMethod, new object[] { property })
+                public JsonPropertyTestCommand(IMethodInfo testMethod, MemberInfo member)
+                    : base(testMethod, new object[] { member })
                 {
-                    DisplayName = string.Join(".", property.DeclaringType.Name, property.Name);
+                    DisplayName = GetDisplayName(member);
                 }
             }
         }

@@ -44,7 +44,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerDto]
+    [SwaggerData]
     public class Operation : DataType
     {
         /// <summary>

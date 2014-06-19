@@ -14,7 +14,7 @@ namespace Nancy.Swagger.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerDto]
+    [SwaggerData]
     public class LoginEndpoint
     {
         /// <summary>

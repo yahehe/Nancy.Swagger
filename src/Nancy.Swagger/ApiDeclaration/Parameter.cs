@@ -1,6 +1,6 @@
 namespace Nancy.Swagger.ApiDeclaration
 {
-    using Nancy.Swagger.Attributes;
+    using Attributes;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
@@ -19,7 +19,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerDto]
+    [SwaggerData]
     public class Parameter : DataType
     {
         /// <summary>

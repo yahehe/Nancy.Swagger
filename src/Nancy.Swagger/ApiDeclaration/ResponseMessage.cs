@@ -17,7 +17,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerDto]
+    [SwaggerData]
     public class ResponseMessage
     {
         /// <summary>

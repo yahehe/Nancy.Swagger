@@ -158,7 +158,7 @@ namespace Nancy.Swagger.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerDto]
+    [SwaggerData]
     public class ApiDeclaration
     {
         public ApiDeclaration()

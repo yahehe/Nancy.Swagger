@@ -1,10 +1,10 @@
-using JetBrains.Annotations;
+using Nancy.Swagger.Attributes;
 
 namespace Nancy.Swagger.ApiDeclaration
 {
     using System.Runtime.Serialization;
 
-    [PublicAPI]
+    [SwaggerData]
     public enum ParameterType
     {
         [EnumMember(Value = "path")]

@@ -20,7 +20,7 @@ namespace Nancy.Swagger
     /// }
     /// </code>
     /// </example>
-    [SwaggerDto]
+    [SwaggerData]
     public class Items
     {
         /// <summary>
