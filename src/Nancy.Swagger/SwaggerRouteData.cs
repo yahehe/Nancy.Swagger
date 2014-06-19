@@ -44,41 +44,5 @@ namespace Nancy.Swagger
         public IList<string> OperationConsumes { get; set; }
 
         public Type OperationModel { get; set; }
-
-        public Operation ToOperation()
-        {
-            var operation = new Operation
-            {
-                Nickname = OperationNickname,
-                Summary = OperationSummary,
-                Method = OperationMethod,
-                Notes = OperationNotes,
-                Parameters = OperationParameters.Select(p => p.ToParameter()),
-                ResponseMessages = OperationResponseMessages,
-                Produces = OperationProduces,
-                Consumes = OperationConsumes,
-            };
-
-            if (OperationModel != null)
-            {
-                if (Primitive.IsPrimitive(OperationModel))
-                {
-                    var primitive = Primitive.FromType(OperationModel);
-
-                    operation.Type = primitive.Type;
-                    operation.Format = primitive.Format;
-                }
-                else
-                {
-                    operation.Type = OperationModel.DefaultModelId();
-                }
-            }
-            else
-            {
-                operation.Type = "void";
-            }
-
-            return operation;
-        }
     }
 }

@@ -163,8 +163,8 @@ namespace Nancy.Swagger.ApiDeclaration
     {
         public ApiDeclaration()
         {
-            this.Apis = new Api[0];
-            this.SwaggerVersion = "1.2"; // TODO: Specify this centrally
+            Apis = new Api[0];
+            SwaggerVersion = "1.2"; // TODO: Specify this centrally
         }
 
         /// <summary>

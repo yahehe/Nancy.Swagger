@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Linq;
 using Nancy.Routing;
 using Nancy.Swagger.ApiDeclaration;
 
@@ -20,6 +20,69 @@ namespace Nancy.Swagger
             action.Invoke(builder);
 
             return builder.Data;
+        }
+
+        public static Operation ToOperation(this SwaggerRouteData routeData)
+        {
+            var operation = new Operation
+            {
+                Nickname = routeData.OperationNickname,
+                Summary = routeData.OperationSummary,
+                Method = routeData.OperationMethod,
+                Notes = routeData.OperationNotes,
+                Parameters = routeData.OperationParameters.Select(p => p.ToParameter()),
+                ResponseMessages = routeData.OperationResponseMessages,
+                Produces = routeData.OperationProduces,
+                Consumes = routeData.OperationConsumes,
+            };
+
+            if (routeData.OperationModel != null)
+            {
+                if (Primitive.IsPrimitive(routeData.OperationModel))
+                {
+                    var primitive = Primitive.FromType(routeData.OperationModel);
+
+                    operation.Type = primitive.Type;
+                    operation.Format = primitive.Format;
+                }
+                else
+                {
+                    operation.Type = routeData.OperationModel.DefaultModelId();
+                }
+            }
+            else
+            {
+                operation.Type = "void";
+            }
+
+            return operation;
+        }
+
+        public static Parameter ToParameter(this SwaggerParameterData parameterData)
+        {
+            var parameter = new Parameter
+            {
+                Name = parameterData.Name,
+                ParamType = parameterData.ParamType,
+                Description = parameterData.Description,
+                Required = parameterData.Required,
+                AllowMultiple = parameterData.AllowMultiple,
+                DefaultValue = parameterData.DefaultValue
+            };
+
+            if (Primitive.IsPrimitive(parameterData.ParameterModel))
+            {
+                var primitive = Primitive.FromType(parameterData.ParameterModel);
+
+                parameter.Type = primitive.Type;
+                parameter.Format = primitive.Format;
+            }
+            else
+            {
+                parameter.Type = parameterData.ParameterModel.DefaultModelId();
+            }
+
+            return parameter;
         }
 
         public static string DefaultModelId(this Type type)
