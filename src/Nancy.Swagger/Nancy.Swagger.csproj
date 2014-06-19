@@ -34,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Nancy">
-      <HintPath>..\..\packages\Nancy.0.23-Pre1363\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.0.23.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -57,6 +57,7 @@
     <Compile Include="ApiDeclaration\Parameter.cs" />
     <Compile Include="ApiDeclaration\ParameterType.cs" />
     <Compile Include="ApiDeclaration\ResponseMessage.cs" />
+    <Compile Include="Modules\SwaggerModule.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ApiDeclaration\ApiDeclaration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -75,9 +76,14 @@
     <Compile Include="ResourceListing\TokenEndpoint.cs" />
     <Compile Include="ResourceListing\TokenRequestEndpoint.cs" />
     <Compile Include="Primitive.cs" />
+    <Compile Include="SwaggerExtensions.cs" />
+    <Compile Include="SwaggerRouteData.cs" />
+    <Compile Include="SwaggerRouteDataBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
