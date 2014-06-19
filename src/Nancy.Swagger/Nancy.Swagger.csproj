@@ -76,6 +76,7 @@
     <Compile Include="ResourceListing\TokenEndpoint.cs" />
     <Compile Include="ResourceListing\TokenRequestEndpoint.cs" />
     <Compile Include="Primitive.cs" />
+    <Compile Include="SwaggerConfig.cs" />
     <Compile Include="SwaggerExtensions.cs" />
     <Compile Include="SwaggerRouteData.cs" />
     <Compile Include="SwaggerRouteDataBuilder.cs" />
