@@ -40,5 +40,10 @@ namespace Nancy.Swagger
         {
             return Primitives[Nullable.GetUnderlyingType(type) ?? type];
         }
+
+        public static bool IsPrimitive(Type type)
+        {
+            return Primitives.ContainsKey(Nullable.GetUnderlyingType(type) ?? type);
+        }
     }
 }

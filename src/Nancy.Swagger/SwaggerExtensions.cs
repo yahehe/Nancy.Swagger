@@ -22,6 +22,15 @@ namespace Nancy.Swagger
             return builder.Data;
         }
 
+        public static string DefaultModelId(this Type type)
+        {
+            // TODO: This won't scale as you'd get collisions between types with the same 
+            // name but different namespace. Could use FullName, but that's a bit fugly. 
+            // perhaps this is a reasonable default but the DSL could provide a facility for 
+            // overriding a given model's ID?
+            return type.Name;
+        }
+
         private static HttpMethod Convert(string method)
         {
             switch (method)
