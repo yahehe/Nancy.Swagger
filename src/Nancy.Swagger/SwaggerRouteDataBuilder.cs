@@ -1,5 +1,6 @@
 ﻿using System;
 
+using Nancy.Responses.Negotiation;
 using Nancy.Swagger.ApiDeclaration;
 
 namespace Nancy.Swagger
@@ -18,11 +19,11 @@ namespace Nancy.Swagger
         public SwaggerRouteDataBuilder(string operationNickName, HttpMethod method, string apiPath)
         {
             Data = new SwaggerRouteData
-                {
-                    OperationNickname = operationNickName,
-                    OperationMethod = method,
-                    ApiPath = apiPath
-                };
+            {
+                OperationNickname = operationNickName,
+                OperationMethod = method,
+                ApiPath = apiPath
+            };
         }
 
         /// <summary>
@@ -38,6 +39,18 @@ namespace Nancy.Swagger
         public SwaggerRouteDataBuilder ResourcePath(string resourcePath)
         {
             Data.ResourcePath = resourcePath;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specify the path for the API.
+        /// </summary>
+        /// <param name="apiPath">The resource path.</param>
+        /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
+        public SwaggerRouteDataBuilder ApiPath(string apiPath)
+        {
+            Data.ApiPath = apiPath;
 
             return this;
         }
@@ -82,21 +95,130 @@ namespace Nancy.Swagger
             bool allowMultiple = false,
             T defaultValue = default(T))
         {
-            var primitive = Primitive.FromType(typeof(T));
+            return Param(ParameterType.Query, name, description, required, allowMultiple, defaultValue);
+        }
 
-            var param = new Parameter
+        /// <summary>
+        /// Specify a body parameter for the operation.
+        /// </summary>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="description">The description of the parameter.</param>
+        /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
+        /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
+        /// <param name="defaultValue">The default value to be used for the field.</param>
+        /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
+        public SwaggerRouteDataBuilder BodyParam<T>(
+            string name,
+            string description = null,
+            bool required = false,
+            bool allowMultiple = false,
+            T defaultValue = default(T))
+        {
+            return Param(ParameterType.Body, name, description, required, allowMultiple, defaultValue);
+        }
+
+        /// <summary>
+        /// Specify a path parameter for the operation.
+        /// </summary>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="description">The description of the parameter.</param>
+        /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
+        /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
+        /// <param name="defaultValue">The default value to be used for the field.</param>
+        /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
+        public SwaggerRouteDataBuilder PathParam<T>(
+            string name,
+            string description = null,
+            bool required = false,
+            bool allowMultiple = false,
+            T defaultValue = default(T))
+        {
+            return Param(ParameterType.Path, name, description, required, allowMultiple, defaultValue);
+        }
+
+        /// <summary>
+        /// Specify a parameter for the operation.
+        /// </summary>
+        /// <param name="paramType">The <see cref="ParameterType"/> of the parameter.</param>
+        /// <param name="name">The name of the parameter.</param>
+        /// <param name="description">The description of the parameter.</param>
+        /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
+        /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
+        /// <param name="defaultValue">The default value to be used for the field.</param>
+        /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
+        public SwaggerRouteDataBuilder Param<T>(
+            ParameterType paramType,
+            string name,
+            string description = null,
+            bool required = false,
+            bool allowMultiple = false,
+            T defaultValue = default(T))
+        {
+            var param = new SwaggerParameterData
                 {
                     Name = name,
-                    Type = primitive.Type,
-                    Format = primitive.Format,
-                    ParamType = ParameterType.Query,
+                    ParamType = paramType,
                     Description = description,
                     Required = required,
                     AllowMultiple = allowMultiple,
-                    DefaultValue = defaultValue
+                    DefaultValue = defaultValue,
+                    ParameterModel = typeof(T)
                 };
 
             Data.OperationParameters.Add(param);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specify a response message for the operation.
+        /// </summary>
+        /// <param name="code">The HTTP code of the response.</param>
+        /// <param name="message">The message for the response.</param>
+        /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
+        public SwaggerRouteDataBuilder Response(int code, string message)
+        {
+            var responseMessage = new ResponseMessage { Code = code, Message = message };
+            // TODO: Populate responseModel
+
+            Data.OperationResponseMessages.Add(responseMessage);
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specify what media type(s) the operation produces.
+        /// </summary>
+        /// <param name="mediaTypes">The media type(s).</param>
+        /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
+        public SwaggerRouteDataBuilder Produces(params MediaType[] mediaTypes)
+        {
+            foreach (var mediaType in mediaTypes)
+            {
+                Data.OperationProduces.Add(mediaType);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specify what media type(s) the operation consumes.
+        /// </summary>
+        /// <param name="mediaTypes">The media type(s).</param>
+        /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
+        public SwaggerRouteDataBuilder Consumes(params MediaType[] mediaTypes)
+        {
+            foreach (var mediaType in mediaTypes)
+            {
+                Data.OperationConsumes.Add(mediaType);
+            }
+
+            return this;
+        }
+
+        public SwaggerRouteDataBuilder Model<T>()
+        {
+            Data.OperationModel = typeof(T);
 
             return this;
         }

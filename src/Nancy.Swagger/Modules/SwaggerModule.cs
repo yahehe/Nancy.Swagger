@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Nancy.Routing;
@@ -50,26 +51,33 @@ namespace Nancy.Swagger.Modules
                             new Api
                             {
                                 Path = group.Key,
-                                Operations =
-                                    group.Select(
-                                        desc =>
-                                        new Operation
-                                        {
-                                            Nickname = desc.OperationNickname,
-                                            Summary = desc.OperationSummary,
-                                            Method = desc.OperationMethod,
-                                            Notes = desc.OperationNotes,
-                                            Parameters = desc.OperationParameters,
-                                            ResponseMessages = desc.OperationResponseMessages,
-                                            Produces = desc.OperationProduces,
-                                            Consumes = desc.OperationConsumes,
-                                            Type = desc.OperationType
-                                        })
-                            })
+                                Operations = group.Select(d => d.ToOperation())
+                            }),
                 };
+
+                var models = GetOperationModels(metadata).Union(GetParameterModels(metadata)).Distinct();
+
+                apiDeclaration.Models = models.Select(t => t.DefaultModelId())
+                        .Select(id => new Model { Id = id })
+                        .ToDictionary(m => m.Id, m => m);
 
                 return JsonConvert.SerializeObject(apiDeclaration);
             };
+        }
+
+        private static IEnumerable<Type> GetOperationModels(IEnumerable<SwaggerRouteData> metadata)
+        {
+            return metadata
+                .Where(d => d.OperationModel != null)
+                .Select(d => d.OperationModel);
+        }
+
+        private static IEnumerable<Type> GetParameterModels(IEnumerable<SwaggerRouteData> metadata)
+        {
+            return metadata
+                .SelectMany(d => d.OperationParameters)
+                .Where(p => p.ParameterModel != null)
+                .Select(p => p.ParameterModel);
         }
     }
 }

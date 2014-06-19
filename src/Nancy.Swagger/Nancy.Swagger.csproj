@@ -78,6 +78,7 @@
     <Compile Include="Primitive.cs" />
     <Compile Include="SwaggerConfig.cs" />
     <Compile Include="SwaggerExtensions.cs" />
+    <Compile Include="SwaggerParameterData.cs" />
     <Compile Include="SwaggerRouteData.cs" />
     <Compile Include="SwaggerRouteDataBuilder.cs" />
   </ItemGroup>

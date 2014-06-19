@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Linq;
+
+using System.Collections.Generic;
 
 using Nancy.Swagger.ApiDeclaration;
 
@@ -14,7 +17,7 @@ namespace Nancy.Swagger
         /// </summary>
         public SwaggerRouteData()
         {
-            OperationParameters = new List<Parameter>();
+            OperationParameters = new List<SwaggerParameterData>();
             OperationResponseMessages = new List<ResponseMessage>();
             OperationProduces = new List<string>();
             OperationConsumes = new List<string>();
@@ -32,7 +35,7 @@ namespace Nancy.Swagger
 
         public string OperationNotes { get; set; }
 
-        public IList<Parameter> OperationParameters { get; set; }
+        public IList<SwaggerParameterData> OperationParameters { get; set; }
 
         public IList<ResponseMessage> OperationResponseMessages { get; set; }
 
@@ -40,6 +43,42 @@ namespace Nancy.Swagger
 
         public IList<string> OperationConsumes { get; set; }
 
-        public string OperationType { get; set; }
+        public Type OperationModel { get; set; }
+
+        public Operation ToOperation()
+        {
+            var operation = new Operation
+            {
+                Nickname = OperationNickname,
+                Summary = OperationSummary,
+                Method = OperationMethod,
+                Notes = OperationNotes,
+                Parameters = OperationParameters.Select(p => p.ToParameter()),
+                ResponseMessages = OperationResponseMessages,
+                Produces = OperationProduces,
+                Consumes = OperationConsumes,
+            };
+
+            if (OperationModel != null)
+            {
+                if (Primitive.IsPrimitive(OperationModel))
+                {
+                    var primitive = Primitive.FromType(OperationModel);
+
+                    operation.Type = primitive.Type;
+                    operation.Format = primitive.Format;
+                }
+                else
+                {
+                    operation.Type = OperationModel.DefaultModelId();
+                }
+            }
+            else
+            {
+                operation.Type = "void";
+            }
+
+            return operation;
+        }
     }
 }
