@@ -13,5 +13,6 @@
     <description>A .NET object model for the Swagger spec.</description>
     <copyright>Copyright © Kristian Hellang 2014</copyright>
     <tags>Swagger</tags>
+    <dependencies></dependencies>
   </metadata>
 </package>
