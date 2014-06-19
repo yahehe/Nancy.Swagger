@@ -2,4 +2,5 @@
 <Weavers>
   <JetBrainsAnnotations />
   <Costura />
+  <Visualize />
 </Weavers>
