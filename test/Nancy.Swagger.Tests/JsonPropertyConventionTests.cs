@@ -26,13 +26,25 @@ namespace Nancy.Swagger.Tests
             if (jsonProperty != null)
             {
                 jsonProperty.PropertyName.ShouldNotBeNull();
+                return;
             }
 
             var enumMember = member.GetCustomAttribute<EnumMemberAttribute>();
             if (enumMember != null)
             {
                 enumMember.Value.ShouldNotBeNull();
+                return;
             }
+
+            throw new Exception(string.Format(
+                "Member {0} is missing JsonProperty- or EnumMemberAttribute.", GetDisplayName(member)));
+        }
+
+        private static string GetDisplayName(MemberInfo member)
+        {
+            return member.DeclaringType != null
+                ? string.Join(".", member.DeclaringType.Name, member.Name)
+                : member.Name;
         }
 
         private class JsonPropertyConventionTestAttribute : TheoryAttribute
@@ -55,13 +67,6 @@ namespace Nancy.Swagger.Tests
                 }
 
                 return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            }
-
-            private static string GetDisplayName(MemberInfo member)
-            {
-                return member.DeclaringType != null 
-                    ? string.Join(".", member.DeclaringType.Name, member.Name) 
-                    : member.Name;
             }
 
             private class JsonPropertyTestCommand : TheoryCommand
