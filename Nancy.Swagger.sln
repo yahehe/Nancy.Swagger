@@ -1,21 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger", "src\Nancy.Swagger\Nancy.Swagger.csproj", "{ADD1E494-A985-4F8D-911B-E487D4B3159E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger.Tests", "test\Nancy.Swagger.Tests\Nancy.Swagger.Tests.csproj", "{FDA8C5B7-E1E0-4235-80F9-54E4C141CED7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FFB1FC36-A798-425B-8379-63D5E15C066A}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Global
-	GlobalSection(CodealikeProperties) = postSolution
-		SolutionGuid = 490b2a4f-22f5-46a2-93a9-b929191d1f55
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -32,5 +24,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(CodealikeProperties) = postSolution
+		SolutionGuid = 490b2a4f-22f5-46a2-93a9-b929191d1f55
 	EndGlobalSection
 EndGlobal
