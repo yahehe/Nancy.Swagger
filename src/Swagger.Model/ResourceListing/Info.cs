@@ -1,5 +1,4 @@
 using System;
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -20,45 +19,42 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class Info
+    public class Info : SwaggerModel
     {
         /// <summary>
         /// The title of the application.
         /// </summary>
-        [Required]
-        [JsonProperty("title")]
+        [SwaggerProperty("title", true)]
         public string Title { get; set; }
 
         /// <summary>
         /// A short description of the application.
         /// </summary>
-        [Required]
-        [JsonProperty("description")]
+        [SwaggerProperty("description", true)]
         public string Description { get; set; }
 
         /// <summary>
         /// A URL to the Terms of Service of the API.
         /// </summary>
-        [JsonProperty("termsOfServiceUrl")]
+        [SwaggerProperty("termsOfServiceUrl")]
         public Uri TermsOfServiceUrl { get; set; }
 
         /// <summary>
         /// An email to be used for API-related correspondence.
         /// </summary>
-        [JsonProperty("contact")]
+        [SwaggerProperty("contact")]
         public string Contact { get; set; }
 
         /// <summary>
         /// The license name used for the API.
         /// </summary>
-        [JsonProperty("license")]
+        [SwaggerProperty("license")]
         public string License { get; set; }
 
         /// <summary>
         /// A URL to the license used for the API.
         /// </summary>
-        [JsonProperty("licenseUrl")]
+        [SwaggerProperty("licenseUrl")]
         public Uri LicenseUrl { get; set; }
     }
 }

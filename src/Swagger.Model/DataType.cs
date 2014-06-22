@@ -1,11 +1,9 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model
 {
-    [SwaggerData]
-    public class DataType
+    public class DataType : SwaggerModel
     {
         /// <summary>
         /// The return type of the operation.
@@ -13,8 +11,7 @@ namespace Swagger.Model
         /// <remarks>
         /// The value MUST be one of the Primitves, array or a model's id.
         /// </remarks>
-        [Required] // TODO: Only if Ref is null
-        [JsonProperty("type")]
+        [SwaggerProperty("type", true)] // TODO: Only required if Ref is null
         public string Type { get; set; }
 
         /// <summary>
@@ -23,14 +20,13 @@ namespace Swagger.Model
         /// <remarks>
         /// The value MUST be a model's id.
         /// </remarks>
-        [Required] // TODO: Only if Type is null
-        [JsonProperty("$ref")]
+        [SwaggerProperty("$ref", true)] // TODO: Only required if Type is null
         public string Ref { get; set; }
 
         /// <summary>
         /// Fine-tuned primitive type definition.
         /// </summary>
-        [JsonProperty("format")]
+        [SwaggerProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -39,7 +35,7 @@ namespace Swagger.Model
         /// <remarks>
         /// The value type MUST conform with the primitive's type value.
         /// </remarks>
-        [JsonProperty("defaultValue")]
+        [SwaggerProperty("defaultValue")]
         public object DefaultValue { get; set; }
 
         /// <summary>
@@ -49,7 +45,7 @@ namespace Swagger.Model
         /// If this field is used in conjunction with the defaultValue field, 
         /// then the default value MUST be one of the values defined in the enum.
         /// </remarks>
-        [JsonProperty("enum")]
+        [SwaggerProperty("enum")]
         public IEnumerable<string> Enum { get; set; }
 
         /// <summary>
@@ -59,14 +55,14 @@ namespace Swagger.Model
         /// If this field is used in conjunction with the defaultValue field, 
         /// then the default value MUST be higher than or equal to this value.
         /// </remarks>
-        [JsonProperty("minimum")]
+        [SwaggerProperty("minimum")]
         public long? Minimum { get; set; }
 
         /// <summary>
         /// The maximum valid value for the type, inclusive. If this field is used in conjunction with the defaultValue field, 
         /// then the default value MUST be lower than or equal to this value.
         /// </summary>
-        [JsonProperty("maximum")]
+        [SwaggerProperty("maximum")]
         public long? Maximum { get; set; }
 
         /// <summary>
@@ -75,15 +71,14 @@ namespace Swagger.Model
         /// <remarks>
         /// A container MAY NOT be nested in another container.
         /// </remarks>
-        [Required]
-        [JsonProperty("items")]
+        [SwaggerProperty("items", true)]
         public Items Items { get; set; }
 
         /// <summary>
         /// A flag to note whether the container allows duplicate values or not. 
         /// If the value is set to <c>true</c>, then the array acts as a set.
         /// </summary>
-        [JsonProperty("uniqueItems")]
+        [SwaggerProperty("uniqueItems")]
         public bool? UniqueItems { get; set; }
     }
 }

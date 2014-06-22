@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -16,20 +15,18 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class ImplicitGrantFlow
+    public class ImplicitGrantFlow : SwaggerModel
     {
         /// <summary>
         /// The login endpoint definition.
         /// </summary>
-        [Required]
-        [JsonProperty("loginEndpoint")]
+        [SwaggerProperty("loginEndpoint", true)]
         public LoginEndpoint LoginEndpoint { get; set; }
 
         /// <summary>
         /// An optional alternative name to standard "access_token" OAuth2 parameter.
         /// </summary>
-        [JsonProperty("tokenName")]
+        [SwaggerProperty("tokenName")]
         public string TokenName { get; set; }
     }
 }

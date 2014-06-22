@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -9,8 +8,8 @@ namespace Swagger.Model.ResourceListing
     [SwaggerData]
     public enum PassType
     {
-        [EnumMember(Value = "header")] Header,
+        [SwaggerEnumValue("header")] Header,
 
-        [EnumMember(Value = "query")] Query
+        [SwaggerEnumValue("query")] Query
     }
 }

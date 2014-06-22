@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ApiDeclaration
@@ -18,15 +16,12 @@ namespace Swagger.Model.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
     public class Parameter : DataType
     {
         /// <summary>
         /// The type of the parameter (that is, the location of the parameter in the request).
         /// </summary>
-        [Required]
-        [JsonProperty("paramType")]
-        [JsonConverter(typeof(StringEnumConverter))]
+        [SwaggerProperty("paramType", true)]
         public ParameterType ParamType { get; set; }
 
         /// <summary>
@@ -36,14 +31,13 @@ namespace Swagger.Model.ApiDeclaration
         /// <remarks>
         /// Parameter names are case sensitive.
         /// </remarks>
-        [Required]
-        [JsonProperty("name")]
+        [SwaggerProperty("name", true)]
         public string Name { get; set; }
 
         /// <summary>
         /// A brief description of this parameter.
         /// </summary>
-        [JsonProperty("description")]
+        [SwaggerProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -53,7 +47,7 @@ namespace Swagger.Model.ApiDeclaration
         /// <remarks>
         /// The field MUST be included if <see cref="ParamType"/> is <see cref="ParameterType.Path"/> and MUST have the value true.
         /// </remarks>
-        [JsonProperty("required")]
+        [SwaggerProperty("required")]
         public bool? Required { get; set; }
 
         /// <summary>
@@ -63,7 +57,7 @@ namespace Swagger.Model.ApiDeclaration
         /// <remarks>
         /// The field may be used only if <see cref="ParamType"/> is <see cref="ParameterType.Query"/>, <see cref="ParameterType.Header"/> or <see cref="ParameterType.Path"/>.
         /// </remarks>
-        [JsonProperty("allowMultiple")]
+        [SwaggerProperty("allowMultiple")]
         public bool? AllowMultiple { get; set; }
     }
 }

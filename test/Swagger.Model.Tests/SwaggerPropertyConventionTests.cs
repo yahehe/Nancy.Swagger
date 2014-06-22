@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
-using Newtonsoft.Json;
 using Should;
 using Swagger.Model.Attributes;
 using Xunit.Extensions;
@@ -11,33 +9,33 @@ using Xunit.Sdk;
 
 namespace Swagger.Model.Tests
 {
-    public class JsonPropertyConventionTests
+    public class SwaggerPropertyConventionTests
     {
         /// <summary>
         /// Checks that all public properties and fields of types marked with the <see cref="SwaggerDataAttribute"/>
-        /// has explicitly defined a <see cref="JsonPropertyAttribute"/> or <see cref="EnumMemberAttribute"/>.
+        /// has explicitly defined a <see cref="SwaggerPropertyAttribute"/> or <see cref="SwaggerEnumValueAttribute"/>.
         /// This allows us to rename properties and enum values without worrying about breaking the Swagger JSON schema.
         /// </summary>
         /// <param name="member">The member to test.</param>
-        [JsonPropertyConventionTest]
-        public void SwaggerDtoPropertiesShouldHaveJsonPropertyAttribute(MemberInfo member)
+        [SwaggerPropertyConventionTest]
+        public void SwaggerDtoPropertiesShouldHaveSwaggerPropertyAttribute(MemberInfo member)
         {
-            var jsonProperty = member.GetCustomAttribute<JsonPropertyAttribute>();
-            if (jsonProperty != null)
+            var swaggerProperty = member.GetCustomAttribute<SwaggerPropertyAttribute>();
+            if (swaggerProperty != null)
             {
-                jsonProperty.PropertyName.ShouldNotBeNull();
+                swaggerProperty.Name.ShouldNotBeNull();
                 return;
             }
 
-            var enumMember = member.GetCustomAttribute<EnumMemberAttribute>();
-            if (enumMember != null)
+            var enumValue = member.GetCustomAttribute<SwaggerEnumValueAttribute>();
+            if (enumValue != null)
             {
-                enumMember.Value.ShouldNotBeNull();
+                enumValue.Value.ShouldNotBeNull();
                 return;
             }
 
             throw new Exception(string.Format(
-                "Member {0} is missing JsonProperty- or EnumMemberAttribute.", GetDisplayName(member)));
+                "Member {0} is missing SwaggerProperty- or SwaggerEnumValueAttribute.", GetDisplayName(member)));
         }
 
         private static string GetDisplayName(MemberInfo member)
@@ -47,7 +45,7 @@ namespace Swagger.Model.Tests
                 : member.Name;
         }
 
-        private class JsonPropertyConventionTestAttribute : TheoryAttribute
+        private class SwaggerPropertyConventionTestAttribute : TheoryAttribute
         {
             protected override IEnumerable<ITestCommand> EnumerateTestCommands(IMethodInfo method)
             {
@@ -56,7 +54,7 @@ namespace Swagger.Model.Tests
                     .SelectMany(GetMemberInfo)
                     .GroupBy(GetDisplayName)
                     .Select(x => x.First())
-                    .Select(member => new JsonPropertyTestCommand(method, member));
+                    .Select(member => new SwaggerPropertyTestCommand(method, member));
             }
 
             private static IEnumerable<MemberInfo> GetMemberInfo(Type type)
@@ -69,9 +67,9 @@ namespace Swagger.Model.Tests
                 return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             }
 
-            private class JsonPropertyTestCommand : TheoryCommand
+            private class SwaggerPropertyTestCommand : TheoryCommand
             {
-                public JsonPropertyTestCommand(IMethodInfo testMethod, MemberInfo member)
+                public SwaggerPropertyTestCommand(IMethodInfo testMethod, MemberInfo member)
                     : base(testMethod, new object[] { member })
                 {
                     DisplayName = GetDisplayName(member);

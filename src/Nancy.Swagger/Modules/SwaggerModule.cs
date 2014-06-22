@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Nancy.Routing;
-using Newtonsoft.Json;
 using Swagger.Model.ApiDeclaration;
 using Swagger.Model.ResourceListing;
 
@@ -14,7 +13,7 @@ namespace Nancy.Swagger.Modules
         public SwaggerModule(IRouteCacheProvider routeCacheProvider)
             : base(SwaggerConfig.ResourceListingPath)
         {
-            this.Get["/"] = _ =>
+            Get["/"] = _ =>
             {
                 var metadata = routeCacheProvider
                     .GetCache()
@@ -29,17 +28,18 @@ namespace Nancy.Swagger.Modules
                         .Select(path => new Resource { Path = path })
                 };
 
-                return JsonConvert.SerializeObject(resourceListing);
+                return resourceListing.ToJson();
             };
 
-            this.Get["/{resourcePath*}"] = _ =>
+            Get["/{resourcePath*}"] = _ =>
             {
                 string path = "/" + _.resourcePath;
                 var metadata = routeCacheProvider
                     .GetCache()
                     .RetrieveMetadata<SwaggerRouteData>()
                     .OfType<SwaggerRouteData>() // filter nulls
-                    .Where(d => d.ResourcePath == path);
+                    .Where(d => d.ResourcePath == path)
+                    .ToList();
 
                 var apiDeclaration = new ApiDeclaration
                 {
@@ -60,7 +60,7 @@ namespace Nancy.Swagger.Modules
                         .Select(id => new Model { Id = id })
                         .ToDictionary(m => m.Id, m => m);
 
-                return JsonConvert.SerializeObject(apiDeclaration);
+                return apiDeclaration.ToJson();
             };
         }
 

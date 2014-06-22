@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ApiDeclaration
@@ -6,16 +5,16 @@ namespace Swagger.Model.ApiDeclaration
     [SwaggerData]
     public enum HttpMethod
     {
-        [EnumMember(Value = "GET")] Get,
+        [SwaggerEnumValue("GET")] Get,
 
-        [EnumMember(Value = "POST")] Post,
+        [SwaggerEnumValue("POST")] Post,
 
-        [EnumMember(Value = "PUT")] Put,
+        [SwaggerEnumValue("PUT")] Put,
 
-        [EnumMember(Value = "PATCH")] Patch,
+        [SwaggerEnumValue("PATCH")] Patch,
 
-        [EnumMember(Value = "DELETE")] Delete,
+        [SwaggerEnumValue("DELETE")] Delete,
 
-        [EnumMember(Value = "OPTIONS")] Options
+        [SwaggerEnumValue("OPTIONS")] Options
     }
 }

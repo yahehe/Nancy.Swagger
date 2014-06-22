@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -21,21 +20,18 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class AuthorizationCodeGrantFlow
+    public class AuthorizationCodeGrantFlow : SwaggerModel
     {
         /// <summary>
         /// The token request endpoint definition.
         /// </summary>
-        [Required]
-        [JsonProperty("tokenRequestEndpoint")]
+        [SwaggerProperty("tokenRequestEndpoint", true)]
         public TokenRequestEndpoint TokenRequestEndpoint { get; set; }
 
         /// <summary>
         /// The token endpoint definition.
         /// </summary>
-        [Required]
-        [JsonProperty("tokenEndpoint")]
+        [SwaggerProperty("tokenEndpoint", true)]
         public TokenEndpoint TokenEndpoint { get; set; }
     }
 }

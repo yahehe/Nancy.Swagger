@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -75,8 +74,7 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class ResourceListing
+    public class ResourceListing : SwaggerModel
     {
         public ResourceListing()
         {
@@ -91,21 +89,19 @@ namespace Swagger.Model.ResourceListing
         /// <remarks>
         /// The value MUST be an existing Swagger specification version.
         /// </remarks>
-        [Required]
-        [JsonProperty("swaggerVersion")]
+        [SwaggerProperty("swaggerVersion", true)]
         public string SwaggerVersion { get; set; }
 
         /// <summary>
         /// Lists the resources to be described by this specification implementation.
         /// </summary>
-        [Required]
-        [JsonProperty("apis")]
+        [SwaggerProperty("apis", true)]
         public IEnumerable<Resource> Apis { get; set; }
 
         /// <summary>
         /// Provides the version of the application API.
         /// </summary>
-        [JsonProperty("apiVersion")]
+        [SwaggerProperty("apiVersion")]
         public string ApiVersion { get; set; }
 
         /// <summary>
@@ -113,13 +109,13 @@ namespace Swagger.Model.ResourceListing
         /// The metadata can be used by the clients if needed, 
         /// and can be presented in the Swagger-UI for convenience.
         /// </summary>
-        [JsonProperty("info")]
+        [SwaggerProperty("info")]
         public Info Info { get; set; }
 
         /// <summary>
         /// Provides information about the the authorization schemes allowed on his API.
         /// </summary>
-        [JsonProperty("authorizations")]
+        [SwaggerProperty("authorizations")]
         public IDictionary<string, Authorization> Authorizations { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -14,8 +13,7 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class Resource
+    public class Resource : SwaggerModel
     {
         /// <summary>
         /// A relative path to the API declaration from the path used to retrieve this Resource Listing.
@@ -25,14 +23,13 @@ namespace Swagger.Model.ResourceListing
         /// <remarks>
         /// The value SHOULD be in a relative (URL) path format.
         /// </remarks>
-        [Required]
-        [JsonProperty("path")]
+        [SwaggerProperty("path", true)]
         public string Path { get; set; }
 
         /// <summary>
         /// A short description of the resource.
         /// </summary>
-        [JsonProperty("description")]
+        [SwaggerProperty("description")]
         public string Description { get; set; }
     }
 }

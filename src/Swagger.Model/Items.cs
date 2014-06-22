@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model
@@ -20,8 +19,7 @@ namespace Swagger.Model
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class Items
+    public class Items : SwaggerModel
     {
         /// <summary>
         /// The return type of the operation.
@@ -29,13 +27,13 @@ namespace Swagger.Model
         /// <remarks>
         /// The value MUST be one of the Primitves, array or a model's id.
         /// </remarks>
-        [JsonProperty("type")]
+        [SwaggerProperty("type")]
         public string Type { get; set; }
 
         /// <summary>
         /// Fine-tuned primitive type definition.
         /// </summary>
-        [JsonProperty("format")]
+        [SwaggerProperty("format")]
         public string Format { get; set; }
 
         /// <summary>
@@ -44,7 +42,7 @@ namespace Swagger.Model
         /// <remarks>
         /// The value MUST be a model's id.
         /// </remarks>
-        [JsonProperty("$ref")]
+        [SwaggerProperty("$ref")]
         public string Ref { get; set; }
     }
 }

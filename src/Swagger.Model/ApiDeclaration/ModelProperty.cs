@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ApiDeclaration
@@ -17,13 +16,12 @@ namespace Swagger.Model.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
     public class ModelProperty : DataType
     {
         /// <summary>
         /// A brief description of this property.
         /// </summary>
-        [JsonProperty("description")]
+        [SwaggerProperty("description")]
         public string Description { get; set; }
     }
 }

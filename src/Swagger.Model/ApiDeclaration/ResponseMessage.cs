@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ApiDeclaration
@@ -17,27 +16,24 @@ namespace Swagger.Model.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class ResponseMessage
+    public class ResponseMessage : SwaggerModel
     {
         /// <summary>
         /// The HTTP status code returned.
         /// </summary>
-        [Required]
-        [JsonProperty("code")]
+        [SwaggerProperty("code", true)]
         public int Code { get; set; }
 
         /// <summary>
         /// The explanation for the status code.
         /// </summary>
-        [Required]
-        [JsonProperty("message")]
+        [SwaggerProperty("message", true)]
         public string Message { get; set; }
 
         /// <summary>
         /// The return type for the given response.
         /// </summary>
-        [JsonProperty("responseModel")]
+        [SwaggerProperty("responseModel")]
         public string ResponseModel { get; set; }
     }
 }

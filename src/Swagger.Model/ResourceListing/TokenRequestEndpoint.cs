@@ -1,5 +1,4 @@
 using System;
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -16,26 +15,24 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class TokenRequestEndpoint
+    public class TokenRequestEndpoint : SwaggerModel
     {
         /// <summary>
         /// The URL of the authorization endpoint for the authentication code grant flow.
         /// </summary>
-        [Required]
-        [JsonProperty("url")]
+        [SwaggerProperty("url", true)]
         public Uri Url { get; set; }
 
         /// <summary>
         /// An optional alternative name to standard "client_id" OAuth2 parameter.
         /// </summary>
-        [JsonProperty("clientIdName")]
+        [SwaggerProperty("clientIdName")]
         public string ClientIdName { get; set; }
 
         /// <summary>
         /// An optional alternative name to standard "client_secret" OAuth2 parameter.
         /// </summary>
-        [JsonProperty("clientSecretName")]
+        [SwaggerProperty("clientSecretName")]
         public string ClientSecretName { get; set; }
     }
 }

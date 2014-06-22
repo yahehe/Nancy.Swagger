@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ApiDeclaration
@@ -46,33 +45,30 @@ namespace Swagger.Model.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class Model
+    public class Model : SwaggerModel
     {
         /// <summary>
         /// A unique identifier for the model.
         /// </summary>
-        [Required]
-        [JsonProperty("id")]
+        [SwaggerProperty("id", true)]
         public string Id { get; set; }
 
         /// <summary>
         /// A brief description of this model.
         /// </summary>
-        [JsonProperty("description")]
+        [SwaggerProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
         /// A definition of which properties MUST exist when a model instance is produced.
         /// </summary>
-        [JsonProperty("required")]
+        [SwaggerProperty("required")]
         public IEnumerable<string> Required { get; set; }
 
         /// <summary>
         /// A list of properties (fields) that are part of the model.
         /// </summary>
-        [Required]
-        [JsonProperty("properties")]
+        [SwaggerProperty("properties", true)]
         public IDictionary<string, ModelProperty> Properties { get; set; }
 
         /// <summary>
@@ -88,7 +84,7 @@ namespace Swagger.Model.ApiDeclaration
         /// A sub-model definition MUST NOT override the properties of any of its ancestors. 
         /// All sub-models MUST be defined in the same API Declaration.
         /// </remarks>
-        [JsonProperty("subTypes")]
+        [SwaggerProperty("subTypes")]
         public IEnumerable<string> SubTypes { get; set; }
 
         /// <summary>
@@ -100,7 +96,7 @@ namespace Swagger.Model.ApiDeclaration
         /// The value of this field MUST be a name of one of the properties in this model, and that field MUST be in the required list.
         /// When used, the value of the discriminator property MUST be the name of parent or any of its sub-models (to any depth of inheritance).
         /// </remarks>
-        [JsonProperty("discriminator")]
+        [SwaggerProperty("discriminator")]
         public string Discriminator { get; set; }
     }
 }

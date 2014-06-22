@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -29,19 +28,18 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class GrantTypes
+    public class GrantTypes : SwaggerModel
     {
         /// <summary>
         /// The Implicit Grant flow definition.
         /// </summary>
-        [JsonProperty("implicit")]
+        [SwaggerProperty("implicit")]
         public ImplicitGrantFlow Implicit { get; set; }
 
         /// <summary>
         /// The Authorization Code Grant flow definition.
         /// </summary>
-        [JsonProperty("authorization_code")]
+        [SwaggerProperty("authorization_code")]
         public AuthorizationCodeGrantFlow AuthorizationCode { get; set; }
     }
 }

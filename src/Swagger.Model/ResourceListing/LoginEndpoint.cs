@@ -1,5 +1,4 @@
 using System;
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -14,14 +13,12 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class LoginEndpoint
+    public class LoginEndpoint : SwaggerModel
     {
         /// <summary>
         /// The URL of the authorization endpoint for the implicit grant flow.
         /// </summary>
-        [Required]
-        [JsonProperty("url")]
+        [SwaggerProperty("url", true)]
         public Uri Url { get; set; }
     }
 }

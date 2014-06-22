@@ -1,14 +1,14 @@
-using JetBrains.Annotations;
+using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
 {
-    [PublicAPI]
+    [SwaggerData]
     public enum AuthorizationType
     {
-        BasicAuth,
+        [SwaggerEnumValue("basicAuth")] BasicAuth,
 
-        ApiKey,
+        [SwaggerEnumValue("apiKey")] ApiKey,
 
-        OAuth2
+        [SwaggerEnumValue("oauth2")] OAuth2
     }
 }

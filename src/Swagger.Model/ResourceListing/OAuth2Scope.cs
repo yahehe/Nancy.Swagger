@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ResourceListing
@@ -14,20 +13,18 @@ namespace Swagger.Model.ResourceListing
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class OAuth2Scope
+    public class OAuth2Scope : SwaggerModel
     {
         /// <summary>
         /// The name of the scope.
         /// </summary>
-        [Required]
-        [JsonProperty("scope")]
+        [SwaggerProperty("scope", true)]
         public string Scope { get; set; }
 
         /// <summary>
         /// A short description of the scope.
         /// </summary>
-        [JsonProperty("description")]
+        [SwaggerProperty("description")]
         public string Description { get; set; }
     }
 }

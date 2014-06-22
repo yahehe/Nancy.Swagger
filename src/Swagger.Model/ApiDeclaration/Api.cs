@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Newtonsoft.Json;
 using Swagger.Model.Attributes;
 
 namespace Swagger.Model.ApiDeclaration
@@ -81,8 +80,7 @@ namespace Swagger.Model.ApiDeclaration
     /// }
     /// </code>
     /// </example>
-    [SwaggerData]
-    public class Api
+    public class Api : SwaggerModel
     {
         /// <summary>
         /// The relative path to the operation, from the basePath, which this operation describes. 
@@ -90,14 +88,13 @@ namespace Swagger.Model.ApiDeclaration
         /// <remarks>
         /// The value SHOULD be in a relative (URL) path format.
         /// </remarks>
-        [Required]
-        [JsonProperty("path")]
+        [SwaggerProperty("path", true)]
         public string Path { get; set; }
 
         /// <summary>
         /// A short description of the resource.
         /// </summary>
-        [JsonProperty("description")]
+        [SwaggerProperty("description")]
         public string Description { get; set; }
 
         /// <summary>
@@ -106,8 +103,7 @@ namespace Swagger.Model.ApiDeclaration
         /// <remarks>
         /// There MUST NOT be more than one Operation Object per method in the array.
         /// </remarks>
-        [Required]
-        [JsonProperty("operations")]
+        [SwaggerProperty("operations", true)]
         public IEnumerable<Operation> Operations { get; set; }
     }
 }
