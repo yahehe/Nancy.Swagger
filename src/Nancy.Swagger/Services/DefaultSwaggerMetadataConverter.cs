@@ -16,7 +16,7 @@ namespace Nancy.Swagger.Services
             this.routeCacheProvider = routeCacheProvider;
         }
 
-        private IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
+        protected virtual IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
         {
             return routeCacheProvider
                     .GetCache()
