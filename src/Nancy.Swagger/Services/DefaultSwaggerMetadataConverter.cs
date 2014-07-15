@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using Swagger.Model.ApiDeclaration;
 using Swagger.Model.ResourceListing;
+using Nancy.Routing;
 
 namespace Nancy.Swagger.Services
 {
     public class DefaultSwaggerMetadataConverter : ISwaggerMetadataConverter
     {
-        public ResourceListing GetResourceListing(IEnumerable<SwaggerRouteData> routeData)
+        private readonly IRouteCacheProvider _routeCacheProvider;
+
+        public DefaultSwaggerMetadataConverter(IRouteCacheProvider routeCacheProvider)
+        {
+            _routeCacheProvider = routeCacheProvider;
+        }
+
+        public ResourceListing GetResourceListing()
         {
             return new ResourceListing
             {
-                Apis = routeData
+                Apis = RetrieveSwaggerRouteData()
                     .Select(d => d.ResourcePath)
                     .Distinct()
                     .Select(path => new Resource { Path = path })
             };
         }
 
-        public ApiDeclaration GetApiDeclaration(IEnumerable<SwaggerRouteData> routeData)
+        public ApiDeclaration GetApiDeclaration(string resourcePath)
         {
+            var routeData = RetrieveSwaggerRouteData()
+                .Where(d => d.ResourcePath == resourcePath)
+                .ToList();
+
             var apiDeclaration = new ApiDeclaration
             {
                 BasePath = new Uri("/", UriKind.Relative),
@@ -30,10 +42,18 @@ namespace Nancy.Swagger.Services
             var models = GetOperationModels(routeData).Union(GetParameterModels(routeData)).Distinct();
 
             apiDeclaration.Models = models.Select(t => t.DefaultModelId())
-                    .Select(id => new Model { Id = id })
-                    .ToDictionary(m => m.Id, m => m);
+                .Select(id => new Model { Id = id })
+                .ToDictionary(m => m.Id, m => m);
 
             return apiDeclaration;
+        }
+
+        protected virtual IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
+        {
+            return _routeCacheProvider
+                .GetCache()
+                .RetrieveMetadata<SwaggerRouteData>()
+                .OfType<SwaggerRouteData>(); // filter nulls
         }
 
         private static Api GetApi(IGrouping<string, SwaggerRouteData> @group)
