@@ -3,24 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using Swagger.Model.ApiDeclaration;
 using Swagger.Model.ResourceListing;
+using Nancy.Routing;
 
 namespace Nancy.Swagger.Services
 {
     public class DefaultSwaggerMetadataConverter : ISwaggerMetadataConverter
     {
-        public ResourceListing GetResourceListing(IEnumerable<SwaggerRouteData> routeData)
+        IRouteCacheProvider routeCacheProvider;
+
+        public DefaultSwaggerMetadataConverter(IRouteCacheProvider routeCacheProvider)
+        {
+            this.routeCacheProvider = routeCacheProvider;
+        }
+
+        protected virtual IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
+        {
+            return routeCacheProvider
+                    .GetCache()
+                    .RetrieveMetadata<SwaggerRouteData>()
+                    .OfType<SwaggerRouteData>(); // filter nulls
+        }
+
+        public ResourceListing GetResourceListing()
         {
             return new ResourceListing
             {
-                Apis = routeData
+                Apis = RetrieveSwaggerRouteData()
                     .Select(d => d.ResourcePath)
                     .Distinct()
                     .Select(path => new Resource { Path = path })
             };
         }
 
-        public ApiDeclaration GetApiDeclaration(IEnumerable<SwaggerRouteData> routeData)
+        public ApiDeclaration GetApiDeclaration(string resourcePath)
         {
+            var routeData = RetrieveSwaggerRouteData()
+                                .Where(d => d.ResourcePath == resourcePath)
+                                .ToList();
+           
             var apiDeclaration = new ApiDeclaration
             {
                 BasePath = new Uri("/", UriKind.Relative),
