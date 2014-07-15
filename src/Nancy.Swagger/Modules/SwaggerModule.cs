@@ -11,30 +11,17 @@ namespace Nancy.Swagger.Modules
 {
     public class SwaggerModule : NancyModule
     {
-        public SwaggerModule(IRouteCacheProvider routeCacheProvider, ISwaggerMetadataConverter converter)
+        public SwaggerModule(ISwaggerMetadataConverter converter)
             : base(SwaggerConfig.ResourceListingPath)
         {
             Get["/"] = _ =>
             {
-                var metadata = routeCacheProvider
-                    .GetCache()
-                    .RetrieveMetadata<SwaggerRouteData>()
-                    .OfType<SwaggerRouteData>(); // filter nulls
-
-                return converter.GetResourceListing(metadata).ToJson();
+                return converter.GetResourceListing().ToJson();
             };
 
             Get["/{resourcePath*}"] = _ =>
             {
-                string path = "/" + _.resourcePath;
-                var metadata = routeCacheProvider
-                    .GetCache()
-                    .RetrieveMetadata<SwaggerRouteData>()
-                    .OfType<SwaggerRouteData>() // filter nulls
-                    .Where(d => d.ResourcePath == path)
-                    .ToList();
-
-                return converter.GetApiDeclaration(metadata).ToJson();
+                return converter.GetApiDeclaration("/" + _.resourcePath).ToJson();
             };
         }
     }

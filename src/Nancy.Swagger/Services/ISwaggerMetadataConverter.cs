@@ -6,8 +6,8 @@ namespace Nancy.Swagger.Services
 {
     public interface ISwaggerMetadataConverter
     {
-        ResourceListing GetResourceListing(IEnumerable<SwaggerRouteData> routeData);
+        ResourceListing GetResourceListing();
 
-        ApiDeclaration GetApiDeclaration(IEnumerable<SwaggerRouteData> routeData);
+        ApiDeclaration GetApiDeclaration(string resourcePath);
     }
 }
