@@ -48,6 +48,7 @@
     <Compile Include="..\..\etc\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Services\SwaggerMetadataConverter.cs" />
     <Compile Include="Services\DefaultSwaggerMetadataConverter.cs" />
     <Compile Include="Services\ISwaggerMetadataConverter.cs" />
     <Compile Include="Modules\SwaggerModule.cs" />
