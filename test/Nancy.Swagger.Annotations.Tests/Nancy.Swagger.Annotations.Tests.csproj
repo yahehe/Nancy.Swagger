@@ -69,11 +69,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nancy.Swagger.Annotations\Nancy.Swagger.Annotations.csproj">
+    <ProjectReference Include="..\..\src\Nancy.Swagger.Annotations\Nancy.Swagger.Annotations.csproj">
       <Project>{10a7f49b-b1ee-41fe-be88-8ab59aa3319f}</Project>
       <Name>Nancy.Swagger.Annotations</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Nancy.Swagger\Nancy.Swagger.csproj">
+    <ProjectReference Include="..\..\src\Nancy.Swagger\Nancy.Swagger.csproj">
       <Project>{add1e494-a985-4f8d-911b-e487d4b3159e}</Project>
       <Name>Nancy.Swagger</Name>
     </ProjectReference>
