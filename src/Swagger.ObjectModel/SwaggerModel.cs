@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Swagger.ObjectModel.Attributes;
+using Swagger.ObjectModel.Reflection;
 
 namespace Swagger.ObjectModel
 {
