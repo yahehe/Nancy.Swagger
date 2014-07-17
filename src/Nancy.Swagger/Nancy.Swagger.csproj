@@ -56,7 +56,9 @@
     <Compile Include="Registrations.cs" />
     <Compile Include="SwaggerConfig.cs" />
     <Compile Include="SwaggerExtensions.cs" />
+    <Compile Include="SwaggerModelData.cs" />
     <Compile Include="SwaggerParameterData.cs" />
+    <Compile Include="SwaggerModelPropertyData.cs" />
     <Compile Include="SwaggerRouteData.cs" />
     <Compile Include="SwaggerRouteDataBuilder.cs" />
   </ItemGroup>

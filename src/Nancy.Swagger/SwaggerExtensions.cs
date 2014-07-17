@@ -3,6 +3,7 @@ using System.Linq;
 using Nancy.Routing;
 using Swagger.Model;
 using Swagger.Model.ApiDeclaration;
+using System.Collections;
 
 namespace Nancy.Swagger
 {
@@ -114,6 +115,12 @@ namespace Nancy.Swagger
                 default:
                     throw new NotSupportedException(string.Format("HTTP method '{0}' is not supported.", method));
             }
+        }
+
+        public static bool IsContainer(this Type type)
+        {
+            return typeof(IEnumerable).IsAssignableFrom(type)
+                && !typeof(String).IsAssignableFrom(type);
         }
     }
 }
