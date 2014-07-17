@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Swagger.Model;
 using Swagger.Model.ApiDeclaration;
 using Swagger.Model.ResourceListing;
-using Nancy.Routing;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nancy.Swagger.Services
 {
@@ -36,16 +36,94 @@ namespace Nancy.Swagger.Services
                 Apis = routeData.GroupBy(d => d.ApiPath).Select(GetApi)
             };
 
-            var models = GetOperationModels(routeData).Union(GetParameterModels(routeData)).Distinct();
+            var modelsData = RetrieveSwaggerModelsData(routeData);
 
-            apiDeclaration.Models = models.Select(t => t.DefaultModelId())
-                .Select(id => new Model { Id = id })
-                .ToDictionary(m => m.Id, m => m);
+            apiDeclaration.Models = modelsData.Select(model => CreateModel(model))
+                                              .ToDictionary(m => m.Id, m => m);
 
             return apiDeclaration;
         }
 
         protected abstract IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData();
+
+
+
+        protected virtual IEnumerable<SwaggerModelData> RetrieveSwaggerModelsData(IEnumerable<SwaggerRouteData> routeData)
+        {
+            return GetOperationModels(routeData)
+                        .Union(GetParameterModels(routeData))
+                        .Distinct()
+                        .Select(type => new SwaggerModelData
+                        {
+                            ModelType = type
+                            // TODO: implement and use the DSL liddelj described in 
+                            //       https://github.com/khellang/Nancy.Swagger/pull/3 and
+                            //       https://github.com/khellang/Nancy.Swagger/pull/5
+                        });
+        }
+
+        private Model CreateModel(SwaggerModelData model)
+        {
+            return new Model
+            {
+                Id = model.ModelType.DefaultModelId(),
+                Description = model.Description,
+                Required = model.Properties
+                                .Where(p => p.Required)
+                                .Select(p => p.Name)
+                                .ToList(),
+                Properties = model.Properties
+                                  .ToDictionary(p => p.Name, p => CreateModelProperty(p))
+                // TODO: SubTypes and Discriminator
+            };
+        }
+
+        private ModelProperty CreateModelProperty(SwaggerModelPropertyData modelPropertyData)
+        {
+            var propertyType = modelPropertyData.Type;
+
+            var modelProperty = new ModelProperty
+            {
+                DefaultValue = modelPropertyData.DefaultValue,
+                Description = modelPropertyData.Description,
+                Enum = modelPropertyData.Enum,
+                Minimum = modelPropertyData.Minimum,
+                Maximum = modelPropertyData.Maximum
+            };
+
+            if (Primitive.IsPrimitive(propertyType))
+            {
+                var primitive = Primitive.FromType(propertyType);
+                modelProperty.Format = primitive.Format;
+                modelProperty.Type = primitive.Type;
+            }
+            else if (propertyType.IsContainer())
+            {
+                modelProperty.Type = "array";
+                modelProperty.UniqueItems = modelPropertyData.UniqueItems;
+
+                var itemsType = propertyType.GetElementType() ?? propertyType.GetGenericArguments().FirstOrDefault();
+                if (Primitive.IsPrimitive(itemsType))
+                {
+                    var itemsPrimitive = Primitive.FromType(itemsType);
+                    modelProperty.Items = new Items
+                    {
+                        Type = itemsPrimitive.Type,
+                        Format = itemsPrimitive.Format
+                    };
+                }
+                else
+                {
+                    modelProperty.Items = new Items { Ref = itemsType.DefaultModelId() };
+                }
+            }
+            else
+            {
+                modelProperty.Ref = propertyType.DefaultModelId();
+            }
+
+            return modelProperty;
+        }
 
         private static Api GetApi(IGrouping<string, SwaggerRouteData> @group)
         {

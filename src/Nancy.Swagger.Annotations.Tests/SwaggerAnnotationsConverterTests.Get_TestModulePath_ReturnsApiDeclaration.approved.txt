@@ -127,7 +127,13 @@
         {
             "Key":"String",
             "Value":{
-                "id":"String"
+                "id":"String",
+                "required":[
+                    
+                ],
+                "properties":[
+                    
+                ]
             }
         }
     ]

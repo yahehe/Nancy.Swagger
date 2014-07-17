@@ -1,9 +1,6 @@
-﻿using System;
+﻿using Nancy.Routing;
 using System.Collections.Generic;
 using System.Linq;
-using Swagger.Model.ApiDeclaration;
-using Swagger.Model.ResourceListing;
-using Nancy.Routing;
 
 namespace Nancy.Swagger.Services
 {
@@ -15,7 +12,7 @@ namespace Nancy.Swagger.Services
         {
             _routeCacheProvider = routeCacheProvider;
         }
-        
+
         protected override IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
         {
             return _routeCacheProvider
