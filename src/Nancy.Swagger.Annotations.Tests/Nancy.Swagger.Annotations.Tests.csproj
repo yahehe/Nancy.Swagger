@@ -7,8 +7,8 @@
     <ProjectGuid>{D64692AA-80A4-4C31-B921-18BDEA18BB03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nancy.Swagger.Providers.Annotations.Tests</RootNamespace>
-    <AssemblyName>Nancy.Swagger.Providers.Annotations.Tests</AssemblyName>
+    <RootNamespace>Nancy.Swagger.Annotations.Tests</RootNamespace>
+    <AssemblyName>Nancy.Swagger.Annotations.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -63,7 +63,7 @@
     </Compile>
     <Compile Include="SwaggerAnnotationsConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestroutesModule.cs" />
+    <Compile Include="TestRoutesModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

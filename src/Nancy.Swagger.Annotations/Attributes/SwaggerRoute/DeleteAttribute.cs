@@ -1,8 +1,8 @@
-﻿namespace Nancy.Swagger.Annotations.Attributes
+﻿namespace Nancy.Swagger.Annotations.Attributes.SwaggerRoute
 {
-    public class Delete : SwaggerRouteAttribute
+    public class DeleteAttribute : SwaggerRouteAttribute
     {
-        public Delete(string path)
+        public DeleteAttribute(string path)
             : base("DELETE", path)
         {
         }

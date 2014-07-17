@@ -1,5 +1,6 @@
 ﻿namespace Nancy.Swagger
 {
+    [SwaggerApi]
     public static class SwaggerConfig
     {
         /// <summary>

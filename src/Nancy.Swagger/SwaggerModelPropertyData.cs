@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Nancy.Swagger
 {
+    [SwaggerApi]
     public class SwaggerModelPropertyData
     {
         public SwaggerModelPropertyData()

@@ -7,8 +7,8 @@
     <ProjectGuid>{10A7F49B-B1EE-41FE-BE88-8AB59AA3319F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nancy.Swagger.Providers.Annotations</RootNamespace>
-    <AssemblyName>Nancy.Swagger.Providers.Annotations</AssemblyName>
+    <RootNamespace>Nancy.Swagger.Annotations</RootNamespace>
+    <AssemblyName>Nancy.Swagger.Annotations</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -51,7 +51,7 @@
     <Compile Include="Attributes\SwaggerRoute\OptionsAttribute.cs" />
     <Compile Include="Attributes\SwaggerRoute\PatchAttribute.cs" />
     <Compile Include="Attributes\SwaggerRoute\DeleteAttribute.cs" />
-    <Compile Include="Attributes\SwaggerRoute\Get.cs" />
+    <Compile Include="Attributes\SwaggerRoute\GetAttribute.cs" />
     <Compile Include="Attributes\SwaggerRoute\SwaggerRouteAttribute.cs" />
     <Compile Include="Attributes\SwaggerRoute\PostAttribute.cs" />
     <Compile Include="Attributes\SwaggerRoute\PutAttribute.cs" />

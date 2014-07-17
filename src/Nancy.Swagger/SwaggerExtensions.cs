@@ -7,6 +7,7 @@ using System.Collections;
 
 namespace Nancy.Swagger
 {
+    [SwaggerApi]
     public static class SwaggerExtensions
     {
         /// <summary>

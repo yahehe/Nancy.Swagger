@@ -7,6 +7,7 @@ namespace Nancy.Swagger
     /// <summary>
     /// Holds all the Swagger metadata pertaining to a specific route.
     /// </summary>
+    [SwaggerApi]
     public class SwaggerRouteData
     {
         /// <summary>

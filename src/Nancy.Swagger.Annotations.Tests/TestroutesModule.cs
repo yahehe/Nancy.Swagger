@@ -1,5 +1,6 @@
-﻿using Nancy.Swagger.Annotations.Attributes;
-using System;
+﻿using System;
+using Nancy.Swagger.Annotations.Attributes.SwaggerRoute;
+using Nancy.Swagger.Annotations.Attributes.SwaggerRouteParameter;
 
 namespace Nancy.Swagger.Annotations.Tests
 {
@@ -8,7 +9,7 @@ namespace Nancy.Swagger.Annotations.Tests
         public TestRoutesModule()
             : base("testroutes")
         {
-            Get["/anonymoushandler"] = _ => { return null; };
+            Get["/anonymoushandler"] = _ => null;
             Get["/not-annotated/get"] = _ => HandlerWithoutAnnotations();
 
             Get["/annotated/"] = _ => GetAll();
@@ -20,7 +21,7 @@ namespace Nancy.Swagger.Annotations.Tests
             Summary = "Some summary",
             Type = typeof(string)
         )]
-        private dynamic GetAll()
+        private static dynamic GetAll()
         {
             throw new NotImplementedException();
         }
@@ -30,14 +31,14 @@ namespace Nancy.Swagger.Annotations.Tests
             Summary = "Some summary",
             Type = typeof(string)
         )]
-        private dynamic GetById(
+        private static dynamic GetById(
             [PathParam("id", Required = true)] string id,
             [QueryParam("q", Description = "Query")] string query)
         {
             throw new NotImplementedException();
         }
 
-        private object HandlerWithoutAnnotations()
+        private static object HandlerWithoutAnnotations()
         {
             throw new NotImplementedException();
         }

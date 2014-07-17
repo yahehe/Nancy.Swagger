@@ -1,5 +1,4 @@
 ﻿using System;
-
 using Nancy.Responses.Negotiation;
 using Swagger.Model.ApiDeclaration;
 
@@ -8,6 +7,7 @@ namespace Nancy.Swagger
     /// <summary>
     /// Helper class for configuring an instance of <see cref="SwaggerRouteData"/>.
     /// </summary>
+    [SwaggerApi]
     public class SwaggerRouteDataBuilder
     {
         /// <summary>
@@ -29,7 +29,7 @@ namespace Nancy.Swagger
         /// <summary>
         /// Gets the <see cref="SwaggerRouteData"/> instance.
         /// </summary>
-        public SwaggerRouteData Data { get; set; }
+        public SwaggerRouteData Data { get; private set; }
 
         /// <summary>
         /// Specify the path for the resource.

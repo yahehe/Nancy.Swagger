@@ -3,6 +3,7 @@ using Swagger.Model.ResourceListing;
 
 namespace Nancy.Swagger.Services
 {
+    [SwaggerApi]
     public interface ISwaggerMetadataConverter
     {
         ResourceListing GetResourceListing();

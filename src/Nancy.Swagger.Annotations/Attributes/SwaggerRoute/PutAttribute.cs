@@ -1,8 +1,8 @@
-﻿namespace Nancy.Swagger.Annotations.Attributes
+﻿namespace Nancy.Swagger.Annotations.Attributes.SwaggerRoute
 {
-    public class Put : SwaggerRouteAttribute
+    public class PutAttribute : SwaggerRouteAttribute
     {
-        public Put(string path)
+        public PutAttribute(string path)
             : base("PUT", path)
         {
         }

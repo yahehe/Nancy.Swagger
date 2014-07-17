@@ -1,11 +1,11 @@
 ﻿using System;
 
-namespace Nancy.Swagger.Annotations.Attributes
+namespace Nancy.Swagger.Annotations.Attributes.SwaggerRoute
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = true)]
-    public class SwaggerRouteAttribute : Attribute
+    public abstract class SwaggerRouteAttribute : Attribute
     {
-        public SwaggerRouteAttribute(string method, string path)
+        protected SwaggerRouteAttribute(string method, string path)
         {
             Method = method;
             Path = path;
@@ -13,9 +13,9 @@ namespace Nancy.Swagger.Annotations.Attributes
 
         public string Method { get; private set; }
 
-        public string Notes { get; set; }
-
         public string Path { get; private set; }
+
+        public string Notes { get; set; }
 
         public string Summary { get; set; }
 

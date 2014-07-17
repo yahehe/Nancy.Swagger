@@ -1,8 +1,8 @@
-﻿namespace Nancy.Swagger.Annotations.Attributes
+﻿namespace Nancy.Swagger.Annotations.Attributes.SwaggerRoute
 {
-    public class Options : SwaggerRouteAttribute
+    public class OptionsAttribute : SwaggerRouteAttribute
     {
-        public Options(string path)
+        public OptionsAttribute(string path)
             : base("OPTIONS", path)
         {
         }

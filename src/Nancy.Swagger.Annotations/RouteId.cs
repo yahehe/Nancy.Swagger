@@ -1,16 +1,21 @@
-﻿using Nancy.Routing;
-using Nancy.Swagger.Annotations.Attributes;
+﻿using System.Diagnostics;
+using Nancy.Routing;
+using Nancy.Swagger.Annotations.Attributes.SwaggerRoute;
 using Swagger.Model.ApiDeclaration;
-using System.Diagnostics;
 
 namespace Nancy.Swagger.Annotations
 {
-    [DebuggerDisplay("{Method} {Path}")]
+    [DebuggerDisplay("{DebuggerDisplay,nq}")]
     internal struct RouteId
     {
-        public HttpMethod Method { get; set; }
+        public HttpMethod Method { get; private set; }
 
-        public string Path { get; set; }
+        public string Path { get; private set; }
+
+        private string DebuggerDisplay
+        {
+            get { return string.Format("{0} {1}", Method, Path); }
+        }
 
         public static RouteId Create(Route route)
         {

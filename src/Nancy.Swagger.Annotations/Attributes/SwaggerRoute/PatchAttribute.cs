@@ -1,8 +1,8 @@
-﻿namespace Nancy.Swagger.Annotations.Attributes
+﻿namespace Nancy.Swagger.Annotations.Attributes.SwaggerRoute
 {
-    public class Patch : SwaggerRouteAttribute
+    public class PatchAttribute : SwaggerRouteAttribute
     {
-        public Patch(string path)
+        public PatchAttribute(string path)
             : base("PATCH", path)
         {
         }

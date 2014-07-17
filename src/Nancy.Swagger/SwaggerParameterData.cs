@@ -3,6 +3,7 @@ using Swagger.Model.ApiDeclaration;
 
 namespace Nancy.Swagger
 {
+    [SwaggerApi]
     public class SwaggerParameterData
     {
         public string Name { get; set; }

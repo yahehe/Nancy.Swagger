@@ -7,12 +7,9 @@ using System.Linq;
 
 namespace Nancy.Swagger.Services
 {
+    [SwaggerApi]
     public abstract class SwaggerMetadataConverter : ISwaggerMetadataConverter
     {
-        protected SwaggerMetadataConverter()
-        {
-        }
-
         public ResourceListing GetResourceListing()
         {
             return new ResourceListing

@@ -1,0 +1,117 @@
+﻿{
+    "swaggerVersion":"1.2",
+    "basePath":"/",
+    "apis":[
+        {
+            "path":"/testroutes/anonymoushandler",
+            "operations":[
+                {
+                    "method":"GET",
+                    "summary":"Warning: no annotated method found for this route",
+                    "notes":"[
+                        example
+                    ]",
+                    "nickname":"/testroutes/anonymoushandler",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/not-annotated/get",
+            "operations":[
+                {
+                    "method":"GET",
+                    "summary":"Warning: no annotated method found for this route",
+                    "notes":"[
+                        example
+                    ]",
+                    "nickname":"/testroutes/not-annotated/get",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/annotated",
+            "operations":[
+                {
+                    "method":"GET",
+                    "summary":"Warning: no annotated method found for this route",
+                    "notes":"[
+                        example
+                    ]",
+                    "nickname":"/testroutes/annotated",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/annotated/get/{
+                id
+            }",
+            "operations":[
+                {
+                    "method":"GET",
+                    "summary":"Warning: no annotated method found for this route",
+                    "notes":"[
+                        example
+                    ]",
+                    "nickname":"/testroutes/annotated/get/{
+                        id
+                    }",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                }
+            ]
+        }
+    ],
+    "models":[
+        
+    ]
+}
