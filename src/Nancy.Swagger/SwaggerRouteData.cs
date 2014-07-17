@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Swagger.Model.ApiDeclaration;
+using Swagger.ObjectModel.ApiDeclaration;
 
 namespace Nancy.Swagger
 {

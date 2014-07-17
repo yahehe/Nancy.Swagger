@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Nancy.Routing;
-using Swagger.Model;
-using Swagger.Model.ApiDeclaration;
 using System.Collections;
+using Swagger.ObjectModel;
+using Swagger.ObjectModel.ApiDeclaration;
 
 namespace Nancy.Swagger
 {

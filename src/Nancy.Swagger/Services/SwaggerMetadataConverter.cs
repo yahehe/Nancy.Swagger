@@ -1,9 +1,9 @@
-﻿using Swagger.Model;
-using Swagger.Model.ApiDeclaration;
-using Swagger.Model.ResourceListing;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Swagger.ObjectModel;
+using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.ResourceListing;
 
 namespace Nancy.Swagger.Services
 {

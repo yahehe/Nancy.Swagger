@@ -5,7 +5,7 @@ using Nancy.Routing;
 using Nancy.Swagger.Annotations.Attributes.SwaggerRoute;
 using Nancy.Swagger.Annotations.Attributes.SwaggerRouteParameter;
 using Nancy.Swagger.Services;
-using Swagger.Model.ApiDeclaration;
+using Swagger.ObjectModel.ApiDeclaration;
 
 namespace Nancy.Swagger.Annotations
 {

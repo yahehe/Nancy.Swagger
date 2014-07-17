@@ -1,5 +1,5 @@
-﻿using Swagger.Model.ApiDeclaration;
-using Swagger.Model.ResourceListing;
+﻿using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.ResourceListing;
 
 namespace Nancy.Swagger.Services
 {

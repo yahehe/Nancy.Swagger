@@ -2,8 +2,7 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Nancy.Swagger.Annotations.Tests")]
-[assembly: AssemblyDescription("Testsuite for Nancy.Swagger.Annotations")]
-[assembly: AssemblyProduct("Nancy.Swagger.Annotations")]
+[assembly: AssemblyProduct("Nancy.Swagger.Annotations.Tests")]
 
 [assembly: ComVisible(false)]
 

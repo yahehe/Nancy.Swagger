@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger", "src\Nancy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger.Tests", "test\Nancy.Swagger.Tests\Nancy.Swagger.Tests.csproj", "{FDA8C5B7-E1E0-4235-80F9-54E4C141CED7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger.Model", "src\Swagger.Model\Swagger.Model.csproj", "{140262C2-A8BE-4C8F-9A2F-B848EF396B91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger.ObjectModel", "src\Swagger.ObjectModel\Swagger.ObjectModel.csproj", "{140262C2-A8BE-4C8F-9A2F-B848EF396B91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger.Model.Tests", "test\Swagger.Model.Tests\Swagger.Model.Tests.csproj", "{CBA30969-FBF7-468F-AB3E-4045F36B0939}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger.ObjectModel.Tests", "test\Swagger.ObjectModel.Tests\Swagger.ObjectModel.Tests.csproj", "{CBA30969-FBF7-468F-AB3E-4045F36B0939}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger.Annotations", "src\Nancy.Swagger.Annotations\Nancy.Swagger.Annotations.csproj", "{10A7F49B-B1EE-41FE-BE88-8AB59AA3319F}"
 EndProject
