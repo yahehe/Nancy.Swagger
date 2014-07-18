@@ -91,7 +91,7 @@ namespace Nancy.Swagger.Annotations
         {
             // Discover route handlers and put them in a Dictionary<RouteId, MethodInfo>
             var routeHandlers =
-                module.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                module.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
                     .Where(methodInfo => methodInfo.GetAttribute<SwaggerRouteAttribute>() != null)
                     .ToDictionary(
                         methodInfo => RouteId.Create(module, methodInfo.GetAttribute<SwaggerRouteAttribute>()),
