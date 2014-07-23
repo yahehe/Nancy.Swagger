@@ -210,7 +210,7 @@ namespace Swagger.ObjectModel.ApiDeclaration
         /// Note that these need to be exposed separately for each API Declaration.
         /// </summary>
         [SwaggerProperty("models")]
-        public IDictionary<string, Model> Models { get; set; }
+        public IDictionary<string, object> Models { get; set; }
 
         /// <summary>
         /// A list of MIME types the APIs on this resource can produce. 

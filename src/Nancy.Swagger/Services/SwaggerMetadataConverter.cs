@@ -36,7 +36,7 @@ namespace Nancy.Swagger.Services
             var modelsData = RetrieveSwaggerModelsData(routeData);
 
             apiDeclaration.Models = modelsData.Select(model => CreateModel(model))
-                                              .ToDictionary(m => m.Id, m => m);
+                                              .ToDictionary(m => m.Id, m => (object)m);
 
             return apiDeclaration;
         }
@@ -70,7 +70,7 @@ namespace Nancy.Swagger.Services
                                 .Select(p => p.Name)
                                 .ToList(),
                 Properties = model.Properties
-                                  .ToDictionary(p => p.Name, p => CreateModelProperty(p))
+                                  .ToDictionary(p => p.Name, p => (object)CreateModelProperty(p))
                 // TODO: SubTypes and Discriminator
             };
         }
