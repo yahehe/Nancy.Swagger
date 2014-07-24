@@ -124,14 +124,14 @@
         }
     ],
     "models":{
-            "String":{
-                "id":"String",
-                "required":[
-                    
-                ],
-                "properties":{
-                    
-                }
+        "String":{
+            "id":"String",
+            "required":[
+                
+            ],
+            "properties":{
+                
             }
         }
+    }
 }

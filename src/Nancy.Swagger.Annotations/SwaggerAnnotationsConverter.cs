@@ -13,10 +13,12 @@ namespace Nancy.Swagger.Annotations
     {
         private NancyContext _context;
         private INancyModuleCatalog _moduleCatalog;
+        private ISwaggerModelCatalog _modelCatalog;
 
-        public SwaggerAnnotationsConverter(INancyModuleCatalog moduleCatalog, NancyContext context)
+        public SwaggerAnnotationsConverter(INancyModuleCatalog moduleCatalog, ISwaggerModelCatalog modelCatalog, NancyContext context)
         {
             _moduleCatalog = moduleCatalog;
+            _modelCatalog = modelCatalog;
             _context = context;
         }
 
@@ -26,6 +28,11 @@ namespace Nancy.Swagger.Annotations
                 .GetAllModules(_context)
                 .SelectMany(ToSwaggerRouteData)
                 .ToList();
+        }
+
+        protected override IEnumerable<SwaggerModelData> RetrieveSwaggerModelData()
+        {
+            return this._modelCatalog;
         }
 
         private SwaggerParameterData CreateSwaggerParameterData(ParameterInfo pi)

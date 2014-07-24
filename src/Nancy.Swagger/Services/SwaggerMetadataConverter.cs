@@ -33,9 +33,10 @@ namespace Nancy.Swagger.Services
                 Apis = routeData.GroupBy(d => d.ApiPath).Select(GetApi)
             };
 
-            var modelsData = RetrieveSwaggerModelsData(routeData);
+            var modelsData = this.RetrieveSwaggerModelData();
+            var modelsForRoutes = this.GetModelsForRoutes(routeData, modelsData);
 
-            apiDeclaration.Models = modelsData.Select(model => CreateModel(model))
+            apiDeclaration.Models = modelsForRoutes.Select(model => CreateModel(model))
                                               .ToDictionary(m => m.Id, m => (object)m);
 
             return apiDeclaration;
@@ -43,20 +44,26 @@ namespace Nancy.Swagger.Services
 
         protected abstract IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData();
 
+        protected abstract IEnumerable<SwaggerModelData> RetrieveSwaggerModelData();
 
-
-        protected virtual IEnumerable<SwaggerModelData> RetrieveSwaggerModelsData(IEnumerable<SwaggerRouteData> routeData)
+        protected virtual IEnumerable<SwaggerModelData> GetModelsForRoutes(
+            IEnumerable<SwaggerRouteData> routeData,
+            IEnumerable<SwaggerModelData> modelData)
         {
             return GetOperationModels(routeData)
                         .Union(GetParameterModels(routeData))
                         .Distinct()
-                        .Select(type => new SwaggerModelData
-                        {
-                            ModelType = type
-                            // TODO: implement and use the DSL liddelj described in 
-                            //       https://github.com/khellang/Nancy.Swagger/pull/3 and
-                            //       https://github.com/khellang/Nancy.Swagger/pull/5
-                        });
+                        .Select(type => EnsureModelData(type, modelData));
+        }
+
+        private SwaggerModelData EnsureModelData(Type type, IEnumerable<SwaggerModelData> modelData)
+        {
+            if (modelData.Any(d => d.ModelType == type))
+            {
+                return modelData.First(d => d.ModelType == type);
+            }
+
+            return new SwaggerModelData(type);
         }
 
         private Model CreateModel(SwaggerModelData model)
@@ -135,6 +142,7 @@ namespace Nancy.Swagger.Services
         {
             return metadata
                 .Where(d => d.OperationModel != null)
+                .Where(d => !Primitive.IsPrimitive(d.OperationModel))
                 .Select(d => d.OperationModel);
         }
 
@@ -143,6 +151,7 @@ namespace Nancy.Swagger.Services
             return metadata
                 .SelectMany(d => d.OperationParameters)
                 .Where(p => p.ParameterModel != null)
+                .Where(d => !Primitive.IsPrimitive(d.ParameterModel))
                 .Select(p => p.ParameterModel);
         }
     }
