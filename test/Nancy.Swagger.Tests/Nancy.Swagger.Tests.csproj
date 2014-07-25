@@ -54,14 +54,21 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SwaggerMetadataConverterForTesting.cs" />
+    <Compile Include="Services\SwaggerMetadataConverterTests.cs" />
     <Compile Include="SwaggerModelDataBuilderTests.cs" />
     <Compile Include="SwaggerModelPropertyDataBuilderTests.cs" />
+    <Compile Include="SwaggerModelPropertyDataTests.cs" />
     <Compile Include="TestModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Nancy.Swagger\Nancy.Swagger.csproj">
       <Project>{add1e494-a985-4f8d-911b-e487d4b3159e}</Project>
       <Name>Nancy.Swagger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Swagger.ObjectModel\Swagger.ObjectModel.csproj">
+      <Project>{140262C2-A8BE-4C8F-9A2F-B848EF396B91}</Project>
+      <Name>Swagger.ObjectModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
