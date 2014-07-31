@@ -6,16 +6,11 @@ namespace Nancy.Swagger
     [SwaggerApi]
     public class SwaggerModelPropertyData
     {
-        public SwaggerModelPropertyData()
-        {
-            Enum = new List<string>();
-        }
-
         public object DefaultValue { get; set; }
 
         public string Description { get; set; }
 
-        public IList<string> Enum { get; set; }
+        public IEnumerable<string> Enum { get; set; }
 
         public long? Maximum { get; set; }
 

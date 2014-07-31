@@ -9,9 +9,14 @@ namespace Nancy.Swagger.Services
     {
         private readonly IRouteCacheProvider _routeCacheProvider;
 
-        public DefaultSwaggerMetadataConverter(IRouteCacheProvider routeCacheProvider)
+        private readonly ISwaggerModelCatalog _modelCatalog;
+
+        public DefaultSwaggerMetadataConverter(
+            IRouteCacheProvider routeCacheProvider,
+            ISwaggerModelCatalog modelCatalog)
         {
             _routeCacheProvider = routeCacheProvider;
+            _modelCatalog = modelCatalog;
         }
 
         protected override IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
@@ -20,6 +25,11 @@ namespace Nancy.Swagger.Services
                 .GetCache()
                 .RetrieveMetadata<SwaggerRouteData>()
                 .OfType<SwaggerRouteData>(); // filter nulls
+        }
+
+        protected override IEnumerable<SwaggerModelData> RetrieveSwaggerModelData()
+        {
+            return this._modelCatalog;
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nancy.Swagger.Tests</RootNamespace>
     <AssemblyName>Nancy.Swagger.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -54,11 +54,21 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SwaggerMetadataConverterForTesting.cs" />
+    <Compile Include="Services\SwaggerMetadataConverterTests.cs" />
+    <Compile Include="SwaggerModelDataBuilderTests.cs" />
+    <Compile Include="SwaggerModelPropertyDataBuilderTests.cs" />
+    <Compile Include="SwaggerModelPropertyDataTests.cs" />
+    <Compile Include="TestModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Nancy.Swagger\Nancy.Swagger.csproj">
       <Project>{add1e494-a985-4f8d-911b-e487d4b3159e}</Project>
       <Name>Nancy.Swagger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Swagger.ObjectModel\Swagger.ObjectModel.csproj">
+      <Project>{140262C2-A8BE-4C8F-9A2F-B848EF396B91}</Project>
+      <Name>Swagger.ObjectModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

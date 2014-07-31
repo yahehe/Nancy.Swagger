@@ -123,18 +123,7 @@
             ]
         }
     ],
-    "models":[
-        {
-            "Key":"String",
-            "Value":{
-                "id":"String",
-                "required":[
-                    
-                ],
-                "properties":[
-                    
-                ]
-            }
-        }
-    ]
+    "models":{
+        
+    }
 }
