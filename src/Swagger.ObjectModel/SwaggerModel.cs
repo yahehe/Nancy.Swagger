@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Swagger.ObjectModel.Attributes;
@@ -46,6 +48,12 @@ namespace Swagger.ObjectModel
                         continue;
                     }
 
+                    var dictionary = value as IDictionary;
+                    if (dictionary != null)
+                    {
+                        value = ToObject(dictionary);
+                    }
+
                     result.Add(MapClrMemberNameToJsonFieldName(getter.Key), value);
                 }
 
@@ -81,6 +89,19 @@ namespace Swagger.ObjectModel
                     .Where(x => x.CanWrite)
                     .Where(x => !ReflectionUtils.GetSetterMethodInfo(x).IsStatic)
                     .ToDictionary(GetMemberName, GetPropertyKeyValuePair);
+            }
+
+            private static dynamic ToObject(IDictionary source)
+            {
+                var eo = new ExpandoObject();
+                var eoColl = (ICollection<KeyValuePair<string, object>>)eo;
+
+                foreach (string key in source.Keys)
+                {
+                    eoColl.Add(new KeyValuePair<string, object>(key, source[key]));
+                }
+
+                return eo;
             }
 
             private static KeyValuePair<Type, ReflectionUtils.SetDelegate> GetPropertyKeyValuePair(PropertyInfo x)

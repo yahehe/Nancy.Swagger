@@ -69,7 +69,7 @@ namespace Swagger.ObjectModel.ApiDeclaration
         /// A list of properties (fields) that are part of the model.
         /// </summary>
         [SwaggerProperty("properties", true)]
-        public IDictionary<string, object> Properties { get; set; }
+        public IDictionary<string, ModelProperty> Properties { get; set; }
 
         /// <summary>
         /// List of the model ids that inherit from this model. 
