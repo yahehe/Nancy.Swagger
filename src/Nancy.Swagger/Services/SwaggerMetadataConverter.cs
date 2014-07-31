@@ -37,7 +37,7 @@ namespace Nancy.Swagger.Services
             var modelsForRoutes = this.GetModelsForRoutes(routeData, modelsData);
 
             apiDeclaration.Models = modelsForRoutes.Select(model => CreateModel(model))
-                                              .ToDictionary(m => m.Id, m => (object)m);
+                                              .ToDictionary(m => m.Id, m => m);
 
             return apiDeclaration;
         }
@@ -77,7 +77,7 @@ namespace Nancy.Swagger.Services
                                 .Select(p => p.Name)
                                 .ToList(),
                 Properties = model.Properties
-                                  .ToDictionary(p => p.Name, p => (object)CreateModelProperty(p))
+                                  .ToDictionary(p => p.Name, p => CreateModelProperty(p))
                 // TODO: SubTypes and Discriminator
             };
         }
