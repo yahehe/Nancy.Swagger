@@ -85,28 +85,15 @@ namespace Nancy.Swagger
 
         public static Parameter ToParameter(this SwaggerParameterData parameterData)
         {
-            var parameter = new Parameter
-            {
-                Name = parameterData.Name,
-                ParamType = parameterData.ParamType,
-                Description = parameterData.Description,
-                Required = parameterData.Required,
-                AllowMultiple = parameterData.AllowMultiple,
-                DefaultValue = parameterData.DefaultValue
-            };
+            var parameter = parameterData.ParameterModel.ToDataType<Parameter>();
 
-            if (Primitive.IsPrimitive(parameterData.ParameterModel))
-            {
-                var primitive = Primitive.FromType(parameterData.ParameterModel);
-
-                parameter.Type = primitive.Type;
-                parameter.Format = primitive.Format;
-            }
-            else
-            {
-                parameter.Type = parameterData.ParameterModel.DefaultModelId();
-            }
-
+            parameter.Name = parameterData.Name;
+            parameter.ParamType = parameterData.ParamType;
+            parameter.Description = parameterData.Description;
+            parameter.Required = parameterData.Required;
+            parameter.AllowMultiple = parameterData.AllowMultiple;
+            parameter.DefaultValue = parameterData.DefaultValue;
+            
             return parameter;
         }
 
