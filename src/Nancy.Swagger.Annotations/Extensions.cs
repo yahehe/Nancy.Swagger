@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Swagger.ObjectModel.ApiDeclaration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
-using Swagger.ObjectModel.ApiDeclaration;
 
 namespace Nancy.Swagger.Annotations
 {
@@ -20,6 +22,12 @@ namespace Nancy.Swagger.Annotations
             where T : Attribute
         {
             return Attribute.GetCustomAttribute(member, typeof(T)) as T;
+        }
+
+        public static IEnumerable<T> GetAttributes<T>(this MemberInfo member)
+            where T : Attribute
+        {
+            return Attribute.GetCustomAttributes(member, typeof(T)).Cast<T>();
         }
 
         public static HttpMethod ToHttpMethod(this string method)

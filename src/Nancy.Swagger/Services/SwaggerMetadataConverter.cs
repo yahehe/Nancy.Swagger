@@ -50,17 +50,23 @@ namespace Nancy.Swagger.Services
             IEnumerable<SwaggerRouteData> routeData,
             IEnumerable<SwaggerModelData> modelData)
         {
+            return GetDistinctModelTypes(routeData).Select(type => EnsureModelData(type, modelData));
+        }
+
+        protected virtual IEnumerable<Type> GetDistinctModelTypes(IEnumerable<SwaggerRouteData> routeData)
+        {
             return GetOperationModels(routeData)
                         .Union(GetParameterModels(routeData))
-                        .Select(type => {
+                        .Select(type =>
+                        {
                             if (type.IsContainer())
                             {
                                 return type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
                             }
                             return type;
                         })
-                        .Distinct()
-                        .Select(type => EnsureModelData(type, modelData));
+                        .Where(type => !Primitive.IsPrimitive(type))
+                        .Distinct();
         }
 
         private SwaggerModelData EnsureModelData(Type type, IEnumerable<SwaggerModelData> modelData)
@@ -119,8 +125,7 @@ namespace Nancy.Swagger.Services
         private static IEnumerable<Type> GetOperationModels(IEnumerable<SwaggerRouteData> metadata)
         {
             return metadata
-                .Where(d => d.OperationModel != null)
-                .Where(d => !Primitive.IsPrimitive(d.OperationModel))
+                .Where(d => d.OperationModel != null)                
                 .Select(d => d.OperationModel);
         }
 
@@ -129,7 +134,6 @@ namespace Nancy.Swagger.Services
             return metadata
                 .SelectMany(d => d.OperationParameters)
                 .Where(p => p.ParameterModel != null)
-                .Where(d => !Primitive.IsPrimitive(d.ParameterModel))
                 .Select(p => p.ParameterModel);
         }
     }

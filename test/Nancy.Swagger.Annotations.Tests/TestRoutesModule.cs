@@ -1,6 +1,6 @@
-﻿using System;
-using Nancy.Swagger.Annotations.Attributes.SwaggerRoute;
-using Nancy.Swagger.Annotations.Attributes.SwaggerRouteParameter;
+﻿using Nancy.Swagger.Annotations.Attributes;
+using Swagger.ObjectModel.ApiDeclaration;
+using System;
 
 namespace Nancy.Swagger.Annotations.Tests
 {
@@ -9,31 +9,61 @@ namespace Nancy.Swagger.Annotations.Tests
         public TestRoutesModule()
             : base("testroutes")
         {
+            // Routes without metadata
             Get["/anonymoushandler"] = _ => null;
             Get["/not-annotated/get"] = _ => HandlerWithoutAnnotations();
 
-            Get["/annotated/"] = _ => GetAll();
-            Get["/annotated/get/{id}"] = _ => GetById(_.id, Request.Query.q);
+            // Primitive response
+            Get["/strings"] = _ => GetStrings();
+            Get["/strings/{id}"] = _ => GetStringById(_.id, Request.Query.q);
+
+            // Non-primitive response
+            Get["/models"] = _ => GetModels();
+            Get["/models/get/{id}"] = _ => GetModel(_.id);
+
+            // Named route
+            Get["GetIntegers", "/integers"] = _ => GetIntegers();
         }
 
-        [Get("/annotated/get",
-            Notes = "Some notes",
-            Summary = "Some summary",
-            Type = typeof(string)
-        )]
-        private static dynamic GetAll()
+        [SwaggerRoute("GetIntegers")]
+        [SwaggerRoute(Response = typeof(int[]))]
+        private static dynamic GetIntegers()
         {
             throw new NotImplementedException();
         }
 
-        [Get("/annotated/get/{id}",
-            Notes = "Some notes",
-            Summary = "Some summary",
-            Type = typeof(string)
-        )]
-        private static dynamic GetById(
-            [PathParam("id", Required = true)] string id,
-            [QueryParam("q", Description = "Query")] string query)
+        [SwaggerRoute(HttpMethod.Get, "/models/{id}")]
+        [SwaggerRoute(Response = typeof(TestModel))]
+        private static dynamic GetModel(
+            [SwaggerRouteParam(ParameterType.Path, "id", Required = true)] int id
+        )
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Get, "/models")]
+        [SwaggerRoute(Response = typeof(TestModel[]))]
+        private static dynamic GetModels()
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Get, "/strings/{id}")]
+        [SwaggerRoute(Response = typeof(string))]
+        private static dynamic GetStringById(
+            [SwaggerRouteParam(ParameterType.Path, "id", Required = true)] int id,
+            [SwaggerRouteParam(ParameterType.Query, "q")]
+            [SwaggerRouteParam(Description = "Query")] string query
+        )
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Get, "/strings")]
+        [SwaggerRoute(Notes = "Some notes")]
+        [SwaggerRoute(Summary = "Some summary")]
+        [SwaggerRoute(Response = typeof(string[]))]
+        private static dynamic GetStrings()
         {
             throw new NotImplementedException();
         }
