@@ -52,6 +52,13 @@ namespace Nancy.Swagger.Services
         {
             return GetOperationModels(routeData)
                         .Union(GetParameterModels(routeData))
+                        .Select(type => {
+                            if (type.IsContainer())
+                            {
+                                return type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
+                            }
+                            return type;
+                        })
                         .Distinct()
                         .Select(type => EnsureModelData(type, modelData));
         }
@@ -80,50 +87,21 @@ namespace Nancy.Swagger.Services
                                   .ToDictionary(p => p.Name, p => CreateModelProperty(p))
                 // TODO: SubTypes and Discriminator
             };
-        }
+        }       
 
         private ModelProperty CreateModelProperty(SwaggerModelPropertyData modelPropertyData)
         {
             var propertyType = modelPropertyData.Type;
 
-            var modelProperty = new ModelProperty
-            {
-                DefaultValue = modelPropertyData.DefaultValue,
-                Description = modelPropertyData.Description,
-                Enum = modelPropertyData.Enum,
-                Minimum = modelPropertyData.Minimum,
-                Maximum = modelPropertyData.Maximum
-            };
+            var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>();
+            modelProperty.DefaultValue = modelPropertyData.DefaultValue;
+            modelProperty.Description = modelPropertyData.Description;
+            modelProperty.Enum = modelPropertyData.Enum;
+            modelProperty.Minimum = modelPropertyData.Minimum;
+            modelProperty.Maximum = modelPropertyData.Maximum;
 
-            if (Primitive.IsPrimitive(propertyType))
-            {
-                var primitive = Primitive.FromType(propertyType);
-                modelProperty.Format = primitive.Format;
-                modelProperty.Type = primitive.Type;
-            }
-            else if (propertyType.IsContainer())
-            {
-                modelProperty.Type = "array";
+            if (modelPropertyData.Type.IsContainer()) {
                 modelProperty.UniqueItems = modelPropertyData.UniqueItems;
-
-                var itemsType = propertyType.GetElementType() ?? propertyType.GetGenericArguments().FirstOrDefault();
-                if (Primitive.IsPrimitive(itemsType))
-                {
-                    var itemsPrimitive = Primitive.FromType(itemsType);
-                    modelProperty.Items = new Items
-                    {
-                        Type = itemsPrimitive.Type,
-                        Format = itemsPrimitive.Format
-                    };
-                }
-                else
-                {
-                    modelProperty.Items = new Items { Ref = itemsType.DefaultModelId() };
-                }
-            }
-            else
-            {
-                modelProperty.Ref = propertyType.DefaultModelId();
             }
 
             return modelProperty;

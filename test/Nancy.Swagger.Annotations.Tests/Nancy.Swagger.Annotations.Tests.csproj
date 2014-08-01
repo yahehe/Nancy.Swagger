@@ -77,6 +77,10 @@
       <Project>{add1e494-a985-4f8d-911b-e487d4b3159e}</Project>
       <Name>Nancy.Swagger</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Swagger.ObjectModel\Swagger.ObjectModel.csproj">
+      <Project>{140262c2-a8be-4c8f-9a2f-b848ef396b91}</Project>
+      <Name>Swagger.ObjectModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
