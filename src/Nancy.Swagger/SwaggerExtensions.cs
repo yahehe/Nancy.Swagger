@@ -27,38 +27,60 @@ namespace Nancy.Swagger
 
         public static Operation ToOperation(this SwaggerRouteData routeData)
         {
-            var operation = new Operation
-            {
-                Nickname = routeData.OperationNickname,
-                Summary = routeData.OperationSummary,
-                Method = routeData.OperationMethod,
-                Notes = routeData.OperationNotes,
-                Parameters = routeData.OperationParameters.Select(p => p.ToParameter()),
-                ResponseMessages = routeData.OperationResponseMessages,
-                Produces = routeData.OperationProduces,
-                Consumes = routeData.OperationConsumes,
-            };
+            var operation = routeData.OperationModel.ToDataType<Operation>();
+            
+            operation.Nickname = routeData.OperationNickname;
+            operation.Summary = routeData.OperationSummary;
+            operation.Method = routeData.OperationMethod;
+            operation.Notes = routeData.OperationNotes;
+            operation.Parameters = routeData.OperationParameters.Select(p => p.ToParameter());
+            operation.ResponseMessages = routeData.OperationResponseMessages;
+            operation.Produces = routeData.OperationProduces;
+            operation.Consumes = routeData.OperationConsumes;
 
-            if (routeData.OperationModel != null)
+            return operation;
+        }
+
+        public static T ToDataType<T>(this Type type)
+            where T : DataType, new()
+        {
+            var dataType = new T();
+
+            if (type == null) 
             {
-                if (Primitive.IsPrimitive(routeData.OperationModel))
+                dataType.Type = "void";
+            }
+            else if (Primitive.IsPrimitive(type))
+            {
+                var primitive = Primitive.FromType(type);
+                dataType.Format = primitive.Format;
+                dataType.Type = primitive.Type;
+            }
+            else if (type.IsContainer())
+            {
+                dataType.Type = "array";
+
+                var itemsType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
+                if (Primitive.IsPrimitive(itemsType))
                 {
-                    var primitive = Primitive.FromType(routeData.OperationModel);
-
-                    operation.Type = primitive.Type;
-                    operation.Format = primitive.Format;
+                    var itemsPrimitive = Primitive.FromType(itemsType);
+                    dataType.Items = new Items
+                    {
+                        Type = itemsPrimitive.Type,
+                        Format = itemsPrimitive.Format
+                    };
                 }
                 else
                 {
-                    operation.Type = routeData.OperationModel.DefaultModelId();
+                    dataType.Items = new Items { Ref = itemsType.DefaultModelId() };
                 }
             }
             else
             {
-                operation.Type = "void";
+                dataType.Ref = type.DefaultModelId();
             }
 
-            return operation;
+            return dataType;
         }
 
         public static Parameter ToParameter(this SwaggerParameterData parameterData)
