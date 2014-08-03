@@ -18,6 +18,7 @@ namespace Nancy.Swagger.Services
                     .Select(d => d.ResourcePath)
                     .Distinct()
                     .Select(path => new Resource { Path = path })
+                    .OrderBy(resource => resource.Path)               
             };
         }
 
@@ -30,13 +31,14 @@ namespace Nancy.Swagger.Services
             var apiDeclaration = new ApiDeclaration
             {
                 BasePath = new Uri("/", UriKind.Relative),
-                Apis = routeData.GroupBy(d => d.ApiPath).Select(GetApi)
+                Apis = routeData.GroupBy(d => d.ApiPath).Select(GetApi).OrderBy(api => api.Path)
             };
 
             var modelsData = this.RetrieveSwaggerModelData();
             var modelsForRoutes = this.GetModelsForRoutes(routeData, modelsData);
 
             apiDeclaration.Models = modelsForRoutes.Select(model => CreateModel(model))
+                                              .OrderBy(m => m.Id)
                                               .ToDictionary(m => m.Id, m => m);
 
             return apiDeclaration;
@@ -88,8 +90,10 @@ namespace Nancy.Swagger.Services
                 Required = model.Properties
                                 .Where(p => p.Required || p.Type.IsImplicitlyRequired())
                                 .Select(p => p.Name)
+                                .OrderBy(name => name)
                                 .ToList(),
                 Properties = model.Properties
+                                  .OrderBy(p => p.Name)
                                   .ToDictionary(p => p.Name, p => CreateModelProperty(p))
                 // TODO: SubTypes and Discriminator
             };
@@ -118,7 +122,7 @@ namespace Nancy.Swagger.Services
             return new Api
             {
                 Path = @group.Key,
-                Operations = @group.Select(d => d.ToOperation())
+                Operations = @group.Select(d => d.ToOperation()).OrderBy(o => o.Method)
             };
         }
 

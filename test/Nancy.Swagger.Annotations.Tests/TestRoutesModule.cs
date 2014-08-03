@@ -19,7 +19,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
             // Non-primitive response
             Get["/models"] = _ => GetModels();
-            Get["/models/get/{id}"] = _ => GetModel(_.id);
+            Get["/models/{id}"] = _ => GetModel(_.id);
 
             // Named route
             Get["GetIntegers", "/integers"] = _ => GetIntegers();
