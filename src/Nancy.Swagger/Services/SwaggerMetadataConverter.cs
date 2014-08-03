@@ -86,14 +86,14 @@ namespace Nancy.Swagger.Services
                 Id = model.ModelType.DefaultModelId(),
                 Description = model.Description,
                 Required = model.Properties
-                                .Where(p => p.Required)
+                                .Where(p => p.Required || p.Type.IsImplicitlyRequired())
                                 .Select(p => p.Name)
                                 .ToList(),
                 Properties = model.Properties
                                   .ToDictionary(p => p.Name, p => CreateModelProperty(p))
                 // TODO: SubTypes and Discriminator
             };
-        }       
+        }
 
         private ModelProperty CreateModelProperty(SwaggerModelPropertyData modelPropertyData)
         {

@@ -209,7 +209,8 @@
             "id":"TestModel",
             "description":"Description of a model",
             "required":[
-                "Required"
+                "ExplicitRequired",
+                "ImplicitRequired"
             ],
             "properties":{
                 "Description":{
@@ -223,18 +224,19 @@
                         "female"
                     ]
                 },
+                "ListOfUniqueItems":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    },
+                    "uniqueItems":true
+                },
                 "Maximum":{
                     "type":"integer",
                     "format":"int32",
-                    "maximum":0
+                    "maximum":100
                 },
                 "Minimum":{
-                    "type":"integer",
-                    "format":"int32",
-                    "minimum":0
-                },
-                "MultipleAnnotations":{
-                    "description":"Property with minimum and description in separate annotations",
                     "type":"integer",
                     "format":"int32",
                     "minimum":0
@@ -245,15 +247,20 @@
                 "name-by-namedparameter":{
                     "type":"string"
                 },
-                "Required":{
+                "ExplicitRequired":{
                     "type":"string"
                 },
-                "ListOfUniqueItems":{
-                    "type":"array",
-                    "items":{
-                        "type":"string"
-                    },
-                    "uniqueItems":true
+                "ImplicitRequired":{
+                    "description":"Non-nullable value types are implicitly required",
+                    "type":"integer",
+                    "format":"int32"
+                },
+                "MultipleAnnotations":{
+                    "description":"Property with multiple annotations (minimum, maximum and description)",
+                    "type":"integer",
+                    "format":"int32",
+                    "minimum":0,
+                    "maximum":100
                 }
             }
         }

@@ -6,38 +6,60 @@ namespace Nancy.Swagger.Annotations.Tests
     [SwaggerModel("Description of a model")]
     public class TestModel
     {
+        #region Default usages
+
         [SwaggerModelProperty(Description = "Some description")]
         public string Description { get; set; }
 
         [SwaggerModelProperty(Enum = new[] { "male", "female" })]
         public string Enum { get; set; }
 
-        [SwaggerModelProperty(Maximum = 0)]
+        [SwaggerModelProperty(UniqueItems = true)]
+        public IList<string> ListOfUniqueItems { get; set; }
+
+        [SwaggerModelProperty(Maximum = 100)]
         public int? Maximum { get; set; }
 
         [SwaggerModelProperty(Minimum = 0)]
         public int? Minimum { get; set; }
 
-        [SwaggerModelProperty(Minimum = 0)]
-        [SwaggerModelProperty(Description = "Property with minimum and description in separate annotations")]
-        public int MultipleAnnotations { get; set; }
-
         [SwaggerModelProperty("name-by-constructor")]
-        public string NamedByConstructor { get; set; }
+        public string NameByConstructor { get; set; }
 
         [SwaggerModelProperty(Name = "name-by-namedparameter")]
-        public string NamedByParameter { get; set; }
-
-        [SwaggerModelProperty(Description = "Properties without public setter are not part of the model")]
-        public string NoSetter { get; private set; }
+        public string NameByNamedParameter { get; set; }
 
         [SwaggerModelProperty(Required = true)]
-        public string Required { get; set; }
+        public string ExplicitRequired { get; set; }
 
-        [SwaggerModelProperty(UniqueItems = true)]
-        public IList<string> ListOfUniqueItems { get; set; }
+        #endregion Default usages
 
-        [SwaggerModelProperty(Description = "Private properties without setter are not part of the model")]
+        #region Non-public properties
+
+        [SwaggerModelProperty(Description = "Properties without public setter are not part of the model")]
+        public string PrivateSetter { get; private set; }
+
+        [SwaggerModelProperty(Description = "Internal properties are not part of the model")]
+        internal string Internal { get; set; }
+
+        [SwaggerModelProperty(Description = "Protected properties are not part of the model")]
+        protected string Protected { get; set; }
+
+        [SwaggerModelProperty(Description = "Private properties are not part of the model")]
         private string Private { get; set; }
+
+        #endregion Non-public properties
+
+        #region Other usages
+
+        [SwaggerModelProperty(Description = "Non-nullable value types are implicitly required")]
+        public int ImplicitRequired { get; set; }
+
+        [SwaggerModelProperty(Minimum = 0)]
+        [SwaggerModelProperty(Maximum = 100)]
+        [SwaggerModelProperty(Description = "Property with multiple annotations (minimum, maximum and description)")]
+        public int? MultipleAnnotations { get; set; }
+
+        #endregion Other usages
     }
 }

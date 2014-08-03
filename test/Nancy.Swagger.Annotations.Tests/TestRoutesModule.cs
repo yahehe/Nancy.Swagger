@@ -35,7 +35,7 @@ namespace Nancy.Swagger.Annotations.Tests
         [SwaggerRoute(HttpMethod.Get, "/models/{id}")]
         [SwaggerRoute(Response = typeof(TestModel))]
         private static dynamic GetModel(
-            [SwaggerRouteParam(ParameterType.Path, "id", Required = true)] int id
+            [SwaggerRouteParam(ParameterType.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
