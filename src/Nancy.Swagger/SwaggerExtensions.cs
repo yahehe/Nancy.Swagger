@@ -90,7 +90,7 @@ namespace Nancy.Swagger
             parameter.Name = parameterData.Name;
             parameter.ParamType = parameterData.ParamType;
             parameter.Description = parameterData.Description;
-            parameter.Required = parameterData.Required;
+            parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
             parameter.AllowMultiple = parameterData.AllowMultiple;
             parameter.DefaultValue = parameterData.DefaultValue;
             
@@ -131,6 +131,12 @@ namespace Nancy.Swagger
         {
             return typeof(IEnumerable).IsAssignableFrom(type)
                 && !typeof(String).IsAssignableFrom(type);
+        }
+
+        internal static bool IsImplicitlyRequired(this Type type)
+        {
+            return type.IsValueType
+                && !(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
         }
     }
 }

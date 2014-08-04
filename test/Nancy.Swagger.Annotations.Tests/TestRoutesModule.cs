@@ -19,7 +19,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
             // Non-primitive response
             Get["/models"] = _ => GetModels();
-            Get["/models/get/{id}"] = _ => GetModel(_.id);
+            Get["/models/{id}"] = _ => GetModel(_.id);
 
             // Named route
             Get["GetIntegers", "/integers"] = _ => GetIntegers();
@@ -35,7 +35,7 @@ namespace Nancy.Swagger.Annotations.Tests
         [SwaggerRoute(HttpMethod.Get, "/models/{id}")]
         [SwaggerRoute(Response = typeof(TestModel))]
         private static dynamic GetModel(
-            [SwaggerRouteParam(ParameterType.Path, "id", Required = true)] int id
+            [SwaggerRouteParam(ParameterType.Path, "id")] int id
         )
         {
             throw new NotImplementedException();

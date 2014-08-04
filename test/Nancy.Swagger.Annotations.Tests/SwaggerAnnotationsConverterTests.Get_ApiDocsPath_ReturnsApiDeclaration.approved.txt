@@ -8,9 +8,7 @@
                 {
                     "method":"GET",
                     "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
+                    "notes":"[example]",
                     "nickname":"/api-docs",
                     "parameters":[
                         
@@ -29,19 +27,13 @@
             ]
         },
         {
-            "path":"/api-docs/{
-                resourcePath*
-            }",
+            "path":"/api-docs/{resourcePath*}",
             "operations":[
                 {
                     "method":"GET",
                     "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
-                    "nickname":"/api-docs/{
-                        resourcePath*
-                    }",
+                    "notes":"[example]",
+                    "nickname":"/api-docs/{resourcePath*}",
                     "parameters":[
                         
                     ],

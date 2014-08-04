@@ -8,9 +8,7 @@
                 {
                     "method":"GET",
                     "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
+                    "notes":"[example]",
                     "nickname":"/testroutes/anonymoushandler",
                     "parameters":[
                         
@@ -29,14 +27,92 @@
             ]
         },
         {
+            "path":"/testroutes/integers",
+            "operations":[
+                {
+                    "method":"GET",
+                    "nickname":"/testroutes/integers",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"array",
+                    "items":{
+                        "type":"integer",
+                        "format":"int32"
+                    }
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/models",
+            "operations":[
+                {
+                    "method":"GET",
+                    "nickname":"/testroutes/models",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"array",
+                    "items":{
+                        "$ref":"TestModel"
+                    }
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/models/{id}",
+            "operations":[
+                {
+                    "method":"GET",
+                    "nickname":"/testroutes/models/{id}",
+                    "parameters":[
+                        {
+                            "paramType":"path",
+                            "name":"id",
+                            "required":true,
+                            "allowMultiple":false,
+                            "type":"integer",
+                            "format":"int32"
+                        }
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "$ref":"TestModel"
+                }
+            ]
+        },
+        {
             "path":"/testroutes/not-annotated/get",
             "operations":[
                 {
                     "method":"GET",
                     "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
+                    "notes":"[example]",
                     "nickname":"/testroutes/not-annotated/get",
                     "parameters":[
                         
@@ -82,15 +158,11 @@
             ]
         },
         {
-            "path":"/testroutes/strings/{
-                id
-            }",
+            "path":"/testroutes/strings/{id}",
             "operations":[
                 {
                     "method":"GET",
-                    "nickname":"/testroutes/strings/{
-                        id
-                    }",
+                    "nickname":"/testroutes/strings/{id}",
                     "parameters":[
                         {
                             "paramType":"path",
@@ -121,87 +193,6 @@
                     "type":"string"
                 }
             ]
-        },
-        {
-            "path":"/testroutes/models",
-            "operations":[
-                {
-                    "method":"GET",
-                    "nickname":"/testroutes/models",
-                    "parameters":[
-                        
-                    ],
-                    "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
-                    "type":"array",
-                    "items":{
-                        "$ref":"TestModel"
-                    }
-                }
-            ]
-        },
-        {
-            "path":"/testroutes/models/get/{
-                id
-            }",
-            "operations":[
-                {
-                    "method":"GET",
-                    "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
-                    "nickname":"/testroutes/models/get/{
-                        id
-                    }",
-                    "parameters":[
-                        
-                    ],
-                    "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
-                    "type":"void"
-                }
-            ]
-        },
-        {
-            "path":"/testroutes/integers",
-            "operations":[
-                {
-                    "method":"GET",
-                    "nickname":"/testroutes/integers",
-                    "parameters":[
-                        
-                    ],
-                    "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
-                    "type":"array",
-                    "items":{
-                        "type":"integer",
-                        "format":"int32"
-                    }
-                }
-            ]
         }
     ],
     "models":{
@@ -209,7 +200,8 @@
             "id":"TestModel",
             "description":"Description of a model",
             "required":[
-                "Required"
+                "ExplicitRequired",
+                "ImplicitRequired"
             ],
             "properties":{
                 "Description":{
@@ -223,30 +215,13 @@
                         "female"
                     ]
                 },
-                "Maximum":{
-                    "type":"integer",
-                    "format":"int32",
-                    "maximum":0
-                },
-                "Minimum":{
-                    "type":"integer",
-                    "format":"int32",
-                    "minimum":0
-                },
-                "MultipleAnnotations":{
-                    "description":"Property with minimum and description in separate annotations",
-                    "type":"integer",
-                    "format":"int32",
-                    "minimum":0
-                },
-                "name-by-constructor":{
+                "ExplicitRequired":{
                     "type":"string"
                 },
-                "name-by-namedparameter":{
-                    "type":"string"
-                },
-                "Required":{
-                    "type":"string"
+                "ImplicitRequired":{
+                    "description":"Non-nullable value types are implicitly required",
+                    "type":"integer",
+                    "format":"int32"
                 },
                 "ListOfUniqueItems":{
                     "type":"array",
@@ -254,6 +229,29 @@
                         "type":"string"
                     },
                     "uniqueItems":true
+                },
+                "Maximum":{
+                    "type":"integer",
+                    "format":"int32",
+                    "maximum":100
+                },
+                "Minimum":{
+                    "type":"integer",
+                    "format":"int32",
+                    "minimum":0
+                },
+                "MultipleAnnotations":{
+                    "description":"Property with multiple annotations (minimum, maximum and description)",
+                    "type":"integer",
+                    "format":"int32",
+                    "minimum":0,
+                    "maximum":100
+                },
+                "name-by-constructor":{
+                    "type":"string"
+                },
+                "name-by-namedparameter":{
+                    "type":"string"
                 }
             }
         }
