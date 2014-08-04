@@ -8,9 +8,7 @@
                 {
                     "method":"GET",
                     "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
+                    "notes":"[example]",
                     "nickname":"/testroutes/anonymoushandler",
                     "parameters":[
                         
@@ -80,15 +78,11 @@
             ]
         },
         {
-            "path":"/testroutes/models/{
-                id
-            }",
+            "path":"/testroutes/models/{id}",
             "operations":[
                 {
                     "method":"GET",
-                    "nickname":"/testroutes/models/{
-                        id
-                    }",
+                    "nickname":"/testroutes/models/{id}",
                     "parameters":[
                         {
                             "paramType":"path",
@@ -118,9 +112,7 @@
                 {
                     "method":"GET",
                     "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
+                    "notes":"[example]",
                     "nickname":"/testroutes/not-annotated/get",
                     "parameters":[
                         
@@ -166,15 +158,11 @@
             ]
         },
         {
-            "path":"/testroutes/strings/{
-                id
-            }",
+            "path":"/testroutes/strings/{id}",
             "operations":[
                 {
                     "method":"GET",
-                    "nickname":"/testroutes/strings/{
-                        id
-                    }",
+                    "nickname":"/testroutes/strings/{id}",
                     "parameters":[
                         {
                             "paramType":"path",
