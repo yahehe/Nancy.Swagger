@@ -1,11 +1,10 @@
 ﻿namespace Nancy.Swagger.Demo
 {
-
     using Nancy.Metadata.Module;
 
-    public class HomeMetaDataModule : MetadataModule<SwaggerRouteData>
+    public class HomeMetadataModule : MetadataModule<SwaggerRouteData>
     {
-        public HomeMetaDataModule()
+        public HomeMetadataModule()
         {
             Describe["GetUsers"] = description => description.AsSwagger(with =>
             {
