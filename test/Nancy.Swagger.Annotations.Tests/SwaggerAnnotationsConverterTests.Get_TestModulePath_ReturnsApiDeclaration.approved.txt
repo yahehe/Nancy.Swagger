@@ -55,15 +55,13 @@
             ]
         },
         {
-            "path":"/testroutes/annotated",
+            "path":"/testroutes/strings",
             "operations":[
                 {
                     "method":"GET",
-                    "summary":"Warning: no annotated method found for this route",
-                    "notes":"[
-                        example
-                    ]",
-                    "nickname":"/testroutes/annotated",
+                    "summary":"Some summary",
+                    "notes":"Some notes",
+                    "nickname":"/testroutes/strings",
                     "parameters":[
                         
                     ],
@@ -76,20 +74,21 @@
                     "consumes":[
                         
                     ],
-                    "type":"void"
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    }
                 }
             ]
         },
         {
-            "path":"/testroutes/annotated/get/{
+            "path":"/testroutes/strings/{
                 id
             }",
             "operations":[
                 {
                     "method":"GET",
-                    "summary":"Some summary",
-                    "notes":"Some notes",
-                    "nickname":"/testroutes/annotated/get/{
+                    "nickname":"/testroutes/strings/{
                         id
                     }",
                     "parameters":[
@@ -98,7 +97,8 @@
                             "name":"id",
                             "required":true,
                             "allowMultiple":false,
-                            "type":"string"
+                            "type":"integer",
+                            "format":"int32"
                         },
                         {
                             "paramType":"query",
@@ -121,9 +121,141 @@
                     "type":"string"
                 }
             ]
+        },
+        {
+            "path":"/testroutes/models",
+            "operations":[
+                {
+                    "method":"GET",
+                    "nickname":"/testroutes/models",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"array",
+                    "items":{
+                        "$ref":"TestModel"
+                    }
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/models/get/{
+                id
+            }",
+            "operations":[
+                {
+                    "method":"GET",
+                    "summary":"Warning: no annotated method found for this route",
+                    "notes":"[
+                        example
+                    ]",
+                    "nickname":"/testroutes/models/get/{
+                        id
+                    }",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/integers",
+            "operations":[
+                {
+                    "method":"GET",
+                    "nickname":"/testroutes/integers",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"array",
+                    "items":{
+                        "type":"integer",
+                        "format":"int32"
+                    }
+                }
+            ]
         }
     ],
     "models":{
-        
+        "TestModel":{
+            "id":"TestModel",
+            "description":"Description of a model",
+            "required":[
+                "Required"
+            ],
+            "properties":{
+                "Description":{
+                    "description":"Some description",
+                    "type":"string"
+                },
+                "Enum":{
+                    "type":"string",
+                    "enum":[
+                        "male",
+                        "female"
+                    ]
+                },
+                "Maximum":{
+                    "type":"integer",
+                    "format":"int32",
+                    "maximum":0
+                },
+                "Minimum":{
+                    "type":"integer",
+                    "format":"int32",
+                    "minimum":0
+                },
+                "MultipleAnnotations":{
+                    "description":"Property with minimum and description in separate annotations",
+                    "type":"integer",
+                    "format":"int32",
+                    "minimum":0
+                },
+                "name-by-constructor":{
+                    "type":"string"
+                },
+                "name-by-namedparameter":{
+                    "type":"string"
+                },
+                "Required":{
+                    "type":"string"
+                },
+                "ListOfUniqueItems":{
+                    "type":"array",
+                    "items":{
+                        "type":"string"
+                    },
+                    "uniqueItems":true
+                }
+            }
+        }
     }
 }
