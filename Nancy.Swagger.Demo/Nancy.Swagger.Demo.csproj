@@ -55,13 +55,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -112,6 +106,10 @@
     <ProjectReference Include="..\src\Nancy.Swagger\Nancy.Swagger.csproj">
       <Project>{add1e494-a985-4f8d-911b-e487d4b3159e}</Project>
       <Name>Nancy.Swagger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\src\Swagger.ObjectModel\Swagger.ObjectModel.csproj">
+      <Project>{140262c2-a8be-4c8f-9a2f-b848ef396b91}</Project>
+      <Name>Swagger.ObjectModel</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
