@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace Nancy.Swagger
 {
+    [SwaggerApi]
     public class SwaggerModelData
     {
         public SwaggerModelData(Type type)
