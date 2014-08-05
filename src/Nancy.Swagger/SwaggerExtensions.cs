@@ -49,36 +49,44 @@ namespace Nancy.Swagger
             if (type == null) 
             {
                 dataType.Type = "void";
+
+                return dataType;
             }
-            else if (Primitive.IsPrimitive(type))
+
+            if (Primitive.IsPrimitive(type))
             {
                 var primitive = Primitive.FromType(type);
+
                 dataType.Format = primitive.Format;
                 dataType.Type = primitive.Type;
+
+                return dataType;
             }
-            else if (type.IsContainer())
+
+            if (type.IsContainer())
             {
                 dataType.Type = "array";
 
                 var itemsType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
                 if (Primitive.IsPrimitive(itemsType))
                 {
-                    var itemsPrimitive = Primitive.FromType(itemsType);
+                    var primitive = Primitive.FromType(itemsType);
+
                     dataType.Items = new Items
                     {
-                        Type = itemsPrimitive.Type,
-                        Format = itemsPrimitive.Format
+                        Type = primitive.Type,
+                        Format = primitive.Format
                     };
+
+                    return dataType;
                 }
-                else
-                {
-                    dataType.Items = new Items { Ref = itemsType.DefaultModelId() };
-                }
+
+                dataType.Items = new Items { Ref = itemsType.DefaultModelId() };
+
+                return dataType;
             }
-            else
-            {
-                dataType.Ref = type.DefaultModelId();
-            }
+
+            dataType.Ref = type.DefaultModelId();
 
             return dataType;
         }
@@ -130,13 +138,17 @@ namespace Nancy.Swagger
         public static bool IsContainer(this Type type)
         {
             return typeof(IEnumerable).IsAssignableFrom(type)
-                && !typeof(String).IsAssignableFrom(type);
+                   && !typeof(String).IsAssignableFrom(type);
         }
 
         internal static bool IsImplicitlyRequired(this Type type)
         {
-            return type.IsValueType
-                && !(type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
+            return type.IsValueType && !IsNullable(type);
+        }
+
+        private static bool IsNullable(Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
     }
 }
