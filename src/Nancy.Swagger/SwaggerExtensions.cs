@@ -101,7 +101,9 @@ namespace Nancy.Swagger
             parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
             parameter.AllowMultiple = parameterData.AllowMultiple;
             parameter.DefaultValue = parameterData.DefaultValue;
-            
+
+            parameter.Type = parameterData.ParamType.ToString();
+
             return parameter;
         }
 
