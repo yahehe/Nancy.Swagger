@@ -1,4 +1,5 @@
-﻿using Nancy.Swagger.Annotations.Attributes;
+﻿using Nancy.ModelBinding;
+using Nancy.Swagger.Annotations.Attributes;
 using Swagger.ObjectModel.ApiDeclaration;
 using System;
 
@@ -18,16 +19,30 @@ namespace Nancy.Swagger.Annotations.Tests
             Get["/strings/{id}"] = _ => GetStringById(_.id, Request.Query.q);
 
             // Non-primitive response
-            Get["/models"] = _ => GetModels();
+            Get["/models"] = _ => GetModels();            
             Get["/models/{id}"] = _ => GetModel(_.id);
+            Post["/models/{id}"] = _ => PostModel(this.Bind<TestModel>());
+            Put["/models/{id}"] = _ => PutModel(this.Bind<TestModel>());
+            Delete["/models/{id}"] = _ => DeleteModel(_.id);
+            Patch["/models/{id}"] = _ => PatchModel(this.Bind<TestModel>());
+            Options["/models/{id}"] = _ => OptionsModel(_.id);
 
             // Named route
             Get["GetIntegers", "/integers"] = _ => GetIntegers();
-        }
 
+            
+        }
+        
         [SwaggerRoute("GetIntegers")]
         [SwaggerRoute(Response = typeof(int[]))]
         private static dynamic GetIntegers()
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Get, "/models")]
+        [SwaggerRoute(Response = typeof(TestModel[]))]
+        private static dynamic GetModels()
         {
             throw new NotImplementedException();
         }
@@ -41,9 +56,42 @@ namespace Nancy.Swagger.Annotations.Tests
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Get, "/models")]
-        [SwaggerRoute(Response = typeof(TestModel[]))]
-        private static dynamic GetModels()
+        [SwaggerRoute(HttpMethod.Options, "/models/{id}")]        
+        private dynamic OptionsModel(
+            [SwaggerRouteParam(ParameterType.Path, "id")] int id
+        )
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Delete, "/models/{id}")]
+        private dynamic DeleteModel(
+            [SwaggerRouteParam(ParameterType.Path, "id")] int id
+        )
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Patch, "/models/{id}")] 
+        private dynamic PatchModel(
+            [SwaggerRouteParam(ParameterType.Body)] TestModel testModel
+        )
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Put, "/models/{id}")] 
+        private dynamic PutModel(
+            [SwaggerRouteParam(ParameterType.Body)] TestModel testModel
+        )        
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute(HttpMethod.Post, "/models/{id}")]
+        private dynamic PostModel(
+            [SwaggerRouteParam(ParameterType.Body, Required = true)] TestModel testModel
+        )
         {
             throw new NotImplementedException();
         }
