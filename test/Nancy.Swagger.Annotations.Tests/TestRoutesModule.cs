@@ -27,15 +27,21 @@ namespace Nancy.Swagger.Annotations.Tests
             Patch["/models/{id}"] = _ => PatchModel(this.Bind<TestModel>());
             Options["/models/{id}"] = _ => OptionsModel(_.id);
 
-            // Named route
-            Get["GetIntegers", "/integers"] = _ => GetIntegers();
-
-            
+            // Misc other cases
+            Get["GetNamedRoute", "/namedroute"] = _ => GetNamedRoute();
+            Get["GetAllowMultipleParam", "/allowmultipleparam"] = _ => GetWithAllowMultipleParam(Request.Query.ids);
         }
-        
-        [SwaggerRoute("GetIntegers")]
+
+        [SwaggerRoute("GetAllowMultipleParam")]
+        private dynamic GetWithAllowMultipleParam(
+            [SwaggerRouteParam(ParameterType.Query, "ids")] int[] ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        [SwaggerRoute("GetNamedRoute")]
         [SwaggerRoute(Response = typeof(int[]))]
-        private static dynamic GetIntegers()
+        private static dynamic GetNamedRoute()
         {
             throw new NotImplementedException();
         }

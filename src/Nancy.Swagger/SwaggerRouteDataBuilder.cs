@@ -92,10 +92,9 @@ namespace Nancy.Swagger
             string name,
             string description = null,
             bool required = false,
-            bool allowMultiple = false,
             T defaultValue = default(T))
         {
-            return Param(ParameterType.Query, name, description, required, allowMultiple, defaultValue);
+            return Param(ParameterType.Query, name, description, required, defaultValue);
         }
 
         /// <summary>
@@ -103,16 +102,14 @@ namespace Nancy.Swagger
         /// </summary>
         /// <param name="description">The description of the parameter.</param>
         /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
-        /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
         /// <param name="defaultValue">The default value to be used for the field.</param>
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder BodyParam<T>(
             string description = null,
             bool required = false,
-            bool allowMultiple = false,
             T defaultValue = default(T))
         {
-            return Param(ParameterType.Body, "body", description, required, allowMultiple, defaultValue);
+            return Param(ParameterType.Body, "body", description, required, defaultValue);
         }
 
         /// <summary>
@@ -128,10 +125,9 @@ namespace Nancy.Swagger
             string name,
             string description = null,
             bool required = false,
-            bool allowMultiple = false,
             T defaultValue = default(T))
         {
-            return Param(ParameterType.Path, name, description, required, allowMultiple, defaultValue);
+            return Param(ParameterType.Path, name, description, required, defaultValue);
         }
 
         /// <summary>
@@ -149,7 +145,6 @@ namespace Nancy.Swagger
             string name,
             string description = null,
             bool required = false,
-            bool allowMultiple = false,
             T defaultValue = default(T))
         {
             var param = new SwaggerParameterData
@@ -158,7 +153,6 @@ namespace Nancy.Swagger
                     ParamType = paramType,
                     Description = description,
                     Required = required,
-                    AllowMultiple = allowMultiple,
                     DefaultValue = defaultValue,
                     ParameterModel = typeof(T)
                 };

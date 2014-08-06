@@ -14,8 +14,6 @@ namespace Nancy.Swagger
 
         public bool Required { get; set; }
 
-        public bool AllowMultiple { get; set; }
-
         public object DefaultValue { get; set; }
 
         public Type ParameterModel { get; set; }

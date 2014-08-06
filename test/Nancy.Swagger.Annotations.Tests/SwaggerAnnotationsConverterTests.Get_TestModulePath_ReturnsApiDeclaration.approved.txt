@@ -3,6 +3,35 @@
     "basePath":"/",
     "apis":[
         {
+            "path":"/testroutes/allowmultipleparam",
+            "operations":[
+                {
+                    "method":"GET",
+                    "nickname":"/testroutes/allowmultipleparam",
+                    "parameters":[
+                        {
+                            "paramType":"query",
+                            "name":"ids",
+                            "required":false,
+                            "allowMultiple":true,
+                            "type":"integer",
+                            "format":"int32"
+                        }
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                }
+            ]
+        },
+        {
             "path":"/testroutes/anonymoushandler",
             "operations":[
                 {
@@ -23,32 +52,6 @@
                         
                     ],
                     "type":"void"
-                }
-            ]
-        },
-        {
-            "path":"/testroutes/integers",
-            "operations":[
-                {
-                    "method":"GET",
-                    "nickname":"/testroutes/integers",
-                    "parameters":[
-                        
-                    ],
-                    "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
-                    "type":"array",
-                    "items":{
-                        "type":"integer",
-                        "format":"int32"
-                    }
                 }
             ]
         },
@@ -113,7 +116,7 @@
                             "name":"body",
                             "required":true,
                             "allowMultiple":false,
-                            "$ref":"TestModel"
+                            "type":"TestModel"
                         }
                     ],
                     "responseMessages":[
@@ -136,7 +139,7 @@
                             "name":"body",
                             "required":false,
                             "allowMultiple":false,
-                            "$ref":"TestModel"
+                            "type":"TestModel"
                         }
                     ],
                     "responseMessages":[
@@ -159,7 +162,7 @@
                             "name":"body",
                             "required":false,
                             "allowMultiple":false,
-                            "$ref":"TestModel"
+                            "type":"TestModel"
                         }
                     ],
                     "responseMessages":[
@@ -220,6 +223,32 @@
                         
                     ],
                     "type":"void"
+                }
+            ]
+        },
+        {
+            "path":"/testroutes/namedroute",
+            "operations":[
+                {
+                    "method":"GET",
+                    "nickname":"/testroutes/namedroute",
+                    "parameters":[
+                        
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"array",
+                    "items":{
+                        "type":"integer",
+                        "format":"int32"
+                    }
                 }
             ]
         },

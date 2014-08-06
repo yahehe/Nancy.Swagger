@@ -99,7 +99,7 @@ namespace Nancy.Swagger
             parameter.ParamType = parameterData.ParamType;
             parameter.Description = parameterData.Description;
             parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
-            parameter.AllowMultiple = parameterData.AllowMultiple;
+            parameter.AllowMultiple = parameterData.ParameterModel.IsContainer();
             parameter.DefaultValue = parameterData.DefaultValue;
 
             // Ensure when ParamType equals "body" name also equals "body" 
@@ -107,6 +107,21 @@ namespace Nancy.Swagger
             if (parameter.ParamType == ParameterType.Body)
             {
                 parameter.Name = "body";
+            }
+
+            // "5.2.4 Parameter Object
+            // ...type field MUST be used to link to other models."
+            // See https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#524-parameter-object
+            if (parameterData.ParameterModel.IsContainer()) 
+            {
+                parameter.Type = parameter.Items.Type;
+                parameter.Format = parameter.Items.Format;
+                parameter.Items = null;
+            }
+            else 
+            {
+                parameter.Type = parameter.Type ?? parameter.Ref;
+                parameter.Ref = null;
             }
             
             return parameter;
