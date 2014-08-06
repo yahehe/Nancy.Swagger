@@ -101,6 +101,13 @@ namespace Nancy.Swagger
             parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
             parameter.AllowMultiple = parameterData.AllowMultiple;
             parameter.DefaultValue = parameterData.DefaultValue;
+
+            // Ensure when ParamType equals "body" name also equals "body" 
+            // See https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#524-parameter-object
+            if (parameter.ParamType == ParameterType.Body)
+            {
+                parameter.Name = "body";
+            }
             
             return parameter;
         }

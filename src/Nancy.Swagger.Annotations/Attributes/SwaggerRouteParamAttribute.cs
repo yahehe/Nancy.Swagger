@@ -13,7 +13,7 @@ namespace Nancy.Swagger.Annotations.Attributes
         {
         }
 
-        public SwaggerRouteParamAttribute(ParameterType paramType, string name)
+        public SwaggerRouteParamAttribute(ParameterType paramType, string name = null)
             : base(name)
         {
             ParamType = paramType;

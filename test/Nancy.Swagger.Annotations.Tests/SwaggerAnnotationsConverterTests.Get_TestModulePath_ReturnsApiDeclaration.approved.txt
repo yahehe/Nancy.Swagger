@@ -103,6 +103,123 @@
                         
                     ],
                     "$ref":"TestModel"
+                },
+                {
+                    "method":"POST",
+                    "nickname":"/testroutes/models/{id}",
+                    "parameters":[
+                        {
+                            "paramType":"body",
+                            "name":"body",
+                            "required":true,
+                            "allowMultiple":false,
+                            "$ref":"TestModel"
+                        }
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                },
+                {
+                    "method":"PUT",
+                    "nickname":"/testroutes/models/{id}",
+                    "parameters":[
+                        {
+                            "paramType":"body",
+                            "name":"body",
+                            "required":false,
+                            "allowMultiple":false,
+                            "$ref":"TestModel"
+                        }
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                },
+                {
+                    "method":"PATCH",
+                    "nickname":"/testroutes/models/{id}",
+                    "parameters":[
+                        {
+                            "paramType":"body",
+                            "name":"body",
+                            "required":false,
+                            "allowMultiple":false,
+                            "$ref":"TestModel"
+                        }
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                },
+                {
+                    "method":"DELETE",
+                    "nickname":"/testroutes/models/{id}",
+                    "parameters":[
+                        {
+                            "paramType":"path",
+                            "name":"id",
+                            "required":true,
+                            "allowMultiple":false,
+                            "type":"integer",
+                            "format":"int32"
+                        }
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
+                },
+                {
+                    "method":"OPTIONS",
+                    "nickname":"/testroutes/models/{id}",
+                    "parameters":[
+                        {
+                            "paramType":"path",
+                            "name":"id",
+                            "required":true,
+                            "allowMultiple":false,
+                            "type":"integer",
+                            "format":"int32"
+                        }
+                    ],
+                    "responseMessages":[
+                        
+                    ],
+                    "produces":[
+                        
+                    ],
+                    "consumes":[
+                        
+                    ],
+                    "type":"void"
                 }
             ]
         },
