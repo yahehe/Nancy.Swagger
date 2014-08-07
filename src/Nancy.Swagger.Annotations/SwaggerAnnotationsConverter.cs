@@ -1,6 +1,7 @@
 ﻿using Nancy.Routing;
 using Nancy.Swagger.Annotations.Attributes;
 using Nancy.Swagger.Services;
+using Swagger.ObjectModel;
 using Swagger.ObjectModel.ApiDeclaration;
 using System;
 using System.Collections.Generic;
@@ -132,6 +133,24 @@ namespace Nancy.Swagger.Annotations
                 data.OperationNotes = attr.Notes ?? data.OperationNotes;
                 data.OperationModel = attr.Response ?? data.OperationModel;
             }
+
+            data.OperationResponseMessages = handler.GetAttributes<SwaggerResponseAttribute>()
+                .Select(attr => {
+                    var msg = new ResponseMessage
+                    {
+                        Code = (int)attr.Code,
+                        Message = attr.Message                    
+                    };
+                    
+                    if (attr.Model != null) 
+                    {
+                        msg.ResponseModel = Primitive.IsPrimitive(attr.Model) ? Primitive.FromType(attr.Model).Type : attr.Model.DefaultModelId();
+                    }
+
+                    return msg;
+                })
+                .ToList();
+
 
             data.OperationParameters = handler.GetParameters()
                 .Select(CreateSwaggerParameterData)
