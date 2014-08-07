@@ -115,7 +115,6 @@
                             "paramType":"body",
                             "name":"body",
                             "required":true,
-                            "allowMultiple":false,
                             "type":"TestModel"
                         }
                     ],
@@ -138,7 +137,6 @@
                             "paramType":"body",
                             "name":"body",
                             "required":false,
-                            "allowMultiple":false,
                             "type":"TestModel"
                         }
                     ],
@@ -161,7 +159,6 @@
                             "paramType":"body",
                             "name":"body",
                             "required":false,
-                            "allowMultiple":false,
                             "type":"TestModel"
                         }
                     ],
