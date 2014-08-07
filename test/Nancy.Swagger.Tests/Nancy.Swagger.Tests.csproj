@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SwaggerMetadataConverterForTesting.cs" />
     <Compile Include="Services\SwaggerMetadataConverterTests.cs" />
+    <Compile Include="SwaggerExtensionsTests.cs" />
     <Compile Include="SwaggerModelDataBuilderTests.cs" />
     <Compile Include="SwaggerModelPropertyDataBuilderTests.cs" />
     <Compile Include="SwaggerModelPropertyDataTests.cs" />
