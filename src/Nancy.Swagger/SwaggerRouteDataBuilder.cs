@@ -101,20 +101,18 @@ namespace Nancy.Swagger
         /// <summary>
         /// Specify a body parameter for the operation.
         /// </summary>
-        /// <param name="name">The name of the parameter.</param>
         /// <param name="description">The description of the parameter.</param>
         /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
         /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
         /// <param name="defaultValue">The default value to be used for the field.</param>
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder BodyParam<T>(
-            string name,
             string description = null,
             bool required = false,
             bool allowMultiple = false,
             T defaultValue = default(T))
         {
-            return Param(ParameterType.Body, name, description, required, allowMultiple, defaultValue);
+            return Param(ParameterType.Body, "body", description, required, allowMultiple, defaultValue);
         }
 
         /// <summary>
