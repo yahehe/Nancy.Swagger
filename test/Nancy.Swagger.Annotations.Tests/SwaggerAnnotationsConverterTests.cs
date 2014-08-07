@@ -3,8 +3,6 @@ using ApprovalTests.Reporters;
 using Nancy.Swagger.Modules;
 using Nancy.Swagger.Services;
 using Nancy.Testing;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace Nancy.Swagger.Annotations.Tests
