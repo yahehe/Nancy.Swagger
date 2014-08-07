@@ -174,7 +174,7 @@ namespace Nancy.Swagger
         /// <param name="code">The HTTP code of the response.</param>
         /// <param name="message">The message for the response.</param>
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
-        public SwaggerRouteDataBuilder Response(int code, string message)
+        public SwaggerRouteDataBuilder Response(int code, string message = null)
         {
             var responseMessage = new ResponseMessage { Code = code, Message = message };
             // TODO: Populate responseModel
