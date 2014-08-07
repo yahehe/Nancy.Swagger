@@ -157,5 +157,15 @@ namespace Nancy.Swagger
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
+
+        public static string EnsureForwardSlash(this string value)
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                return "/";
+            }
+
+            return value.StartsWith("/") ? value : "/" + value;
+        }
     }
 }

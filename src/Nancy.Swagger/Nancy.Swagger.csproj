@@ -41,6 +41,9 @@
     <Reference Include="Nancy">
       <HintPath>..\..\packages\Nancy.0.23.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
+    <Reference Include="Nancy.Metadata.Module">
+      <HintPath>..\..\packages\Nancy.MetaData.0.23.0\lib\net40\Nancy.Metadata.Module.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +53,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ISwaggerModelCatalog.cs" />
+    <Compile Include="Modules\SwaggerMetadataModule.cs" />
     <Compile Include="Services\DefaultSwaggerModelCatalog.cs" />
     <Compile Include="Services\ISwaggerModelDataProvider.cs" />
     <Compile Include="Services\SwaggerMetadataConverter.cs" />
