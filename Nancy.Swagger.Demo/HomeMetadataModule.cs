@@ -20,7 +20,7 @@
                 with.Response(201, "Created a User");
                 with.Response(422, "Invalid input");
                 with.Model<User>();
-                with.BodyParam<User>("User", "a user object", required: true);
+                with.BodyParam<User>("A User object", required:true);
                 with.Notes("Creates a user with the shown schema for our awesome app");
             });
         }
