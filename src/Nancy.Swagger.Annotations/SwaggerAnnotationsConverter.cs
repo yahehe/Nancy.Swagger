@@ -131,6 +131,8 @@ namespace Nancy.Swagger.Annotations
                 data.OperationSummary = attr.Summary ?? data.OperationSummary;
                 data.OperationNotes = attr.Notes ?? data.OperationNotes;
                 data.OperationModel = attr.Response ?? data.OperationModel;
+                data.OperationConsumes = attr.Consumes ?? data.OperationConsumes;
+                data.OperationProduces = attr.Produces ?? data.OperationProduces;
             }
 
             data.OperationParameters = handler.GetParameters()

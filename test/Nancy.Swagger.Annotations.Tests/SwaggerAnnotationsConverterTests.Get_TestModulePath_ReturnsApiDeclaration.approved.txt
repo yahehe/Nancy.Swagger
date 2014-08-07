@@ -302,10 +302,11 @@
                         
                     ],
                     "produces":[
-                        
+                        "application/json"
                     ],
                     "consumes":[
-                        
+                        "application/json",
+                        "application/xml"
                     ],
                     "type":"string"
                 }
