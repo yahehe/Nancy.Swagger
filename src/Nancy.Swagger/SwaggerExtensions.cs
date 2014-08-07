@@ -98,17 +98,46 @@ namespace Nancy.Swagger
             parameter.Name = parameterData.Name;
             parameter.ParamType = parameterData.ParamType;
             parameter.Description = parameterData.Description;
-            parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
-            parameter.AllowMultiple = parameterData.AllowMultiple;
             parameter.DefaultValue = parameterData.DefaultValue;
 
-            // Ensure when ParamType equals "body" name also equals "body" 
-            // See https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md#524-parameter-object
-            if (parameter.ParamType == ParameterType.Body)
+            var paramType = parameter.ParamType;
+
+            // 5.2.4 Parameter Object: If paramType is "path" then this field MUST be included and have the value true.
+            if (paramType == ParameterType.Path)
+            {
+                parameter.Required = true;
+            }
+            else
+            {
+                parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
+            }
+
+            // 5.2.4 Parameter Object: The field may be used only if paramType is "query", "header" or "path".
+            if (paramType == ParameterType.Query || paramType == ParameterType.Header || paramType == ParameterType.Path)
+            {
+                parameter.AllowMultiple = parameterData.ParameterModel.IsContainer();
+            }
+
+            // 5.2.4 Parameter Object: If paramType is "body", the name is used only for 
+            // Swagger-UI and Swagger-Codegen. In this case, the name MUST be "body".  
+            if (paramType == ParameterType.Body)
             {
                 parameter.Name = "body";
             }
-            
+
+            // 5.2.4 Parameter Object: Type field MUST be used to link to other models.
+            if (parameterData.ParameterModel.IsContainer())
+            {
+                parameter.Type = parameter.Items.Type;
+                parameter.Format = parameter.Items.Format;
+                parameter.Items = null;
+            }
+            else
+            {
+                parameter.Type = parameter.Type ?? parameter.Ref;
+                parameter.Ref = null;
+            }
+
             return parameter;
         }
 
