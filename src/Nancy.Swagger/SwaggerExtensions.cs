@@ -87,7 +87,7 @@ namespace Nancy.Swagger
             }
 
             dataType.Ref = type.DefaultModelId();
-
+            dataType.Type = type.DefaultModelId();
             return dataType;
         }
 
