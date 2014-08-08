@@ -210,4 +210,4 @@ $RECYCLE.BIN/
 *.received.txt
 
 
-Nancy.Swagger.Demo/swagger-ui/*
+swagger-ui/

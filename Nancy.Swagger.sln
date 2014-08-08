@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F6D6A272-5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{06F8EE55-908F-4FA4-81F7-E0ECE9FBA3AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger.Demo", "Nancy.Swagger.Demo\Nancy.Swagger.Demo.csproj", "{367BF53D-1FD7-4CC8-9154-A2B2AF87871F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Swagger.Demo", "samples\Nancy.Swagger.Demo\Nancy.Swagger.Demo.csproj", "{367BF53D-1FD7-4CC8-9154-A2B2AF87871F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
