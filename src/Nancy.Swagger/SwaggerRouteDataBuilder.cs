@@ -1,11 +1,9 @@
-﻿using System;
-using Nancy.Responses.Negotiation;
+﻿using Nancy.Responses.Negotiation;
 using Swagger.ObjectModel.ApiDeclaration;
+using System;
 
 namespace Nancy.Swagger
 {
-    using System.Globalization;
-
     /// <summary>
     /// Helper class for configuring an instance of <see cref="SwaggerRouteData"/>.
     /// </summary>
