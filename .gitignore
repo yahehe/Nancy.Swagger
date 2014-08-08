@@ -208,3 +208,6 @@ $RECYCLE.BIN/
 
 # Approval testing received files
 *.received.txt
+
+
+Nancy.Swagger.Demo/swagger-ui/*
