@@ -104,6 +104,8 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [SwaggerRoute(HttpMethod.Get, "/strings/{id}")]
         [SwaggerRoute(Response = typeof(string))]
+        [SwaggerRoute(Produces = new[] { "application/json" } )]
+        [SwaggerRoute(Consumes = new[] { "application/json", "application/xml" })]        
         private static dynamic GetStringById(
             [SwaggerRouteParam(ParameterType.Path, "id", Required = true)] int id,
             [SwaggerRouteParam(ParameterType.Query, "q")]
