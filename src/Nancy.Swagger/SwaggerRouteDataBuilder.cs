@@ -178,7 +178,7 @@ namespace Nancy.Swagger
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder Response(int code, string message = null)
         {
-            message = message ?? code.ToString();
+            message = message ?? Enum.GetName(typeof (HttpStatusCode), code);
 
             var responseMessage = new ResponseMessage { Code = code, Message = message };
             // TODO: Populate responseModel
