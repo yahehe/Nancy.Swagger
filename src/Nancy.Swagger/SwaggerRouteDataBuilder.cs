@@ -4,6 +4,8 @@ using Swagger.ObjectModel.ApiDeclaration;
 
 namespace Nancy.Swagger
 {
+    using System.Globalization;
+
     /// <summary>
     /// Helper class for configuring an instance of <see cref="SwaggerRouteData"/>.
     /// </summary>
@@ -176,6 +178,8 @@ namespace Nancy.Swagger
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder Response(int code, string message = null)
         {
+            message = message ?? code.ToString();
+
             var responseMessage = new ResponseMessage { Code = code, Message = message };
             // TODO: Populate responseModel
 
