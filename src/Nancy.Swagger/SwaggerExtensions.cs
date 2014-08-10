@@ -34,7 +34,7 @@ namespace Nancy.Swagger
             operation.Method = routeData.OperationMethod;
             operation.Notes = routeData.OperationNotes;
             operation.Parameters = routeData.OperationParameters.Select(p => p.ToParameter());
-            operation.ResponseMessages = routeData.OperationResponseMessages;
+            operation.ResponseMessages = routeData.OperationResponseMessages.OrderBy(r => r.Code);
             operation.Produces = routeData.OperationProduces;
             operation.Consumes = routeData.OperationConsumes;
 

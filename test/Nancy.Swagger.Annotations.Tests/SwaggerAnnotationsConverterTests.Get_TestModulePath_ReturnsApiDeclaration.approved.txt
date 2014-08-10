@@ -119,7 +119,24 @@
                         }
                     ],
                     "responseMessages":[
-                        
+                        {
+                            "code":200,
+                            "message":"Everything OK",
+                            "responseModel":"TestModel"
+                        },
+                        {
+                            "code":404,
+                            "message":"NotFound"
+                        },
+                        {
+                            "code":418,
+                            "message":"I'm a teapot"
+                        },
+                        {
+                            "code":500,
+                            "message":"InternalServerError",
+                            "responseModel":"string"
+                        }
                     ],
                     "produces":[
                         
