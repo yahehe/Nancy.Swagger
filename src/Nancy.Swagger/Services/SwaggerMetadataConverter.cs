@@ -87,17 +87,47 @@ namespace Nancy.Swagger.Services
 
             var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type));
 
+             var modelsData = this.RetrieveSwaggerModelData();
+
             foreach (var swaggerModelPropertyData in classProperties)
             {
                 var properties = GetPropertiesFromType(swaggerModelPropertyData.Type);
 
+                var modelDataForClassProperty =
+                    modelsData.FirstOrDefault(x => x.ModelType == swaggerModelPropertyData.Type);
+
+                var id = modelDataForClassProperty == null
+                    ? swaggerModelPropertyData.Type.Name
+                    : modelDataForClassProperty.ModelType.DefaultModelId();
+
+                var description = modelDataForClassProperty == null
+                    ? swaggerModelPropertyData.Description
+                    : modelDataForClassProperty.Description;
+
+                var required = modelDataForClassProperty == null
+                    ? properties.Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                        .Select(p => p.Name)
+                        .OrderBy(name => name)
+                        .ToList()
+                    : modelDataForClassProperty.Properties
+                        .Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                        .Select(p => p.Name)
+                        .OrderBy(name => name)
+                        .ToList();
+
+                var modelproperties = modelDataForClassProperty == null
+                    ? properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, p => CreateModelProperty(p))
+                    : modelDataForClassProperty.Properties.OrderBy(x => x.Name)
+                        .ToDictionary(p => p.Name, p => CreateModelProperty(p));
+
                 var item = new Model()
                 {
-                    Id = swaggerModelPropertyData.Type.Name, //Same as DefaultModelId()
-                    Description = swaggerModelPropertyData.Description,
-                    Properties =
-                        properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, p => CreateModelProperty(p))
+                    Id = id,
+                    Description = description,
+                    Required = required,
+                    Properties = modelproperties
                 };
+
                 models.Add(item);
             }
 
