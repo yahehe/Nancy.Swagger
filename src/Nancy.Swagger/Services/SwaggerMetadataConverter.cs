@@ -18,7 +18,7 @@ namespace Nancy.Swagger.Services
                     .Select(d => d.ResourcePath)
                     .Distinct()
                     .Select(path => new Resource { Path = path })
-                    .OrderBy(resource => resource.Path)               
+                    .OrderBy(resource => resource.Path)
             };
         }
 
@@ -83,11 +83,11 @@ namespace Nancy.Swagger.Services
 
         private IEnumerable<Model> CreateModel(SwaggerModelData model)
         {
-             var models = new List<Model>();
+            var models = new List<Model>();
 
             var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum);
 
-             var modelsData = this.RetrieveSwaggerModelData();
+            var modelsData = this.RetrieveSwaggerModelData();
 
             foreach (var swaggerModelPropertyData in classProperties)
             {
@@ -145,6 +145,7 @@ namespace Nancy.Swagger.Services
                                   .ToDictionary(p => p.Name, p => CreateModelProperty(p))
                 // TODO: SubTypes and Discriminator
             };
+
             models.Add(toplevelmodel);
 
             return models;
@@ -156,14 +157,15 @@ namespace Nancy.Swagger.Services
 
             var classProperty = !Primitive.IsPrimitive(propertyType);
 
-            var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>(topLevelModel: classProperty);
+            var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>(topLevelModel:classProperty);
             modelProperty.DefaultValue = modelPropertyData.DefaultValue;
             modelProperty.Description = modelPropertyData.Description;
             modelProperty.Enum = modelPropertyData.Enum;
             modelProperty.Minimum = modelPropertyData.Minimum;
             modelProperty.Maximum = modelPropertyData.Maximum;
 
-            if (modelPropertyData.Type.IsContainer()) {
+            if (modelPropertyData.Type.IsContainer())
+            {
                 modelProperty.UniqueItems = modelPropertyData.UniqueItems;
             }
 
@@ -182,7 +184,7 @@ namespace Nancy.Swagger.Services
         private static IEnumerable<Type> GetOperationModels(IEnumerable<SwaggerRouteData> metadata)
         {
             return metadata
-                .Where(d => d.OperationModel != null)                
+                .Where(d => d.OperationModel != null)
                 .Select(d => d.OperationModel);
         }
 
