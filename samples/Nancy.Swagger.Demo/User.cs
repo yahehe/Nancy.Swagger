@@ -31,6 +31,6 @@
     {
         User = 0,
         Admin = 1,
-        God = 2
+        God = 2 
     }
 }
