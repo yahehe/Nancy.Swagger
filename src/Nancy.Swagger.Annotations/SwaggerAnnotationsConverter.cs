@@ -21,13 +21,14 @@ namespace Nancy.Swagger.Annotations
             _context = context;
         }
 
-        protected override IEnumerable<SwaggerModelData> RetrieveSwaggerModelData()
+        protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
         {
             return GetDistinctModelTypes(RetrieveSwaggerRouteData())
-                    .Select(type => CreateSwaggerModelData(type));
+                    .Select(CreateSwaggerModelData)
+                    .ToList();
         }
 
-        protected override IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
+        protected override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
         {
             return _moduleCatalog
                 .GetAllModules(_context)
@@ -44,7 +45,7 @@ namespace Nancy.Swagger.Annotations
 
             var modelData = new SwaggerModelData(type)
             {
-                Properties = typeProperties.Select(pi => CreateSwaggerModelPropertyData(pi)).ToList()
+                Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList()
             };
 
             var modelAttr = type.GetAttribute<SwaggerModelAttribute>();

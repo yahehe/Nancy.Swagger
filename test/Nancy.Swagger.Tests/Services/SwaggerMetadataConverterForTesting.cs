@@ -16,14 +16,14 @@ namespace Nancy.Swagger.Tests.Services
 
         public IEnumerable<SwaggerModelData> ModelDataAccessor { get; set; }
 
-        protected override IEnumerable<SwaggerRouteData> RetrieveSwaggerRouteData()
+        protected override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
         {
-            return RouteDataAccessor;
+            return RouteDataAccessor.ToList();
         }
 
-        protected override IEnumerable<SwaggerModelData> RetrieveSwaggerModelData()
+        protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
         {
-            return ModelDataAccessor;
+            return ModelDataAccessor.ToList();
         }
     }
 }

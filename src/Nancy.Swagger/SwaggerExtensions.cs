@@ -27,6 +27,7 @@ namespace Nancy.Swagger
 
         public static Operation ToOperation(this SwaggerRouteData routeData)
         {
+
             var operation = routeData.OperationModel.ToDataType<Operation>();
             
             operation.Nickname = routeData.OperationNickname;
@@ -41,7 +42,7 @@ namespace Nancy.Swagger
             return operation;
         }
 
-        public static T ToDataType<T>(this Type type)
+        public static T ToDataType<T>(this Type type, bool isTopLevel = false)
             where T : DataType, new()
         {
             var dataType = new T();
@@ -68,6 +69,7 @@ namespace Nancy.Swagger
                 dataType.Type = "array";
 
                 var itemsType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
+                
                 if (Primitive.IsPrimitive(itemsType))
                 {
                     var primitive = Primitive.FromType(itemsType);
@@ -86,7 +88,13 @@ namespace Nancy.Swagger
                 return dataType;
             }
 
-            dataType.Ref = type.DefaultModelId();
+            if (isTopLevel)
+            {
+                dataType.Ref = type.DefaultModelId();
+                return dataType;
+            }
+
+            dataType.Type = type.DefaultModelId();
 
             return dataType;
         }
@@ -174,7 +182,7 @@ namespace Nancy.Swagger
         public static bool IsContainer(this Type type)
         {
             return typeof(IEnumerable).IsAssignableFrom(type)
-                   && !typeof(String).IsAssignableFrom(type);
+                && !typeof(string).IsAssignableFrom(type);
         }
 
         internal static bool IsImplicitlyRequired(this Type type)
@@ -182,7 +190,7 @@ namespace Nancy.Swagger
             return type.IsValueType && !IsNullable(type);
         }
 
-        private static bool IsNullable(Type type)
+        internal static bool IsNullable(Type type)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }

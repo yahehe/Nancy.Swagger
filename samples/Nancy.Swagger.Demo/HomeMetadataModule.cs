@@ -11,6 +11,7 @@
                 with.ResourcePath("/users");
                 with.Summary("The list of users");
                 with.Notes("This returns a list of users from our awesome app");
+                with.Model<User>();
             });
 
             Describe["PostUsers"] = description => description.AsSwagger(with =>
