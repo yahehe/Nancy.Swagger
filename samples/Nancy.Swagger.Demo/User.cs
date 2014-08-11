@@ -14,6 +14,8 @@
         public DateTime DateOfBirth { get; set; }
 
         public Address Address { get; set; }
+
+        public Role Role { get; set; }
     }
 
     public class Address
@@ -23,5 +25,12 @@
         public string Town { get; set; }
         public string County { get; set; }
         public string  PostCode { get; set; }
+    }
+
+    public enum Role
+    {
+        User = 0,
+        Admin = 1,
+        God = 2
     }
 }
