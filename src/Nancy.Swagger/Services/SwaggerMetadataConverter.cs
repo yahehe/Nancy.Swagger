@@ -31,13 +31,13 @@ namespace Nancy.Swagger.Services
             var apiDeclaration = new ApiDeclaration
             {
                 BasePath = new Uri("/", UriKind.Relative),
-                Apis = routeData.GroupBy(d => d.ApiPath).SelectMany(GetApi).OrderBy(api => api.Path)
+                Apis = routeData.GroupBy(d => d.ApiPath).Select(GetApi).OrderBy(api => api.Path)
             };
 
             var modelsData = this.RetrieveSwaggerModelData();
             var modelsForRoutes = this.GetModelsForRoutes(routeData, modelsData);
 
-            apiDeclaration.Models = modelsForRoutes.Select(model => CreateModel(model))
+            apiDeclaration.Models = modelsForRoutes.SelectMany(model => CreateModel(model))
                                               .OrderBy(m => m.Id)
                                               .ToDictionary(m => m.Id, m => m);
 
