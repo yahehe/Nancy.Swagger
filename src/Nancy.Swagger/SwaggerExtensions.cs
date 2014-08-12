@@ -27,7 +27,6 @@ namespace Nancy.Swagger
 
         public static Operation ToOperation(this SwaggerRouteData routeData)
         {
-
             var operation = routeData.OperationModel.ToDataType<Operation>();
             
             operation.Nickname = routeData.OperationNickname;

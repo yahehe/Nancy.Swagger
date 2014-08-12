@@ -3,11 +3,12 @@ using System.Linq;
 
 namespace Nancy.Swagger.Services
 {
+    [SwaggerApi]
     public class DefaultSwaggerModelCatalog : List<SwaggerModelData>, ISwaggerModelCatalog
     {
         public DefaultSwaggerModelCatalog(IEnumerable<ISwaggerModelDataProvider> dataProviders)
         {
-            this.AddRange(dataProviders.Select(p => p.GetModelData()));
+            AddRange(dataProviders.Select(p => p.GetModelData()));
         }
     }
 }

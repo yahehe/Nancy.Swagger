@@ -36,7 +36,7 @@ namespace Nancy.Swagger
         /// <summary>
         /// Access a <see cref="SwaggerModelPropertyDataBuilder{TProperty}"/> for a given property of the model.
         /// </summary>
-        /// <param name="expression">An <see cref="Expression{Func{T, TProperty}}" /> for accessing the property.</param>
+        /// <param name="expression">An <see cref="Expression{Func{T, TProperty}}"/> for accessing the property.</param>
         /// <returns>The <see cref="SwaggerModelPropertyDataBuilder{TProperty}"/> instance.</returns>
         public SwaggerModelPropertyDataBuilder<TProperty> Property<TProperty>(Expression<Func<T, TProperty>> expression)
         {
