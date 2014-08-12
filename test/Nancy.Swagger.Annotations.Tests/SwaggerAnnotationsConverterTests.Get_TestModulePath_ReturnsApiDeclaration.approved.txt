@@ -12,19 +12,12 @@
                         {
                             "paramType":"query",
                             "name":"ids",
-                            "required":false,
                             "allowMultiple":true,
                             "type":"integer",
                             "format":"int32"
                         }
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"void"
@@ -45,12 +38,6 @@
                     "responseMessages":[
                         
                     ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
                     "type":"void"
                 }
             ]
@@ -65,12 +52,6 @@
                         
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"array",
@@ -91,18 +72,11 @@
                             "paramType":"path",
                             "name":"id",
                             "required":true,
-                            "allowMultiple":false,
                             "type":"integer",
                             "format":"int32"
                         }
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"TestModel"
@@ -138,12 +112,6 @@
                             "responseModel":"string"
                         }
                     ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
                     "type":"void"
                 },
                 {
@@ -153,17 +121,10 @@
                         {
                             "paramType":"body",
                             "name":"body",
-                            "required":false,
                             "type":"TestModel"
                         }
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"void"
@@ -175,17 +136,10 @@
                         {
                             "paramType":"body",
                             "name":"body",
-                            "required":false,
                             "type":"TestModel"
                         }
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"void"
@@ -198,18 +152,11 @@
                             "paramType":"path",
                             "name":"id",
                             "required":true,
-                            "allowMultiple":false,
                             "type":"integer",
                             "format":"int32"
                         }
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"void"
@@ -222,18 +169,11 @@
                             "paramType":"path",
                             "name":"id",
                             "required":true,
-                            "allowMultiple":false,
                             "type":"integer",
                             "format":"int32"
                         }
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"void"
@@ -250,12 +190,6 @@
                         
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"array",
@@ -280,12 +214,6 @@
                     "responseMessages":[
                         
                     ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
                     "type":"void"
                 }
             ]
@@ -302,12 +230,6 @@
                         
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"array",
@@ -328,7 +250,6 @@
                             "paramType":"path",
                             "name":"id",
                             "required":true,
-                            "allowMultiple":false,
                             "type":"integer",
                             "format":"int32"
                         },
@@ -336,8 +257,6 @@
                             "paramType":"query",
                             "name":"q",
                             "description":"Query",
-                            "required":false,
-                            "allowMultiple":false,
                             "type":"string"
                         }
                     ],

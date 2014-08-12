@@ -16,12 +16,6 @@
                     "responseMessages":[
                         
                     ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
-                        
-                    ],
                     "type":"void"
                 }
             ]
@@ -38,12 +32,6 @@
                         
                     ],
                     "responseMessages":[
-                        
-                    ],
-                    "produces":[
-                        
-                    ],
-                    "consumes":[
                         
                     ],
                     "type":"void"
