@@ -18,7 +18,7 @@ namespace Nancy.Swagger.Services
                     .Select(d => d.ResourcePath)
                     .Distinct()
                     .Select(path => new Resource { Path = path })
-                    .OrderBy(resource => resource.Path)               
+                    .OrderBy(resource => resource.Path)
             };
         }
 
@@ -37,7 +37,7 @@ namespace Nancy.Swagger.Services
             var modelsData = this.RetrieveSwaggerModelData();
             var modelsForRoutes = this.GetModelsForRoutes(routeData, modelsData);
 
-            apiDeclaration.Models = modelsForRoutes.Select(model => CreateModel(model))
+            apiDeclaration.Models = modelsForRoutes.SelectMany(model => CreateModel(model))
                                               .OrderBy(m => m.Id)
                                               .ToDictionary(m => m.Id, m => m);
 
@@ -81,9 +81,57 @@ namespace Nancy.Swagger.Services
             return new SwaggerModelData(type);
         }
 
-        private Model CreateModel(SwaggerModelData model)
+        private IEnumerable<Model> CreateModel(SwaggerModelData model)
         {
-            return new Model
+            var models = new List<Model>();
+
+            var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum && !x.Type.IsGenericType);
+
+            var modelsData = this.RetrieveSwaggerModelData();
+
+            foreach (var swaggerModelPropertyData in classProperties)
+            {
+                var properties = GetPropertiesFromType(swaggerModelPropertyData.Type);
+
+                var modelDataForClassProperty =
+                    modelsData.FirstOrDefault(x => x.ModelType == swaggerModelPropertyData.Type);
+
+                var id = modelDataForClassProperty == null
+                    ? swaggerModelPropertyData.Type.Name
+                    : modelDataForClassProperty.ModelType.DefaultModelId();
+
+                var description = modelDataForClassProperty == null
+                    ? swaggerModelPropertyData.Description
+                    : modelDataForClassProperty.Description;
+
+                var required = modelDataForClassProperty == null
+                    ? properties.Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                        .Select(p => p.Name)
+                        .OrderBy(name => name)
+                        .ToList()
+                    : modelDataForClassProperty.Properties
+                        .Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                        .Select(p => p.Name)
+                        .OrderBy(name => name)
+                        .ToList();
+
+                var modelproperties = modelDataForClassProperty == null
+                    ? properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, p => CreateModelProperty(p))
+                    : modelDataForClassProperty.Properties.OrderBy(x => x.Name)
+                        .ToDictionary(p => p.Name, p => CreateModelProperty(p));
+
+                var item = new Model()
+                {
+                    Id = id,
+                    Description = description,
+                    Required = required,
+                    Properties = modelproperties
+                };
+
+                models.Add(item);
+            }
+
+            var toplevelmodel = new Model
             {
                 Id = model.ModelType.DefaultModelId(),
                 Description = model.Description,
@@ -97,20 +145,27 @@ namespace Nancy.Swagger.Services
                                   .ToDictionary(p => p.Name, p => CreateModelProperty(p))
                 // TODO: SubTypes and Discriminator
             };
+
+            models.Add(toplevelmodel);
+
+            return models;
         }
 
         private ModelProperty CreateModelProperty(SwaggerModelPropertyData modelPropertyData)
         {
             var propertyType = modelPropertyData.Type;
 
-            var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>();
+            var classProperty = !Primitive.IsPrimitive(propertyType);
+
+            var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>(topLevelModel:classProperty);
             modelProperty.DefaultValue = modelPropertyData.DefaultValue;
             modelProperty.Description = modelPropertyData.Description;
             modelProperty.Enum = modelPropertyData.Enum;
             modelProperty.Minimum = modelPropertyData.Minimum;
             modelProperty.Maximum = modelPropertyData.Maximum;
 
-            if (modelPropertyData.Type.IsContainer()) {
+            if (modelPropertyData.Type.IsContainer())
+            {
                 modelProperty.UniqueItems = modelPropertyData.UniqueItems;
             }
 
@@ -129,7 +184,7 @@ namespace Nancy.Swagger.Services
         private static IEnumerable<Type> GetOperationModels(IEnumerable<SwaggerRouteData> metadata)
         {
             return metadata
-                .Where(d => d.OperationModel != null)                
+                .Where(d => d.OperationModel != null)
                 .Select(d => d.OperationModel);
         }
 
@@ -139,6 +194,16 @@ namespace Nancy.Swagger.Services
                 .SelectMany(d => d.OperationParameters)
                 .Where(p => p.ParameterModel != null)
                 .Select(p => p.ParameterModel);
+        }
+
+        private IEnumerable<SwaggerModelPropertyData> GetPropertiesFromType(Type type)
+        {
+            return type.GetProperties()
+                .Select(property => new SwaggerModelPropertyData
+                {
+                    Name = property.Name,
+                    Type = property.PropertyType
+                });
         }
     }
 }
