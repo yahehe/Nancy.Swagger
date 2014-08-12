@@ -35,9 +35,9 @@ namespace Nancy.Swagger
             operation.Method = routeData.OperationMethod;
             operation.Notes = routeData.OperationNotes;
             operation.Parameters = routeData.OperationParameters.Select(p => p.ToParameter());
-            operation.ResponseMessages = routeData.OperationResponseMessages.OrderBy(r => r.Code);
-            operation.Produces = routeData.OperationProduces;
-            operation.Consumes = routeData.OperationConsumes;
+            operation.ResponseMessages = routeData.OperationResponseMessages.Any() ? routeData.OperationResponseMessages.OrderBy(r => r.Code) : null;
+            operation.Produces = routeData.OperationProduces.Any() ? routeData.OperationProduces.OrderBy(p => p) : null;
+            operation.Consumes = routeData.OperationConsumes.Any() ? routeData.OperationConsumes.OrderBy(c => c) : null;
 
             return operation;
         }
@@ -117,13 +117,13 @@ namespace Nancy.Swagger
             }
             else
             {
-                parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
+                parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired() ? true : (bool?)null;
             }
 
             // 5.2.4 Parameter Object: The field may be used only if paramType is "query", "header" or "path".
             if (paramType == ParameterType.Query || paramType == ParameterType.Header || paramType == ParameterType.Path)
             {
-                parameter.AllowMultiple = parameterData.ParameterModel.IsContainer();
+                parameter.AllowMultiple = parameterData.ParameterModel.IsContainer() ? true : (bool?)null;
             }
 
             // 5.2.4 Parameter Object: If paramType is "body", the name is used only for 
@@ -230,7 +230,7 @@ namespace Nancy.Swagger
 
             if (modelPropertyData.Type.IsContainer())
             {
-                modelProperty.UniqueItems = modelPropertyData.UniqueItems;
+                modelProperty.UniqueItems = modelPropertyData.UniqueItems ? true : (bool?)null;
             }
 
             return modelProperty;
