@@ -1,6 +1,7 @@
 ﻿namespace Nancy.Swagger.Demo
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class User
@@ -16,6 +17,8 @@
         public Address Address { get; set; }
 
         public Role Role { get; set; }
+
+        public IList<string> Tags { get; set; }
     }
 
     public class Address

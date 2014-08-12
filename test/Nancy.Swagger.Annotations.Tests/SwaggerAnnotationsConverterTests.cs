@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Nancy.Swagger.Annotations.Tests
 {
-    [UseReporter(typeof(XUnitReporter))]
+    [UseReporter(typeof(XUnitReporter), typeof(DiffReporter))]
     public class SwaggerAnnotationsConverterTests
     {
         private readonly Browser _browser;

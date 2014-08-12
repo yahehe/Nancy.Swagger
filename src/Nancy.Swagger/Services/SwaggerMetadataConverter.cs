@@ -85,7 +85,7 @@ namespace Nancy.Swagger.Services
         {
             var models = new List<Model>();
 
-            var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum);
+            var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum && !x.Type.IsGenericType);
 
             var modelsData = this.RetrieveSwaggerModelData();
 
