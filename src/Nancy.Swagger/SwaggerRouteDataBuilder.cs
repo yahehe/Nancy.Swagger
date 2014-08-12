@@ -85,7 +85,6 @@ namespace Nancy.Swagger
         /// <param name="name">The name of the parameter.</param>
         /// <param name="description">The description of the parameter.</param>
         /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
-        /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
         /// <param name="defaultValue">The default value to be used for the field.</param>
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder QueryParam<T>(
@@ -118,7 +117,6 @@ namespace Nancy.Swagger
         /// <param name="name">The name of the parameter.</param>
         /// <param name="description">The description of the parameter.</param>
         /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
-        /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
         /// <param name="defaultValue">The default value to be used for the field.</param>
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder PathParam<T>(
@@ -137,7 +135,6 @@ namespace Nancy.Swagger
         /// <param name="name">The name of the parameter.</param>
         /// <param name="description">The description of the parameter.</param>
         /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
-        /// <param name="allowMultiple">A <see cref="Boolean"/> value indicating whether the parameter is allowed to appear more than once. The default is <c>false</c>.</param>
         /// <param name="defaultValue">The default value to be used for the field.</param>
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder Param<T>(
@@ -148,14 +145,14 @@ namespace Nancy.Swagger
             T defaultValue = default(T))
         {
             var param = new SwaggerParameterData
-                {
-                    Name = name,
-                    ParamType = paramType,
-                    Description = description,
-                    Required = required,
-                    DefaultValue = defaultValue,
-                    ParameterModel = typeof(T)
-                };
+            {
+                Name = name,
+                ParamType = paramType,
+                Description = description,
+                Required = required,
+                DefaultValue = defaultValue,
+                ParameterModel = typeof(T)
+            };
 
             Data.OperationParameters.Add(param);
 
@@ -171,6 +168,7 @@ namespace Nancy.Swagger
         public SwaggerRouteDataBuilder Response(int code, string message)
         {
             var responseMessage = new ResponseMessage { Code = code, Message = message };
+
             // TODO: Populate responseModel
 
             Data.OperationResponseMessages.Add(responseMessage);
