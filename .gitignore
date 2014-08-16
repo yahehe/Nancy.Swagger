@@ -207,7 +207,7 @@ $RECYCLE.BIN/
 *.msp
 
 # Approval testing received files
-*.received.txt
+*.received.json
 
 
 swagger-ui/
