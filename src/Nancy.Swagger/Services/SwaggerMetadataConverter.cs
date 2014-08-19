@@ -37,7 +37,7 @@ namespace Nancy.Swagger.Services
             var modelsData = RetrieveSwaggerModelData();
             var modelsForRoutes = GetModelsForRoutes(routeData, modelsData);
 
-            apiDeclaration.Models = modelsForRoutes.SelectMany(CreateModel)
+            apiDeclaration.Models = modelsForRoutes.SelectMany(m => m.ToModel(modelsData))
                 .OrderBy(m => m.Id)
                 .ToDictionary(m => m.Id, m => m);
 
@@ -78,94 +78,7 @@ namespace Nancy.Swagger.Services
         {
             return modelData.FirstOrDefault(x => x.ModelType == type) ?? new SwaggerModelData(type);
         }
-
-        private IEnumerable<Model> CreateModel(SwaggerModelData model)
-        {
-            var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum && !x.Type.IsGenericType);
-
-            var modelsData = RetrieveSwaggerModelData();
-
-            foreach (var swaggerModelPropertyData in classProperties)
-            {
-                var properties = GetPropertiesFromType(swaggerModelPropertyData.Type);
-
-                var modelDataForClassProperty =
-                    modelsData.FirstOrDefault(x => x.ModelType == swaggerModelPropertyData.Type);
-
-                var id = modelDataForClassProperty == null
-                    ? swaggerModelPropertyData.Type.Name
-                    : modelDataForClassProperty.ModelType.DefaultModelId();
-
-                var description = modelDataForClassProperty == null
-                    ? swaggerModelPropertyData.Description
-                    : modelDataForClassProperty.Description;
-
-                var required = modelDataForClassProperty == null
-                    ? properties.Where(p => p.Required || p.Type.IsImplicitlyRequired())
-                        .Select(p => p.Name)
-                        .OrderBy(name => name)
-                        .ToList()
-                    : modelDataForClassProperty.Properties
-                        .Where(p => p.Required || p.Type.IsImplicitlyRequired())
-                        .Select(p => p.Name)
-                        .OrderBy(name => name)
-                        .ToList();
-
-                var modelproperties = modelDataForClassProperty == null
-                    ? properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, CreateModelProperty)
-                    : modelDataForClassProperty.Properties.OrderBy(x => x.Name)
-                        .ToDictionary(p => p.Name, CreateModelProperty);
-
-                yield return new Model
-                {
-                    Id = id,
-                    Description = description,
-                    Required = required,
-                    Properties = modelproperties
-                };
-            }
-
-            var topLevelModel = new Model
-            {
-                Id = model.ModelType.DefaultModelId(),
-                Description = model.Description,
-                Required = model.Properties
-                    .Where(p => p.Required || p.Type.IsImplicitlyRequired())
-                    .Select(p => p.Name)
-                    .OrderBy(name => name)
-                    .ToList(),
-                Properties = model.Properties
-                    .OrderBy(p => p.Name)
-                    .ToDictionary(p => p.Name, CreateModelProperty)
-
-                // TODO: SubTypes and Discriminator
-            };
-
-            yield return topLevelModel;
-        }
-
-        private ModelProperty CreateModelProperty(SwaggerModelPropertyData modelPropertyData)
-        {
-            var propertyType = modelPropertyData.Type;
-
-            var isClassProperty = !Primitive.IsPrimitive(propertyType);
-
-            var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>(isClassProperty);
-            
-            modelProperty.DefaultValue = modelPropertyData.DefaultValue;
-            modelProperty.Description = modelPropertyData.Description;
-            modelProperty.Enum = modelPropertyData.Enum;
-            modelProperty.Minimum = modelPropertyData.Minimum;
-            modelProperty.Maximum = modelPropertyData.Maximum;
-
-            if (modelPropertyData.Type.IsContainer())
-            {
-                modelProperty.UniqueItems = modelPropertyData.UniqueItems;
-            }
-
-            return modelProperty;
-        }
-
+		
         private static Api GetApi(IGrouping<string, SwaggerRouteData> @group)
         {
             return new Api
@@ -190,16 +103,6 @@ namespace Nancy.Swagger.Services
                 .SelectMany(d => d.OperationParameters)
                 .Where(p => p.ParameterModel != null)
                 .Select(p => p.ParameterModel);
-        }
-
-        private IList<SwaggerModelPropertyData> GetPropertiesFromType(Type type)
-        {
-            return type.GetProperties()
-                .Select(property => new SwaggerModelPropertyData
-                {
-                    Name = property.Name,
-                    Type = property.PropertyType
-                }).ToList();
         }
     }
 }

@@ -4,6 +4,7 @@ using Nancy.Routing;
 using System.Collections;
 using Swagger.ObjectModel;
 using Swagger.ObjectModel.ApiDeclaration;
+using System.Collections.Generic;
 
 namespace Nancy.Swagger
 {
@@ -34,9 +35,9 @@ namespace Nancy.Swagger
             operation.Method = routeData.OperationMethod;
             operation.Notes = routeData.OperationNotes;
             operation.Parameters = routeData.OperationParameters.Select(p => p.ToParameter());
-            operation.ResponseMessages = routeData.OperationResponseMessages.OrderBy(r => r.Code);
-            operation.Produces = routeData.OperationProduces;
-            operation.Consumes = routeData.OperationConsumes;
+            operation.ResponseMessages = routeData.OperationResponseMessages.Any() ? routeData.OperationResponseMessages.OrderBy(r => r.Code) : null;
+            operation.Produces = routeData.OperationProduces.Any() ? routeData.OperationProduces.OrderBy(p => p) : null;
+            operation.Consumes = routeData.OperationConsumes.Any() ? routeData.OperationConsumes.OrderBy(c => c) : null;
 
             return operation;
         }
@@ -116,13 +117,13 @@ namespace Nancy.Swagger
             }
             else
             {
-                parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired();
+                parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired() ? true : (bool?)null;
             }
 
             // 5.2.4 Parameter Object: The field may be used only if paramType is "query", "header" or "path".
             if (paramType == ParameterType.Query || paramType == ParameterType.Header || paramType == ParameterType.Path)
             {
-                parameter.AllowMultiple = parameterData.ParameterModel.IsContainer();
+                parameter.AllowMultiple = parameterData.ParameterModel.IsContainer() ? true : (bool?)null;
             }
 
             // 5.2.4 Parameter Object: If paramType is "body", the name is used only for 
@@ -146,6 +147,93 @@ namespace Nancy.Swagger
             }
 
             return parameter;
+        }
+
+        public static IEnumerable<Model> ToModel(this SwaggerModelData model, IEnumerable<SwaggerModelData> knownModels = null)
+        {
+            var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum && !x.Type.IsGenericType);
+
+            var modelsData = knownModels ?? Enumerable.Empty<SwaggerModelData>();
+
+            foreach (var swaggerModelPropertyData in classProperties)
+            {
+                var properties = GetPropertiesFromType(swaggerModelPropertyData.Type);
+
+                var modelDataForClassProperty =
+                    modelsData.FirstOrDefault(x => x.ModelType == swaggerModelPropertyData.Type);
+
+                var id = modelDataForClassProperty == null
+                    ? swaggerModelPropertyData.Type.Name
+                    : modelDataForClassProperty.ModelType.DefaultModelId();
+
+                var description = modelDataForClassProperty == null
+                    ? swaggerModelPropertyData.Description
+                    : modelDataForClassProperty.Description;
+
+                var required = modelDataForClassProperty == null
+                    ? properties.Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                        .Select(p => p.Name)
+                        .OrderBy(name => name)
+                        .ToList()
+                    : modelDataForClassProperty.Properties
+                        .Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                        .Select(p => p.Name)
+                        .OrderBy(name => name)
+                        .ToList();
+
+                var modelproperties = modelDataForClassProperty == null
+                    ? properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, ToModelProperty)
+                    : modelDataForClassProperty.Properties.OrderBy(x => x.Name)
+                        .ToDictionary(p => p.Name, ToModelProperty);
+
+                yield return new Model
+                {
+                    Id = id,
+                    Description = description,
+                    Required = required,
+                    Properties = modelproperties
+                };
+            }
+
+            var topLevelModel = new Model
+            {
+                Id = model.ModelType.DefaultModelId(),
+                Description = model.Description,
+                Required = model.Properties
+                    .Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                    .Select(p => p.Name)
+                    .OrderBy(name => name)
+                    .ToList(),
+                Properties = model.Properties
+                    .OrderBy(p => p.Name)
+                    .ToDictionary(p => p.Name, ToModelProperty)
+
+                // TODO: SubTypes and Discriminator
+            };
+
+            yield return topLevelModel;
+        }
+
+        public static ModelProperty ToModelProperty(this SwaggerModelPropertyData modelPropertyData)
+        {
+            var propertyType = modelPropertyData.Type;
+
+            var isClassProperty = !Primitive.IsPrimitive(propertyType);
+
+            var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>(isClassProperty);
+            
+            modelProperty.DefaultValue = modelPropertyData.DefaultValue;
+            modelProperty.Description = modelPropertyData.Description;
+            modelProperty.Enum = modelPropertyData.Enum;
+            modelProperty.Minimum = modelPropertyData.Minimum;
+            modelProperty.Maximum = modelPropertyData.Maximum;
+
+            if (modelPropertyData.Type.IsContainer())
+            {
+                modelProperty.UniqueItems = modelPropertyData.UniqueItems ? true : (bool?)null;
+            }
+
+            return modelProperty;
         }
 
         public static string DefaultModelId(this Type type)
@@ -176,6 +264,16 @@ namespace Nancy.Swagger
                 default:
                     throw new NotSupportedException(string.Format("HTTP method '{0}' is not supported.", method));
             }
+        }
+
+        private static IList<SwaggerModelPropertyData> GetPropertiesFromType(Type type)
+        {
+            return type.GetProperties()
+                .Select(property => new SwaggerModelPropertyData
+                {
+                    Name = property.Name,
+                    Type = property.PropertyType
+                }).ToList();
         }
 
         public static bool IsContainer(this Type type)

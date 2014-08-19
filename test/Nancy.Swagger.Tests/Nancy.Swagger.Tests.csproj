@@ -60,6 +60,7 @@
     <Compile Include="SwaggerModelDataBuilderTests.cs" />
     <Compile Include="SwaggerModelPropertyDataBuilderTests.cs" />
     <Compile Include="SwaggerModelPropertyDataTests.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="TestModel.cs" />
   </ItemGroup>
   <ItemGroup>

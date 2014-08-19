@@ -1,0 +1,11 @@
+﻿{
+    "swaggerVersion": "1.2",
+    "apis": [
+        {
+            "path": "/api-docs"
+        },
+        {
+            "path": "/testroutes"
+        }
+    ]
+}

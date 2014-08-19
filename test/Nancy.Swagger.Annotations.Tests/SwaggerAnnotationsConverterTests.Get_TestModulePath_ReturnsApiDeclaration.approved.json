@@ -1,0 +1,293 @@
+﻿{
+    "swaggerVersion": "1.2",
+    "basePath": "/",
+    "apis": [
+        {
+            "path": "/testroutes/allowmultipleparam",
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "/testroutes/allowmultipleparam",
+                    "parameters": [
+                        {
+                            "paramType": "query",
+                            "name": "ids",
+                            "allowMultiple": true,
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    ],
+                    "type": "void"
+                }
+            ]
+        },
+        {
+            "path": "/testroutes/anonymoushandler",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Warning: no annotated method found for this route",
+                    "notes": "[example]",
+                    "nickname": "/testroutes/anonymoushandler",
+                    "parameters": [],
+                    "type": "void"
+                }
+            ]
+        },
+        {
+            "path": "/testroutes/models",
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "/testroutes/models",
+                    "parameters": [],
+                    "type": "array",
+                    "items": {
+                        "$ref": "TestModel"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/testroutes/models/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "/testroutes/models/{id}",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    ],
+                    "type": "TestModel"
+                },
+                {
+                    "method": "POST",
+                    "nickname": "/testroutes/models/{id}",
+                    "parameters": [
+                        {
+                            "paramType": "body",
+                            "name": "body",
+                            "required": true,
+                            "type": "TestModel"
+                        }
+                    ],
+                    "responseMessages": [
+                        {
+                            "code": 200,
+                            "message": "Everything OK",
+                            "responseModel": "TestModel"
+                        },
+                        {
+                            "code": 404,
+                            "message": "NotFound"
+                        },
+                        {
+                            "code": 418,
+                            "message": "I'm a teapot"
+                        },
+                        {
+                            "code": 500,
+                            "message": "InternalServerError",
+                            "responseModel": "string"
+                        }
+                    ],
+                    "type": "void"
+                },
+                {
+                    "method": "PUT",
+                    "nickname": "/testroutes/models/{id}",
+                    "parameters": [
+                        {
+                            "paramType": "body",
+                            "name": "body",
+                            "type": "TestModel"
+                        }
+                    ],
+                    "type": "void"
+                },
+                {
+                    "method": "PATCH",
+                    "nickname": "/testroutes/models/{id}",
+                    "parameters": [
+                        {
+                            "paramType": "body",
+                            "name": "body",
+                            "type": "TestModel"
+                        }
+                    ],
+                    "type": "void"
+                },
+                {
+                    "method": "DELETE",
+                    "nickname": "/testroutes/models/{id}",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    ],
+                    "type": "void"
+                },
+                {
+                    "method": "OPTIONS",
+                    "nickname": "/testroutes/models/{id}",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    ],
+                    "type": "void"
+                }
+            ]
+        },
+        {
+            "path": "/testroutes/namedroute",
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "/testroutes/namedroute",
+                    "parameters": [],
+                    "type": "array",
+                    "items": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/testroutes/not-annotated/get",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Warning: no annotated method found for this route",
+                    "notes": "[example]",
+                    "nickname": "/testroutes/not-annotated/get",
+                    "parameters": [],
+                    "type": "void"
+                }
+            ]
+        },
+        {
+            "path": "/testroutes/strings",
+            "operations": [
+                {
+                    "method": "GET",
+                    "summary": "Some summary",
+                    "notes": "Some notes",
+                    "nickname": "/testroutes/strings",
+                    "parameters": [],
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        {
+            "path": "/testroutes/strings/{id}",
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "/testroutes/strings/{id}",
+                    "parameters": [
+                        {
+                            "paramType": "path",
+                            "name": "id",
+                            "required": true,
+                            "type": "integer",
+                            "format": "int32"
+                        },
+                        {
+                            "paramType": "query",
+                            "name": "q",
+                            "description": "Query",
+                            "type": "string"
+                        }
+                    ],
+                    "produces": [
+                        "application/json"
+                    ],
+                    "consumes": [
+                        "application/json",
+                        "application/xml"
+                    ],
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "models": {
+        "TestModel": {
+            "id": "TestModel",
+            "description": "Description of a model",
+            "required": [
+                "ExplicitRequired",
+                "ImplicitRequired"
+            ],
+            "properties": {
+                "Description": {
+                    "description": "Some description",
+                    "type": "string"
+                },
+                "Enum": {
+                    "type": "string",
+                    "enum": [
+                        "male",
+                        "female"
+                    ]
+                },
+                "ExplicitRequired": {
+                    "type": "string"
+                },
+                "ImplicitRequired": {
+                    "description": "Non-nullable value types are implicitly required",
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "ListOfUniqueItems": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "uniqueItems": true
+                },
+                "Maximum": {
+                    "type": "integer",
+                    "format": "int32",
+                    "maximum": 100
+                },
+                "Minimum": {
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 0
+                },
+                "MultipleAnnotations": {
+                    "description": "Property with multiple annotations (minimum, maximum and description)",
+                    "type": "integer",
+                    "format": "int32",
+                    "minimum": 0,
+                    "maximum": 100
+                },
+                "name-by-constructor": {
+                    "type": "string"
+                },
+                "name-by-namedparameter": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

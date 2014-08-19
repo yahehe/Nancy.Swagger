@@ -46,32 +46,9 @@ namespace Nancy.Swagger.Annotations.Tests
             ApproveJsonResponse(_browser.Get("/api-docs/testroutes"));
         }
 
-        private static void ApproveJson(string json)
-        {
-            Approvals.Verify(FormatJson(json));
-        }
-
         private static void ApproveJsonResponse(BrowserResponse response)
         {
-            ApproveJson(response.Body.AsString());
-        }
-
-        private static string FormatJson(string json)
-        {
-            const string indentString = "    ";
-
-            var indentation = 0;
-            var quoteCount = 0;
-
-            var result =
-                from ch in json
-                let quotes = ch == '"' ? quoteCount++ : quoteCount
-                let lineBreak = ch == ',' && quotes % 2 == 0 ? ch + Environment.NewLine + String.Concat(Enumerable.Repeat(indentString, indentation)) : null
-                let openChar = (ch == '{' || ch == '[') && quotes % 2 == 0 ? ch + Environment.NewLine + String.Concat(Enumerable.Repeat(indentString, ++indentation)) : ch.ToString()
-                let closeChar = (ch == '}' || ch == ']') && quotes % 2 == 0 ? Environment.NewLine + String.Concat(Enumerable.Repeat(indentString, --indentation)) + ch : ch.ToString()
-                select lineBreak ?? (openChar.Length > 1 ? openChar : closeChar);
-
-            return String.Concat(result);
+            Approvals.VerifyJson(response.Body.AsString());
         }
     }
 }
