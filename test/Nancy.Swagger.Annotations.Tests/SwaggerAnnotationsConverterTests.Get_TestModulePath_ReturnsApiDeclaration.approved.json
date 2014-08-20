@@ -7,7 +7,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "nickname": "/testroutes/allowmultipleparam",
+                    "nickname": "getTestroutesAllowmultipleparam",
                     "parameters": [
                         {
                             "paramType": "query",
@@ -28,7 +28,7 @@
                     "method": "GET",
                     "summary": "Warning: no annotated method found for this route",
                     "notes": "[example]",
-                    "nickname": "/testroutes/anonymoushandler",
+                    "nickname": "getTestroutesAnonymoushandler",
                     "parameters": [],
                     "type": "void"
                 }
@@ -39,7 +39,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "nickname": "/testroutes/models",
+                    "nickname": "getTestroutesModels",
                     "parameters": [],
                     "type": "array",
                     "items": {
@@ -53,7 +53,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "nickname": "/testroutes/models/{id}",
+                    "nickname": "getTestroutesModelsId",
                     "parameters": [
                         {
                             "paramType": "path",
@@ -67,7 +67,7 @@
                 },
                 {
                     "method": "POST",
-                    "nickname": "/testroutes/models/{id}",
+                    "nickname": "postTestroutesModelsId",
                     "parameters": [
                         {
                             "paramType": "body",
@@ -100,7 +100,7 @@
                 },
                 {
                     "method": "PUT",
-                    "nickname": "/testroutes/models/{id}",
+                    "nickname": "putTestroutesModelsId",
                     "parameters": [
                         {
                             "paramType": "body",
@@ -112,7 +112,7 @@
                 },
                 {
                     "method": "PATCH",
-                    "nickname": "/testroutes/models/{id}",
+                    "nickname": "patchTestroutesModelsId",
                     "parameters": [
                         {
                             "paramType": "body",
@@ -124,7 +124,7 @@
                 },
                 {
                     "method": "DELETE",
-                    "nickname": "/testroutes/models/{id}",
+                    "nickname": "deleteTestroutesModelsId",
                     "parameters": [
                         {
                             "paramType": "path",
@@ -138,7 +138,7 @@
                 },
                 {
                     "method": "OPTIONS",
-                    "nickname": "/testroutes/models/{id}",
+                    "nickname": "optionsTestroutesModelsId",
                     "parameters": [
                         {
                             "paramType": "path",
@@ -157,7 +157,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "nickname": "/testroutes/namedroute",
+                    "nickname": "GetNamedRoute",
                     "parameters": [],
                     "type": "array",
                     "items": {
@@ -174,7 +174,7 @@
                     "method": "GET",
                     "summary": "Warning: no annotated method found for this route",
                     "notes": "[example]",
-                    "nickname": "/testroutes/not-annotated/get",
+                    "nickname": "getTestroutesNotAnnotatedGet",
                     "parameters": [],
                     "type": "void"
                 }
@@ -187,7 +187,7 @@
                     "method": "GET",
                     "summary": "Some summary",
                     "notes": "Some notes",
-                    "nickname": "/testroutes/strings",
+                    "nickname": "getTestroutesStrings",
                     "parameters": [],
                     "type": "array",
                     "items": {
@@ -201,7 +201,7 @@
             "operations": [
                 {
                     "method": "GET",
-                    "nickname": "/testroutes/strings/{id}",
+                    "nickname": "getTestroutesStringsId",
                     "parameters": [
                         {
                             "paramType": "path",

@@ -29,10 +29,10 @@ namespace Nancy.Swagger.Annotations.Tests
 
             // Misc other cases
             Get["GetNamedRoute", "/namedroute"] = _ => GetNamedRoute();
-            Get["GetAllowMultipleParam", "/allowmultipleparam"] = _ => GetWithAllowMultipleParam(Request.Query.ids);
+            Get["/allowmultipleparam"] = _ => GetWithAllowMultipleParam(Request.Query.ids);
         }
 
-        [SwaggerRoute("GetAllowMultipleParam")]
+        [SwaggerRoute(HttpMethod.Get, "/allowmultipleparam")]
         private dynamic GetWithAllowMultipleParam(
             [SwaggerRouteParam(ParameterType.Query, "ids")] int[] ids)
         {

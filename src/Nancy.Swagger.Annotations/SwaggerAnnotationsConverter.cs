@@ -113,9 +113,10 @@ namespace Nancy.Swagger.Annotations
             {
                 ApiPath = route.Description.Path,
                 ResourcePath = module.ModulePath.EnsureForwardSlash(),
-
                 OperationMethod = route.Description.Method.ToHttpMethod(),
-                OperationNickname = route.Description.Path,
+                OperationNickname = string.IsNullOrEmpty(route.Description.Name)
+                                        ? string.Format("{0}/{1}", route.Description.Method.ToLower(), route.Description.Path).ToCamelCase()
+                                        : route.Description.Name
             };
 
             var routeId = RouteId.Create(module, route);
