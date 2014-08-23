@@ -146,7 +146,9 @@ namespace Nancy.Swagger.Annotations
                     
                     if (attr.Model != null) 
                     {
-                        msg.ResponseModel = Primitive.IsPrimitive(attr.Model) ? Primitive.FromType(attr.Model).Type : attr.Model.DefaultModelId();
+                        msg.ResponseModel = Primitive.IsPrimitive(attr.Model) 
+                                                ? Primitive.FromType(attr.Model).Type
+                                                : SwaggerConfig.ModelIdConvention(attr.Model);
                     }
 
                     return msg;

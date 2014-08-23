@@ -30,6 +30,14 @@ namespace Nancy.Swagger.Annotations.Tests
             // Misc other cases
             Get["GetNamedRoute", "/namedroute"] = _ => GetNamedRoute();
             Get["/allowmultipleparam"] = _ => GetWithAllowMultipleParam(Request.Query.ids);
+            Get["/model-with-duplicate-typename"] = _ => GetModelWithDuplicateTypeName();
+        }
+
+        [SwaggerRoute(HttpMethod.Get, "/model-with-duplicate-typename")]
+        [SwaggerRoute(Response=typeof(InOtherNamespace.TestModel))]
+        private dynamic GetModelWithDuplicateTypeName()
+        {
+            throw new NotImplementedException();
         }
 
         [SwaggerRoute(HttpMethod.Get, "/allowmultipleparam")]
