@@ -1,6 +1,7 @@
-﻿using Nancy.Swagger.Services;
+﻿using Nancy.Swagger.Demo.Models;
+using Nancy.Swagger.Services;
 
-namespace Nancy.Swagger.Demo
+namespace Nancy.Swagger.Demo.ModelDataProviders
 {
     public class AddressModelDataProvider : ISwaggerModelDataProvider
     {

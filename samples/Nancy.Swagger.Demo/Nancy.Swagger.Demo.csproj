@@ -76,15 +76,15 @@
     <Compile Include="..\..\etc\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Address.cs" />
-    <Compile Include="AddressModelDataProvider.cs" />
+    <Compile Include="Models\Address.cs" />
+    <Compile Include="ModelDataProviders\AddressModelDataProvider.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="HomeMetadataModule.cs" />
-    <Compile Include="HomeModule.cs" />
+    <Compile Include="Modules\HomeMetadataModule.cs" />
+    <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserModelDataProvider.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="ModelDataProviders\UserModelDataProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Nancy.Swagger\Nancy.Swagger.csproj">

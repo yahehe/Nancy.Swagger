@@ -1,4 +1,4 @@
-namespace Nancy.Swagger.Demo
+namespace Nancy.Swagger.Demo.Models
 {
     public enum Role
     {

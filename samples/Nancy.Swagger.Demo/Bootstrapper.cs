@@ -9,7 +9,7 @@ namespace Nancy.Swagger.Demo
             base.ConfigureConventions(nancyConventions);
 
             nancyConventions.StaticContentsConventions
-                .Add(StaticContentConventionBuilder.AddDirectory("docs","swagger-ui"));
+                .Add(StaticContentConventionBuilder.AddDirectory("docs", "swagger-ui"));
         }
     }
 }

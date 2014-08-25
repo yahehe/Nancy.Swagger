@@ -1,13 +1,16 @@
 ﻿using Nancy.ModelBinding;
+using Nancy.Swagger.Demo.Models;
 
-namespace Nancy.Swagger.Demo
+namespace Nancy.Swagger.Demo.Modules
 {
     public class HomeModule : NancyModule
     {
         public HomeModule()
         {
-            Get["Home", "/"] = parameters => "Hello!";
+            Get["Home", "/"] = _ => "Hello Swagger!";
+
             Get["GetUsers", "/users"] = _ => new[] { new User { Name = "Vincent Vega", Age = 45 } };
+
             Post["PostUsers", "/users"] = _ =>
             {
                 var result = this.BindAndValidate<User>();
