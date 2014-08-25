@@ -9,7 +9,7 @@
                     "method": "GET",
                     "summary": "Warning: no annotated method found for this route",
                     "notes": "[example]",
-                    "nickname": "/api-docs",
+                    "nickname": "getApiDocs",
                     "parameters": [],
                     "type": "void"
                 }
@@ -22,7 +22,7 @@
                     "method": "GET",
                     "summary": "Warning: no annotated method found for this route",
                     "notes": "[example]",
-                    "nickname": "/api-docs/{resourcePath*}",
+                    "nickname": "getApiDocsResourcePath",
                     "parameters": [],
                     "type": "void"
                 }

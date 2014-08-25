@@ -1,10 +1,11 @@
-﻿using System;
-using System.Linq;
-using Nancy.Routing;
-using System.Collections;
+﻿using Nancy.Routing;
 using Swagger.ObjectModel;
 using Swagger.ObjectModel.ApiDeclaration;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Nancy.Swagger
 {
@@ -29,8 +30,8 @@ namespace Nancy.Swagger
         public static Operation ToOperation(this SwaggerRouteData routeData)
         {
             var operation = routeData.OperationModel.ToDataType<Operation>();
-            
-            operation.Nickname = routeData.OperationNickname;
+
+            operation.Nickname = SwaggerConfig.NicknameConvention(routeData);
             operation.Summary = routeData.OperationSummary;
             operation.Method = routeData.OperationMethod;
             operation.Notes = routeData.OperationNotes;
@@ -282,6 +283,46 @@ namespace Nancy.Swagger
                 && !typeof(string).IsAssignableFrom(type);
         }
 
+        public static string ToCamelCase(this string val)
+        {
+            if (string.IsNullOrEmpty(val))
+            {
+                return val;
+            }
+
+            var sb = new StringBuilder();
+            var nextToUpper = true;
+            foreach (var c in val.Trim())
+            {
+                if (char.IsLetter(c))
+                {
+                    if (sb.Length == 0)
+                    {
+                        sb.Append(char.ToLower(c));
+                    }
+                    else
+                    {
+                        sb.Append(nextToUpper ? char.ToUpper(c) : c);
+                    }
+                    nextToUpper = false;
+                }
+                else
+                {
+                    if (char.IsDigit(c))
+                    {
+                        if (sb.Length == 0)
+                        {
+                            sb.Append("_");
+                        }
+                        sb.Append(nextToUpper ? char.ToUpper(c) : c);
+                    }
+                    nextToUpper = true;
+                }
+            }
+
+            return sb.ToString();
+        }
+        
         internal static bool IsImplicitlyRequired(this Type type)
         {
             return type.IsValueType && !IsNullable(type);

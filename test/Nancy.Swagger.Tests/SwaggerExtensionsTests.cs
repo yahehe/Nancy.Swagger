@@ -1,7 +1,9 @@
-﻿using Swagger.ObjectModel;
+﻿using Should;
+using Swagger.ObjectModel;
 using Swagger.ObjectModel.ApiDeclaration;
 using System.Linq;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Nancy.Swagger.Tests
 {
@@ -77,6 +79,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = typeof(TestModel).DefaultModelId(),
                     Parameters = Enumerable.Empty<Parameter>()
                 }
@@ -94,6 +97,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "array",
                     Items = new Items { Ref = typeof(TestModel).DefaultModelId() },
                     Parameters = Enumerable.Empty<Parameter>()
@@ -113,6 +117,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "string",
                     Parameters = Enumerable.Empty<Parameter>()
                 }
@@ -130,6 +135,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "array",
                     Items = new Items { Type = "string" },
                     Parameters = Enumerable.Empty<Parameter>()
@@ -147,6 +153,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "void",
                     Parameters = Enumerable.Empty<Parameter>()
                 }
@@ -259,6 +266,26 @@ namespace Nancy.Swagger.Tests
                 },
                 "AllowMultiple is true when container type is used in Query param"
             );
+        }
+
+        [Theory]
+        [InlineData(null, null)]
+        [InlineData("", "")]
+        [InlineData("a", "a")]
+        [InlineData("ab", "ab")]
+        [InlineData("aB", "aB")]
+        [InlineData("AB", "aB")]
+        [InlineData("Ab", "ab")]
+        [InlineData(" a", "a")]
+        [InlineData(" A", "a")]
+        [InlineData("a b", "aB")]
+        [InlineData("1", "_1")]
+        [InlineData("a1b", "a1B")]
+        public void ToCamelCase_TestCases(string value, string expected)
+        {
+            var valueString = value == null ? "null" : string.Format("\"{0}\"", value);
+            var expectedString = expected == null ? "null" : string.Format("\"{0}\"", expected);
+            value.ToCamelCase().ShouldEqual(expected, string.Format("{0}.ToCamelCase() should equal {1}", valueString, expectedString));
         }
     }
 }
