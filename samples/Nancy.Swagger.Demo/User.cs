@@ -1,9 +1,9 @@
-﻿namespace Nancy.Swagger.Demo
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
+namespace Nancy.Swagger.Demo
+{
     public class User
     {
         [Required]
@@ -19,21 +19,5 @@
         public Role Role { get; set; }
 
         public IList<string> Tags { get; set; }
-    }
-
-    public class Address
-    {
-        public string Address1 { get; set; }
-        public string Address2 { get; set; }
-        public string Town { get; set; }
-        public string County { get; set; }
-        public string  PostCode { get; set; }
-    }
-
-    public enum Role
-    {
-        User = 0,
-        Admin = 1,
-        God = 2 
     }
 }

@@ -29,12 +29,12 @@ namespace Nancy.Swagger
         public static string ResourceListingPath { get; set; }
 
         /// <summary>
-        /// Returns a unique id for the given <paramref name="SwaggerRouteData"/>
+        /// Returns a unique id for the given <paramref name="route"/>
         /// that can be used by tools reading the output for further and easier
         /// manipulation.
         /// </summary>
         /// <param name="route">The route for which a nickname is returned.</param>
-        /// <returns>a unique id for the given <paramref name="Route"/> that can
+        /// <returns>a unique id for the given <paramref name="route"/> that can
         /// be used by tools reading the output for further and easier 
         /// manipulation.</returns>        
         public static string DefaultNicknameConvention(SwaggerRouteData route)

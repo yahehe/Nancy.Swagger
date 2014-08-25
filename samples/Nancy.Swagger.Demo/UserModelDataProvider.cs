@@ -1,7 +1,7 @@
-﻿namespace Nancy.Swagger.Demo
-{
-    using Nancy.Swagger.Services;
+﻿using Nancy.Swagger.Services;
 
+namespace Nancy.Swagger.Demo
+{
     public class UserModelDataProvider : ISwaggerModelDataProvider
     {
         public SwaggerModelData GetModelData()
@@ -17,20 +17,6 @@
                     .Required(true)
                     .Minimum(1)
                     .Maximum(100);
-            });
-        }
-    }
-
-    public class AddressModelDataProvider : ISwaggerModelDataProvider
-    {
-        public SwaggerModelData GetModelData()
-        {
-            return SwaggerModelData.ForType<Address>(with =>
-            {
-                with.Description("An address of a user");
-                with.Property(x => x.Address1)
-                    .Description("First Line of Address")
-                    .Required(true);
             });
         }
     }

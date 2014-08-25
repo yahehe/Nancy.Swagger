@@ -1,7 +1,7 @@
-﻿namespace Nancy.Swagger.Demo
-{
-    using Nancy.Metadata.Module;
+﻿using Nancy.Metadata.Module;
 
+namespace Nancy.Swagger.Demo
+{
     public class HomeMetadataModule : MetadataModule<SwaggerRouteData>
     {
         public HomeMetadataModule()
@@ -21,7 +21,7 @@
                 with.Response(201, "Created a User");
                 with.Response(422, "Invalid input");
                 with.Model<User>();
-                with.BodyParam<User>("A User object", required:true);
+                with.BodyParam<User>("A User object", required: true);
                 with.Notes("Creates a user with the shown schema for our awesome app");
             });
         }
