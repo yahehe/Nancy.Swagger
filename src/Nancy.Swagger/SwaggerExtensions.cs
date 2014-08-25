@@ -31,7 +31,7 @@ namespace Nancy.Swagger
         {
             var operation = routeData.OperationModel.ToDataType<Operation>();
 
-            operation.Nickname = routeData.OperationNickname;
+            operation.Nickname = SwaggerConfig.NicknameConvention(routeData);
             operation.Summary = routeData.OperationSummary;
             operation.Method = routeData.OperationMethod;
             operation.Notes = routeData.OperationNotes;

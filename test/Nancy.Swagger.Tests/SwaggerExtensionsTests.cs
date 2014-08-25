@@ -79,6 +79,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = typeof(TestModel).DefaultModelId(),
                     Parameters = Enumerable.Empty<Parameter>()
                 }
@@ -96,6 +97,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "array",
                     Items = new Items { Ref = typeof(TestModel).DefaultModelId() },
                     Parameters = Enumerable.Empty<Parameter>()
@@ -115,6 +117,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "string",
                     Parameters = Enumerable.Empty<Parameter>()
                 }
@@ -132,6 +135,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "array",
                     Items = new Items { Type = "string" },
                     Parameters = Enumerable.Empty<Parameter>()
@@ -149,6 +153,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
+                    Nickname = "get",
                     Type = "void",
                     Parameters = Enumerable.Empty<Parameter>()
                 }
