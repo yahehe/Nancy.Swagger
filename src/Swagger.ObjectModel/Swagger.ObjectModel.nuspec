@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
-<package >
+<package>
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
+    <licenseNames>MIT</licenseNames>
+    <repositoryUrl>https://github.com/khellang/Nancy.Swagger.git</repositoryUrl>
+    <repositoryType>git</repositoryType>
     <licenseUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/khellang/Nancy.Swagger</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/etc/logo.png</iconUrl>
