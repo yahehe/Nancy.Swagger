@@ -1,5 +1,6 @@
 ﻿using Nancy.Routing;
 using Nancy.Swagger.Annotations.Attributes;
+using Nancy.Swagger.Annotations.Enrichers;
 using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
 using Swagger.ObjectModel.ApiDeclaration;
@@ -14,11 +15,16 @@ namespace Nancy.Swagger.Annotations
     {
         private NancyContext _context;
         private INancyModuleCatalog _moduleCatalog;
+        private ISwaggerDataEnricherCatalog _swaggerModelDataEnricherCatalog;
 
-        public SwaggerAnnotationsConverter(INancyModuleCatalog moduleCatalog, NancyContext context)
+        public SwaggerAnnotationsConverter(
+            INancyModuleCatalog moduleCatalog, 
+            NancyContext context,
+            ISwaggerDataEnricherCatalog swaggerModelDataEnricherCatalog)
         {
             _moduleCatalog = moduleCatalog;
             _context = context;
+            _swaggerModelDataEnricherCatalog = swaggerModelDataEnricherCatalog;
         }
 
         protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
@@ -54,7 +60,7 @@ namespace Nancy.Swagger.Annotations
                 modelData.Description = modelAttr.Description;
             }
 
-            return modelData;
+            return Enrich(modelData);
         }
 
         private SwaggerModelPropertyData CreateSwaggerModelPropertyData(PropertyInfo pi)
@@ -76,7 +82,7 @@ namespace Nancy.Swagger.Annotations
                 modelProperty.Enum = attr.Enum ?? modelProperty.Enum;
             }
 
-            return modelProperty;
+            return Enrich(modelProperty, pi);
         }
 
         private SwaggerParameterData CreateSwaggerParameterData(ParameterInfo pi)
@@ -104,7 +110,7 @@ namespace Nancy.Swagger.Annotations
                 parameter.Description = attr.Description ?? parameter.Description;
             }
 
-            return parameter;
+            return Enrich(parameter, pi);
         }
 
         private SwaggerRouteData CreateSwaggerRouteData(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
@@ -160,7 +166,7 @@ namespace Nancy.Swagger.Annotations
                 .Select(CreateSwaggerParameterData)
                 .ToList();
 
-            return data;
+            return Enrich(data);
         }
 
         private IEnumerable<SwaggerRouteData> ToSwaggerRouteData(INancyModule module)
@@ -187,6 +193,46 @@ namespace Nancy.Swagger.Annotations
 
             return module.Routes
                 .Select(route => CreateSwaggerRouteData(module, route, routeHandlers));
+        }
+
+        private SwaggerModelData Enrich(SwaggerModelData modelData)
+        {
+            foreach (var enricher in _swaggerModelDataEnricherCatalog)
+            {
+                enricher.Enrich(modelData);
+            }
+
+            return modelData;
+        }
+
+        private SwaggerModelPropertyData Enrich(SwaggerModelPropertyData modelPropertyData, PropertyInfo pi)
+        {
+            foreach (var enricher in _swaggerModelDataEnricherCatalog)
+            {
+                enricher.Enrich(modelPropertyData, pi);
+            }
+
+            return modelPropertyData;
+        }
+
+        private SwaggerRouteData Enrich(SwaggerRouteData routeData)
+        {
+            foreach (var enricher in _swaggerModelDataEnricherCatalog)
+            {
+                enricher.Enrich(routeData);
+            }
+
+            return routeData;
+        }
+
+        private SwaggerParameterData Enrich(SwaggerParameterData parameterData, ParameterInfo pi)
+        {
+            foreach (var enricher in _swaggerModelDataEnricherCatalog)
+            {
+                enricher.Enrich(parameterData, pi);
+            }
+
+            return parameterData;
         }
     }
 }

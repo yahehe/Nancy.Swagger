@@ -1,5 +1,7 @@
 ﻿using ApprovalTests;
 using ApprovalTests.Reporters;
+using Nancy.Swagger.Annotations.Tests.Testdata;
+using Nancy.Swagger.Annotations.Tests.Testdata.JsonNetEnricher;
 using Nancy.Swagger.Modules;
 using Nancy.Swagger.Services;
 using Nancy.Testing;
@@ -21,6 +23,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
                 with.Module<SwaggerModule>();
                 with.Module<TestRoutesModule>();
+                with.Module<JsonNetEnricherRoutesModule>();
             });
 
             _browser = new Browser(bootstrapper);
@@ -42,6 +45,12 @@ namespace Nancy.Swagger.Annotations.Tests
         public void Get_TestModulePath_ReturnsApiDeclaration()
         {
             ApproveJsonResponse(_browser.Get("/api-docs/testroutes"));
+        }
+
+        [Fact]
+        public void Get_JsonNetEnricherModulePath_ReturnsApiDeclaration()
+        {
+            ApproveJsonResponse(_browser.Get("/api-docs/json-net-enricher-routes"));
         }
 
         private static void ApproveJsonResponse(BrowserResponse response)

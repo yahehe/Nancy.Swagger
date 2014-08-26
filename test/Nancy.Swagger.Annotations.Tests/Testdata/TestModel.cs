@@ -1,7 +1,7 @@
 ﻿using Nancy.Swagger.Annotations.Attributes;
 using System.Collections.Generic;
 
-namespace Nancy.Swagger.Annotations.Tests
+namespace Nancy.Swagger.Annotations.Tests.Testdata
 {
     [SwaggerModel("Description of a model")]
     public class TestModel
