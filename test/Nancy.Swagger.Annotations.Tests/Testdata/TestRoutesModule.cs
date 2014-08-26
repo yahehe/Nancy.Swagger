@@ -3,7 +3,7 @@ using Nancy.Swagger.Annotations.Attributes;
 using Swagger.ObjectModel.ApiDeclaration;
 using System;
 
-namespace Nancy.Swagger.Annotations.Tests
+namespace Nancy.Swagger.Annotations.Tests.Testdata
 {
     public class TestRoutesModule : NancyModule
     {
