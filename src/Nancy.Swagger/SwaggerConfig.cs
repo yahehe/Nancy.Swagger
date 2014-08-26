@@ -15,8 +15,11 @@ namespace Nancy.Swagger
         /// </summary>
         public const string DefaultResourceListingPath = "api-docs";
 
+        public const string DefaultSwaggerUIPath = "swagger-ui";
+
         static SwaggerConfig()
         {
+            SwaggerUIPath = DefaultSwaggerUIPath;
             ResourceListingPath = DefaultResourceListingPath;
             ModelIdConvention = DefaultModelIdConvention;
             NicknameConvention = DefaultNicknameConvention;        
@@ -39,6 +42,8 @@ namespace Nancy.Swagger
         /// Default value is <see cref="DefaultResourceListingPath"/>.
         /// </summary>
         public static string ResourceListingPath { get; set; }
+
+        public static string SwaggerUIPath { get; set; }        
 
         /// <summary>
         /// Returns a unique model id for the given <paramref name="type"/>. 

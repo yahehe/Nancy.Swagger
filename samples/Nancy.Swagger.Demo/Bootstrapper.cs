@@ -1,15 +1,12 @@
-﻿using Nancy.Conventions;
-
-namespace Nancy.Swagger.Demo
+﻿namespace Nancy.Swagger.Demo
 {
     public class Bootstrapper : DefaultNancyBootstrapper
     {
-        protected override void ConfigureConventions(NancyConventions nancyConventions)
+        protected override void ApplicationStartup(TinyIoc.TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines)
         {
-            base.ConfigureConventions(nancyConventions);
+            SwaggerConfig.SwaggerUIPath = "docs";
 
-            nancyConventions.StaticContentsConventions
-                .Add(StaticContentConventionBuilder.AddDirectory("docs", "swagger-ui"));
+            base.ApplicationStartup(container, pipelines);
         }
     }
 }
