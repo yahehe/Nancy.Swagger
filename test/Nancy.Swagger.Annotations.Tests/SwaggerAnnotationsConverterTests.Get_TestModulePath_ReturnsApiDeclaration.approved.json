@@ -153,6 +153,17 @@
             ]
         },
         {
+            "path": "/testroutes/model-with-duplicate-typename",
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "getTestroutesModelWithDuplicateTypename",
+                    "parameters": [],
+                    "type": "InOtherNamespaceTestModel"
+                }
+            ]
+        },
+        {
             "path": "/testroutes/namedroute",
             "operations": [
                 {
@@ -230,6 +241,11 @@
         }
     ],
     "models": {
+        "InOtherNamespaceTestModel": {
+            "id": "InOtherNamespaceTestModel",
+            "required": [],
+            "properties": {}
+        },
         "TestModel": {
             "id": "TestModel",
             "description": "Description of a model",

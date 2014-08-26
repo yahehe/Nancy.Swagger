@@ -18,7 +18,7 @@ namespace Nancy.Swagger.Tests
             }.ToModelProperty().ShouldEqual(
                 new ModelProperty
                 {
-                    Ref = typeof(TestModel).DefaultModelId()
+                    Ref = SwaggerConfig.ModelIdConvention(typeof(TestModel))
                 }
             );
         }
@@ -62,7 +62,7 @@ namespace Nancy.Swagger.Tests
                 new ModelProperty
                 {
                     Type = "array",
-                    Items = new Items { Ref = typeof(TestModel).DefaultModelId() }
+                    Items = new Items { Ref = SwaggerConfig.ModelIdConvention(typeof(TestModel)) }
                 },
                 "String return type"
             );
@@ -80,8 +80,7 @@ namespace Nancy.Swagger.Tests
                 {
                     Method = HttpMethod.Get,
                     Nickname = "get",
-                    Type = typeof(TestModel).DefaultModelId(),
-                    Parameters = Enumerable.Empty<Parameter>()
+                    Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),                    Parameters = Enumerable.Empty<Parameter>()
                 }
             );
         }
@@ -99,7 +98,7 @@ namespace Nancy.Swagger.Tests
                     Method = HttpMethod.Get,
                     Nickname = "get",
                     Type = "array",
-                    Items = new Items { Ref = typeof(TestModel).DefaultModelId() },
+                    Items = new Items { Ref = SwaggerConfig.ModelIdConvention(typeof(TestModel)) },
                     Parameters = Enumerable.Empty<Parameter>()
                 },
                 "String return type"
@@ -172,7 +171,7 @@ namespace Nancy.Swagger.Tests
                 {
                     Name = "body",
                     ParamType = ParameterType.Body,
-                    Type = typeof(TestModel).DefaultModelId(),
+                    Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),
                 },
                 "Type field MUST be used to link to other models."
             );
@@ -191,7 +190,7 @@ namespace Nancy.Swagger.Tests
                 {
                     Name = "body",
                     ParamType = ParameterType.Body,
-                    Type = typeof(TestModel).DefaultModelId(),
+                    Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),
                 },
                 "If paramType is \"body\", the name is used only for Swagger-UI and Swagger-Codegen. In this case, the name MUST be \"body\"."
             );
@@ -209,7 +208,7 @@ namespace Nancy.Swagger.Tests
                 {
                     Name = "body",
                     ParamType = ParameterType.Body,
-                    Type = typeof(TestModel).DefaultModelId(),
+                    Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),
                 },
                 "If paramType is \"body\", the name is used only for Swagger-UI and Swagger-Codegen. In this case, the name MUST be \"body\"."
             );

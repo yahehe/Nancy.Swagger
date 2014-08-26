@@ -84,18 +84,18 @@ namespace Nancy.Swagger
                     return dataType;
                 }
 
-                dataType.Items = new Items { Ref = itemsType.DefaultModelId() };
+                dataType.Items = new Items { Ref = SwaggerConfig.ModelIdConvention(itemsType) };
 
                 return dataType;
             }
 
             if (isTopLevel)
             {
-                dataType.Ref = type.DefaultModelId();
+                dataType.Ref = SwaggerConfig.ModelIdConvention(type);
                 return dataType;
             }
 
-            dataType.Type = type.DefaultModelId();
+            dataType.Type = SwaggerConfig.ModelIdConvention(type);
 
             return dataType;
         }
@@ -165,7 +165,7 @@ namespace Nancy.Swagger
 
                 var id = modelDataForClassProperty == null
                     ? swaggerModelPropertyData.Type.Name
-                    : modelDataForClassProperty.ModelType.DefaultModelId();
+                    : SwaggerConfig.ModelIdConvention(modelDataForClassProperty.ModelType);
 
                 var description = modelDataForClassProperty == null
                     ? swaggerModelPropertyData.Description
@@ -198,7 +198,7 @@ namespace Nancy.Swagger
 
             var topLevelModel = new Model
             {
-                Id = model.ModelType.DefaultModelId(),
+                Id = SwaggerConfig.ModelIdConvention(model.ModelType),
                 Description = model.Description,
                 Required = model.Properties
                     .Where(p => p.Required || p.Type.IsImplicitlyRequired())
@@ -235,15 +235,6 @@ namespace Nancy.Swagger
             }
 
             return modelProperty;
-        }
-
-        public static string DefaultModelId(this Type type)
-        {
-            // TODO: This won't scale as you'd get collisions between types with the same 
-            // name but different namespace. Could use FullName, but that's a bit fugly. 
-            // perhaps this is a reasonable default but the DSL could provide a facility for 
-            // overriding a given model's ID?
-            return type.Name;
         }
 
         private static HttpMethod Convert(string method)
