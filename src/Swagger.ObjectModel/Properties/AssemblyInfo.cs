@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Swagger.ObjectModel")]
@@ -8,3 +9,5 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 [assembly: Guid("61e06a51-5890-4ffe-a7cc-388a09b32b05")]
+
+[assembly: InternalsVisibleTo("Swagger.ObjectModel.Tests")]

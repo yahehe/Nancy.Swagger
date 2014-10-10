@@ -3,7 +3,7 @@
 namespace Swagger.ObjectModel.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class SwaggerPropertyAttribute : Attribute
+    internal class SwaggerPropertyAttribute : Attribute
     {
         public SwaggerPropertyAttribute(string name, bool required = false)
         {

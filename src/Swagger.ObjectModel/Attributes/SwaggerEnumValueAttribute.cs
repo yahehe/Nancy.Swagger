@@ -3,7 +3,7 @@
 namespace Swagger.ObjectModel.Attributes
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class SwaggerEnumValueAttribute : Attribute
+    internal class SwaggerEnumValueAttribute : Attribute
     {
         public SwaggerEnumValueAttribute(string value)
         {
