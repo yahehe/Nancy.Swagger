@@ -4,7 +4,7 @@ using Swagger.ObjectModel.Attributes;
 namespace Swagger.ObjectModel.ResourceListing
 {
     /// <summary>
-    /// The Info object provides metadata about the API. 
+    /// The Info object provides metadata about the API.
     /// The metadata can be used by the clients if needed, and can be presented in the Swagger-UI for convenience.
     /// </summary>
     /// <example>

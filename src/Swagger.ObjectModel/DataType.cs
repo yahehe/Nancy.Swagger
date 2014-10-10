@@ -45,7 +45,7 @@ namespace Swagger.ObjectModel
         /// A fixed list of possible values.
         /// </summary>
         /// <remarks>
-        /// If this field is used in conjunction with the defaultValue field, 
+        /// If this field is used in conjunction with the defaultValue field,
         /// then the default value MUST be one of the values defined in the enum.
         /// </remarks>
         [SwaggerProperty("enum")]
@@ -55,21 +55,21 @@ namespace Swagger.ObjectModel
         /// The minimum valid value for the type, inclusive.
         /// </summary>
         /// <remarks>
-        /// If this field is used in conjunction with the defaultValue field, 
+        /// If this field is used in conjunction with the defaultValue field,
         /// then the default value MUST be higher than or equal to this value.
         /// </remarks>
         [SwaggerProperty("minimum")]
         public long? Minimum { get; set; }
 
         /// <summary>
-        /// The maximum valid value for the type, inclusive. If this field is used in conjunction with the defaultValue field, 
+        /// The maximum valid value for the type, inclusive. If this field is used in conjunction with the defaultValue field,
         /// then the default value MUST be lower than or equal to this value.
         /// </summary>
         [SwaggerProperty("maximum")]
         public long? Maximum { get; set; }
 
         /// <summary>
-        /// The type definition of the values in the container. 
+        /// The type definition of the values in the container.
         /// </summary>
         /// <remarks>
         /// A container MAY NOT be nested in another container.
@@ -78,7 +78,7 @@ namespace Swagger.ObjectModel
         public Items Items { get; set; }
 
         /// <summary>
-        /// A flag to note whether the container allows duplicate values or not. 
+        /// A flag to note whether the container allows duplicate values or not.
         /// If the value is set to <c>true</c>, then the array acts as a set.
         /// </summary>
         [SwaggerProperty("uniqueItems")]

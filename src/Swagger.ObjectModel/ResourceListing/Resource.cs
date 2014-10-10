@@ -17,7 +17,7 @@ namespace Swagger.ObjectModel.ResourceListing
     {
         /// <summary>
         /// A relative path to the API declaration from the path used to retrieve this Resource Listing.
-        /// This path does not necessarily have to correspond to the URL which actually serves this 
+        /// This path does not necessarily have to correspond to the URL which actually serves this
         /// resource in the API but rather where the resource listing itself is served.
         /// </summary>
         /// <remarks>

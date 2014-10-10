@@ -7,8 +7,8 @@ namespace Swagger.ObjectModel.ApiDeclaration
     /// A Model Object holds the definition of a new model for this API Declaration.
     /// </summary>
     /// <remarks>
-    /// Models in Swagger allow for inheritance. 
-    /// The inheritance is controlled by two fields - <see cref="SubTypes"/> to give the name of 
+    /// Models in Swagger allow for inheritance.
+    /// The inheritance is controlled by two fields - <see cref="SubTypes"/> to give the name of
     /// the models extending this definition, and <see cref="Discriminator"/> to support polymorphism.
     /// </remarks>
     /// <example>
@@ -72,16 +72,16 @@ namespace Swagger.ObjectModel.ApiDeclaration
         public IDictionary<string, ModelProperty> Properties { get; set; }
 
         /// <summary>
-        /// List of the model ids that inherit from this model. 
-        /// Sub models inherit all the properties of the parent model. 
-        /// Since inheritance is transitive, if the parent of a model inherits 
-        /// from another model, its sub-model will include all properties. 
-        /// As such, if you have Foo->Bar->Baz, then Baz will inherit the properties of Bar and Foo. 
+        /// List of the model ids that inherit from this model.
+        /// Sub models inherit all the properties of the parent model.
+        /// Since inheritance is transitive, if the parent of a model inherits
+        /// from another model, its sub-model will include all properties.
+        /// As such, if you have Foo->Bar->Baz, then Baz will inherit the properties of Bar and Foo.
         /// </summary>
         /// <remarks>
         /// There MUST NOT be a cyclic definition of inheritance.
         /// There also MUST NOT be a case of multiple inheritance.
-        /// A sub-model definition MUST NOT override the properties of any of its ancestors. 
+        /// A sub-model definition MUST NOT override the properties of any of its ancestors.
         /// All sub-models MUST be defined in the same API Declaration.
         /// </remarks>
         [SwaggerProperty("subTypes")]

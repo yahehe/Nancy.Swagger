@@ -3,8 +3,8 @@ using Swagger.ObjectModel.Attributes;
 namespace Swagger.ObjectModel.ApiDeclaration
 {
     /// <summary>
-    /// The Response Message Object describes a single possible response message that can be 
-    /// returned from the operation call, and maps to the responseMessages field in the Operation Object. 
+    /// The Response Message Object describes a single possible response message that can be
+    /// returned from the operation call, and maps to the responseMessages field in the Operation Object.
     /// Each Response Message allows you to give further details as to why the HTTP status code may be received.
     /// </summary>
     /// <example>

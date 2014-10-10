@@ -92,21 +92,21 @@ namespace Swagger.ObjectModel.ApiDeclaration
         public IEnumerable<ResponseMessage> ResponseMessages { get; set; }
 
         /// <summary>
-        /// A list of MIME types this operation can produce. 
+        /// A list of MIME types this operation can produce.
         /// This is overrides the global produces definition at the root of the API Declaration.
         /// </summary>
         [SwaggerProperty("produces")]
         public IEnumerable<string> Produces { get; set; }
 
         /// <summary>
-        /// A list of MIME types this operation can consume. 
+        /// A list of MIME types this operation can consume.
         /// This is overrides the global consumes definition at the root of the API Declaration.
         /// </summary>
         [SwaggerProperty("consumes")]
         public IEnumerable<string> Consumes { get; set; }
 
         /// <summary>
-        /// Declares this operation to be deprecated. 
+        /// Declares this operation to be deprecated.
         /// Usage of the declared operation should be refrained.
         /// </summary>
         [SwaggerProperty("deprecated")]

@@ -87,7 +87,7 @@ namespace Swagger.ObjectModel.ResourceListing
 
         /// <summary>
         /// Specifies the Swagger Specification version being used.
-        /// It can be used by the Swagger UI and other clients to interpret the API listing. 
+        /// It can be used by the Swagger UI and other clients to interpret the API listing.
         /// </summary>
         /// <remarks>
         /// The value MUST be an existing Swagger specification version.
@@ -108,8 +108,8 @@ namespace Swagger.ObjectModel.ResourceListing
         public string ApiVersion { get; set; }
 
         /// <summary>
-        /// Provides metadata about the API. 
-        /// The metadata can be used by the clients if needed, 
+        /// Provides metadata about the API.
+        /// The metadata can be used by the clients if needed,
         /// and can be presented in the Swagger-UI for convenience.
         /// </summary>
         [SwaggerProperty("info")]

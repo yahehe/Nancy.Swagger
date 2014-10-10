@@ -83,7 +83,7 @@ namespace Swagger.ObjectModel.ApiDeclaration
     public class Api : SwaggerModel
     {
         /// <summary>
-        /// The relative path to the operation, from the basePath, which this operation describes. 
+        /// The relative path to the operation, from the basePath, which this operation describes.
         /// </summary>
         /// <remarks>
         /// The value SHOULD be in a relative (URL) path format.

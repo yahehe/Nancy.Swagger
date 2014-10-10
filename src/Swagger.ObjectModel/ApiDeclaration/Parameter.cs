@@ -25,8 +25,8 @@ namespace Swagger.ObjectModel.ApiDeclaration
         public ParameterType ParamType { get; set; }
 
         /// <summary>
-        /// The unique name for the parameter. 
-        /// Each name MUST be unique, even if they are associated with different <see cref="ParamType"/> values. 
+        /// The unique name for the parameter.
+        /// Each name MUST be unique, even if they are associated with different <see cref="ParamType"/> values.
         /// </summary>
         /// <remarks>
         /// Parameter names are case sensitive.
@@ -41,7 +41,7 @@ namespace Swagger.ObjectModel.ApiDeclaration
         public string Description { get; set; }
 
         /// <summary>
-        /// A flag to note whether this parameter is required. 
+        /// A flag to note whether this parameter is required.
         /// If this field is not included, it is equivalent to adding this field with the value false.
         /// </summary>
         /// <remarks>
@@ -51,8 +51,8 @@ namespace Swagger.ObjectModel.ApiDeclaration
         public bool? Required { get; set; }
 
         /// <summary>
-        /// Another way to allow multiple values for a <see cref="ParameterType.Query"/> parameter. 
-        /// If used, the query parameter may accept comma-separated values. 
+        /// Another way to allow multiple values for a <see cref="ParameterType.Query"/> parameter.
+        /// If used, the query parameter may accept comma-separated values.
         /// </summary>
         /// <remarks>
         /// The field may be used only if <see cref="ParamType"/> is <see cref="ParameterType.Query"/>, <see cref="ParameterType.Header"/> or <see cref="ParameterType.Path"/>.
