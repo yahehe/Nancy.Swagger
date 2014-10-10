@@ -9,11 +9,20 @@ using Swagger.ObjectModel.Reflection;
 
 namespace Swagger.ObjectModel
 {
+    /// <summary>
+    /// The base class for all Swagger models with logic
+    /// to serialize it according to the Swagger schema.
+    /// </summary>
     [SwaggerData]
     public class SwaggerModel
     {
         private static readonly IJsonSerializerStrategy SerializerStrategy = new SwaggerSerializerStrategy();
 
+        /// <summary>
+        /// Returns a valid JSON representation of
+        /// the model, according to the Swagger schema.
+        /// </summary>
+        /// <returns>A valid JSON representation of the model.</returns>
         public string ToJson()
         {
             return SimpleJson.SerializeObject(this, SerializerStrategy);

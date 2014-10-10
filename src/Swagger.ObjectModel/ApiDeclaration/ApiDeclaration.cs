@@ -159,6 +159,9 @@ namespace Swagger.ObjectModel.ApiDeclaration
     /// </example>
     public class ApiDeclaration : SwaggerModel
     {
+        /// <summary>
+        /// Creates an instance of a <see cref="ApiDeclaration"/>.
+        /// </summary>
         public ApiDeclaration()
         {
             Apis = new Api[0];

@@ -8,8 +8,14 @@ namespace Swagger.ObjectModel.ResourceListing
     [SwaggerData]
     public enum PassType
     {
+        /// <summary>
+        /// Denotes a header value.
+        /// </summary>
         [SwaggerEnumValue("header")] Header,
 
+        /// <summary>
+        /// Denotes a query value.
+        /// </summary>
         [SwaggerEnumValue("query")] Query
     }
 }

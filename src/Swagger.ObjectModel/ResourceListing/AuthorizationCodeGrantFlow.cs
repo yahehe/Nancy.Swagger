@@ -12,7 +12,7 @@ namespace Swagger.ObjectModel.ResourceListing
     ///     "url": "http://petstore.swagger.wordnik.com/oauth/requestToken",
     ///     "clientIdName": "client_id",
     ///     "clientSecretName": "client_secret"
-    ///   },  
+    ///   },
     ///   "tokenEndpoint": {
     ///     "url": "http://petstore.swagger.wordnik.com/oauth/token",
     ///     "tokenName": "access_code"

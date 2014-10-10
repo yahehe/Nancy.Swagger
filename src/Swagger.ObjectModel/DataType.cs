@@ -3,6 +3,9 @@ using Swagger.ObjectModel.Attributes;
 
 namespace Swagger.ObjectModel
 {
+    /// <summary>
+    /// Base class for Swagger data types.
+    /// </summary>
     public class DataType : SwaggerModel
     {
         /// <summary>

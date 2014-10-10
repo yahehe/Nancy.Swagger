@@ -76,6 +76,9 @@ namespace Swagger.ObjectModel.ResourceListing
     /// </example>
     public class ResourceListing : SwaggerModel
     {
+        /// <summary>
+        /// Creates an instance of a <see cref="ResourceListing"/>.
+        /// </summary>
         public ResourceListing()
         {
             SwaggerVersion = "1.2"; // TODO: Specify this centrally
