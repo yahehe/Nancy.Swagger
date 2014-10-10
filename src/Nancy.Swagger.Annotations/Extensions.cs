@@ -1,8 +1,5 @@
 ﻿using Swagger.ObjectModel.ApiDeclaration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace Nancy.Swagger.Annotations
 {
@@ -16,18 +13,6 @@ namespace Nancy.Swagger.Annotations
             }
 
             return value.StartsWith("/") ? value : "/" + value;
-        }
-
-        public static T GetAttribute<T>(this MemberInfo member)
-            where T : Attribute
-        {
-            return Attribute.GetCustomAttribute(member, typeof(T)) as T;
-        }
-
-        public static IEnumerable<T> GetAttributes<T>(this MemberInfo member)
-            where T : Attribute
-        {
-            return Attribute.GetCustomAttributes(member, typeof(T)).Cast<T>();
         }
 
         public static HttpMethod ToHttpMethod(this string method)

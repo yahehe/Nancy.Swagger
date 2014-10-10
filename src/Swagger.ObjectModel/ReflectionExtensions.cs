@@ -7,21 +7,21 @@ namespace Swagger.ObjectModel
 {
     internal static class ReflectionExtensions
     {
-        public static TAttribute GetCustomAttribute<TAttribute>(this MemberInfo member, bool inherits = true)
+        public static TAttribute GetCustomAttribute<TAttribute>(this ICustomAttributeProvider provider, bool inherits = true)
             where TAttribute : Attribute
         {
-            return member.GetCustomAttributes<TAttribute>().FirstOrDefault();
+            return provider.GetCustomAttributes<TAttribute>(inherits).FirstOrDefault();
         }
 
-        public static IEnumerable<TAttribute> GetCustomAttributes<TAttribute>(this MemberInfo member, bool inherits = true)
+        public static IEnumerable<TAttribute> GetCustomAttributes<TAttribute>(this ICustomAttributeProvider provider, bool inherits = true)
             where TAttribute : Attribute
         {
-            return member.GetCustomAttributes(typeof (TAttribute), inherits).Cast<TAttribute>();
+            return provider.GetCustomAttributes(typeof (TAttribute), inherits).Cast<TAttribute>();
         }
 
-        public static bool IsDefined<TAttribute>(this MemberInfo member, bool inherits = true)
+        public static bool IsDefined<TAttribute>(this ICustomAttributeProvider provider, bool inherits = true)
         {
-            return member.IsDefined(typeof (TAttribute), inherits);
+            return provider.IsDefined(typeof (TAttribute), inherits);
         }
     }
 }

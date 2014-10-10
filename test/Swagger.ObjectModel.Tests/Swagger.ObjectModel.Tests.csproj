@@ -55,7 +55,6 @@
     </Compile>
     <Compile Include="ApiDeclaration\ModelPropertyTests.cs" />
     <Compile Include="SwaggerPropertyConventionTests.cs" />
-    <Compile Include="MemberInfoExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

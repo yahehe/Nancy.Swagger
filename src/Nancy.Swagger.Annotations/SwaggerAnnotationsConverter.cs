@@ -48,7 +48,7 @@ namespace Nancy.Swagger.Annotations
                 Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList()
             };
 
-            var modelAttr = type.GetAttribute<SwaggerModelAttribute>();
+            var modelAttr = type.GetCustomAttribute<SwaggerModelAttribute>();
             if (modelAttr != null)
             {
                 modelData.Description = modelAttr.Description;
@@ -65,7 +65,7 @@ namespace Nancy.Swagger.Annotations
                 Name = pi.Name
             };
 
-            foreach (var attr in pi.GetAttributes<SwaggerModelPropertyAttribute>())
+            foreach (var attr in pi.GetCustomAttributes<SwaggerModelPropertyAttribute>())
             {
                 modelProperty.Name = attr.Name ?? modelProperty.Name;
                 modelProperty.Description = attr.Description ?? modelProperty.Description;
@@ -87,7 +87,7 @@ namespace Nancy.Swagger.Annotations
                 ParameterModel = pi.ParameterType
             };
 
-            var paramAttrs = pi.GetCustomAttributes(typeof(SwaggerRouteParamAttribute), true).Cast<SwaggerRouteParamAttribute>();
+            var paramAttrs = pi.GetCustomAttributes<SwaggerRouteParamAttribute>();
             if (!paramAttrs.Any())
             {
                 parameter.Description = "Warning: no annotation found for this parameter";
@@ -127,7 +127,7 @@ namespace Nancy.Swagger.Annotations
                 return data;
             }
 
-            foreach (var attr in handler.GetAttributes<SwaggerRouteAttribute>())
+            foreach (var attr in handler.GetCustomAttributes<SwaggerRouteAttribute>())
             {
                 data.OperationSummary = attr.Summary ?? data.OperationSummary;
                 data.OperationNotes = attr.Notes ?? data.OperationNotes;
@@ -136,7 +136,7 @@ namespace Nancy.Swagger.Annotations
                 data.OperationProduces = attr.Produces ?? data.OperationProduces;
             }
 
-            data.OperationResponseMessages = handler.GetAttributes<SwaggerResponseAttribute>()
+            data.OperationResponseMessages = handler.GetCustomAttributes<SwaggerResponseAttribute>()
                 .Select(attr => {
                     var msg = new ResponseMessage
                     {
@@ -176,7 +176,7 @@ namespace Nancy.Swagger.Annotations
                 module.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
                     .Select(methodInfo => new
                     {
-                        RouteId = getRouteId(methodInfo.GetAttributes<SwaggerRouteAttribute>()),
+                        RouteId = getRouteId(methodInfo.GetCustomAttributes<SwaggerRouteAttribute>()),
                         MethodInfo = methodInfo
                     })
                     .Where(x => x.RouteId.IsValid)

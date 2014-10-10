@@ -48,6 +48,9 @@
     <Compile Include="..\..\etc\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\Swagger.ObjectModel\ReflectionExtensions.cs">
+      <Link>ReflectionExtensions.cs</Link>
+    </Compile>
     <Compile Include="Attributes\SwaggerDatatypeAttribute.cs" />
     <Compile Include="Attributes\SwaggerModelAttribute.cs" />
     <Compile Include="Attributes\SwaggerModelPropertyAttribute.cs" />
