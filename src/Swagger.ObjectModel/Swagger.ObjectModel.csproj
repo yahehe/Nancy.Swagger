@@ -63,6 +63,7 @@
     <Compile Include="Items.cs" />
     <Compile Include="Primitive.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="ResourceListing\Authorization.cs" />
     <Compile Include="ResourceListing\AuthorizationCodeGrantFlow.cs" />
     <Compile Include="ResourceListing\AuthorizationType.cs" />

@@ -33,9 +33,9 @@ namespace Swagger.ObjectModel
             // Enums should use value from SwaggerEnumValueAttribute if it exists.
             protected override object SerializeEnum(Enum @enum)
             {
-                var memberInfo = @enum.GetType().GetMember(@enum.ToString()).Single();
+                var member = @enum.GetType().GetMember(@enum.ToString()).Single();
 
-                var attribute = (SwaggerEnumValueAttribute) ReflectionUtils.GetAttribute(memberInfo, typeof(SwaggerEnumValueAttribute));
+                var attribute = member.GetCustomAttribute<SwaggerEnumValueAttribute>();
                 if (attribute != null && !string.IsNullOrEmpty(attribute.Value))
                 {
                     return attribute.Value;
@@ -49,7 +49,9 @@ namespace Swagger.ObjectModel
             {
                 var result = new JsonObject();
 
-                foreach (var getter in GetCache[input.GetType()].Where(x => x.Value != null))
+                var getters = GetCache[input.GetType()].Where(x => x.Value != null);
+
+                foreach (var getter in getters)
                 {
                     var value = getter.Value(input);
                     if (value == null)
@@ -63,7 +65,9 @@ namespace Swagger.ObjectModel
                         value = ToObject(dictionary);
                     }
 
-                    result.Add(MapClrMemberNameToJsonFieldName(getter.Key), value);
+                    var fieldName = MapClrMemberNameToJsonFieldName(getter.Key);
+
+                    result.Add(fieldName, value);
                 }
 
                 output = result;
@@ -73,8 +77,7 @@ namespace Swagger.ObjectModel
             // Serialized properties should use name from SwaggerPropertyAttribute if it exists.
             internal override IDictionary<string, ReflectionUtils.GetDelegate> GetterValueFactory(Type type)
             {
-                var hasAttribute = ReflectionUtils.GetAttribute(type, typeof (SwaggerDataAttribute)) != null;
-                if (!hasAttribute)
+                if (!type.IsDefined<SwaggerDataAttribute>())
                 {
                     return base.GetterValueFactory(type);
                 }
@@ -88,8 +91,7 @@ namespace Swagger.ObjectModel
             // Serialized properties should use name from SwaggerPropertyAttribute if it exists.
             internal override IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> SetterValueFactory(Type type)
             {
-                var hasAttribute = ReflectionUtils.GetAttribute(type, typeof (SwaggerDataAttribute)) != null;
-                if (!hasAttribute)
+                if (!type.IsDefined<SwaggerDataAttribute>())
                 {
                     return base.SetterValueFactory(type);
                 }
@@ -102,15 +104,15 @@ namespace Swagger.ObjectModel
 
             private static dynamic ToObject(IDictionary source)
             {
-                var eo = new ExpandoObject();
-                var eoColl = (ICollection<KeyValuePair<string, object>>)eo;
+                var expando = new ExpandoObject();
+                var expandoCollection = (ICollection<KeyValuePair<string, object>>) expando;
 
                 foreach (string key in source.Keys)
                 {
-                    eoColl.Add(new KeyValuePair<string, object>(key, source[key]));
+                    expandoCollection.Add(new KeyValuePair<string, object>(key, source[key]));
                 }
 
-                return eo;
+                return expando;
             }
 
             private static KeyValuePair<Type, ReflectionUtils.SetDelegate> GetPropertyKeyValuePair(PropertyInfo x)
@@ -120,7 +122,7 @@ namespace Swagger.ObjectModel
 
             private static string GetMemberName(MemberInfo member)
             {
-                var attribute = (SwaggerPropertyAttribute) ReflectionUtils.GetAttribute(member, typeof(SwaggerPropertyAttribute));
+                var attribute = member.GetCustomAttribute<SwaggerPropertyAttribute>();
                 if (attribute != null && !string.IsNullOrEmpty(attribute.Name))
                 {
                     return attribute.Name;
