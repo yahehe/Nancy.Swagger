@@ -53,8 +53,10 @@ namespace Swagger.ObjectModel
         /// <returns>Primitive data about the given type.</returns>
         public static Primitive FromType(Type type)
         {
+            var primitiveType = Nullable.GetUnderlyingType(type) ?? type;
+
             Primitive primitive;
-            if (Primitives.TryGetValue(type, out primitive))
+            if (Primitives.TryGetValue(primitiveType, out primitive))
             {
                 return primitive;
             }
