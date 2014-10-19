@@ -38,7 +38,9 @@ namespace Nancy.Swagger.Services
             var modelsForRoutes = GetModelsForRoutes(routeData, modelsData);
 
             apiDeclaration.Models = modelsForRoutes.SelectMany(m => m.ToModel(modelsData))
-                .OrderBy(m => m.Id)
+                .GroupBy(m => m.Id)
+                .Select(g => g.First())
+                .OrderBy(m => m.Id)                
                 .ToDictionary(m => m.Id, m => m);
 
             return apiDeclaration;
