@@ -302,6 +302,12 @@
                 },
                 "name-by-namedparameter": {
                     "type": "string"
+                },
+                "TwoPropertiesOfSameType_First": {
+                    "$ref": "InOtherNamespaceTestModel"
+                },
+                "TwoPropertiesOfSameType_Second": {
+                    "$ref": "InOtherNamespaceTestModel"
                 }
             }
         }

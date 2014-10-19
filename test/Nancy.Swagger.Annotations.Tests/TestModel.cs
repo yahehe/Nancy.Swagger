@@ -59,6 +59,11 @@ namespace Nancy.Swagger.Annotations.Tests
         [SwaggerModelProperty(Maximum = 100)]
         [SwaggerModelProperty(Description = "Property with multiple annotations (minimum, maximum and description)")]
         public int? MultipleAnnotations { get; set; }
+        
+        // Adding two properties of the same non-primitive type to reproduce 
+        // https://github.com/khellang/Nancy.Swagger/issues/49
+        public InOtherNamespace.TestModel TwoPropertiesOfSameType_First { get; set; }
+        public InOtherNamespace.TestModel TwoPropertiesOfSameType_Second { get; set; }
 
         #endregion Other usages
     }
