@@ -1,0 +1,43 @@
+﻿{
+    "swaggerVersion": "1.2",
+    "basePath": "/",
+    "apis": [
+        {
+            "path": "/json-net-enricher-routes/models",
+            "operations": [
+                {
+                    "method": "GET",
+                    "nickname": "getJsonNetEnricherRoutesModels",
+                    "parameters": [],
+                    "type": "array",
+                    "items": {
+                        "$ref": "JsonNetEnricherModel"
+                    }
+                }
+            ]
+        }
+    ],
+    "models": {
+        "JsonNetEnricherModel": {
+            "id": "JsonNetEnricherModel",
+            "description": "Description of a model",
+            "required": [
+                "RequiredAlways"
+            ],
+            "properties": {
+                "named": {
+                    "type": "string"
+                },
+                "RequiredAllowNull": {
+                    "type": "string"
+                },
+                "RequiredAlways": {
+                    "type": "string"
+                },
+                "RequiredDefault": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
