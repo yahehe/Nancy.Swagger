@@ -58,10 +58,15 @@
     <Compile Include="Attributes\SwaggerRouteAttribute.cs" />
     <Compile Include="Attributes\SwaggerRouteParamAttribute.cs" />
     <Compile Include="Attributes\SwaggerResponse.cs" />
+    <Compile Include="Enrichers\JsonNetEnricher.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="Enrichers\DefaultSwaggerDataEnricherCatalog.cs" />
+    <Compile Include="Enrichers\ISwaggerDataEnricher.cs" />
+    <Compile Include="Enrichers\ISwaggerDataEnricherCatalog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteId.cs" />
     <Compile Include="SwaggerAnnotationsConverter.cs" />
+    <Compile Include="SwaggerAnnotationsRegistrations.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Nancy.Swagger\Nancy.Swagger.csproj">

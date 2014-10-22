@@ -5,6 +5,9 @@
             "path": "/api-docs"
         },
         {
+            "path": "/json-net-enricher-routes"
+        },
+        {
             "path": "/testroutes"
         }
     ]
