@@ -4,9 +4,9 @@ using Nancy.Swagger.Services;
 
 namespace Nancy.Swagger.Tests.Services
 {
-    public class SwaggerMetadataConverterForTesting : SwaggerMetadataConverter
+    public class SwaggerMetadataProviderForTesting : SwaggerMetadataProvider
     {
-        public SwaggerMetadataConverterForTesting()
+        public SwaggerMetadataProviderForTesting()
         {
             RouteDataAccessor = Enumerable.Empty<SwaggerRouteData>();
             ModelDataAccessor = Enumerable.Empty<SwaggerModelData>();
@@ -16,12 +16,12 @@ namespace Nancy.Swagger.Tests.Services
 
         public IEnumerable<SwaggerModelData> ModelDataAccessor { get; set; }
 
-        protected override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
+        public override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
         {
             return RouteDataAccessor.ToList();
         }
 
-        protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
+        public override IList<SwaggerModelData> RetrieveSwaggerModelData()
         {
             return ModelDataAccessor.ToList();
         }

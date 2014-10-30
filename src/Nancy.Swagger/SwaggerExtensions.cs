@@ -27,6 +27,40 @@ namespace Nancy.Swagger
             return builder.Data;
         }
 
+        public static IEnumerable<Type> GetDistinctModelTypes(this IList<SwaggerRouteData> routeData)
+        {
+            return GetOperationModels(routeData)
+                .Union(GetParameterModels(routeData))
+                .Select(GetType)
+                .Where(type => !Primitive.IsPrimitive(type))
+                .Distinct();
+        }
+
+        private static Type GetType(Type type)
+        {
+            if (type.IsContainer())
+            {
+                return type.GetElementType() ?? type.GetGenericArguments().First();
+            }
+
+            return type;
+        }
+
+        private static IEnumerable<Type> GetOperationModels(IEnumerable<SwaggerRouteData> metadata)
+        {
+            return metadata
+                .Where(d => d.OperationModel != null)
+                .Select(d => d.OperationModel);
+        }
+
+        private static IEnumerable<Type> GetParameterModels(IEnumerable<SwaggerRouteData> metadata)
+        {
+            return metadata
+                .SelectMany(d => d.OperationParameters)
+                .Where(p => p.ParameterModel != null)
+                .Select(p => p.ParameterModel);
+        }
+
         public static Operation ToOperation(this SwaggerRouteData routeData)
         {
             var operation = routeData.OperationModel.ToDataType<Operation>();

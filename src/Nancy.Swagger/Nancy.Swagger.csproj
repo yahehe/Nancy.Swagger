@@ -51,12 +51,14 @@
     </Compile>
     <Compile Include="ISwaggerModelCatalog.cs" />
     <Compile Include="Services\DefaultSwaggerModelCatalog.cs" />
+    <Compile Include="Services\ISwaggerMetadataProvider.cs" />
     <Compile Include="Services\ISwaggerModelDataProvider.cs" />
-    <Compile Include="Services\SwaggerMetadataConverter.cs" />
     <Compile Include="Services\DefaultSwaggerMetadataConverter.cs" />
+    <Compile Include="Services\DefaultSwaggerMetadataProvider.cs" />
     <Compile Include="Services\ISwaggerMetadataConverter.cs" />
     <Compile Include="Modules\SwaggerModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\SwaggerMetadataProvider.cs" />
     <Compile Include="SwaggerApiAttribute.cs" />
     <Compile Include="SwaggerModelDataBuilder.cs" />
     <Compile Include="SwaggerModelPropertyDataBuilder.cs" />

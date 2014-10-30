@@ -8,16 +8,17 @@ using Xunit;
 namespace Nancy.Swagger.Annotations.Tests
 {
     [UseReporter(typeof(XUnitReporter))]
-    public class SwaggerAnnotationsConverterTests
+    public class SwaggerAnnotationsProviderTests
     {
         private readonly Browser _browser;
 
-        public SwaggerAnnotationsConverterTests()
+        public SwaggerAnnotationsProviderTests()
         {
             var bootstrapper = new ConfigurableBootstrapper(with =>
             {
-                with.ApplicationStartup((container, pipelines) =>
-                    container.Register<ISwaggerMetadataConverter, SwaggerAnnotationsConverter>());
+                with.ApplicationStartup((container, pipelines) => {
+                    container.Register<ISwaggerMetadataProvider, SwaggerAnnotationsProvider>();
+                });
 
                 with.Module<SwaggerModule>();
                 with.Module<TestRoutesModule>();
