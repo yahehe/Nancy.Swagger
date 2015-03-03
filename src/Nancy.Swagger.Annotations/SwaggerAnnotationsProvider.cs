@@ -10,25 +10,26 @@ using System.Reflection;
 
 namespace Nancy.Swagger.Annotations
 {
-    public class SwaggerAnnotationsConverter : SwaggerMetadataConverter
+    public class SwaggerAnnotationsProvider : SwaggerMetadataProvider
     {
         private NancyContext _context;
         private INancyModuleCatalog _moduleCatalog;
 
-        public SwaggerAnnotationsConverter(INancyModuleCatalog moduleCatalog, NancyContext context)
+        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, NancyContext context)
         {
             _moduleCatalog = moduleCatalog;
             _context = context;
         }
 
-        protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
+        public override IList<SwaggerModelData> RetrieveSwaggerModelData()
         {
-            return GetDistinctModelTypes(RetrieveSwaggerRouteData())
+            return RetrieveSwaggerRouteData()
+                    .GetDistinctModelTypes()
                     .Select(CreateSwaggerModelData)
                     .ToList();
         }
 
-        protected override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
+        public override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
         {
             return _moduleCatalog
                 .GetAllModules(_context)
