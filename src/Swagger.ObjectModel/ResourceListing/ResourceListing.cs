@@ -81,7 +81,7 @@ namespace Swagger.ObjectModel.ResourceListing
         /// </summary>
         public ResourceListing()
         {
-            SwaggerVersion = "1.2"; // TODO: Specify this centrally
+            SwaggerVersion = "2.0"; // TODO: Specify this centrally
             Apis = new Resource[0];
         }
 
@@ -92,8 +92,58 @@ namespace Swagger.ObjectModel.ResourceListing
         /// <remarks>
         /// The value MUST be an existing Swagger specification version.
         /// </remarks>
-        [SwaggerProperty("swaggerVersion", true)]
+        [SwaggerProperty("swagger", true)]
         public string SwaggerVersion { get; set; }
+
+        /// <summary>
+        /// Provides metadata about the API. The metadata can be used by the clients if needed, and can be presented in the Swagger-UI for convenience.
+        /// </summary>
+        [SwaggerProperty("info", true)]
+        public Info Info { get; set; }
+
+        /// <summary>
+        /// The host (name or ip) serving the API. This MUST be the host only and does not include the scheme nor sub-paths. 
+        /// It MAY include a port. If the host is not included, the host serving the documentation is to be used (including the port). 
+        /// The host does not support path templating.
+        /// </summary>
+        [SwaggerProperty("host")]
+        public string Host { get; set; }
+
+        /// <summary>
+        /// The base path on which the API is served, which is relative to the host. If it is not included, the API is served directly under the host. 
+        /// The value MUST start with a leading slash (/). The basePath does not support path templating.
+        /// </summary>
+        [SwaggerProperty("basePath")]
+        public string BasePath { get; set; }
+
+        /// <summary>
+        /// The transfer protocol of the API. Values MUST be from the list: "http", "https", "ws", "wss". 
+        /// If the schemes is not included, the default scheme to be used is the one used to access the specification.
+        /// </summary>
+        [SwaggerProperty("schemes")]
+        public IEnumerable<Schemes> Schemes { get; set; }
+
+        /// <summary>
+        /// A list of MIME types the APIs can consume. This is global to all APIs but can be overridden on specific API calls. 
+        /// Value MUST be as described under Mime Types.
+        /// </summary>
+        [SwaggerProperty("consumes")]
+        public IEnumerable<string> Consumes { get; set; }
+
+        /// <summary>
+        /// A list of MIME types the APIs can produce. This is global to all APIs but can be overridden on specific API calls. 
+        /// Value MUST be as described under Mime Types.
+        /// </summary>
+        [SwaggerProperty("produces")]
+        public IEnumerable<string> Produces { get; set; }
+
+        /// <summary>
+        /// The available paths and operations for the API.
+        /// Key: A relative path to an individual endpoint. The field name MUST begin with a slash. 
+        /// The path is appended to the basePath in order to construct the full URL. Path templating is allowed.
+        /// </summary>
+        [SwaggerProperty("path", true)]
+        public IDictionary<string, PathItem> Paths { get; set; }
 
         /// <summary>
         /// Lists the resources to be described by this specification implementation.
@@ -107,13 +157,6 @@ namespace Swagger.ObjectModel.ResourceListing
         [SwaggerProperty("apiVersion")]
         public string ApiVersion { get; set; }
 
-        /// <summary>
-        /// Provides metadata about the API.
-        /// The metadata can be used by the clients if needed,
-        /// and can be presented in the Swagger-UI for convenience.
-        /// </summary>
-        [SwaggerProperty("info")]
-        public Info Info { get; set; }
 
         /// <summary>
         /// Provides information about the the authorization schemes allowed on his API.

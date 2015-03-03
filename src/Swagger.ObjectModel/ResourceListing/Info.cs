@@ -34,27 +34,26 @@ namespace Swagger.ObjectModel.ResourceListing
         public string Description { get; set; }
 
         /// <summary>
-        /// A URL to the Terms of Service of the API.
+        /// The Terms of Service for the API.
         /// </summary>
-        [SwaggerProperty("termsOfServiceUrl")]
-        public Uri TermsOfServiceUrl { get; set; }
+        [SwaggerProperty("termsOfService")]
+        public Uri TermsOfService { get; set; }
 
         /// <summary>
-        /// An email to be used for API-related correspondence.
+        /// The contact information for the exposed API.
         /// </summary>
         [SwaggerProperty("contact")]
-        public string Contact { get; set; }
+        public Contact Contact { get; set; }
 
         /// <summary>
-        /// The license name used for the API.
+        /// The license information for the exposed API.
         /// </summary>
         [SwaggerProperty("license")]
-        public string License { get; set; }
+        public License License { get; set; }
 
         /// <summary>
-        /// A URL to the license used for the API.
+        /// Provides the version of the application API (not to be confused by the specification version).
         /// </summary>
-        [SwaggerProperty("licenseUrl")]
-        public Uri LicenseUrl { get; set; }
+        public string Version { get; set; }
     }
 }
