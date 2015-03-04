@@ -2,7 +2,7 @@
 using Nancy.Swagger.Annotations.Attributes;
 using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,7 +91,7 @@ namespace Nancy.Swagger.Annotations
             if (!paramAttrs.Any())
             {
                 parameter.Description = "Warning: no annotation found for this parameter";
-                parameter.ParamType = ParameterType.Query; // Required, so use query as fallback
+                parameter.ParamIn = ParameterIn.Query; // Required, so use query as fallback
 
                 return parameter;
             }
@@ -99,7 +99,7 @@ namespace Nancy.Swagger.Annotations
             foreach (var attr in paramAttrs)
             {
                 parameter.Name = attr.Name ?? parameter.Name;
-                parameter.ParamType = attr.GetNullableParamType() ?? parameter.ParamType;
+                parameter.ParamIn = attr.GetNullableParamType() ?? parameter.ParamIn;
                 parameter.Required = attr.GetNullableRequired() ?? parameter.Required;
                 parameter.Description = attr.Description ?? parameter.Description;
             }

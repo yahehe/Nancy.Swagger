@@ -1,12 +1,12 @@
-﻿using Swagger.ObjectModel.ApiDeclaration;
-using Swagger.ObjectModel.ResourceListing;
+﻿using Swagger.ObjectModel.SwaggerDocument;
+using Swagger.ObjectModel.SwaggerDocument;
 
 namespace Nancy.Swagger.Services
 {
     [SwaggerApi]
     public interface ISwaggerMetadataConverter
     {
-        ResourceListing GetResourceListing();
+        Swagger GetResourceListing();
 
         ApiDeclaration GetApiDeclaration(string resourcePath);
     }

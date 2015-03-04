@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using Swagger.ObjectModel.Attributes;
+
 using Swagger.ObjectModel.Reflection;
 
 namespace Swagger.ObjectModel
 {
+    using Swagger.ObjectModel.Attributes;
+
     /// <summary>
-    /// The base class for all Swagger models with logic
-    /// to serialize it according to the Swagger schema.
+    /// The base class for all Swagger models with logic to serialize it according to the Swagger schema.
     /// </summary>
     [SwaggerData]
     public class SwaggerModel

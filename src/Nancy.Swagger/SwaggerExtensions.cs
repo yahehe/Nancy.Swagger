@@ -1,6 +1,6 @@
 ﻿using Nancy.Routing;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,10 +31,10 @@ namespace Nancy.Swagger
         {
             var operation = routeData.OperationModel.ToDataType<Operation>();
 
-            operation.Nickname = SwaggerConfig.NicknameConvention(routeData);
+            operation.OperationId = SwaggerConfig.NicknameConvention(routeData);
             operation.Summary = routeData.OperationSummary;
             operation.Method = routeData.OperationMethod;
-            operation.Notes = routeData.OperationNotes;
+            operation.Description = routeData.OperationNotes;
             operation.Parameters = routeData.OperationParameters.Select(p => p.ToParameter());
             operation.ResponseMessages = routeData.OperationResponseMessages.Any() ? routeData.OperationResponseMessages.OrderBy(r => r.Code) : null;
             operation.Produces = routeData.OperationProduces.Any() ? routeData.OperationProduces.OrderBy(p => p) : null;
@@ -75,7 +75,7 @@ namespace Nancy.Swagger
                 {
                     var primitive = Primitive.FromType(itemsType);
 
-                    dataType.Items = new Items
+                    dataType.Items = new Item
                     {
                         Type = primitive.Type,
                         Format = primitive.Format
@@ -84,7 +84,7 @@ namespace Nancy.Swagger
                     return dataType;
                 }
 
-                dataType.Items = new Items { Ref = SwaggerConfig.ModelIdConvention(itemsType) };
+                dataType.Items = new Item { Ref = SwaggerConfig.ModelIdConvention(itemsType) };
 
                 return dataType;
             }
@@ -105,14 +105,14 @@ namespace Nancy.Swagger
             var parameter = parameterData.ParameterModel.ToDataType<Parameter>();
 
             parameter.Name = parameterData.Name;
-            parameter.ParamType = parameterData.ParamType;
+            parameter.In = parameterData.ParamIn;
             parameter.Description = parameterData.Description;
             parameter.DefaultValue = parameterData.DefaultValue;
 
-            var paramType = parameter.ParamType;
+            var paramType = parameter.In;
 
             // 5.2.4 Parameter Object: If paramType is "path" then this field MUST be included and have the value true.
-            if (paramType == ParameterType.Path)
+            if (paramType == ParameterIn.Path)
             {
                 parameter.Required = true;
             }
@@ -122,14 +122,14 @@ namespace Nancy.Swagger
             }
 
             // 5.2.4 Parameter Object: The field may be used only if paramType is "query", "header" or "path".
-            if (paramType == ParameterType.Query || paramType == ParameterType.Header || paramType == ParameterType.Path)
+            if (paramType == ParameterIn.Query || paramType == ParameterIn.Header || paramType == ParameterIn.Path)
             {
                 parameter.AllowMultiple = parameterData.ParameterModel.IsContainer() ? true : (bool?)null;
             }
 
             // 5.2.4 Parameter Object: If paramType is "body", the name is used only for 
             // Swagger-UI and Swagger-Codegen. In this case, the name MUST be "body".  
-            if (paramType == ParameterType.Body)
+            if (paramType == ParameterIn.Body)
             {
                 parameter.Name = "body";
             }

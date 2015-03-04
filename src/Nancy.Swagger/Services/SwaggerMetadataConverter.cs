@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.ApiDeclaration;
-using Swagger.ObjectModel.ResourceListing;
+using Swagger.ObjectModel.SwaggerDocument;
+using Swagger.ObjectModel.SwaggerDocument;
 
 namespace Nancy.Swagger.Services
 {
     [SwaggerApi]
     public abstract class SwaggerMetadataConverter : ISwaggerMetadataConverter
     {
-        public ResourceListing GetResourceListing()
+        public Swagger GetResourceListing()
         {
-            return new ResourceListing
+            return new Swagger
             {
                 Apis = RetrieveSwaggerRouteData()
                     .Select(d => d.ResourcePath)

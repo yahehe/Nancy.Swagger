@@ -1,4 +1,4 @@
-﻿using Swagger.ObjectModel.ApiDeclaration;
+﻿using Swagger.ObjectModel.SwaggerDocument;
 using System;
 
 namespace Nancy.Swagger.Annotations.Attributes
@@ -6,28 +6,28 @@ namespace Nancy.Swagger.Annotations.Attributes
     [AttributeUsage(AttributeTargets.Parameter, Inherited = true, AllowMultiple = true)]
     public class SwaggerRouteParamAttribute : SwaggerDataTypeAttribute
     {
-        private ParameterType? _paramType;
+        private ParameterIn? paramIn;
 
         public SwaggerRouteParamAttribute()
             : base(null)
         {
         }
 
-        public SwaggerRouteParamAttribute(ParameterType paramType, string name = null)
+        public SwaggerRouteParamAttribute(ParameterIn paramIn, string name = null)
             : base(name)
         {
-            ParamType = paramType;
+            this.ParamIn = paramIn;
         }
 
-        public ParameterType ParamType
+        public ParameterIn ParamIn
         {
-            get { return _paramType.GetValueOrDefault(); }
-            set { _paramType = value; }
+            get { return this.paramIn.GetValueOrDefault(); }
+            set { this.paramIn = value; }
         }
 
-        public ParameterType? GetNullableParamType()
+        public ParameterIn? GetNullableParamType()
         {
-            return _paramType;
+            return this.paramIn;
         }
     }
 }

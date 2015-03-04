@@ -1,6 +1,6 @@
 ﻿using Should;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 
 namespace Nancy.Swagger.Tests
 {
@@ -25,7 +25,7 @@ namespace Nancy.Swagger.Tests
 
             actual.Description.ShouldEqual(expected.Description, userMessage.Append("DefaultValue"));
             actual.Name.ShouldEqual(expected.Name, userMessage.Append("Name"));
-            actual.ParamType.ShouldEqual(expected.ParamType, userMessage.Append("ParamType"));
+            actual.In.ShouldEqual(expected.In, userMessage.Append("ParamType"));
             actual.Required.ShouldEqual(expected.Required, userMessage.Append("Required"));
         }
 
@@ -37,8 +37,8 @@ namespace Nancy.Swagger.Tests
             actual.Consumes.ShouldEqual(expected.Consumes, userMessage.Append("Consumes"));
             actual.Deprecated.ShouldEqual(expected.Deprecated, userMessage.Append("Deprecated"));
             actual.Method.ShouldEqual(expected.Method, userMessage.Append("Method"));
-            actual.Notes.ShouldEqual(expected.Notes, userMessage.Append("Notes"));
-            actual.Nickname.ShouldEqual(expected.Nickname, userMessage.Append("Nickname"));
+            actual.Description.ShouldEqual(expected.Description, userMessage.Append("Notes"));
+            actual.OperationId.ShouldEqual(expected.OperationId, userMessage.Append("Nickname"));
             actual.Parameters.ShouldEqual(expected.Parameters, userMessage.Append("Parameters"));
             actual.Produces.ShouldEqual(expected.Produces, userMessage.Append("Produces"));
             actual.Summary.ShouldEqual(expected.Summary, userMessage.Append("Summary"));
@@ -51,7 +51,7 @@ namespace Nancy.Swagger.Tests
             actual.Description.ShouldEqual(expected.Description, userMessage.Append("Description"));
         }
 
-        public static void ShouldEqual(this Items actual, Items expected, string userMessage = null)
+        public static void ShouldEqual(this Item actual, Item expected, string userMessage = null)
         {
             if (actual == null)
             {

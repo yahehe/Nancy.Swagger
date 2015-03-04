@@ -1,6 +1,6 @@
 ﻿using Should;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 using System.Linq;
 using Xunit;
 using Xunit.Extensions;
@@ -47,7 +47,7 @@ namespace Nancy.Swagger.Tests
                 new ModelProperty
                 {
                     Type = "array",
-                    Items = new Items { Type = "string" }
+                    Items = new Item { Type = "string" }
                 }
             );
         }
@@ -62,7 +62,7 @@ namespace Nancy.Swagger.Tests
                 new ModelProperty
                 {
                     Type = "array",
-                    Items = new Items { Ref = SwaggerConfig.ModelIdConvention(typeof(TestModel)) }
+                    Items = new Item { Ref = SwaggerConfig.ModelIdConvention(typeof(TestModel)) }
                 },
                 "String return type"
             );
@@ -79,7 +79,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
-                    Nickname = "get",
+                    OperationId = "get",
                     Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),                    Parameters = Enumerable.Empty<Parameter>()
                 }
             );
@@ -96,9 +96,9 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
-                    Nickname = "get",
+                    OperationId = "get",
                     Type = "array",
-                    Items = new Items { Ref = SwaggerConfig.ModelIdConvention(typeof(TestModel)) },
+                    Items = new Item { Ref = SwaggerConfig.ModelIdConvention(typeof(TestModel)) },
                     Parameters = Enumerable.Empty<Parameter>()
                 },
                 "String return type"
@@ -116,7 +116,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
-                    Nickname = "get",
+                    OperationId = "get",
                     Type = "string",
                     Parameters = Enumerable.Empty<Parameter>()
                 }
@@ -134,9 +134,9 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
-                    Nickname = "get",
+                    OperationId = "get",
                     Type = "array",
-                    Items = new Items { Type = "string" },
+                    Items = new Item { Type = "string" },
                     Parameters = Enumerable.Empty<Parameter>()
                 }
             );
@@ -152,7 +152,7 @@ namespace Nancy.Swagger.Tests
                 new Operation
                 {
                     Method = HttpMethod.Get,
-                    Nickname = "get",
+                    OperationId = "get",
                     Type = "void",
                     Parameters = Enumerable.Empty<Parameter>()
                 }
@@ -164,13 +164,13 @@ namespace Nancy.Swagger.Tests
         {
             new SwaggerParameterData
             {
-                ParamType = ParameterType.Body,
+                ParamIn = ParameterIn.Body,
                 ParameterModel = typeof(TestModel)
             }.ToParameter().ShouldEqual(
                 new Parameter
                 {
                     Name = "body",
-                    ParamType = ParameterType.Body,
+                    In = ParameterIn.Body,
                     Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),
                 },
                 "Type field MUST be used to link to other models."
@@ -182,14 +182,14 @@ namespace Nancy.Swagger.Tests
         {
             new SwaggerParameterData
             {
-                ParamType = ParameterType.Body,
+                ParamIn = ParameterIn.Body,
                 ParameterModel = typeof(TestModel),
                 Name = "SomeName"
             }.ToParameter().ShouldEqual(
                 new Parameter
                 {
                     Name = "body",
-                    ParamType = ParameterType.Body,
+                    In = ParameterIn.Body,
                     Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),
                 },
                 "If paramType is \"body\", the name is used only for Swagger-UI and Swagger-Codegen. In this case, the name MUST be \"body\"."
@@ -201,13 +201,13 @@ namespace Nancy.Swagger.Tests
         {
             new SwaggerParameterData
             {
-                ParamType = ParameterType.Body,
+                ParamIn = ParameterIn.Body,
                 ParameterModel = typeof(TestModel)
             }.ToParameter().ShouldEqual(
                 new Parameter
                 {
                     Name = "body",
-                    ParamType = ParameterType.Body,
+                    In = ParameterIn.Body,
                     Type = SwaggerConfig.ModelIdConvention(typeof(TestModel)),
                 },
                 "If paramType is \"body\", the name is used only for Swagger-UI and Swagger-Codegen. In this case, the name MUST be \"body\"."
@@ -219,13 +219,13 @@ namespace Nancy.Swagger.Tests
         {
             new SwaggerParameterData
             {
-                ParamType = ParameterType.Form,
+                ParamIn = ParameterIn.Form,
                 ParameterModel = typeof(string[])
             }.ToParameter().ShouldEqual(
                 new Parameter
                 {
                     Type = "string",
-                    ParamType = ParameterType.Form,
+                    In = ParameterIn.Form,
                 },
                 "AllowMultiple is null when container type is used in Form param"
             );
@@ -236,14 +236,14 @@ namespace Nancy.Swagger.Tests
         {
             new SwaggerParameterData
             {
-                ParamType = ParameterType.Path,
+                ParamIn = ParameterIn.Path,
                 ParameterModel = typeof(string)
             }.ToParameter().ShouldEqual(
                 new Parameter
                 {
                     Type = "string",
                     Required = true,
-                    ParamType = ParameterType.Path,
+                    In = ParameterIn.Path,
                 },
                 "If paramType is \"path\" then this field MUST be included and have the value true."
             );
@@ -254,14 +254,14 @@ namespace Nancy.Swagger.Tests
         {
             new SwaggerParameterData
             {
-                ParamType = ParameterType.Query,
+                ParamIn = ParameterIn.Query,
                 ParameterModel = typeof(string[])
             }.ToParameter().ShouldEqual(
                 new Parameter
                 {
                     Type = "string",
                     AllowMultiple = true,
-                    ParamType = ParameterType.Query,
+                    In = ParameterIn.Query,
                 },
                 "AllowMultiple is true when container type is used in Query param"
             );

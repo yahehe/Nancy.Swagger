@@ -1,6 +1,6 @@
 ﻿using Nancy.Routing;
 using Nancy.Swagger.Annotations.Attributes;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 using System.Diagnostics;
 
 namespace Nancy.Swagger.Annotations

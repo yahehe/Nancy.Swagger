@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Should;
-using Swagger.ObjectModel.Attributes;
+
 using Xunit.Extensions;
 using Xunit.Sdk;
 
 namespace Swagger.ObjectModel.Tests
 {
+    using Swagger.ObjectModel.Attributes;
+
     public class SwaggerPropertyConventionTests
     {
         /// <summary>

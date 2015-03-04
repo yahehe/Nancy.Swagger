@@ -1,4 +1,4 @@
-﻿using Swagger.ObjectModel.ApiDeclaration;
+﻿using Swagger.ObjectModel.SwaggerDocument;
 using System;
 
 namespace Nancy.Swagger.Annotations.Attributes

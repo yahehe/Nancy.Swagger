@@ -1,5 +1,5 @@
 ﻿using System;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 
 namespace Nancy.Swagger
 {
@@ -8,7 +8,7 @@ namespace Nancy.Swagger
     {
         public string Name { get; set; }
 
-        public ParameterType ParamType { get; set; }
+        public ParameterIn ParamIn { get; set; }
 
         public string Description { get; set; }
 

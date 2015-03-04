@@ -1,5 +1,5 @@
 ﻿using Nancy.Responses.Negotiation;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 using System;
 
 namespace Nancy.Swagger
@@ -93,7 +93,7 @@ namespace Nancy.Swagger
             bool required = false,
             T defaultValue = default(T))
         {
-            return Param(ParameterType.Query, name, description, required, defaultValue);
+            return Param(ParameterIn.Query, name, description, required, defaultValue);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Nancy.Swagger
             bool required = false,
             T defaultValue = default(T))
         {
-            return Param(ParameterType.Body, "body", description, required, defaultValue);
+            return Param(ParameterIn.Body, "body", description, required, defaultValue);
         }
 
         /// <summary>
@@ -125,20 +125,20 @@ namespace Nancy.Swagger
             bool required = false,
             T defaultValue = default(T))
         {
-            return Param(ParameterType.Path, name, description, required, defaultValue);
+            return Param(ParameterIn.Path, name, description, required, defaultValue);
         }
 
         /// <summary>
         /// Specify a parameter for the operation.
         /// </summary>
-        /// <param name="paramType">The <see cref="ParameterType"/> of the parameter.</param>
+        /// <param name="paramIn">The <see cref="ParameterIn"/> of the parameter.</param>
         /// <param name="name">The name of the parameter.</param>
         /// <param name="description">The description of the parameter.</param>
         /// <param name="required">A <see cref="Boolean"/> value indicating whether the parameter is required. The default is <c>false</c>.</param>
         /// <param name="defaultValue">The default value to be used for the field.</param>
         /// <returns>The <see cref="SwaggerRouteDataBuilder"/> instance.</returns>
         public SwaggerRouteDataBuilder Param<T>(
-            ParameterType paramType,
+            ParameterIn paramIn,
             string name,
             string description = null,
             bool required = false,
@@ -147,7 +147,7 @@ namespace Nancy.Swagger
             var param = new SwaggerParameterData
             {
                 Name = name,
-                ParamType = paramType,
+                ParamIn = paramIn,
                 Description = description,
                 Required = required,
                 DefaultValue = defaultValue,

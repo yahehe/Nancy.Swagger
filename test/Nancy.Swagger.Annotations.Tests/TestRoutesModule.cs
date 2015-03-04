@@ -1,6 +1,6 @@
 ﻿using Nancy.ModelBinding;
 using Nancy.Swagger.Annotations.Attributes;
-using Swagger.ObjectModel.ApiDeclaration;
+using Swagger.ObjectModel.SwaggerDocument;
 using System;
 
 namespace Nancy.Swagger.Annotations.Tests
@@ -42,7 +42,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [SwaggerRoute(HttpMethod.Get, "/allowmultipleparam")]
         private dynamic GetWithAllowMultipleParam(
-            [SwaggerRouteParam(ParameterType.Query, "ids")] int[] ids)
+            [SwaggerRouteParam(ParameterIn.Query, "ids")] int[] ids)
         {
             throw new NotImplementedException();
         }
@@ -64,7 +64,7 @@ namespace Nancy.Swagger.Annotations.Tests
         [SwaggerRoute(HttpMethod.Get, "/models/{id}")]
         [SwaggerRoute(Response = typeof(TestModel))]
         private static dynamic GetModel(
-            [SwaggerRouteParam(ParameterType.Path, "id")] int id
+            [SwaggerRouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
@@ -72,7 +72,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [SwaggerRoute(HttpMethod.Options, "/models/{id}")]        
         private dynamic OptionsModel(
-            [SwaggerRouteParam(ParameterType.Path, "id")] int id
+            [SwaggerRouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
@@ -80,7 +80,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [SwaggerRoute(HttpMethod.Delete, "/models/{id}")]
         private dynamic DeleteModel(
-            [SwaggerRouteParam(ParameterType.Path, "id")] int id
+            [SwaggerRouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
@@ -88,7 +88,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [SwaggerRoute(HttpMethod.Patch, "/models/{id}")] 
         private dynamic PatchModel(
-            [SwaggerRouteParam(ParameterType.Body)] TestModel testModel
+            [SwaggerRouteParam(ParameterIn.Body)] TestModel testModel
         )
         {
             throw new NotImplementedException();
@@ -96,7 +96,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [SwaggerRoute(HttpMethod.Put, "/models/{id}")] 
         private dynamic PutModel(
-            [SwaggerRouteParam(ParameterType.Body)] TestModel testModel
+            [SwaggerRouteParam(ParameterIn.Body)] TestModel testModel
         )        
         {
             throw new NotImplementedException();
@@ -108,7 +108,7 @@ namespace Nancy.Swagger.Annotations.Tests
         [SwaggerResponse(HttpStatusCode.InternalServerError, Model = typeof(string))]
         [SwaggerResponse(HttpStatusCode.OK, Message = "Everything OK", Model = typeof(TestModel))] 
         private dynamic PostModel(
-            [SwaggerRouteParam(ParameterType.Body, Required = true)] TestModel testModel
+            [SwaggerRouteParam(ParameterIn.Body, Required = true)] TestModel testModel
         )
         {
             throw new NotImplementedException();
@@ -119,8 +119,8 @@ namespace Nancy.Swagger.Annotations.Tests
         [SwaggerRoute(Produces = new[] { "application/json" } )]
         [SwaggerRoute(Consumes = new[] { "application/json", "application/xml" })]        
         private static dynamic GetStringById(
-            [SwaggerRouteParam(ParameterType.Path, "id", Required = true)] int id,
-            [SwaggerRouteParam(ParameterType.Query, "q")]
+            [SwaggerRouteParam(ParameterIn.Path, "id", Required = true)] int id,
+            [SwaggerRouteParam(ParameterIn.Query, "q")]
             [SwaggerRouteParam(Description = "Query")] string query
         )
         {
