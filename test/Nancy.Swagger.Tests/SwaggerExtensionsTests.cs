@@ -1,6 +1,6 @@
 ﻿using Should;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.SwaggerDocument;
+using Swagger.ObjectModel;
 using System.Linq;
 using Xunit;
 using Xunit.Extensions;

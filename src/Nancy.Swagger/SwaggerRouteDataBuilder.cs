@@ -1,5 +1,5 @@
 ﻿using Nancy.Responses.Negotiation;
-using Swagger.ObjectModel.SwaggerDocument;
+using Swagger.ObjectModel;
 using System;
 
 namespace Nancy.Swagger

@@ -1,6 +1,6 @@
 ﻿using Should;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.SwaggerDocument;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Tests
 {

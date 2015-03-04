@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Swagger.ObjectModel.SwaggerDocument;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger
 {

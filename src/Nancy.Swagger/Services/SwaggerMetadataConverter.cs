@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.SwaggerDocument;
-using Swagger.ObjectModel.SwaggerDocument;
+using Swagger.ObjectModel;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Services
 {
