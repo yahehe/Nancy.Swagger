@@ -4,19 +4,19 @@ using System;
 namespace Nancy.Swagger.Annotations.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class SwaggerRouteAttribute : Attribute
+    public class RouteAttribute : Attribute
     {
-        public SwaggerRouteAttribute()
+        public RouteAttribute()
             : this(default(HttpMethod), null)
         {
         }
 
-        public SwaggerRouteAttribute(string name)
+        public RouteAttribute(string name)
         {
             Name = name;
         }
 
-        public SwaggerRouteAttribute(HttpMethod method, string path)
+        public RouteAttribute(HttpMethod method, string path)
         {
             Method = method;
             Path = path;

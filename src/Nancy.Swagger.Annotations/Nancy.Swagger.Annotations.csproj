@@ -52,12 +52,12 @@
     <Compile Include="..\Swagger.ObjectModel\ReflectionExtensions.cs">
       <Link>ReflectionExtensions.cs</Link>
     </Compile>
-    <Compile Include="Attributes\SwaggerDatatypeAttribute.cs" />
-    <Compile Include="Attributes\SwaggerModelAttribute.cs" />
-    <Compile Include="Attributes\SwaggerModelPropertyAttribute.cs" />
-    <Compile Include="Attributes\SwaggerRouteAttribute.cs" />
-    <Compile Include="Attributes\SwaggerRouteParamAttribute.cs" />
-    <Compile Include="Attributes\SwaggerResponse.cs" />
+    <Compile Include="Attributes\DatatypeAttribute.cs" />
+    <Compile Include="Attributes\ModelAttribute.cs" />
+    <Compile Include="Attributes\ModelPropertyAttribute.cs" />
+    <Compile Include="Attributes\RouteAttribute.cs" />
+    <Compile Include="Attributes\RouteParamAttribute.cs" />
+    <Compile Include="Attributes\Response.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RouteId.cs" />

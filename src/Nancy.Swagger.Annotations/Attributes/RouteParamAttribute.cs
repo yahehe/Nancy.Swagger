@@ -4,16 +4,16 @@ using System;
 namespace Nancy.Swagger.Annotations.Attributes
 {
     [AttributeUsage(AttributeTargets.Parameter, Inherited = true, AllowMultiple = true)]
-    public class SwaggerRouteParamAttribute : SwaggerDataTypeAttribute
+    public class RouteParamAttribute : SwaggerDataTypeAttribute
     {
         private ParameterType? _paramType;
 
-        public SwaggerRouteParamAttribute()
+        public RouteParamAttribute()
             : base(null)
         {
         }
 
-        public SwaggerRouteParamAttribute(ParameterType paramType, string name = null)
+        public RouteParamAttribute(ParameterType paramType, string name = null)
             : base(name)
         {
             ParamType = paramType;
