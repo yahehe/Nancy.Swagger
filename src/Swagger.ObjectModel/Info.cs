@@ -39,7 +39,7 @@ namespace Swagger.ObjectModel
         /// The Terms of Service for the API.
         /// </summary>
         [SwaggerProperty("termsOfService")]
-        public Uri TermsOfService { get; set; }
+        public string TermsOfService { get; set; }
 
         /// <summary>
         /// The contact information for the exposed API.

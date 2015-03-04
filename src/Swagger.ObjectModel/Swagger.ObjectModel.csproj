@@ -51,6 +51,11 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApiKeyLocations.cs" />
+    <Compile Include="Builders\ContactBuilder.cs" />
+    <Compile Include="Builders\InfoBuilder.cs" />
+    <Compile Include="Builders\LicenseBuilder.cs" />
+    <Compile Include="Builders\RequiredFieldException.cs" />
+    <Compile Include="Builders\SwaggerRootBuilder.cs" />
     <Compile Include="CollectionFormats.cs" />
     <Compile Include="Api.cs" />
     <Compile Include="ApiDeclaration.cs" />

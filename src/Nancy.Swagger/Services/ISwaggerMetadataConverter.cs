@@ -5,7 +5,7 @@ namespace Nancy.Swagger.Services
     [SwaggerApi]
     public interface ISwaggerMetadataConverter
     {
-        Swagger GetResourceListing();
+        SwaggerRoot GetResourceListing();
 
         ApiDeclaration GetApiDeclaration(string resourcePath);
     }
