@@ -23,10 +23,27 @@ namespace Nancy.Swagger.Annotations
 
         public override IList<SwaggerModelData> RetrieveSwaggerModelData()
         {
-            return RetrieveSwaggerRouteData()
-                    .GetDistinctModelTypes()
-                    .Select(CreateSwaggerModelData)
-                    .ToList();
+            var allTypes = new List<Type>();
+            
+            CollectAllModelTypes(
+                RetrieveSwaggerRouteData().GetDistinctModelTypes(),
+                allTypes
+            );
+
+            return allTypes.Select(CreateSwaggerModelData).ToList();
+        }
+
+        private void CollectAllModelTypes(IEnumerable<Type> types, List<Type> collector)
+        {
+            foreach (var type in types.Where(type => !collector.Contains(type)))
+            {
+                collector.Add(type);
+
+                CollectAllModelTypes(
+                    type.GetProperties().Select(p => p.PropertyType),
+                    collector
+                );
+            }
         }
 
         public override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
