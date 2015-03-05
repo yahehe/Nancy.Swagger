@@ -3,14 +3,14 @@
 namespace Nancy.Swagger.Annotations.Attributes
 {
     [AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = true)]
-    public class SwaggerModelPropertyAttribute : SwaggerDataTypeAttribute
+    public class ModelPropertyAttribute : SwaggerDataTypeAttribute
     {
-        public SwaggerModelPropertyAttribute()
+        public ModelPropertyAttribute()
             : this(null)
         {
         }
 
-        public SwaggerModelPropertyAttribute(string name)
+        public ModelPropertyAttribute(string name)
             : base(name)
         {
         }
