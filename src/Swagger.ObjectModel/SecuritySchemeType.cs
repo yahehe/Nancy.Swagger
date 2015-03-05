@@ -6,7 +6,7 @@
     /// The security scheme type.
     /// </summary>
     [SwaggerData]
-    public enum SecuritySchemeType
+    public enum SecuritySchemes
     {
         /// <summary>
         /// The basic.

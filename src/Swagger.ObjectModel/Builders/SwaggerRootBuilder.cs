@@ -9,7 +9,9 @@
 
 namespace Swagger.ObjectModel.Builders
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// The swagger root builder.
@@ -24,7 +26,7 @@ namespace Swagger.ObjectModel.Builders
         /// <summary>
         /// The info.
         /// </summary>
-        private readonly Info info;
+        private Info info;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwaggerRootBuilder"/> class. 
@@ -43,7 +45,36 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public SwaggerRoot Build()
         {
+            if (this.info == null)
+            {
+                throw new RequiredFieldException("Info");
+            }
+
+            if (this.paths == null || !this.paths.Any())
+            {
+                throw new RequiredFieldException("Paths");
+            }
+
             return new SwaggerRoot { Info = this.info, Paths = this.paths };
         }
+
+        SwaggerRootBuilder Info(Info info)
+        {
+            this.info = info;
+            return this;
+        }
+
+        SwaggerRootBuilder Info(InfoBuilder info)
+        {
+            this.info = info.Build();
+            return this;
+        }
+
+        SwaggerRootBuilder Path(string endpointPath)
+        {
+            this.info = info.Build();
+            return this;
+        }
+
     }
 }

@@ -25,6 +25,6 @@
         /// The schema defining the type used for the body parameter.
         /// </summary>
         [SwaggerProperty("schema", true)]
-        public object Schema { get; set; }
+        public Schema Schema { get; set; }
     }
 }

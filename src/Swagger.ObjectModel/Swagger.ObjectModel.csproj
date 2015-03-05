@@ -51,16 +51,21 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApiKeyLocations.cs" />
+    <Compile Include="Builders\BodyParameterBuilder.cs" />
     <Compile Include="Builders\ContactBuilder.cs" />
     <Compile Include="Builders\InfoBuilder.cs" />
     <Compile Include="Builders\LicenseBuilder.cs" />
+    <Compile Include="Builders\OperationBuilder.cs" />
+    <Compile Include="Builders\ParameterBuilder.cs" />
     <Compile Include="Builders\RequiredFieldException.cs" />
     <Compile Include="Builders\SwaggerRootBuilder.cs" />
     <Compile Include="CollectionFormats.cs" />
     <Compile Include="Api.cs" />
     <Compile Include="ApiDeclaration.cs" />
     <Compile Include="BodyParameter.cs" />
+    <Compile Include="DataTypeBuilder.cs" />
     <Compile Include="ExternalDocumentation.cs" />
+    <Compile Include="ExternalDocumentationBuilder.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="HttpMethod.cs" />
     <Compile Include="Model.cs" />
@@ -93,6 +98,7 @@
     <Compile Include="PathItem.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="Schema.cs" />
+    <Compile Include="SchemaBuilder.cs" />
     <Compile Include="SecurityScheme.cs" />
     <Compile Include="SecuritySchemeType.cs" />
     <Compile Include="SwaggerRoot.cs" />

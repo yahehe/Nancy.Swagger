@@ -41,7 +41,7 @@ namespace Swagger.ObjectModel
     /// }
     /// </code>
     /// </example>
-    public class Operation : DataType
+    public class Operation : SwaggerModel
     {
         /// <summary>
         /// The HTTP method required to invoke this operation.
@@ -53,7 +53,7 @@ namespace Swagger.ObjectModel
         /// A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or any other qualifier.
         /// </summary>
         [SwaggerProperty("tags")]
-        public string Tags { get; set; }
+        public IEnumerable<string> Tags { get; set; }
 
         /// <summary>
         /// A short summary of what the operation does. For maximum readability in the swagger-ui, this field SHOULD be less than 120 characters.
@@ -66,6 +66,12 @@ namespace Swagger.ObjectModel
         /// </summary>
         [SwaggerProperty("description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Additional external documentation for this operation.
+        /// </summary>
+        [SwaggerProperty("externalDocs")]
+        public ExternalDocumentation ExternalDocumentation { get; set; }
 
         /// <summary>
         /// A friendly name for the operation. The id MUST be unique among all operations described in the API. 
@@ -102,18 +108,18 @@ namespace Swagger.ObjectModel
         [SwaggerProperty("parameters", true)]
         public IEnumerable<Parameter> Parameters { get; set; }
 
-        /// <summary>
-        /// A list of authorizations required to execute this operation.
-        /// </summary>
-        [SwaggerProperty("authorizations")]
-        public IDictionary<string, Authorization> Authorizations { get; set; }
-
 
         /// <summary>
         /// Lists the possible response statuses that can return from the operation.
         /// </summary>
-        [SwaggerProperty("responseMessages")]
-        public IEnumerable<ResponseMessage> ResponseMessages { get; set; }
+        [SwaggerProperty("responses")]
+        public IEnumerable<Response> Responses { get; set; }
+
+        /// <summary>
+        /// The transfer protocol for the operation.
+        /// </summary>
+        [SwaggerProperty("schemes")]
+        public IEnumerable<Schemes> Schemes { get; set; }
 
         /// <summary>
         /// Declares this operation to be deprecated.
@@ -121,5 +127,14 @@ namespace Swagger.ObjectModel
         /// </summary>
         [SwaggerProperty("deprecated")]
         public bool? Deprecated { get; set; }
+
+        /// <summary>
+        /// A declaration of which security schemes are applied for this operation. 
+        /// The list of values describes alternative security schemes that can be used (that is, there is a logical OR between the security requirements). 
+        /// This definition overrides any declared top-level security. 
+        /// To remove a top-level security declaration, an empty array can be used.
+        /// </summary>
+        [SwaggerProperty("security")]        
+        public IDictionary<SecuritySchemes, IEnumerable<string>> SecurityRequirements { get; set; }
     }
 }
