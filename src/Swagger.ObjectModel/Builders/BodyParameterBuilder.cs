@@ -1,18 +1,13 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="BodyParameterBuilder.cs" company="Premise Health">
-//   Copyright (c) 2015 Premise Health. All rights reserved.
-// </copyright>
-// <summary>
-//   The body parameter builder.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿//  <copyright file="BodyParameterBuilder.cs" company="Premise Health">
+//      Copyright (c) 2015 Premise Health. All rights reserved.
+//  </copyright>
 
 namespace Swagger.ObjectModel.Builders
 {
     /// <summary>
     /// The body parameter builder.
     /// </summary>
-    public class BodyParameterBuilder : DataTypeBuilder<BodyParameterBuilder, BodyParameter>
+    public class BodyParameterBuilder
     {
         /// <summary>
         /// The name.
@@ -20,19 +15,9 @@ namespace Swagger.ObjectModel.Builders
         private string name;
 
         /// <summary>
-        /// The parameter in.
-        /// </summary>
-        private ParameterIn? parameterIn;
-
-        /// <summary>
         /// The description.
         /// </summary>
         private string description;
-
-        /// <summary>
-        /// The required.
-        /// </summary>
-        private bool? required;
 
         /// <summary>
         /// The schema.
@@ -45,38 +30,25 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="Parameter"/>.
         /// </returns>
-        /// <exception cref="RequiredFieldException">
-        /// </exception>
-        public override BodyParameter Build()
+        public BodyParameter Build()
         {
             if (string.IsNullOrWhiteSpace(this.name))
             {
                 throw new RequiredFieldException("Name");
             }
 
-            if (this.parameterIn == null)
+            if (this.schema == null)
             {
-                throw new RequiredFieldException("In");
+                throw new RequiredFieldException("Schema");
             }
 
-            if (this.parameterIn == ParameterIn.Path)
-            {
-                this.IsRequired();
-            }
-
-            var parameter = this.BuildBase();
-
-            parameter.Name = this.name;
-            parameter.In = this.parameterIn.Value;
-            parameter.Description = this.description;
-            parameter.Required = this.required;
-            parameter.Schema = this.schema;
+            var parameter = new BodyParameter { Name = this.name, In = ParameterIn.Body, Description = this.description, Required = true, Schema = this.schema };
 
             return parameter;
         }
 
         /// <summary>
-        /// The name.
+        /// Add the name
         /// </summary>
         /// <param name="name">
         /// The name.
@@ -91,22 +63,7 @@ namespace Swagger.ObjectModel.Builders
         }
 
         /// <summary>
-        /// The in.
-        /// </summary>
-        /// <param name="parameterIn">
-        /// The parameter in.
-        /// </param>
-        /// <returns>
-        /// The <see cref="ParameterBuilder"/>.
-        /// </returns>
-        public BodyParameterBuilder In(ParameterIn parameterIn)
-        {
-            this.parameterIn = parameterIn;
-            return this;
-        }
-
-        /// <summary>
-        /// The description.
+        /// Add the description
         /// </summary>
         /// <param name="description">
         /// The description.
@@ -121,19 +78,7 @@ namespace Swagger.ObjectModel.Builders
         }
 
         /// <summary>
-        /// The is required.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="ParameterBuilder"/>.
-        /// </returns>
-        public BodyParameterBuilder IsRequired()
-        {
-            this.required = true;
-            return this;
-        }
-
-        /// <summary>
-        /// The schema.
+        /// Add The schema defining the type used for the body parameter.
         /// </summary>
         /// <param name="schema">
         /// The schema.
@@ -148,7 +93,7 @@ namespace Swagger.ObjectModel.Builders
         }
 
         /// <summary>
-        /// The schema.
+        /// Add The schema defining the type used for the body parameter.
         /// </summary>
         /// <param name="schema">
         /// The schema.

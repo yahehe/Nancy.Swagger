@@ -1,17 +1,12 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SwaggerRootBuilder.cs" company="Premise Health">
-//   Copyright (c) 2015 Premise Health. All rights reserved.
-// </copyright>
-// <summary>
-//   The swagger root builder.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+﻿//  <copyright file="SwaggerRootBuilder.cs" company="Premise Health">
+//      Copyright (c) 2015 Premise Health. All rights reserved.
+//  </copyright>
 
 namespace Swagger.ObjectModel.Builders
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
 
     /// <summary>
     /// The swagger root builder.
@@ -29,9 +24,56 @@ namespace Swagger.ObjectModel.Builders
         private Info info;
 
         /// <summary>
+        /// The tags.
+        /// </summary>
+        private List<Tag> tags;
+
+        /// <summary>
+        /// The documentation.
+        /// </summary>
+        private ExternalDocumentation documentation;
+
+        /// <summary>
+        /// The consumes.
+        /// </summary>
+        private List<string> consumes;
+
+        /// <summary>
+        /// The produces.
+        /// </summary>
+        private List<string> produces;
+
+        /// <summary>
+        /// The parameters.
+        /// </summary>
+        private IDictionary<string, Parameter> parameters;
+
+        /// <summary>
+        /// The responses.
+        /// </summary>
+        private IDictionary<string, Response> responses;
+
+        /// <summary>
+        /// The schemes.
+        /// </summary>
+        private List<Schemes> schemes;
+
+        /// <summary>
+        /// The security requirements.
+        /// </summary>
+        private IDictionary<SecuritySchemes, IEnumerable<string>> securityRequirements;
+
+        private string host;
+
+        private string basePath;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SwaggerRootBuilder"/> class. 
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
+        /// <param name="info">
+        /// The info.
+        /// </param>
         public SwaggerRootBuilder(Info info)
         {
             this.info = info;
@@ -55,26 +97,453 @@ namespace Swagger.ObjectModel.Builders
                 throw new RequiredFieldException("Paths");
             }
 
-            return new SwaggerRoot { Info = this.info, Paths = this.paths };
+            return new SwaggerRoot
+                       {
+                           Info = this.info,
+                           Paths = this.paths,
+                           Host = this.host,
+                           BasePath = this.basePath,
+                           Schemes = this.schemes,
+                           Consumes = this.consumes,
+                           Produces = this.produces,
+                           Definitions = this.definitions,
+                           Parameters = this.parameters,
+                           Responses = this.responses,
+                           SecurityDefinitions = this.securityDefinitions,
+                           Security = this.securityRequirements,
+                           Tags = this.tags,
+                           ExternalDocumentation = this.documentation
+                       };
         }
 
-        SwaggerRootBuilder Info(Info info)
+        /// <summary>
+        /// The info.
+        /// </summary>
+        /// <param name="info">
+        /// The info.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Info(Info info)
         {
             this.info = info;
             return this;
         }
 
-        SwaggerRootBuilder Info(InfoBuilder info)
+        /// <summary>
+        /// The info.
+        /// </summary>
+        /// <param name="info">
+        /// The info.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Info(InfoBuilder info)
         {
             this.info = info.Build();
             return this;
         }
 
-        SwaggerRootBuilder Path(string endpointPath)
+        /// <summary>
+        /// Add an available path (endpoint) for the API
+        /// </summary>
+        /// <param name="endpointName">
+        /// A relative path to an individual endpoint. 
+        /// The path is appended to the basePath in order to construct the full URL. Path templating is allowed.
+        /// </param>
+        /// <param name="pathItem">
+        /// The path item.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Path(string endpointName, PathItem pathItem)
         {
-            this.info = info.Build();
+            if (this.paths == null)
+            {
+                this.paths = new Dictionary<string, PathItem>();
+            }
+
+            if (endpointName.First() != '/')
+            {
+                endpointName = "/" + endpointName;
+            }
+
+            this.paths.Add(endpointName, pathItem);
             return this;
         }
 
+        /// <summary>
+        /// Add an available path (endpoint) for the API
+        /// </summary>
+        /// <param name="endpointName">
+        /// A relative path to an individual endpoint. 
+        /// The path is appended to the basePath in order to construct the full URL. Path templating is allowed.
+        /// </param>
+        /// <param name="pathItem">
+        /// The path item.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Path(string endpointName, PathItemBuilder pathItem)
+        {
+            return this.Path(endpointName, pathItem.Build());
+        }
+
+        /// <summary>
+        /// Add an available path (endpoint) for the API with no documentation. 
+        /// The path itself is still exposed to the documentation viewer but they will not know which operations and parameters are available.
+        /// </summary>
+        /// <param name="endpointName">
+        /// A relative path to an individual endpoint. 
+        /// The path is appended to the basePath in order to construct the full URL. Path templating is allowed.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Path(string endpointName)
+        {
+            return this.Path(endpointName, new PathItem());
+        }
+
+
+        /// <summary>
+        /// The host (name or ip) serving the API. This MUST be the host only and does not include the scheme nor sub-paths. 
+        /// It MAY include a port. 
+        /// If the host is not included, the host serving the documentation is to be used (including the port). 
+        /// The host does not support path templating.
+        /// </summary>
+        /// <param name="host">
+        /// The host.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Host(string host)
+        {
+            this.host = host;
+            return this;
+        }
+
+        /// <summary>
+        /// The base path on which the API is served, which is relative to the host. If it is not included, the API is served directly under the host. 
+        /// The value MUST start with a leading slash (/). 
+        /// The basePath does not support path templating.
+        /// </summary>
+        /// <param name="basePath">
+        /// The base path
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder BasePath(string basePath)
+        {
+            if (basePath.First() != '/')
+            {
+                basePath = "/" + basePath;
+            }
+
+            this.basePath = basePath;
+            return this;
+        }
+        
+        /// <summary>
+        /// Add a transfer protocol
+        /// </summary>
+        /// <param name="scheme">
+        /// The scheme.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Scheme(Schemes scheme)
+        {
+            if (this.schemes == null)
+            {
+                this.schemes = new List<Schemes>();
+            }
+
+            this.schemes.Add(scheme);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a MIME type the API can consume
+        /// </summary>
+        /// <param name="consume">
+        /// The consume.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder ConsumeMimeType(string consume)
+        {
+            if (this.consumes == null)
+            {
+                this.consumes = new List<string>();
+            }
+
+            this.consumes.Add(consume);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a list of MIME types the API can consume
+        /// </summary>
+        /// <param name="consumes">
+        /// The consumes.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder ConsumeMimeTypes(IEnumerable<string> consumes)
+        {
+            foreach (var consume in consumes)
+            {
+                this.ConsumeMimeType(consume);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a MIME type the API can produce
+        /// </summary>
+        /// <param name="produce">
+        /// The produce.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder ProduceMimeType(string produce)
+        {
+            if (this.produces == null)
+            {
+                this.produces = new List<string>();
+            }
+
+            this.produces.Add(produce);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a list of MIME types the API can produce
+        /// </summary>
+        /// <param name="produces">
+        /// The produces.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder ProduceMimeTypes(IEnumerable<string> produces)
+        {
+            foreach (var produce in produces)
+            {
+                this.ProduceMimeType(produce);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Add a parameter that can be reused across operations
+        /// </summary>
+        /// <param name="name"> Map a name for the parameter </param>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Parameter(string name, Parameter parameter)
+        {
+            if (this.parameters == null)
+            {
+                this.parameters = new Dictionary<string, Parameter>();
+            }
+
+            this.parameters.Add(name, parameter);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a parameter that can be reused across operations.
+        /// Uses the parameter name as the name.
+        /// </summary>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Parameter(Parameter parameter)
+        {
+            return this.Parameter(parameter.Name, parameter);
+        }
+
+        /// <summary>
+        /// Add a parameter for this operation
+        /// </summary>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Parameter(ParameterBuilder parameter)
+        {
+            return this.Parameter(parameter.Build());
+        }
+
+        /// <summary>
+        /// Add a body parameter for this operation
+        /// </summary>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Parameter(BodyParameterBuilder parameter)
+        {
+            return this.Parameter(parameter.Build());
+        }
+#error stopped here
+        /// <summary>
+        /// Add the default response
+        /// </summary>
+        /// <param name="response">
+        /// The response.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Response(Response response)
+        {
+            return this.Response("default", response);
+        }
+
+        /// <summary>
+        /// Add the expected response object for an HTTP Status Code
+        /// </summary>
+        /// <param name="httpStatusCode">
+        /// The http status code.
+        /// </param>
+        /// <param name="response">
+        /// The response.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Response(HttpStatusCode httpStatusCode, Response response)
+        {
+            return this.Response(httpStatusCode.ToString(), response);
+        }
+
+        /// <summary>
+        /// Add the expected response object for an HTTP Status Code
+        /// </summary>
+        /// <param name="httpStatusCode">
+        /// The http status code.
+        /// </param>
+        /// <param name="response">
+        /// The response.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Response(string httpStatusCode, Response response)
+        {
+            if (this.responses == null)
+            {
+                this.responses = new Dictionary<string, Response>();
+            }
+
+            this.responses.Add(httpStatusCode, response);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a security requirement
+        /// </summary>
+        /// <param name="security">
+        /// The security.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder SecurityRequirement(KeyValuePair<SecuritySchemes, IEnumerable<string>> security)
+        {
+            if (this.securityRequirements == null)
+            {
+                this.securityRequirements = new Dictionary<SecuritySchemes, IEnumerable<string>>();
+            }
+
+            this.securityRequirements.Add(security);
+            return this;
+        }
+
+        /// <summary>
+        /// Add a security requirement from the builder
+        /// </summary>
+        /// <param name="security">
+        /// The security.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder SecurityRequirement(SecurityRequirementBuilder security)
+        {
+            return this.SecurityRequirement(security.Build());
+        }
+
+        /// <summary>
+        /// Shortcut to add a security requirement that is not <see cref="SecuritySchemes.Oauth2"/>
+        /// </summary>
+        /// <param name="securityScheme">
+        /// The security scheme.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder SecurityRequirement(SecuritySchemes securityScheme)
+        {
+            return this.SecurityRequirement(new SecurityRequirementBuilder().SecurityScheme(securityScheme).Build());
+        }
+
+
+
+        /// <summary>
+        /// Additional external documentation
+        /// </summary>
+        /// <param name="documentation">
+        /// The documentation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder ExternalDocumentation(ExternalDocumentation documentation)
+        {
+            this.documentation = documentation;
+            return this;
+        }
+
+        /// <summary>
+        /// Additional external documentation 
+        /// </summary>
+        /// <param name="documentation">
+        /// The documentation.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder ExternalDocumentation(ExternalDocumentationBuilder documentation)
+        {
+            this.documentation = documentation.Build();
+            return this;
+        }
     }
 }

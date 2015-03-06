@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Swagger.ObjectModel
+﻿namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using System.Collections.Generic;
+
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// The Operation Object describes a single operation on a path.
@@ -10,35 +10,59 @@ namespace Swagger.ObjectModel
     /// <example>
     /// <code>
     /// {
-    ///   "method": "GET",
-    ///   "summary": "Find pet by ID",
-    ///   "notes": "Returns a pet based on ID",
-    ///   "type": "Pet",
-    ///   "nickname": "getPetById",
-    ///   "authorizations": {},
-    ///   "parameters": [
-    ///     {
-    ///       "name": "petId",
-    ///       "description": "ID of pet that needs to be fetched",
-    ///       "required": true,
-    ///       "type": "integer",
-    ///       "format": "int64",
-    ///       "paramType": "path",
-    ///       "minimum": "1.0",
-    ///       "maximum": "100000.0"
-    ///     }
-    ///   ],
-    ///   "responseMessages": [
-    ///     {
-    ///       "code": 400,
-    ///       "message": "Invalid ID supplied"
-    ///     },
-    ///     {
-    ///       "code": 404,
-    ///       "message": "Pet not found"
-    ///     }
-    ///   ]
-    /// }
+    ///  "tags": [
+    ///    "pet"
+    ///  ],
+    ///  "summary": "Updates a pet in the store with form data",
+    ///  "description": "",
+    ///  "operationId": "updatePetWithForm",
+    ///  "consumes": [
+    ///    "application/x-www-form-urlencoded"
+    ///  ],
+    ///  "produces": [
+    ///    "application/json",
+    ///    "application/xml"
+    ///  ],
+    ///  "parameters": [
+    ///    {
+    ///      "name": "petId",
+    ///      "in": "path",
+    ///      "description": "ID of pet that needs to be updated",
+    ///      "required": true,
+    ///      "type": "string"
+    ///    },
+    ///    {
+    ///      "name": "name",
+    ///      "in": "formData",
+    ///      "description": "Updated name of the pet",
+    ///      "required": false,
+    ///      "type": "string"
+    ///    },
+    ///    {
+    ///      "name": "status",
+    ///      "in": "formData",
+    ///      "description": "Updated status of the pet",
+    ///      "required": false,
+    ///      "type": "string"
+    ///    }
+    ///  ],
+    ///  "responses": {
+    ///    "200": {
+    ///      "description": "Pet updated."
+    ///    },
+    ///    "405": {
+    ///      "description": "Invalid input"
+    ///    }
+    ///  },
+    ///  "security": [
+    ///    {
+    ///      "petstore_auth": [
+    ///        "write:pets",
+    ///        "read:pets"
+    ///      ]
+    ///    }
+    ///  ]
+    ///}
     /// </code>
     /// </example>
     public class Operation : SwaggerModel
@@ -97,7 +121,6 @@ namespace Swagger.ObjectModel
         [SwaggerProperty("produces")]
         public IEnumerable<string> Produces { get; set; }
 
-
         /// <summary>
         /// A list of parameters that are applicable for this operation. 
         /// If a parameter is already defined at the Path Item, the new definition will override it, but can never remove it. 
@@ -108,12 +131,11 @@ namespace Swagger.ObjectModel
         [SwaggerProperty("parameters", true)]
         public IEnumerable<Parameter> Parameters { get; set; }
 
-
         /// <summary>
         /// Lists the possible response statuses that can return from the operation.
         /// </summary>
         [SwaggerProperty("responses")]
-        public IEnumerable<Response> Responses { get; set; }
+        public IDictionary<string, Response> Responses { get; set; }
 
         /// <summary>
         /// The transfer protocol for the operation.
@@ -134,7 +156,7 @@ namespace Swagger.ObjectModel
         /// This definition overrides any declared top-level security. 
         /// To remove a top-level security declaration, an empty array can be used.
         /// </summary>
-        [SwaggerProperty("security")]        
+        [SwaggerProperty("security")]
         public IDictionary<SecuritySchemes, IEnumerable<string>> SecurityRequirements { get; set; }
     }
 }

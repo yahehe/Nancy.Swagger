@@ -20,12 +20,12 @@
         /// Gets or sets the operations.
         /// </summary>
         [SwaggerProperty("operations")]
-        private IEnumerable<Operation> Operations { get; set; }
+        public IDictionary<HttpMethod, Operation> Operations { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters.
         /// </summary>
         [SwaggerProperty("parameters")]
-        private IEnumerable<Parameter> Parameters { get; set; }
+        public IEnumerable<Parameter> Parameters { get; set; }
     }
 }

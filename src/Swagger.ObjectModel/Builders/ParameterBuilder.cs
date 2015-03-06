@@ -9,6 +9,8 @@
 
 namespace Swagger.ObjectModel.Builders
 {
+    using System;
+
     /// <summary>
     /// The parameter builder.
     /// </summary>
@@ -85,7 +87,7 @@ namespace Swagger.ObjectModel.Builders
         }
 
         /// <summary>
-        /// The in.
+        /// Add the location of the parameter. Use <see cref="BodyParameterBuilder"/> for body parameters
         /// </summary>
         /// <param name="parameterIn">
         /// The parameter in.
@@ -95,6 +97,11 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         private ParameterBuilder In(ParameterIn parameterIn)
         {
+            if (parameterIn == ParameterIn.Body)
+            {
+                throw new InvalidOperationException("Use a BodyParameterBuilder to create Parameter objects where the parameter is in the Body.");
+            }
+
             this.parameterIn = parameterIn;
             return this;
         }
@@ -115,7 +122,7 @@ namespace Swagger.ObjectModel.Builders
         }
 
         /// <summary>
-        /// The is required.
+        /// Declares that the parameter is required
         /// </summary>
         /// <returns>
         /// The <see cref="ParameterBuilder"/>.

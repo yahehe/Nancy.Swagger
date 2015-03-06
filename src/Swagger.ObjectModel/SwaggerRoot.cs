@@ -107,7 +107,7 @@ namespace Swagger.ObjectModel
         /// The name used for each property MUST correspond to a security scheme declared in the Security Definitions.
         /// </summary>
         [SwaggerProperty("security")]
-        public IDictionary<string, string> Security { get; set; }
+        public IDictionary<SecuritySchemes, IEnumerable<string>> Security { get; set; }
 
         /// <summary>
         /// A list of tags used by the specification with additional metadata. 
@@ -123,6 +123,6 @@ namespace Swagger.ObjectModel
         /// Additional external documentation.
         /// </summary>
         [SwaggerProperty("externalDocs")]
-        public IEnumerable<ExternalDocumentation> ExternalDocumentations { get; set; }
+        public ExternalDocumentation ExternalDocumentation { get; set; }
     }
 }

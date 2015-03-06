@@ -57,7 +57,9 @@
     <Compile Include="Builders\LicenseBuilder.cs" />
     <Compile Include="Builders\OperationBuilder.cs" />
     <Compile Include="Builders\ParameterBuilder.cs" />
+    <Compile Include="Builders\PathItemBuilder.cs" />
     <Compile Include="Builders\RequiredFieldException.cs" />
+    <Compile Include="Builders\SecurityRequirementBuilder.cs" />
     <Compile Include="Builders\SwaggerRootBuilder.cs" />
     <Compile Include="CollectionFormats.cs" />
     <Compile Include="Api.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="ExternalDocumentation.cs" />
     <Compile Include="ExternalDocumentationBuilder.cs" />
     <Compile Include="Header.cs" />
+    <Compile Include="Builders\HeaderBuilder.cs" />
     <Compile Include="HttpMethod.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ModelProperty.cs" />
@@ -75,6 +78,7 @@
     <Compile Include="Parameter.cs" />
     <Compile Include="ParameterIn.cs" />
     <Compile Include="Response.cs" />
+    <Compile Include="Builders\ResponseBuilder.cs" />
     <Compile Include="ResponseMessage.cs" />
     <Compile Include="Attributes\SwaggerDataAttribute.cs" />
     <Compile Include="Attributes\SwaggerEnumValueAttribute.cs" />

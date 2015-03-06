@@ -28,7 +28,7 @@
         /// The name of the property corresponds to the name of the header. The value describes the type of the header.
         /// </summary>
         [SwaggerProperty("headers")]
-        public IDictionary<string, Header> Header { get; set; }
+        public IDictionary<string, Header> Headers { get; set; }
 
         /// <summary>
         /// An example of the response message. 
@@ -36,6 +36,6 @@
         /// The value SHOULD be an example of what such a response would look like.
         /// </summary>
         [SwaggerProperty("examples")]
-        public IDictionary<string, object> Example { get; set; }
+        public IDictionary<string, object> Examples { get; set; }
     }
 }
