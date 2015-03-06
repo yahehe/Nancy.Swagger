@@ -51,15 +51,19 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ApiKeyLocations.cs" />
+    <Compile Include="Builders\ApiKeySecuritySchemeBuilder.cs" />
+    <Compile Include="Builders\BasicSecuritySchemeBuilder.cs" />
     <Compile Include="Builders\BodyParameterBuilder.cs" />
     <Compile Include="Builders\ContactBuilder.cs" />
     <Compile Include="Builders\InfoBuilder.cs" />
     <Compile Include="Builders\LicenseBuilder.cs" />
+    <Compile Include="Builders\Oauth2SecuritySchemeBuilder.cs" />
     <Compile Include="Builders\OperationBuilder.cs" />
     <Compile Include="Builders\ParameterBuilder.cs" />
     <Compile Include="Builders\PathItemBuilder.cs" />
     <Compile Include="Builders\RequiredFieldException.cs" />
     <Compile Include="Builders\SecurityRequirementBuilder.cs" />
+    <Compile Include="Builders\SecuritySchemeBuilder.cs" />
     <Compile Include="Builders\SwaggerRootBuilder.cs" />
     <Compile Include="CollectionFormats.cs" />
     <Compile Include="Api.cs" />

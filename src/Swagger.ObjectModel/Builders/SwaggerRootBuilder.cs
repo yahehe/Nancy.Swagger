@@ -411,26 +411,12 @@ namespace Swagger.ObjectModel.Builders
         {
             return this.Parameter(parameter.Build());
         }
-#error stopped here
-        /// <summary>
-        /// Add the default response
-        /// </summary>
-        /// <param name="response">
-        /// The response.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SwaggerRootBuilder"/>.
-        /// </returns>
-        public SwaggerRootBuilder Response(Response response)
-        {
-            return this.Response("default", response);
-        }
 
         /// <summary>
-        /// Add the expected response object for an HTTP Status Code
+        /// Add a response to be reused across operations. Response definitions can be referenced to the ones defined here.
         /// </summary>
-        /// <param name="httpStatusCode">
-        /// The http status code.
+        /// <param name="name">
+        /// The name
         /// </param>
         /// <param name="response">
         /// The response.
@@ -438,34 +424,43 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SwaggerRootBuilder"/>.
         /// </returns>
-        public SwaggerRootBuilder Response(HttpStatusCode httpStatusCode, Response response)
-        {
-            return this.Response(httpStatusCode.ToString(), response);
-        }
-
-        /// <summary>
-        /// Add the expected response object for an HTTP Status Code
-        /// </summary>
-        /// <param name="httpStatusCode">
-        /// The http status code.
-        /// </param>
-        /// <param name="response">
-        /// The response.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SwaggerRootBuilder"/>.
-        /// </returns>
-        public SwaggerRootBuilder Response(string httpStatusCode, Response response)
+        public SwaggerRootBuilder Response(string name, Response response)
         {
             if (this.responses == null)
             {
                 this.responses = new Dictionary<string, Response>();
             }
 
-            this.responses.Add(httpStatusCode, response);
+            this.responses.Add(name, response);
             return this;
         }
 
+        /// <summary>
+        /// Add a response to be reused across operations. Response definitions can be referenced to the ones defined here.
+        /// </summary>
+        /// <param name="name">
+        /// The name
+        /// </param>
+        /// <param name="response">
+        /// The response.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Response(string name, ResponseBuilder response)
+        {
+            return this.Response(name, response.Build());
+        }
+
+        public SwaggerRootBuilder SecurityDefinition(string name, SecurityScheme scheme)
+        {
+            if (this.securityRequirements == null)
+            {
+                this.securityRequirements = new Dictionary<SecuritySchemes, IEnumerable<string>>();
+            }
+
+            this.securityRequirements.Add(name);
+        }
         /// <summary>
         /// Add a security requirement
         /// </summary>
