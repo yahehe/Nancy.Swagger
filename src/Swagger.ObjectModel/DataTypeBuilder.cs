@@ -111,7 +111,7 @@ namespace Swagger.ObjectModel
         /// The build.
         /// </summary>
         /// <returns>
-        /// The <see cref="T"/>.
+        /// An instance of type T
         /// </returns>
         public abstract T Build();
 
@@ -155,7 +155,7 @@ namespace Swagger.ObjectModel
         /// The maximum.
         /// </param>
         /// <returns>
-        /// The <see cref="DataTypeBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Maximum(long maximum)
         {
@@ -170,7 +170,7 @@ namespace Swagger.ObjectModel
         /// The minimum.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Minimum(long minimum)
         {
@@ -185,7 +185,7 @@ namespace Swagger.ObjectModel
         /// The type.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Type(string type)
         {
@@ -200,7 +200,7 @@ namespace Swagger.ObjectModel
         /// The collection format.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder CollectionFormat(CollectionFormats collectionFormat)
         {
@@ -215,7 +215,7 @@ namespace Swagger.ObjectModel
         /// The default value.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Default(object defaultValue)
         {
@@ -230,7 +230,7 @@ namespace Swagger.ObjectModel
         /// The enum.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Enum(string @enum)
         {
@@ -250,7 +250,7 @@ namespace Swagger.ObjectModel
         /// The enums.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Enums(IEnumerable<string> @enums)
         {
@@ -269,7 +269,7 @@ namespace Swagger.ObjectModel
         /// The is exclusive maximum.
         /// </summary>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder IsExclusiveMaximum()
         {
@@ -281,7 +281,7 @@ namespace Swagger.ObjectModel
         /// The is exclusive minimum.
         /// </summary>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder IsExclusiveMinimum()
         {
@@ -296,7 +296,7 @@ namespace Swagger.ObjectModel
         /// The format.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Format(string format)
         {
@@ -311,7 +311,7 @@ namespace Swagger.ObjectModel
         /// The items.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Items(Item items)
         {
@@ -326,7 +326,7 @@ namespace Swagger.ObjectModel
         /// The max items.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder MaxItems(int maxItems)
         {
@@ -341,7 +341,7 @@ namespace Swagger.ObjectModel
         /// The max length.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder MaxLength(long maxLength)
         {
@@ -356,7 +356,7 @@ namespace Swagger.ObjectModel
         /// The min items.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder MinItems(int minItems)
         {
@@ -371,7 +371,7 @@ namespace Swagger.ObjectModel
         /// The min length.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder MinLength(long minLength)
         {
@@ -386,7 +386,7 @@ namespace Swagger.ObjectModel
         /// The multiple of.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder MultipleOf(int multipleOf)
         {
@@ -401,7 +401,7 @@ namespace Swagger.ObjectModel
         /// The pattern.
         /// </param>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder Pattern(string pattern)
         {
@@ -413,7 +413,7 @@ namespace Swagger.ObjectModel
         /// The is unique items.
         /// </summary>
         /// <returns>
-        /// The <see cref="TBuilder"/>.
+        /// The builder
         /// </returns>
         public TBuilder IsUniqueItems()
         {

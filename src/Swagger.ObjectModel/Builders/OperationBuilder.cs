@@ -74,11 +74,6 @@ namespace Swagger.ObjectModel.Builders
         private IDictionary<SecuritySchemes, IEnumerable<string>> securityRequirements;
 
         /// <summary>
-        /// The method.
-        /// </summary>
-        private HttpMethod method;
-
-        /// <summary>
         /// The build.
         /// </summary>
         /// <returns>
@@ -111,7 +106,6 @@ namespace Swagger.ObjectModel.Builders
                            Schemes = this.schemes,
                            Deprecated = this.deprecated,
                            SecurityRequirements = this.securityRequirements,
-                           Method = this.method
                        };
         }
 

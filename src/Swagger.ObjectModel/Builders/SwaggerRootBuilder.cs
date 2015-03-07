@@ -1,12 +1,15 @@
-﻿//  <copyright file="SwaggerRootBuilder.cs" company="Premise Health">
-//      Copyright (c) 2015 Premise Health. All rights reserved.
-//  </copyright>
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SwaggerRootBuilder.cs" company="CHS Health Services">
+//   Copyright (c) 2015 CHS Health Services. All rights reserved.
+// </copyright>
+// <summary>
+//   The swagger root builder.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace Swagger.ObjectModel.Builders
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
 
     /// <summary>
     /// The swagger root builder.
@@ -63,9 +66,25 @@ namespace Swagger.ObjectModel.Builders
         /// </summary>
         private IDictionary<SecuritySchemes, IEnumerable<string>> securityRequirements;
 
+        /// <summary>
+        /// The host.
+        /// </summary>
         private string host;
 
+        /// <summary>
+        /// The base path.
+        /// </summary>
         private string basePath;
+
+        /// <summary>
+        /// The security definitions.
+        /// </summary>
+        private IDictionary<string, SecurityScheme> securityDefinitions;
+
+        /// <summary>
+        /// The definitions.
+        /// </summary>
+        private IDictionary<string, Schema> definitions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwaggerRootBuilder"/> class. 
@@ -98,22 +117,22 @@ namespace Swagger.ObjectModel.Builders
             }
 
             return new SwaggerRoot
-                       {
-                           Info = this.info,
-                           Paths = this.paths,
-                           Host = this.host,
-                           BasePath = this.basePath,
-                           Schemes = this.schemes,
-                           Consumes = this.consumes,
-                           Produces = this.produces,
-                           Definitions = this.definitions,
-                           Parameters = this.parameters,
-                           Responses = this.responses,
-                           SecurityDefinitions = this.securityDefinitions,
-                           Security = this.securityRequirements,
-                           Tags = this.tags,
-                           ExternalDocumentation = this.documentation
-                       };
+                   {
+                       Info = this.info, 
+                       Paths = this.paths, 
+                       Host = this.host, 
+                       BasePath = this.basePath, 
+                       Schemes = this.schemes, 
+                       Consumes = this.consumes, 
+                       Produces = this.produces, 
+                       Definitions = this.definitions, 
+                       Parameters = this.parameters, 
+                       Responses = this.responses, 
+                       SecurityDefinitions = this.securityDefinitions, 
+                       Security = this.securityRequirements, 
+                       Tags = this.tags, 
+                       ExternalDocumentation = this.documentation
+                   };
         }
 
         /// <summary>
@@ -209,7 +228,6 @@ namespace Swagger.ObjectModel.Builders
             return this.Path(endpointName, new PathItem());
         }
 
-
         /// <summary>
         /// The host (name or ip) serving the API. This MUST be the host only and does not include the scheme nor sub-paths. 
         /// It MAY include a port. 
@@ -249,7 +267,7 @@ namespace Swagger.ObjectModel.Builders
             this.basePath = basePath;
             return this;
         }
-        
+
         /// <summary>
         /// Add a transfer protocol
         /// </summary>
@@ -452,15 +470,52 @@ namespace Swagger.ObjectModel.Builders
             return this.Response(name, response.Build());
         }
 
+        /// <summary>
+        /// Add a Security scheme definitions that can be used across the specification.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="scheme">
+        /// The scheme.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
         public SwaggerRootBuilder SecurityDefinition(string name, SecurityScheme scheme)
         {
-            if (this.securityRequirements == null)
+            if (this.securityDefinitions == null)
             {
-                this.securityRequirements = new Dictionary<SecuritySchemes, IEnumerable<string>>();
+                this.securityDefinitions = new Dictionary<string, SecurityScheme>();
             }
 
-            this.securityRequirements.Add(name);
+            this.securityDefinitions.Add(name, scheme);
+            return this;
         }
+
+        /// <summary>
+        /// Add a Security scheme definitions that can be used across the specification.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="scheme">
+        /// The scheme.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder SecurityDefinition(string name, SecuritySchemeBuilder scheme)
+        {
+            if (this.securityDefinitions == null)
+            {
+                this.securityDefinitions = new Dictionary<string, SecurityScheme>();
+            }
+
+            this.securityDefinitions.Add(name, scheme.Build());
+            return this;
+        }
+
         /// <summary>
         /// Add a security requirement
         /// </summary>
@@ -509,8 +564,6 @@ namespace Swagger.ObjectModel.Builders
             return this.SecurityRequirement(new SecurityRequirementBuilder().SecurityScheme(securityScheme).Build());
         }
 
-
-
         /// <summary>
         /// Additional external documentation
         /// </summary>
@@ -539,6 +592,80 @@ namespace Swagger.ObjectModel.Builders
         {
             this.documentation = documentation.Build();
             return this;
+        }
+
+        /// <summary>
+        /// The tag.
+        /// </summary>
+        /// <param name="tag">
+        /// The tag.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Tag(Tag tag)
+        {
+            if (this.tags == null)
+            {
+                this.tags = new List<Tag>();
+            }
+
+            this.tags.Add(tag);
+            return this;
+        }
+
+        /// <summary>
+        /// The tag.
+        /// </summary>
+        /// <param name="tag">
+        /// The tag.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Tag(TagBuilder tag)
+        {
+            return this.Tag(tag.Build());
+        }
+
+        /// <summary>
+        /// The definition.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="definition">
+        /// The definition.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Definition(string name, Schema definition)
+        {
+            if (this.definitions == null)
+            {
+                this.definitions = new Dictionary<string, Schema>();
+            }
+
+            this.definitions.Add(name, definition);
+            return this;
+        }
+
+        /// <summary>
+        /// The definition.
+        /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="definition">
+        /// The definition.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SwaggerRootBuilder"/>.
+        /// </returns>
+        public SwaggerRootBuilder Definition(string name, SchemaBuilder definition)
+        {
+            return this.Definition(name, definition.Build());
         }
     }
 }

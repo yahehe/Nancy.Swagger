@@ -2,8 +2,6 @@
 {
     using global::Swagger.ObjectModel.Attributes;
 
-    using global::Swagger.ObjectModel.Attributes;
-
     /// <summary>
     /// The body parameter.
     /// </summary>

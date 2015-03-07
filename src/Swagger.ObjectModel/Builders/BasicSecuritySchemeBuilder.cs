@@ -1,7 +1,11 @@
-﻿//  <copyright file="BasicSecuritySchemeBuilder.cs" company="Premise Health">
-//      Copyright (c) 2015 Premise Health. All rights reserved.
-//  </copyright>
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="BasicSecuritySchemeBuilder.cs" company="CHS Health Services">
+//   Copyright (c) 2015 CHS Health Services. All rights reserved.
+// </copyright>
+// <summary>
+//   The basic security scheme builder.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace Swagger.ObjectModel.Builders
 {
     /// <summary>
@@ -20,6 +24,21 @@ namespace Swagger.ObjectModel.Builders
         public override SecurityScheme Build()
         {
             return new SecurityScheme { Type = SecuritySchemes.Basic, Description = this.description };
+        }
+
+        /// <summary>
+        /// A short description for security scheme.
+        /// </summary>
+        /// <param name="description">
+        /// The description.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SecuritySchemeBuilder"/>.
+        /// </returns>
+        public BasicSecuritySchemeBuilder Description(string description)
+        {
+            this.description = description;
+            return this;
         }
     }
 }

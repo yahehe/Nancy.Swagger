@@ -21,7 +21,7 @@
         /// The build.
         /// </summary>
         /// <returns>
-        /// The <see cref="KeyValuePair"/>.
+        /// The <see cref="KeyValuePair{TKey,TValue}"/>.
         /// </returns>
         /// <exception cref="RequiredFieldException">
         /// </exception>

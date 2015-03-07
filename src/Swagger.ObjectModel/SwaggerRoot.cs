@@ -1,18 +1,29 @@
-﻿using System.Collections.Generic;
-
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SwaggerRoot.cs" company="CHS Health Services">
+//   Copyright (c) 2015 CHS Health Services. All rights reserved.
+// </copyright>
+// <summary>
+//   The swagger root.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using System.Collections.Generic;
 
+    using Swagger.ObjectModel.Attributes;
+
+    /// <summary>
+    /// The swagger root.
+    /// </summary>
     public class SwaggerRoot : SwaggerModel
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="SwaggerRoot"/> class. 
         /// Creates an instance of a <see cref="SwaggerRoot"/>.
         /// </summary>
         public SwaggerRoot()
         {
-            SwaggerVersion = "2.0"; // TODO: Specify this centrally
+            this.SwaggerVersion = "2.0"; // TODO: Specify this centrally
         }
 
         /// <summary>

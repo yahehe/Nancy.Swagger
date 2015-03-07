@@ -25,7 +25,7 @@ namespace Swagger.ObjectModel
         /// The build.
         /// </summary>
         /// <returns>
-        /// The <see cref="T"/>.
+        /// The <see cref="Header"/>.
         /// </returns>
         public override Header Build()
         {

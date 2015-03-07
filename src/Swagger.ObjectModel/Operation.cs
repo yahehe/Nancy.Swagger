@@ -68,12 +68,6 @@
     public class Operation : SwaggerModel
     {
         /// <summary>
-        /// The HTTP method required to invoke this operation.
-        /// </summary>
-        [SwaggerProperty("method", true)]
-        public HttpMethod Method { get; set; }
-
-        /// <summary>
         /// A list of tags for API documentation control. Tags can be used for logical grouping of operations by resources or any other qualifier.
         /// </summary>
         [SwaggerProperty("tags")]

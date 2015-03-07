@@ -1,7 +1,11 @@
-﻿//  <copyright file="SecuritySchemeBuilder.cs" company="Premise Health">
-//      Copyright (c) 2015 Premise Health. All rights reserved.
-//  </copyright>
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="SecuritySchemeBuilder.cs" company="CHS Health Services">
+//   Copyright (c) 2015 CHS Health Services. All rights reserved.
+// </copyright>
+// <summary>
+//   The security scheme builder.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace Swagger.ObjectModel.Builders
 {
     using System.Collections.Generic;
@@ -14,7 +18,7 @@ namespace Swagger.ObjectModel.Builders
         /// <summary>
         /// The type.
         /// </summary>
-        protected SecuritySchemes type;
+        protected SecuritySchemes? type;
 
         /// <summary>
         /// The description.
@@ -67,46 +71,16 @@ namespace Swagger.ObjectModel.Builders
             }
 
             return new SecurityScheme
-                       {
-                           Type = this.type,
-                           Description = this.description,
-                           Name = this.name,
-                           In = this.securityIn,
-                           Flow = this.flow,
-                           AuthorizationUrl = this.authorizationUrl,
-                           TokenUrl = this.tokenUrl,
-                           Scopes = this.scopes
-                       };
-        }
-
-        /// <summary>
-        ///  The type of the security scheme
-        /// </summary>
-        /// <param name="type">
-        /// The type.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SecuritySchemeBuilder"/>.
-        /// </returns>
-        public SecuritySchemeBuilder Type(SecuritySchemes type)
-        {
-            this.type = type;
-            return this;
-        }
-
-        /// <summary>
-        /// A short description for security scheme.
-        /// </summary>
-        /// <param name="description">
-        /// The description.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SecuritySchemeBuilder"/>.
-        /// </returns>
-        public SecuritySchemeBuilder Description(string description)
-        {
-            this.description = description;
-            return this;
+                   {
+                       Type = this.type.Value, 
+                       Description = this.description, 
+                       Name = this.name, 
+                       In = this.securityIn, 
+                       Flow = this.flow, 
+                       AuthorizationUrl = this.authorizationUrl, 
+                       TokenUrl = this.tokenUrl, 
+                       Scopes = this.scopes
+                   };
         }
     }
 }

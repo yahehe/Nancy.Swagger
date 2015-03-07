@@ -32,7 +32,7 @@
         Pipes,
 
         /// <summary>
-        /// corresponds to multiple parameter instances instead of multiple values for a single instance foo=bar&foo=baz. 
+        /// corresponds to multiple parameter instances instead of multiple values for a single instance <code>foo=bar&foo=baz</code>
         /// </summary>
         /// <remarks>
         /// This is valid only for parameters in "query" or "formData".

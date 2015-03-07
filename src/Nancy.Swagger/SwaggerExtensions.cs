@@ -1,6 +1,6 @@
 ﻿using Nancy.Routing;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

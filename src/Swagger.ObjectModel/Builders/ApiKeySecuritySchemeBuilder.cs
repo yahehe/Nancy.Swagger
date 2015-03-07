@@ -1,7 +1,11 @@
-﻿//  <copyright file="ApiKeySecuritySchemeBuilder.cs" company="Premise Health">
-//      Copyright (c) 2015 Premise Health. All rights reserved.
-//  </copyright>
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ApiKeySecuritySchemeBuilder.cs" company="CHS Health Services">
+//   Copyright (c) 2015 CHS Health Services. All rights reserved.
+// </copyright>
+// <summary>
+//   The api key security scheme builder.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace Swagger.ObjectModel.Builders
 {
     /// <summary>
@@ -17,7 +21,7 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         /// <exception cref="RequiredFieldException">
         /// </exception>
-        public SecurityScheme Build()
+        public override SecurityScheme Build()
         {
             if (string.IsNullOrWhiteSpace(this.name))
             {
@@ -33,6 +37,21 @@ namespace Swagger.ObjectModel.Builders
         }
 
         /// <summary>
+        /// A short description for security scheme.
+        /// </summary>
+        /// <param name="description">
+        /// The description.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SecuritySchemeBuilder"/>.
+        /// </returns>
+        public ApiKeySecuritySchemeBuilder Description(string description)
+        {
+            this.description = description;
+            return this;
+        }
+
+        /// <summary>
         /// The name.
         /// </summary>
         /// <param name="name">
@@ -41,7 +60,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SecuritySchemeBuilder"/>.
         /// </returns>
-        public SecuritySchemeBuilder Name(string name)
+        public ApiKeySecuritySchemeBuilder Name(string name)
         {
             this.name = name;
             return this;
@@ -53,7 +72,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SecuritySchemeBuilder"/>.
         /// </returns>
-        public SecuritySchemeBuilder IsInQuery()
+        public ApiKeySecuritySchemeBuilder IsInQuery()
         {
             return this.In(ApiKeyLocations.Query);
         }
@@ -64,7 +83,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SecuritySchemeBuilder"/>.
         /// </returns>
-        public SecuritySchemeBuilder IsInHeader()
+        public ApiKeySecuritySchemeBuilder IsInHeader()
         {
             return this.In(ApiKeyLocations.Header);
         }
@@ -78,7 +97,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SecuritySchemeBuilder"/>.
         /// </returns>
-        private SecuritySchemeBuilder In(ApiKeyLocations securityIn)
+        private ApiKeySecuritySchemeBuilder In(ApiKeyLocations securityIn)
         {
             this.securityIn = securityIn;
             return this;

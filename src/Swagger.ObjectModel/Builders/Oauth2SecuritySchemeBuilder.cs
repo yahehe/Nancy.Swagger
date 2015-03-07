@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Swagger.ObjectModel.Builders
+﻿namespace Swagger.ObjectModel.Builders
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
+    /// <summary>
+    /// The oauth 2 security scheme builder.
+    /// </summary>
     public class Oauth2SecuritySchemeBuilder : SecuritySchemeBuilder
     {
         /// <summary>
@@ -13,8 +14,6 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SecurityScheme"/>.
         /// </returns>
-        /// <exception cref="RequiredFieldException">
-        /// </exception>
         public override SecurityScheme Build()
         {
             if (this.flow == null)
@@ -22,20 +21,48 @@ namespace Swagger.ObjectModel.Builders
                 throw new RequiredFieldException("Flow");
             }
 
+            if ((this.flow == Oauth2Flows.Implicit || this.flow == Oauth2Flows.AccessCode) && string.IsNullOrWhiteSpace(this.authorizationUrl))
+            {
+                throw new RequiredFieldException("AuthorizationUrl");
+            }
+
+            if ((this.flow.Value == Oauth2Flows.AccessCode || this.flow.Value == Oauth2Flows.Application || this.flow.Value == Oauth2Flows.Password)
+                && string.IsNullOrWhiteSpace(this.tokenUrl))
+            {
+                throw new RequiredFieldException("TokenUrl");
+            }
+
+            if (this.scopes == null || !this.scopes.Any())
+            {
+                throw new RequiredFieldException("Scopes");
+            }
+
             return new SecurityScheme
-                       {
-                           Type = SecuritySchemes.Oauth2,
-                           Description = this.description,
-                           Flow = this.flow
-                       };
+                   {
+                       Type = SecuritySchemes.Oauth2, 
+                       Description = this.description, 
+                       Flow = this.flow, 
+                       AuthorizationUrl = this.authorizationUrl, 
+                       TokenUrl = this.tokenUrl, 
+                       Scopes = this.scopes
+                   };
         }
 
+        /// <summary>
+        /// The flow.
+        /// </summary>
+        /// <param name="flow">
+        /// The flow.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Oauth2SecuritySchemeBuilder"/>.
+        /// </returns>
         public Oauth2SecuritySchemeBuilder Flow(Oauth2Flows flow)
         {
             this.flow = flow;
             return this;
         }
-#error stopped here
+
         /// <summary>
         /// The authorization url.
         /// </summary>
@@ -67,7 +94,7 @@ namespace Swagger.ObjectModel.Builders
         }
 
         /// <summary>
-        /// The scope.
+        /// Add a scope
         /// </summary>
         /// <param name="name">
         /// The name.
@@ -87,6 +114,21 @@ namespace Swagger.ObjectModel.Builders
 
             this.scopes.Add(name, scope);
 
+            return this;
+        }
+
+        /// <summary>
+        /// A short description for security scheme.
+        /// </summary>
+        /// <param name="description">
+        /// The description.
+        /// </param>
+        /// <returns>
+        /// The <see cref="SecuritySchemeBuilder"/>.
+        /// </returns>
+        public SecuritySchemeBuilder Description(string description)
+        {
+            this.description = description;
             return this;
         }
     }

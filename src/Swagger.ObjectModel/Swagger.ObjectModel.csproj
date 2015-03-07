@@ -65,13 +65,14 @@
     <Compile Include="Builders\SecurityRequirementBuilder.cs" />
     <Compile Include="Builders\SecuritySchemeBuilder.cs" />
     <Compile Include="Builders\SwaggerRootBuilder.cs" />
+    <Compile Include="Builders\TagBuilder.cs" />
     <Compile Include="CollectionFormats.cs" />
     <Compile Include="Api.cs" />
     <Compile Include="ApiDeclaration.cs" />
     <Compile Include="BodyParameter.cs" />
     <Compile Include="DataTypeBuilder.cs" />
     <Compile Include="ExternalDocumentation.cs" />
-    <Compile Include="ExternalDocumentationBuilder.cs" />
+    <Compile Include="Builders\ExternalDocumentationBuilder.cs" />
     <Compile Include="Header.cs" />
     <Compile Include="Builders\HeaderBuilder.cs" />
     <Compile Include="HttpMethod.cs" />
