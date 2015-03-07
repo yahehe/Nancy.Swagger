@@ -3,7 +3,7 @@ using System;
 
 namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// The Info object provides metadata about the API.

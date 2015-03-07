@@ -2,7 +2,7 @@
 
 namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// Provides details regarding the OAuth2's Implicit Grant flow type.

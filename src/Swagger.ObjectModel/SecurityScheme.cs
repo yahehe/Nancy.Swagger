@@ -3,7 +3,7 @@
     using System.Collections;
     using System.Collections.Generic;
 
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// The security scheme.

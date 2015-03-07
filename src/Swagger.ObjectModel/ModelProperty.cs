@@ -2,7 +2,7 @@
 
 namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// A Property Object holds the definition of a new property for a model.

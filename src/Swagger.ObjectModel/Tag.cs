@@ -1,6 +1,6 @@
 ﻿namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// The tag.

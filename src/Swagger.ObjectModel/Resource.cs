@@ -2,7 +2,7 @@
 
 namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// The Resource object describes a resource API endpoint in the application.

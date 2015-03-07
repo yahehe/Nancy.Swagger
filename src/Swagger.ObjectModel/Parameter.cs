@@ -2,7 +2,7 @@
 
 namespace Swagger.ObjectModel
 {
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     /// <summary>
     /// The Parameter Object describes a single parameter to be sent in an operation and maps to the parameters field in the Operation Object.

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using global::Swagger.ObjectModel.Attributes;
+    using Swagger.ObjectModel.Attributes;
 
     
 
