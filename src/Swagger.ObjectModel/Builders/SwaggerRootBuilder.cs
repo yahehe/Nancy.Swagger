@@ -1,11 +1,12 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SwaggerRootBuilder.cs" company="CHS Health Services">
-//   Copyright (c) 2015 CHS Health Services. All rights reserved.
+// <copyright file="SwaggerRootBuilder.cs" company="">
+//   
 // </copyright>
 // <summary>
 //   The swagger root builder.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
 namespace Swagger.ObjectModel.Builders
 {
     using System.Collections.Generic;
@@ -88,7 +89,6 @@ namespace Swagger.ObjectModel.Builders
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwaggerRootBuilder"/> class. 
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
         /// <param name="info">
         /// The info.
@@ -96,6 +96,13 @@ namespace Swagger.ObjectModel.Builders
         public SwaggerRootBuilder(Info info)
         {
             this.info = info;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SwaggerRootBuilder"/> class. 
+        /// </summary>
+        public SwaggerRootBuilder()
+        {
         }
 
         /// <summary>
