@@ -4,8 +4,6 @@
 
     using Swagger.ObjectModel.Attributes;
 
-    
-
     /// <summary>
     /// Describes a single response from an API Operation.
     /// </summary>

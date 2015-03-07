@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Swagger.ObjectModel
 {
+    using System;
     using System.Collections.Generic;
 
     using Swagger.ObjectModel.Attributes;
@@ -18,13 +19,9 @@ namespace Swagger.ObjectModel
     public class SwaggerRoot : SwaggerModel
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SwaggerRoot"/> class. 
-        /// Creates an instance of a <see cref="SwaggerRoot"/>.
+        /// The swagger version.
         /// </summary>
-        public SwaggerRoot()
-        {
-            this.SwaggerVersion = "2.0"; // TODO: Specify this centrally
-        }
+        private const string Version = "2.0";
 
         /// <summary>
         /// Specifies the Swagger Specification version being used.
@@ -34,7 +31,13 @@ namespace Swagger.ObjectModel
         /// The value MUST be an existing Swagger specification version.
         /// </remarks>
         [SwaggerProperty("swagger", true)]
-        public string SwaggerVersion { get; set; }
+        public string SwaggerVersion
+        {
+            get
+            {
+                return Version;
+            }
+        }
 
         /// <summary>
         /// Provides metadata about the API. The metadata can be used by the clients if needed, and can be presented in the Swagger-UI for convenience.

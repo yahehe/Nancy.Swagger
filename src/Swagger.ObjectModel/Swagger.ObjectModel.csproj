@@ -68,7 +68,7 @@
     <Compile Include="Builders\TagBuilder.cs" />
     <Compile Include="CollectionFormats.cs" />
     <Compile Include="BodyParameter.cs" />
-    <Compile Include="DataTypeBuilder.cs" />
+    <Compile Include="Builders\DataTypeBuilder.cs" />
     <Compile Include="ExternalDocumentation.cs" />
     <Compile Include="Builders\ExternalDocumentationBuilder.cs" />
     <Compile Include="Header.cs" />
@@ -82,7 +82,6 @@
     <Compile Include="ParameterIn.cs" />
     <Compile Include="Response.cs" />
     <Compile Include="Builders\ResponseBuilder.cs" />
-    <Compile Include="ResponseMessage.cs" />
     <Compile Include="Attributes\SwaggerDataAttribute.cs" />
     <Compile Include="Attributes\SwaggerEnumValueAttribute.cs" />
     <Compile Include="Attributes\SwaggerPropertyAttribute.cs" />
@@ -93,24 +92,17 @@
     <Compile Include="ReflectionExtensions.cs" />
     <Compile Include="AuthorizationType.cs" />
     <Compile Include="Contact.cs" />
-    <Compile Include="GrantTypes.cs" />
-    <Compile Include="ImplicitGrantFlow.cs" />
     <Compile Include="Info.cs" />
     <Compile Include="License.cs" />
-    <Compile Include="LoginEndpoint.cs" />
     <Compile Include="OAuth2Scope.cs" />
-    <Compile Include="PassType.cs" />
     <Compile Include="PathItem.cs" />
-    <Compile Include="Resource.cs" />
     <Compile Include="Schema.cs" />
-    <Compile Include="SchemaBuilder.cs" />
+    <Compile Include="Builders\SchemaBuilder.cs" />
     <Compile Include="SecurityScheme.cs" />
     <Compile Include="SecuritySchemeType.cs" />
     <Compile Include="SwaggerRoot.cs" />
     <Compile Include="Schemes.cs" />
     <Compile Include="Tag.cs" />
-    <Compile Include="TokenEndpoint.cs" />
-    <Compile Include="TokenRequestEndpoint.cs" />
     <Compile Include="SimpleJson.cs" />
     <Compile Include="SwaggerModel.cs" />
   </ItemGroup>

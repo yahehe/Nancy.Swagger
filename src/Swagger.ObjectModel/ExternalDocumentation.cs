@@ -2,8 +2,6 @@
 {
     using Swagger.ObjectModel.Attributes;
 
-    
-
     /// <summary>
     /// The external documentation.
     /// </summary>

@@ -4,67 +4,6 @@
 
     using Swagger.ObjectModel.Attributes;
 
-    /// <summary>
-    /// The Operation Object describes a single operation on a path.
-    /// </summary>
-    /// <example>
-    /// <code>
-    /// {
-    ///  "tags": [
-    ///    "pet"
-    ///  ],
-    ///  "summary": "Updates a pet in the store with form data",
-    ///  "description": "",
-    ///  "operationId": "updatePetWithForm",
-    ///  "consumes": [
-    ///    "application/x-www-form-urlencoded"
-    ///  ],
-    ///  "produces": [
-    ///    "application/json",
-    ///    "application/xml"
-    ///  ],
-    ///  "parameters": [
-    ///    {
-    ///      "name": "petId",
-    ///      "in": "path",
-    ///      "description": "ID of pet that needs to be updated",
-    ///      "required": true,
-    ///      "type": "string"
-    ///    },
-    ///    {
-    ///      "name": "name",
-    ///      "in": "formData",
-    ///      "description": "Updated name of the pet",
-    ///      "required": false,
-    ///      "type": "string"
-    ///    },
-    ///    {
-    ///      "name": "status",
-    ///      "in": "formData",
-    ///      "description": "Updated status of the pet",
-    ///      "required": false,
-    ///      "type": "string"
-    ///    }
-    ///  ],
-    ///  "responses": {
-    ///    "200": {
-    ///      "description": "Pet updated."
-    ///    },
-    ///    "405": {
-    ///      "description": "Invalid input"
-    ///    }
-    ///  },
-    ///  "security": [
-    ///    {
-    ///      "petstore_auth": [
-    ///        "write:pets",
-    ///        "read:pets"
-    ///      ]
-    ///    }
-    ///  ]
-    ///}
-    /// </code>
-    /// </example>
     public class Operation : SwaggerModel
     {
         /// <summary>

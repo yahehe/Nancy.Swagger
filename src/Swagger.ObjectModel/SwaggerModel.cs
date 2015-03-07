@@ -20,6 +20,37 @@ namespace Swagger.ObjectModel
         private static readonly IJsonSerializerStrategy SerializerStrategy = new SwaggerSerializerStrategy();
 
         /// <summary>
+        /// Gets or sets the references to a globally defined object
+        /// </summary>
+        /// <remarks>
+        /// The value MUST be a model's id.
+        /// </remarks>
+        [SwaggerProperty("$ref")]
+        public string Ref { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether reference.
+        /// </summary>
+        public bool Reference
+        {
+            get
+            {
+                return this.Ref != null;
+            }
+        }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the current object.
+        /// </returns>
+        public override string ToString()
+        {
+            return this.ToJson();
+        }
+
+        /// <summary>
         /// Returns a valid JSON representation of
         /// the model, according to the Swagger schema.
         /// </summary>
