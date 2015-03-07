@@ -9,40 +9,24 @@ using System.Text;
 
 namespace Nancy.Swagger
 {
+    using global::Swagger.ObjectModel.Builders;
+
     [SwaggerApi]
     public static class SwaggerExtensions
     {
         /// <summary>
-        /// Returns an instance of <see cref="SwaggerRouteData"/> representing this route.
+        /// Returns an instance of <see cref="PathItem"/> representing this route.
         /// </summary>
-        /// <param name="desc">The <see cref="RouteDescription"/>.</param>
-        /// <param name="action">An <see cref="Action{SwaggerRouteDataBuilder}"/> for building the <see cref="SwaggerRouteData"/>.</param>
-        /// <returns>An instance of <see cref="SwaggerRouteData"/> constructed using <paramref name="desc"/> and by invoking <paramref name="action"/>.</returns>
-        public static SwaggerRouteData AsSwagger(this RouteDescription desc, Action<SwaggerRouteDataBuilder> action)
+        /// <param name="description">The <see cref="RouteDescription"/>.</param>
+        /// <param name="action">An <see cref="Action{PathItemBuilder}"/> for building the <see cref="PathItem"/>.</param>
+        /// <returns>An instance of <see cref="PathItem"/> constructed using <paramref name="description"/> and by invoking <paramref name="action"/>.</returns>
+        public static PathItem AsSwagger(this RouteDescription description, Action<PathItemBuilder> action)
         {
-            var builder = new SwaggerRouteDataBuilder(desc.Name, Convert(desc.Method), desc.Path);
-
+            var builder = new PathItemBuilder();
             action.Invoke(builder);
-
-            return builder.Data;
+            return builder.Build();
         }
-
-        public static Operation ToOperation(this SwaggerRouteData routeData)
-        {
-            var operation = routeData.OperationModel.ToDataType<Operation>();
-
-            operation.OperationId = SwaggerConfig.NicknameConvention(routeData);
-            operation.Summary = routeData.OperationSummary;
-            operation.Method = routeData.OperationMethod;
-            operation.Description = routeData.OperationNotes;
-            operation.Parameters = routeData.OperationParameters.Select(p => p.ToParameter());
-            operation.ResponseMessages = routeData.OperationResponseMessages.Any() ? routeData.OperationResponseMessages.OrderBy(r => r.Code) : null;
-            operation.Produces = routeData.OperationProduces.Any() ? routeData.OperationProduces.OrderBy(p => p) : null;
-            operation.Consumes = routeData.OperationConsumes.Any() ? routeData.OperationConsumes.OrderBy(c => c) : null;
-
-            return operation;
-        }
-
+        
         public static T ToDataType<T>(this Type type, bool isTopLevel = false)
             where T : DataType, new()
         {
@@ -98,56 +82,6 @@ namespace Nancy.Swagger
             dataType.Type = SwaggerConfig.ModelIdConvention(type);
 
             return dataType;
-        }
-
-        public static Parameter ToParameter(this SwaggerParameterData parameterData)
-        {
-            var parameter = parameterData.ParameterModel.ToDataType<Parameter>();
-
-            parameter.Name = parameterData.Name;
-            parameter.In = parameterData.ParamIn;
-            parameter.Description = parameterData.Description;
-            parameter.DefaultValue = parameterData.DefaultValue;
-
-            var paramType = parameter.In;
-
-            // 5.2.4 Parameter Object: If paramType is "path" then this field MUST be included and have the value true.
-            if (paramType == ParameterIn.Path)
-            {
-                parameter.Required = true;
-            }
-            else
-            {
-                parameter.Required = parameterData.Required || parameterData.ParameterModel.IsImplicitlyRequired() ? true : (bool?)null;
-            }
-
-            // 5.2.4 Parameter Object: The field may be used only if paramType is "query", "header" or "path".
-            if (paramType == ParameterIn.Query || paramType == ParameterIn.Header || paramType == ParameterIn.Path)
-            {
-                parameter.AllowMultiple = parameterData.ParameterModel.IsContainer() ? true : (bool?)null;
-            }
-
-            // 5.2.4 Parameter Object: If paramType is "body", the name is used only for 
-            // Swagger-UI and Swagger-Codegen. In this case, the name MUST be "body".  
-            if (paramType == ParameterIn.Body)
-            {
-                parameter.Name = "body";
-            }
-
-            // 5.2.4 Parameter Object: Type field MUST be used to link to other models.
-            if (parameterData.ParameterModel.IsContainer())
-            {
-                parameter.Type = parameter.Items.Type;
-                parameter.Format = parameter.Items.Format;
-                parameter.Items = null;
-            }
-            else
-            {
-                parameter.Type = parameter.Type ?? parameter.Ref;
-                parameter.Ref = null;
-            }
-
-            return parameter;
         }
 
         public static IEnumerable<Model> ToModel(this SwaggerModelData model, IEnumerable<SwaggerModelData> knownModels = null)
@@ -235,27 +169,6 @@ namespace Nancy.Swagger
             }
 
             return modelProperty;
-        }
-
-        private static HttpMethod Convert(string method)
-        {
-            switch (method)
-            {
-                case "DELETE":
-                    return HttpMethod.Delete;
-                case "GET":
-                    return HttpMethod.Get;
-                case "OPTIONS":
-                    return HttpMethod.Options;
-                case "PATCH":
-                    return HttpMethod.Patch;
-                case "POST":
-                    return HttpMethod.Post;
-                case "PUT":
-                    return HttpMethod.Put;
-                default:
-                    throw new NotSupportedException(string.Format("HTTP method '{0}' is not supported.", method));
-            }
         }
 
         private static IList<SwaggerModelPropertyData> GetPropertiesFromType(Type type)

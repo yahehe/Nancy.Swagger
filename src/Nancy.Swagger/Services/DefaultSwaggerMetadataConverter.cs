@@ -19,15 +19,6 @@ namespace Nancy.Swagger.Services
             _modelCatalog = modelCatalog;
         }
 
-        protected override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
-        {
-            return _routeCacheProvider
-                .GetCache()
-                .RetrieveMetadata<SwaggerRouteData>()
-                .OfType<SwaggerRouteData>()
-                .ToList(); // filter nulls
-        }
-
         protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
         {
             return _modelCatalog.ToList();
