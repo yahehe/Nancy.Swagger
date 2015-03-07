@@ -3,18 +3,18 @@
 namespace Nancy.Swagger.Annotations.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class SwaggerResponseAttribute : Attribute
+    public class ResponseAttribute : Attribute
     {
-        public SwaggerResponseAttribute(HttpStatusCode code)
+        public ResponseAttribute(HttpStatusCode code)
             : this(code, null, null) { }
 
-        public SwaggerResponseAttribute(HttpStatusCode code, string message)
+        public ResponseAttribute(HttpStatusCode code, string message)
             : this(code, message, null) { }
 
-        public SwaggerResponseAttribute(HttpStatusCode code, Type responseModel)
+        public ResponseAttribute(HttpStatusCode code, Type responseModel)
             : this(code, null, responseModel) { }
 
-        public SwaggerResponseAttribute(HttpStatusCode code, string message, Type model)
+        public ResponseAttribute(HttpStatusCode code, string message, Type model)
         {
             Code = code;
             Message = message ?? code.ToString();

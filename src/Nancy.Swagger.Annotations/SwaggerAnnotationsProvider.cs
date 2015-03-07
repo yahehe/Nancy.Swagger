@@ -154,7 +154,7 @@ namespace Nancy.Swagger.Annotations
                 data.OperationProduces = attr.Produces ?? data.OperationProduces;
             }
 
-            data.OperationResponseMessages = handler.GetCustomAttributes<SwaggerResponseAttribute>()
+            data.OperationResponseMessages = handler.GetCustomAttributes<ResponseAttribute>()
                 .Select(attr => {
                     var msg = new ResponseMessage
                     {
