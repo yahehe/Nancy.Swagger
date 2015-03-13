@@ -11,15 +11,11 @@ namespace Swagger.ObjectModel.Builders
     /// </summary>
     public class PathItemBuilder
     {
-        /// <summary>
-        /// The operations.
-        /// </summary>
-        private IDictionary<HttpMethod, Operation> operations;
+        private readonly PathItem pathItem = new PathItem()
+                                             {
+                                                 Parameters = new List<Parameter>()
+                                             };
 
-        /// <summary>
-        /// The parameters.
-        /// </summary>
-        private List<Parameter> parameters;
 
         /// <summary>
         /// The build.
@@ -29,32 +25,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItem Build()
         {
-            return new PathItem { Operations = this.operations, Parameters = this.parameters };
+            return pathItem;
         }
-
-        /// <summary>
-        /// Define an operation on the path
-        /// </summary>
-        /// <param name="httpMethod">
-        /// The method.
-        /// </param>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Operation(HttpMethod httpMethod, Operation operation)
-        {
-            if (this.operations == null)
-            {
-                this.operations = new Dictionary<HttpMethod, Operation>();
-            }
-
-            this.operations.Add(httpMethod, operation);
-            return this;
-        }
-
         /// <summary>
         /// Define a GET operation
         /// </summary>
@@ -66,7 +38,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Get(Operation operation)
         {
-            return this.Operation(HttpMethod.Get, operation);
+            pathItem.Get = operation;
+            return this;
         }
 
 
@@ -81,7 +54,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Put(Operation operation)
         {
-            return this.Operation(HttpMethod.Put, operation);
+            pathItem.Put = operation;
+            return this;
         }
 
         /// <summary>
@@ -95,7 +69,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Post(Operation operation)
         {
-            return this.Operation(HttpMethod.Post, operation);
+            pathItem.Post = operation;
+            return this;
         }
 
         /// <summary>
@@ -109,7 +84,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Delete(Operation operation)
         {
-            return this.Operation(HttpMethod.Delete, operation);
+            pathItem.Delete = operation;
+            return this;
         }
 
         /// <summary>
@@ -123,7 +99,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Options(Operation operation)
         {
-            return this.Operation(HttpMethod.Options, operation);
+            pathItem.Options = operation;
+            return this;
         }
 
         /// <summary>
@@ -137,7 +114,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Head(Operation operation)
         {
-            return this.Operation(HttpMethod.Head, operation);
+            pathItem.Head = operation;
+            return this;
         }
 
         /// <summary>
@@ -151,7 +129,8 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Patch(Operation operation)
         {
-            return this.Operation(HttpMethod.Patch, operation);
+            pathItem.Patch = operation;
+            return this;
         }
 
 
@@ -166,12 +145,7 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Parameter(Parameter parameter)
         {
-            if (this.parameters == null)
-            {
-                this.parameters = new List<Parameter>();
-            }
-
-            this.parameters.Add(parameter);
+            ((List<Parameter>)pathItem.Parameters).Add(parameter);
             return this;
         }
 
