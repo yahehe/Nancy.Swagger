@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Swagger.ObjectModel;
+using Swagger.ObjectModel.Builders;
 
 namespace Nancy.Swagger.Services
 {
@@ -10,15 +11,17 @@ namespace Nancy.Swagger.Services
     {
         public SwaggerRoot GetSwaggerJson()
         {
-            return new SwaggerRoot
+            var builder = new SwaggerRootBuilder();
+            foreach (var kvp in RetrieveSwaggerRouteData())
             {
-                Paths = RetrieveSwaggerRouteData(),
-                Info = new Info()
-                       {
-                           Title = "No title set",
-                           Version = "0.1"
-                       }
-            };
+                builder.Path(kvp.Key, kvp.Value);
+            }
+            builder.Info(new Info()
+                         {
+                             Title = "No title set",
+                             Version = "0.1"
+                         });
+            return builder.Build();
         }
 
         protected abstract IDictionary<string, PathItem> RetrieveSwaggerRouteData();
