@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Nancy.Routing;
-using Nancy.Swagger.Builders;
 using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Services
@@ -23,11 +22,26 @@ namespace Nancy.Swagger.Services
 
         protected override IDictionary<string, PathItem> RetrieveSwaggerRouteData()
         {
-            return _routeCacheProvider.GetCache()
-                               .RetrieveMetadata<SwaggerRouteDataBuilder>()
-                               .OfType<SwaggerRouteDataBuilder>()
-                               .SelectMany(x => x.PathItems)
-                               .ToDictionary(x => x.Key, x => x.Value);
+            var pathItems = new Dictionary<string, PathItem>();
+            foreach (var routeDescription in _routeCacheProvider.GetCache()
+                                                             .SelectMany(x => x.Value)
+                                                             .Select(x => x.Item2))
+            {
+                var pathItem = routeDescription.Metadata.Retrieve<PathItem>();
+                if (pathItem != null)
+                {
+                    PathItem entry;
+                    if (pathItems.TryGetValue(routeDescription.Path, out entry))
+                    {
+                        pathItems[routeDescription.Path] = entry.Combine(pathItem);
+                    }
+                    else
+                    {
+                        pathItems.Add(routeDescription.Path, pathItem);
+                    }
+                }
+            }
+            return pathItems;
         }
     }
 }

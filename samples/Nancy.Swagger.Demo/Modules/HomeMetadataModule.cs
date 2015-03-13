@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using Nancy.Metadata.Module;
-using Nancy.Swagger.Builders;
 using Nancy.Swagger.Demo.Models;
 using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Demo.Modules
 {
-    public class HomeMetadataModule : MetadataModule<SwaggerRouteDataBuilder>
+    public class HomeMetadataModule : MetadataModule<PathItem>
     {
         public HomeMetadataModule()
         {
             Describe["GetUsers"] = description => description.AsSwagger(with =>
             {
-                with.AddPath("GetUsers", x => x.Get(new Operation()
+                with.Get(new Operation()
                          {
                              OperationId = "GetUsers",
                              Summary = "The list of users",
@@ -27,12 +26,12 @@ namespace Nancy.Swagger.Demo.Modules
                                                                       }
                                                          }}
                                          }
-                         }));
+                         });
             });
 
             Describe["PostUsers"] = description => description.AsSwagger(with =>
             {
-                with.AddPath("/users", x => x.Post(new Operation()
+                with.Post(new Operation()
                          {
                              OperationId = "PostUsers",
                              Summary = "Create a User",
@@ -58,7 +57,7 @@ namespace Nancy.Swagger.Demo.Modules
                                                 }
                                             }
 
-                         }));
+                         });
             });
         }
     }

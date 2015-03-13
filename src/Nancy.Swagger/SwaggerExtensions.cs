@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nancy.Routing;
-using Nancy.Swagger.Builders;
 using Swagger.ObjectModel;
+using Swagger.ObjectModel.Builders;
 
 namespace Nancy.Swagger
 {
@@ -19,11 +19,11 @@ namespace Nancy.Swagger
         /// <param name="description">The <see cref="RouteDescription"/>.</param>
         /// <param name="action">An <see cref="Action{PathItemBuilder}"/> for building the <see cref="PathItem"/>.</param>
         /// <returns>An instance of <see cref="PathItem"/> constructed using <paramref name="description"/> and by invoking <paramref name="action"/>.</returns>
-        public static SwaggerRouteDataBuilder AsSwagger(this RouteDescription description, Action<SwaggerRouteDataBuilder> action)
+        public static PathItem AsSwagger(this RouteDescription description, Action<PathItemBuilder> action)
         {
-            var builder = new SwaggerRouteDataBuilder();
+            var builder = new PathItemBuilder();
             action.Invoke(builder);
-            return builder;
+            return builder.Build();
         }
 
         public static T ToDataType<T>(this Type type, bool isTopLevel = false)

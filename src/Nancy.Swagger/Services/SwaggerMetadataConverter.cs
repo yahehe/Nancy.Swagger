@@ -10,7 +10,15 @@ namespace Nancy.Swagger.Services
     {
         public SwaggerRoot GetSwaggerJson()
         {
-            return new SwaggerRoot { Paths = RetrieveSwaggerRouteData() };
+            return new SwaggerRoot
+            {
+                Paths = RetrieveSwaggerRouteData(),
+                Info = new Info()
+                       {
+                           Title = "No title set",
+                           Version = "0.1"
+                       }
+            };
         }
 
         protected abstract IDictionary<string, PathItem> RetrieveSwaggerRouteData();
