@@ -1,15 +1,14 @@
-﻿using Nancy.Routing;
-using Swagger.ObjectModel;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Nancy.Routing;
+using Nancy.Swagger.Builders;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger
 {
-    using global::Swagger.ObjectModel.Builders;
 
     [SwaggerApi]
     public static class SwaggerExtensions
@@ -20,19 +19,19 @@ namespace Nancy.Swagger
         /// <param name="description">The <see cref="RouteDescription"/>.</param>
         /// <param name="action">An <see cref="Action{PathItemBuilder}"/> for building the <see cref="PathItem"/>.</param>
         /// <returns>An instance of <see cref="PathItem"/> constructed using <paramref name="description"/> and by invoking <paramref name="action"/>.</returns>
-        public static PathItem AsSwagger(this RouteDescription description, Action<PathItemBuilder> action)
+        public static SwaggerRouteDataBuilder AsSwagger(this RouteDescription description, Action<SwaggerRouteDataBuilder> action)
         {
-            var builder = new PathItemBuilder();
+            var builder = new SwaggerRouteDataBuilder();
             action.Invoke(builder);
-            return builder.Build();
+            return builder;
         }
-        
+
         public static T ToDataType<T>(this Type type, bool isTopLevel = false)
             where T : DataType, new()
         {
             var dataType = new T();
 
-            if (type == null) 
+            if (type == null)
             {
                 dataType.Type = "void";
 
@@ -54,7 +53,7 @@ namespace Nancy.Swagger
                 dataType.Type = "array";
 
                 var itemsType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
-                
+
                 if (Primitive.IsPrimitive(itemsType))
                 {
                     var primitive = Primitive.FromType(itemsType);
@@ -156,8 +155,8 @@ namespace Nancy.Swagger
             var isClassProperty = !Primitive.IsPrimitive(propertyType);
 
             var modelProperty = modelPropertyData.Type.ToDataType<ModelProperty>(isClassProperty);
-            
-            modelProperty.DefaultValue = modelPropertyData.DefaultValue;
+
+            modelProperty.Default = modelPropertyData.DefaultValue;
             modelProperty.Description = modelPropertyData.Description;
             modelProperty.Enum = modelPropertyData.Enum;
             modelProperty.Minimum = modelPropertyData.Minimum;
@@ -226,7 +225,7 @@ namespace Nancy.Swagger
 
             return sb.ToString();
         }
-        
+
         internal static bool IsImplicitlyRequired(this Type type)
         {
             return type.IsValueType && !IsNullable(type);

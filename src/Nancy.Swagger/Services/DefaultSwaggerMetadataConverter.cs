@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Nancy.Routing;
+using Nancy.Swagger.Builders;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Services
 {
@@ -19,9 +21,13 @@ namespace Nancy.Swagger.Services
             _modelCatalog = modelCatalog;
         }
 
-        protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
+        protected override IDictionary<string, PathItem> RetrieveSwaggerRouteData()
         {
-            return _modelCatalog.ToList();
+            return _routeCacheProvider.GetCache()
+                               .RetrieveMetadata<SwaggerRouteDataBuilder>()
+                               .OfType<SwaggerRouteDataBuilder>()
+                               .SelectMany(x => x.PathItems)
+                               .ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }

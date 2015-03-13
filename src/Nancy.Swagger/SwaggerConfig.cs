@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using Swagger.ObjectModel;
+
 namespace Nancy.Swagger
 {
     [SwaggerApi]
@@ -8,8 +10,8 @@ namespace Nancy.Swagger
         /// <summary>
         /// Contains all resolved ids by the <see cref="DefaultModelIdConvention"/>.
         /// </summary>
-        private static ConcurrentDictionary<string, Type> _resolvedModelIds = new ConcurrentDictionary<string, Type>();        
-        
+        private static ConcurrentDictionary<string, Type> _resolvedModelIds = new ConcurrentDictionary<string, Type>();
+
         /// <summary>
         /// The default resource listing path, <c>api-docs</c>.
         /// </summary>
@@ -19,7 +21,7 @@ namespace Nancy.Swagger
         {
             ResourceListingPath = DefaultResourceListingPath;
             ModelIdConvention = DefaultModelIdConvention;
-            NicknameConvention = DefaultNicknameConvention;        
+            NicknameConvention = DefaultNicknameConvention;
         }
 
         /// <summary>
@@ -29,10 +31,10 @@ namespace Nancy.Swagger
 
         /// <summary>
         /// Get or sets a function which returns a unique id for the given 
-        /// <see cref="SwaggerRouteData"/> that can be used by tools reading
+        /// <see cref="PathItem"/> that can be used by tools reading
         /// the output for further and easier manipulation.
         /// </summary>
-        public static Func<SwaggerRouteData, string> NicknameConvention { get; set; }
+        public static Func<string, HttpMethod, Operation, string> NicknameConvention { get; set; }
 
         /// <summary>
         /// Gets or sets the path at which the Swagger resource listing will be served. 
@@ -71,11 +73,11 @@ namespace Nancy.Swagger
         /// <returns>a unique id for the given <paramref name="route"/> that can
         /// be used by tools reading the output for further and easier 
         /// manipulation.</returns>        
-        public static string DefaultNicknameConvention(SwaggerRouteData route)
+        public static string DefaultNicknameConvention(string path, HttpMethod method, Operation route)
         {
-            return string.IsNullOrEmpty(route.OperationNickname)
-                    ? string.Format("{0}/{1}", route.OperationMethod.ToString().ToLower(), route.ApiPath).ToCamelCase()
-                    : route.OperationNickname;
+            return string.IsNullOrEmpty(route.OperationId)
+                    ? string.Format("{0}/{1}", method.ToString().ToLower(), path).ToCamelCase()
+                    : route.OperationId;
         }
     }
 }
