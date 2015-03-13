@@ -57,7 +57,7 @@ namespace Swagger.ObjectModel
         /// If null or false, then the instance is valid if it is less than, or equal to, the value of <see cref="Maximum"/>
         /// if true, the instance is valid if it is strictly less than the value of <see cref="Maximum"/>.
         /// </summary>
-        [SwaggerProperty("exclusiveMinimum")]
+        [SwaggerProperty("exclusiveMaximum")]
         public bool? ExclusiveMaximum { get; set; }
 
         /// <summary>
