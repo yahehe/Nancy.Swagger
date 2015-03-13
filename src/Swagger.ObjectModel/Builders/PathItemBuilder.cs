@@ -2,6 +2,8 @@
 //      Copyright (c) 2015 Premise Health. All rights reserved.
 //  </copyright>
 
+using System;
+
 namespace Swagger.ObjectModel.Builders
 {
     using System.Collections.Generic;
@@ -11,10 +13,14 @@ namespace Swagger.ObjectModel.Builders
     /// </summary>
     public class PathItemBuilder
     {
-        private readonly PathItem pathItem = new PathItem()
-                                             {
-                                                 Parameters = new List<Parameter>()
-                                             };
+        private readonly List<Parameter> parameters = new List<Parameter>();
+        private readonly Operation operation = new Operation();
+        private readonly string method;
+
+        public PathItemBuilder(string method)
+        {
+            this.method = method;
+        }
 
 
         /// <summary>
@@ -25,10 +31,39 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItem Build()
         {
-            return pathItem;
+            var item = new PathItem()
+                       {
+                           Parameters = parameters
+                       };
+
+            switch (method.ToLowerInvariant())
+            {
+                case "get":
+                    item.Get = operation;
+                    break;
+                case "post":
+                    item.Post = operation;
+                    break;
+                case "patch":
+                    item.Patch = operation;
+                    break;
+                case "delete":
+                    item.Delete = operation;
+                    break;
+                case "put":
+                    item.Put = operation;
+                    break;
+                case "head":
+                    item.Head = operation;
+                    break;
+                case "options":
+                    item.Options = operation;
+                    break;
+            }
+            return item;
         }
         /// <summary>
-        /// Define a GET operation
+        /// Defines the operation for the path and method;
         /// </summary>
         /// <param name="operation">
         /// The operation.
@@ -36,102 +71,12 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="PathItemBuilder"/>.
         /// </returns>
-        public PathItemBuilder Get(Operation operation)
+        public PathItemBuilder Operation(Action<Operation> action)
         {
-            pathItem.Get = operation;
+            action(operation);
             return this;
         }
 
-
-        /// <summary>
-        /// Define a PUT operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Put(Operation operation)
-        {
-            pathItem.Put = operation;
-            return this;
-        }
-
-        /// <summary>
-        /// Define a Post operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Post(Operation operation)
-        {
-            pathItem.Post = operation;
-            return this;
-        }
-
-        /// <summary>
-        /// Define a Delete operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Delete(Operation operation)
-        {
-            pathItem.Delete = operation;
-            return this;
-        }
-
-        /// <summary>
-        /// Define a Options operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Options(Operation operation)
-        {
-            pathItem.Options = operation;
-            return this;
-        }
-
-        /// <summary>
-        /// Define a Head operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Head(Operation operation)
-        {
-            pathItem.Head = operation;
-            return this;
-        }
-
-        /// <summary>
-        /// Define a Patch operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Patch(Operation operation)
-        {
-            pathItem.Patch = operation;
-            return this;
-        }
 
 
         /// <summary>
@@ -145,7 +90,7 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Parameter(Parameter parameter)
         {
-            ((List<Parameter>)pathItem.Parameters).Add(parameter);
+            parameters.Add(parameter);
             return this;
         }
 

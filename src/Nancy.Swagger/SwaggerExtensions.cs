@@ -21,7 +21,7 @@ namespace Nancy.Swagger
         /// <returns>An instance of <see cref="PathItem"/> constructed using <paramref name="description"/> and by invoking <paramref name="action"/>.</returns>
         public static PathItem AsSwagger(this RouteDescription description, Action<PathItemBuilder> action)
         {
-            var builder = new PathItemBuilder();
+            var builder = new PathItemBuilder(description.Method);
             action.Invoke(builder);
             return builder.Build();
         }
