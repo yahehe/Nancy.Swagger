@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
@@ -138,11 +137,11 @@ namespace Swagger.ObjectModel
             private static dynamic ToObject(IDictionary source)
             {
                 var expando = new ExpandoObject();
-                var expandoCollection = (ICollection<KeyValuePair<string, object>>)expando;
+                var expandoCollection = (ICollection<KeyValuePair<string, object>>) expando;
 
-                foreach (var key in source.Keys.Cast<object>())
+                foreach (string key in source.Keys)
                 {
-                    expandoCollection.Add(new KeyValuePair<string, object>(key.ToString(), source[key]));
+                    expandoCollection.Add(new KeyValuePair<string, object>(key, source[key]));
                 }
 
                 return expando;
