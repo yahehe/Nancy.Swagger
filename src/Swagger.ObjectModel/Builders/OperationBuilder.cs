@@ -79,7 +79,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="Operation"/>.
         /// </returns>
-        public Operation Build(Operation provided = null)
+        public Operation Build()
         {
             if (this.responses == null)
             {
@@ -91,21 +91,24 @@ namespace Swagger.ObjectModel.Builders
                 throw new InvalidOperationException(
                     "The Responses Object MUST contain at least one response code, and it SHOULD be the response for a successful operation call.");
             }
-            provided = new Operation() ?? provided;
+            
+            var operation = new Operation
+                           {
+                               Tags = this.tags,
+                               Summary = this.summary,
+                               Description = this.description,
+                               ExternalDocumentation = this.documentation,
+                               OperationId = this.operationId,
+                               Consumes = this.consumes,
+                               Produces = this.produces,
+                               Parameters = this.parameters,
+                               Responses = this.responses,
+                               Schemes = this.schemes,
+                               Deprecated = this.deprecated,
+                               SecurityRequirements = this.securityRequirements
+                           };
 
-            provided.Tags = this.tags;
-            provided.Summary = this.summary;
-            provided.Description = this.description;
-            provided.ExternalDocumentation = this.documentation;
-            provided.OperationId = this.operationId;
-            provided.Consumes = this.consumes;
-            provided.Produces = this.produces;
-            provided.Parameters = this.parameters;
-            provided.Responses = this.responses;
-            provided.Schemes = this.schemes;
-            provided.Deprecated = this.deprecated;
-            provided.SecurityRequirements = this.securityRequirements;
-            return provided;
+            return operation;
         }
 
         /// <summary>

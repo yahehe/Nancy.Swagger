@@ -14,7 +14,7 @@ namespace Swagger.ObjectModel.Builders
     public class PathItemBuilder
     {
         private readonly List<Parameter> parameters = new List<Parameter>();
-        private readonly Operation operation = new Operation();
+        private Operation operation = new Operation();
         private readonly string method;
 
         public PathItemBuilder(string method)
@@ -75,7 +75,7 @@ namespace Swagger.ObjectModel.Builders
         {
             var builder = new OperationBuilder();
             action(builder);
-            builder.Build(operation);
+            this.operation = builder.Build();
             return this;
         }
 
