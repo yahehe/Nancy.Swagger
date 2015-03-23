@@ -7,6 +7,11 @@
     /// </summary>
     public class BodyParameter : Parameter
     {
+        public BodyParameter()
+        {
+            Required = true;
+        }
+
         /// <summary>
         /// The type of the parameter (that is, the location of the parameter in the request).
         /// </summary>

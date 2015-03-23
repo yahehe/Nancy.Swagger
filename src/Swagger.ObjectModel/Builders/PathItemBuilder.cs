@@ -71,9 +71,11 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="PathItemBuilder"/>.
         /// </returns>
-        public PathItemBuilder Operation(Action<Operation> action)
+        public PathItemBuilder Operation(Action<OperationBuilder> action)
         {
-            action(operation);
+            var builder = new OperationBuilder();
+            action(builder);
+            builder.Build(operation);
             return this;
         }
 
