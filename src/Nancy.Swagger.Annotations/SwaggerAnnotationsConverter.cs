@@ -22,10 +22,22 @@ namespace Nancy.Swagger.Annotations
 
         protected override IDictionary<string, PathItem> RetrieveSwaggerRouteData()
         {
-            return _moduleCatalog
+            var pathItems = new Dictionary<string, PathItem>();
+            foreach (var pair in _moduleCatalog
                 .GetAllModules(_context)
-                .SelectMany(ToSwaggerRouteData)
-                .ToDictionary(x => x.Item1, x => x.Item2);
+                .SelectMany(ToSwaggerRouteData))
+            {
+                PathItem entry;
+                if (pathItems.TryGetValue(pair.Item1, out entry))
+                {
+                    pathItems[pair.Item1] = entry.Combine(pair.Item2);
+                }
+                else
+                {
+                    pathItems.Add(pair.Item1, pair.Item2);
+                }
+            }
+            return pathItems;
         }
 
         private SwaggerModelData CreateSwaggerModelData(Type type)

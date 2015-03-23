@@ -11,6 +11,11 @@ namespace Swagger.ObjectModel
     /// </summary>
     public class PathItem : SwaggerModel
     {
+        public PathItem()
+        {
+            Parameters = Enumerable.Empty<Parameter>();
+        }
+
         /// <summary>
         /// Gets or sets the GET operation.
         /// </summary>
