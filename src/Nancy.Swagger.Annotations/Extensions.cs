@@ -1,5 +1,5 @@
-﻿using Swagger.ObjectModel.SwaggerDocument;
-using System;
+﻿using System;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations
 {

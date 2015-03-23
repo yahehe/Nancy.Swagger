@@ -1,12 +1,11 @@
-﻿using Nancy.Routing;
-using Nancy.Swagger.Annotations.Attributes;
-using Nancy.Swagger.Services;
-using Swagger.ObjectModel;
-using Swagger.ObjectModel.SwaggerDocument;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Nancy.Routing;
+using Nancy.Swagger.Annotations.Attributes;
+using Nancy.Swagger.Services;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations
 {
@@ -21,19 +20,12 @@ namespace Nancy.Swagger.Annotations
             _context = context;
         }
 
-        protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
-        {
-            return GetDistinctModelTypes(RetrieveSwaggerRouteData())
-                    .Select(CreateSwaggerModelData)
-                    .ToList();
-        }
-
-        protected override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
+        protected override IDictionary<string, PathItem> RetrieveSwaggerRouteData()
         {
             return _moduleCatalog
                 .GetAllModules(_context)
                 .SelectMany(ToSwaggerRouteData)
-                .ToList();
+                .ToDictionary(x => x.Item1, x => x.Item2);
         }
 
         private SwaggerModelData CreateSwaggerModelData(Type type)
@@ -79,19 +71,19 @@ namespace Nancy.Swagger.Annotations
             return modelProperty;
         }
 
-        private SwaggerParameterData CreateSwaggerParameterData(ParameterInfo pi)
+        private Parameter CreateSwaggerParameterData(ParameterInfo pi)
         {
-            var parameter = new SwaggerParameterData
+            var parameter = new Parameter
             {
                 Name = pi.Name,
-                ParameterModel = pi.ParameterType
+                //ParameterModel = pi.ParameterType
             };
 
             var paramAttrs = pi.GetCustomAttributes<SwaggerRouteParamAttribute>();
             if (!paramAttrs.Any())
             {
                 parameter.Description = "Warning: no annotation found for this parameter";
-                parameter.ParamIn = ParameterIn.Query; // Required, so use query as fallback
+                parameter.In = ParameterIn.Query; // Required, so use query as fallback
 
                 return parameter;
             }
@@ -99,7 +91,7 @@ namespace Nancy.Swagger.Annotations
             foreach (var attr in paramAttrs)
             {
                 parameter.Name = attr.Name ?? parameter.Name;
-                parameter.ParamIn = attr.GetNullableParamType() ?? parameter.ParamIn;
+                parameter.In = attr.GetNullableParamType() ?? parameter.In;
                 parameter.Required = attr.GetNullableRequired() ?? parameter.Required;
                 parameter.Description = attr.Description ?? parameter.Description;
             }
@@ -107,63 +99,88 @@ namespace Nancy.Swagger.Annotations
             return parameter;
         }
 
-        private SwaggerRouteData CreateSwaggerRouteData(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
+        private Tuple<string, PathItem> CreateSwaggerRouteData(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
         {
-            var data = new SwaggerRouteData
+            var operation = new Operation()
+                            {
+                                OperationId = route.Description.Name
+                            };
+
+
+            var data = Tuple.Create(route.Description.Path, new PathItem());
+
+            switch (route.Description.Method.ToLowerInvariant())
             {
-                ApiPath = route.Description.Path,
-                ResourcePath = module.ModulePath.EnsureForwardSlash(),
-                OperationMethod = route.Description.Method.ToHttpMethod(),
-                OperationNickname = route.Description.Name
-            };
+                case "get":
+                    data.Item2.Get = operation;
+                    break;
+                case "post":
+                    data.Item2.Post = operation;
+                    break;
+                case "patch":
+                    data.Item2.Patch = operation;
+                    break;
+                case "delete":
+                    data.Item2.Delete = operation;
+                    break;
+                case "put":
+                    data.Item2.Put = operation;
+                    break;
+                case "head":
+                    data.Item2.Head = operation;
+                    break;
+                case "options":
+                    data.Item2.Options = operation;
+                    break;
+            }
 
             var routeId = RouteId.Create(module, route);
             var handler = routeHandlers.ContainsKey(routeId) ? routeHandlers[routeId] : null;
             if (handler == null)
             {
-                data.OperationNotes = "[example]"; // TODO: Insert example how to annotate a route
-                data.OperationSummary = "Warning: no annotated method found for this route";
+                operation.Description = "[example]"; // TODO: Insert example how to annotate a route
+                operation.Summary = "Warning: no annotated method found for this route";
 
                 return data;
             }
 
             foreach (var attr in handler.GetCustomAttributes<SwaggerRouteAttribute>())
             {
-                data.OperationSummary = attr.Summary ?? data.OperationSummary;
-                data.OperationNotes = attr.Notes ?? data.OperationNotes;
-                data.OperationModel = attr.Response ?? data.OperationModel;
-                data.OperationConsumes = attr.Consumes ?? data.OperationConsumes;
-                data.OperationProduces = attr.Produces ?? data.OperationProduces;
+                operation.Summary = attr.Summary ?? operation.Summary;
+                operation.Description = attr.Notes ?? operation.Description;
+                // data.OperationModel = attr.Response ?? data.OperationModel;
+                operation.Consumes = attr.Consumes ?? operation.Consumes;
+                operation.Consumes = attr.Produces ?? operation.Produces;
             }
 
-            data.OperationResponseMessages = handler.GetCustomAttributes<SwaggerResponseAttribute>()
-                .Select(attr => {
-                    var msg = new ResponseMessage
+            operation.Responses = handler.GetCustomAttributes<SwaggerResponseAttribute>()
+                .Select(attr =>
+                {
+                    var msg = new global::Swagger.ObjectModel.Response()
                     {
-                        Code = (int)attr.Code,
-                        Message = attr.Message                    
+                        Description = attr.Message
                     };
-                    
-                    if (attr.Model != null) 
-                    {
-                        msg.ResponseModel = Primitive.IsPrimitive(attr.Model) 
-                                                ? Primitive.FromType(attr.Model).Type
-                                                : SwaggerConfig.ModelIdConvention(attr.Model);
-                    }
 
-                    return msg;
+                    //if (attr.Model != null)
+                    //{
+                    //    msg.ResponseModel = Primitive.IsPrimitive(attr.Model)
+                    //                            ? Primitive.FromType(attr.Model).Type
+                    //                            : SwaggerConfig.ModelIdConvention(attr.Model);
+                    //}
+
+                    return Tuple.Create((int)attr.Code, msg);
                 })
-                .ToList();
+                .ToDictionary(x => x.Item1.ToString(), x => x.Item2);
 
 
-            data.OperationParameters = handler.GetParameters()
+            operation.Parameters = handler.GetParameters()
                 .Select(CreateSwaggerParameterData)
                 .ToList();
 
             return data;
         }
 
-        private IEnumerable<SwaggerRouteData> ToSwaggerRouteData(INancyModule module)
+        private IEnumerable<Tuple<string, PathItem>> ToSwaggerRouteData(INancyModule module)
         {
             Func<IEnumerable<SwaggerRouteAttribute>, RouteId> getRouteId = (attrs) =>
             {
