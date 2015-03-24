@@ -13,8 +13,8 @@ namespace Nancy.Swagger.Demo.Modules
                     .Summary("The list of users")
                     .Description("This returns a list of users from our awesome app")
                     .Response(r =>
-                        r.Schema(s => s.Type(typeof(User).ToString())))));
-
+                        r.Schema(s => s.Type(typeof(User).ToString())).Description("The list of users"))));
+            
             Describe["PostUsers"] = description => description.AsSwagger(with =>
                 with.Operation(op => op.OperationId("PostUsers")
                     .Summary("Create a User")
@@ -22,6 +22,7 @@ namespace Nancy.Swagger.Demo.Modules
                     .Response(201, r => r.Description("Created a User"))
                     .Response(422, r => r.Description("Invalid input"))
                     .BodyParameter(p => p.Description("A User object")
+                        .Name("user")
                         .Schema(s => s.Type(typeof(User).ToString())))));
         }
     }

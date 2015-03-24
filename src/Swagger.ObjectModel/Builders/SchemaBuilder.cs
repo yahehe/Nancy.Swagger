@@ -8,7 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
-namespace Swagger.ObjectModel
+namespace Swagger.ObjectModel.Builders
 {
     /// <summary>
     /// The schema builder.

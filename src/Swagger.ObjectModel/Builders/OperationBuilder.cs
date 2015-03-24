@@ -91,6 +91,7 @@ namespace Swagger.ObjectModel.Builders
                 throw new InvalidOperationException(
                     "The Responses Object MUST contain at least one response code, and it SHOULD be the response for a successful operation call.");
             }
+            
             provided = provided ?? new Operation();
 
             provided.Tags = this.tags;

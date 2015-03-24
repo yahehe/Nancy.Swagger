@@ -75,7 +75,7 @@ namespace Swagger.ObjectModel.Builders
         {
             var builder = new OperationBuilder();
             action(builder);
-            builder.Build(operation);
+            this.operation = builder.Build();
             return this;
         }
 
