@@ -15,9 +15,9 @@ namespace Swagger.ObjectModel.Builders
     {
         private readonly List<Parameter> parameters = new List<Parameter>();
         private readonly Operation operation = new Operation();
-        private readonly string method;
+        private readonly HttpMethod method;
 
-        public PathItemBuilder(string method)
+        public PathItemBuilder(HttpMethod method)
         {
             this.method = method;
         }
@@ -36,27 +36,27 @@ namespace Swagger.ObjectModel.Builders
                            Parameters = parameters
                        };
 
-            switch (method.ToLowerInvariant())
+            switch (method)
             {
-                case "get":
+                case HttpMethod.Get:
                     item.Get = operation;
                     break;
-                case "post":
+                case HttpMethod.Post:
                     item.Post = operation;
                     break;
-                case "patch":
+                case HttpMethod.Patch:
                     item.Patch = operation;
                     break;
-                case "delete":
+                case HttpMethod.Delete:
                     item.Delete = operation;
                     break;
-                case "put":
+                case HttpMethod.Put:
                     item.Put = operation;
                     break;
-                case "head":
+                case HttpMethod.Head:
                     item.Head = operation;
                     break;
-                case "options":
+                case HttpMethod.Options:
                     item.Options = operation;
                     break;
             }

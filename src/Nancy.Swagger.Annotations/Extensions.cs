@@ -1,6 +1,4 @@
-﻿using System;
-using Swagger.ObjectModel;
-
+﻿
 namespace Nancy.Swagger.Annotations
 {
     internal static class Extensions
@@ -13,33 +11,6 @@ namespace Nancy.Swagger.Annotations
             }
 
             return value.StartsWith("/") ? value : "/" + value;
-        }
-
-        public static HttpMethod ToHttpMethod(this string method)
-        {
-            switch (method)
-            {
-                case "DELETE":
-                    return HttpMethod.Delete;
-
-                case "GET":
-                    return HttpMethod.Get;
-
-                case "OPTIONS":
-                    return HttpMethod.Options;
-
-                case "PATCH":
-                    return HttpMethod.Patch;
-
-                case "POST":
-                    return HttpMethod.Post;
-
-                case "PUT":
-                    return HttpMethod.Put;
-
-                default:
-                    throw new NotSupportedException(string.Format("HTTP method '{0}' is not supported.", method));
-            }
         }
     }
 }

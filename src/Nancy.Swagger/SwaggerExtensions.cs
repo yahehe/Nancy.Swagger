@@ -21,7 +21,7 @@ namespace Nancy.Swagger
         /// <returns>An instance of <see cref="PathItem"/> constructed using <paramref name="description"/> and by invoking <paramref name="action"/>.</returns>
         public static PathItem AsSwagger(this RouteDescription description, Action<PathItemBuilder> action)
         {
-            var builder = new PathItemBuilder(description.Method);
+            var builder = new PathItemBuilder(description.Method.ToHttpMethod());
             action.Invoke(builder);
             return builder.Build();
         }
@@ -234,6 +234,33 @@ namespace Nancy.Swagger
         internal static bool IsNullable(Type type)
         {
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        public static HttpMethod ToHttpMethod(this string method)
+        {
+            switch (method)
+            {
+                case "DELETE":
+                    return HttpMethod.Delete;
+
+                case "GET":
+                    return HttpMethod.Get;
+
+                case "OPTIONS":
+                    return HttpMethod.Options;
+
+                case "PATCH":
+                    return HttpMethod.Patch;
+
+                case "POST":
+                    return HttpMethod.Post;
+
+                case "PUT":
+                    return HttpMethod.Put;
+
+                default:
+                    throw new NotSupportedException(string.Format("HTTP method '{0}' is not supported.", method));
+            }
         }
     }
 }
