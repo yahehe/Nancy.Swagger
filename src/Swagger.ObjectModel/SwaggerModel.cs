@@ -29,17 +29,6 @@ namespace Swagger.ObjectModel
         public string Ref { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether reference.
-        /// </summary>
-        public bool Reference
-        {
-            get
-            {
-                return this.Ref != null;
-            }
-        }
-
-        /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>
@@ -137,7 +126,7 @@ namespace Swagger.ObjectModel
             private static dynamic ToObject(IDictionary source)
             {
                 var expando = new ExpandoObject();
-                var expandoCollection = (ICollection<KeyValuePair<string, object>>) expando;
+                var expandoCollection = (ICollection<KeyValuePair<string, object>>)expando;
 
                 foreach (string key in source.Keys)
                 {

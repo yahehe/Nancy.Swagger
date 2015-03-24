@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Nancy.Swagger.Services;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Tests.Services
 {
@@ -8,22 +9,14 @@ namespace Nancy.Swagger.Tests.Services
     {
         public SwaggerMetadataConverterForTesting()
         {
-            RouteDataAccessor = Enumerable.Empty<SwaggerRouteData>();
-            ModelDataAccessor = Enumerable.Empty<SwaggerModelData>();
+            RouteDataAccessor = new Dictionary<string, PathItem>();
         }
 
-        public IEnumerable<SwaggerRouteData> RouteDataAccessor { get; set; }
+        public IDictionary<string, PathItem> RouteDataAccessor { get; set; }
 
-        public IEnumerable<SwaggerModelData> ModelDataAccessor { get; set; }
-
-        protected override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
+        protected override IDictionary<string, PathItem> RetrieveSwaggerRouteData()
         {
-            return RouteDataAccessor.ToList();
-        }
-
-        protected override IList<SwaggerModelData> RetrieveSwaggerModelData()
-        {
-            return ModelDataAccessor.ToList();
+            return RouteDataAccessor.ToDictionary(x => x.Key, x => x.Value);
         }
     }
 }

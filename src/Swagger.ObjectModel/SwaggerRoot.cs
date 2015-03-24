@@ -8,7 +8,6 @@
 // --------------------------------------------------------------------------------------------------------------------
 namespace Swagger.ObjectModel
 {
-    using System;
     using System.Collections.Generic;
 
     using Swagger.ObjectModel.Attributes;
@@ -86,7 +85,7 @@ namespace Swagger.ObjectModel
         /// Key: A relative path to an individual endpoint. The field name MUST begin with a slash. 
         /// The path is appended to the basePath in order to construct the full URL. Path templating is allowed.
         /// </summary>
-        [SwaggerProperty("path", true)]
+        [SwaggerProperty("paths", true)]
         public IDictionary<string, PathItem> Paths { get; set; }
 
         /// <summary>

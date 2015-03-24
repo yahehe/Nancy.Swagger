@@ -79,7 +79,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="Operation"/>.
         /// </returns>
-        public Operation Build()
+        public Operation Build(Operation provided = null)
         {
             if (this.responses == null)
             {
@@ -91,22 +91,21 @@ namespace Swagger.ObjectModel.Builders
                 throw new InvalidOperationException(
                     "The Responses Object MUST contain at least one response code, and it SHOULD be the response for a successful operation call.");
             }
+            provided = provided ?? new Operation();
 
-            return new Operation
-                       {
-                           Tags = this.tags,
-                           Summary = this.summary,
-                           Description = this.description,
-                           ExternalDocumentation = this.documentation,
-                           OperationId = this.operationId,
-                           Consumes = this.consumes,
-                           Produces = this.produces,
-                           Parameters = this.parameters,
-                           Responses = this.responses,
-                           Schemes = this.schemes,
-                           Deprecated = this.deprecated,
-                           SecurityRequirements = this.securityRequirements,
-                       };
+            provided.Tags = this.tags;
+            provided.Summary = this.summary;
+            provided.Description = this.description;
+            provided.ExternalDocumentation = this.documentation;
+            provided.OperationId = this.operationId;
+            provided.Consumes = this.consumes;
+            provided.Produces = this.produces;
+            provided.Parameters = this.parameters;
+            provided.Responses = this.responses;
+            provided.Schemes = this.schemes;
+            provided.Deprecated = this.deprecated;
+            provided.SecurityRequirements = this.securityRequirements;
+            return provided;
         }
 
         /// <summary>
@@ -334,9 +333,11 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="OperationBuilder"/>.
         /// </returns>
-        public OperationBuilder Parameter(ParameterBuilder parameter)
+        public OperationBuilder Parameter(Action<ParameterBuilder> parameter)
         {
-            return this.Parameter(parameter.Build());
+            var builder = new ParameterBuilder();
+            parameter(builder);
+            return this.Parameter(builder.Build());
         }
 
         /// <summary>
@@ -348,9 +349,11 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="OperationBuilder"/>.
         /// </returns>
-        public OperationBuilder Parameter(BodyParameterBuilder parameter)
+        public OperationBuilder BodyParameter(Action<BodyParameterBuilder> parameter)
         {
-            return this.Parameter(parameter.Build());
+            var builder = new BodyParameterBuilder();
+            parameter(builder);
+            return this.Parameter(builder.Build());
         }
 
         /// <summary>
@@ -381,7 +384,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="OperationBuilder"/>.
         /// </returns>
-        public OperationBuilder Response(Response response)
+        public OperationBuilder Response(Action<ResponseBuilder> response)
         {
             return this.Response("default", response);
         }
@@ -398,7 +401,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="OperationBuilder"/>.
         /// </returns>
-        public OperationBuilder Response(HttpStatusCode httpStatusCode, Response response)
+        public OperationBuilder Response(HttpStatusCode httpStatusCode, Action<ResponseBuilder> response)
         {
             return this.Response(httpStatusCode.ToString(), response);
         }
@@ -415,14 +418,32 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="OperationBuilder"/>.
         /// </returns>
-        public OperationBuilder Response(string httpStatusCode, Response response)
+        public OperationBuilder Response(int httpStatusCode, Action<ResponseBuilder> response)
+        {
+            return this.Response(httpStatusCode.ToString(), response);
+        }
+
+        /// <summary>
+        /// Add the expected response object for an HTTP Status Code
+        /// </summary>
+        /// <param name="httpStatusCode">
+        /// The http status code.
+        /// </param>
+        /// <param name="response">
+        /// The response.
+        /// </param>
+        /// <returns>
+        /// The <see cref="OperationBuilder"/>.
+        /// </returns>
+        public OperationBuilder Response(string httpStatusCode, Action<ResponseBuilder> response)
         {
             if (this.responses == null)
             {
                 this.responses = new Dictionary<string, Response>();
             }
-
-            this.responses.Add(httpStatusCode, response);
+            var builder = new ResponseBuilder();
+            response(builder);
+            this.responses.Add(httpStatusCode, builder.Build());
             return this;
         }
 

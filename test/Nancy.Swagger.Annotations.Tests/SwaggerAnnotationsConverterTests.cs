@@ -27,21 +27,9 @@ namespace Nancy.Swagger.Annotations.Tests
         }
 
         [Fact]
-        public void Get_ApiDocsPath_ReturnsApiDeclaration()
-        {
-            ApproveJsonResponse(_browser.Get("/api-docs/api-docs"));
-        }
-
-        [Fact]
         public void Get_ApiDocsRootpath_ReturnsResourceListing()
         {
             ApproveJsonResponse(_browser.Get("/api-docs"));
-        }
-
-        [Fact]
-        public void Get_TestModulePath_ReturnsApiDeclaration()
-        {
-            ApproveJsonResponse(_browser.Get("/api-docs/testroutes"));
         }
 
         private static void ApproveJsonResponse(BrowserResponse response)

@@ -2,6 +2,8 @@
 //      Copyright (c) 2015 Premise Health. All rights reserved.
 //  </copyright>
 
+using System;
+
 namespace Swagger.ObjectModel.Builders
 {
     using System.Collections.Generic;
@@ -88,9 +90,11 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="ResponseBuilder"/>.
         /// </returns>
-        public ResponseBuilder Schema(SchemaBuilder schema)
+        public ResponseBuilder Schema(Action<SchemaBuilder> schema)
         {
-            this.schema = schema.Build();
+            var builder = new SchemaBuilder();
+            schema(builder);
+            this.schema = builder.Build();
             return this;
         }
 

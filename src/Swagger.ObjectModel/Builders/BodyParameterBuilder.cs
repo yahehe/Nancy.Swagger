@@ -2,6 +2,8 @@
 //      Copyright (c) 2015 Premise Health. All rights reserved.
 //  </copyright>
 
+using System;
+
 namespace Swagger.ObjectModel.Builders
 {
     /// <summary>
@@ -101,9 +103,11 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="BodyParameterBuilder"/>.
         /// </returns>
-        public BodyParameterBuilder Schema(SchemaBuilder schema)
+        public BodyParameterBuilder Schema(Action<SchemaBuilder> schema)
         {
-            this.schema = schema.Build();
+            var builder = new SchemaBuilder();
+            schema(builder);
+            this.schema = builder.Build();
             return this;
         }
     }

@@ -7,12 +7,13 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+
 namespace Swagger.ObjectModel
 {
     /// <summary>
     /// The schema builder.
     /// </summary>
-    public class SchemaBuilder
+    public class SchemaBuilder : DataTypeBuilder<SchemaBuilder, Schema>
     {
         /// <summary>
         /// The discriminator.
@@ -40,15 +41,14 @@ namespace Swagger.ObjectModel
         /// <returns>
         /// The <see cref="Schema"/>.
         /// </returns>
-        public Schema Build()
+        public override Schema Build()
         {
-            return new Schema
-                       {
-                           Discriminator = this.discriminator,
-                           ReadOnly = this.readOnly,
-                           ExternalDocumentation = this.documentation,
-                           Example = this.example
-                       };
+            var schema = this.BuildBase();
+            schema.Discriminator = this.discriminator;
+            schema.ReadOnly = this.readOnly;
+            schema.ExternalDocumentation = this.documentation;
+            schema.Example = this.example;
+            return schema;
         }
 
         /// <summary>

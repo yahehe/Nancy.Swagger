@@ -2,6 +2,8 @@
 //      Copyright (c) 2015 Premise Health. All rights reserved.
 //  </copyright>
 
+using System;
+
 namespace Swagger.ObjectModel.Builders
 {
     using System.Collections.Generic;
@@ -11,15 +13,15 @@ namespace Swagger.ObjectModel.Builders
     /// </summary>
     public class PathItemBuilder
     {
-        /// <summary>
-        /// The operations.
-        /// </summary>
-        private IDictionary<HttpMethod, Operation> operations;
+        private readonly List<Parameter> parameters = new List<Parameter>();
+        private readonly Operation operation = new Operation();
+        private readonly HttpMethod method;
 
-        /// <summary>
-        /// The parameters.
-        /// </summary>
-        private List<Parameter> parameters;
+        public PathItemBuilder(HttpMethod method)
+        {
+            this.method = method;
+        }
+
 
         /// <summary>
         /// The build.
@@ -29,130 +31,54 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItem Build()
         {
-            return new PathItem { Operations = this.operations, Parameters = this.parameters };
-        }
+            var item = new PathItem()
+                       {
+                           Parameters = parameters
+                       };
 
+            switch (method)
+            {
+                case HttpMethod.Get:
+                    item.Get = operation;
+                    break;
+                case HttpMethod.Post:
+                    item.Post = operation;
+                    break;
+                case HttpMethod.Patch:
+                    item.Patch = operation;
+                    break;
+                case HttpMethod.Delete:
+                    item.Delete = operation;
+                    break;
+                case HttpMethod.Put:
+                    item.Put = operation;
+                    break;
+                case HttpMethod.Head:
+                    item.Head = operation;
+                    break;
+                case HttpMethod.Options:
+                    item.Options = operation;
+                    break;
+            }
+            return item;
+        }
         /// <summary>
-        /// Define an operation on the path
+        /// Defines the operation for the path and method;
         /// </summary>
-        /// <param name="httpMethod">
-        /// The method.
-        /// </param>
         /// <param name="operation">
         /// The operation.
         /// </param>
         /// <returns>
         /// The <see cref="PathItemBuilder"/>.
         /// </returns>
-        public PathItemBuilder Operation(HttpMethod httpMethod, Operation operation)
+        public PathItemBuilder Operation(Action<OperationBuilder> action)
         {
-            if (this.operations == null)
-            {
-                this.operations = new Dictionary<HttpMethod, Operation>();
-            }
-
-            this.operations.Add(httpMethod, operation);
+            var builder = new OperationBuilder();
+            action(builder);
+            builder.Build(operation);
             return this;
         }
 
-        /// <summary>
-        /// Define a GET operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Get(Operation operation)
-        {
-            return this.Operation(HttpMethod.Get, operation);
-        }
-
-
-        /// <summary>
-        /// Define a PUT operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Put(Operation operation)
-        {
-            return this.Operation(HttpMethod.Put, operation);
-        }
-
-        /// <summary>
-        /// Define a Post operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Post(Operation operation)
-        {
-            return this.Operation(HttpMethod.Post, operation);
-        }
-
-        /// <summary>
-        /// Define a Delete operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Delete(Operation operation)
-        {
-            return this.Operation(HttpMethod.Delete, operation);
-        }
-
-        /// <summary>
-        /// Define a Options operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Options(Operation operation)
-        {
-            return this.Operation(HttpMethod.Options, operation);
-        }
-
-        /// <summary>
-        /// Define a Head operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Head(Operation operation)
-        {
-            return this.Operation(HttpMethod.Head, operation);
-        }
-
-        /// <summary>
-        /// Define a Patch operation
-        /// </summary>
-        /// <param name="operation">
-        /// The operation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="PathItemBuilder"/>.
-        /// </returns>
-        public PathItemBuilder Patch(Operation operation)
-        {
-            return this.Operation(HttpMethod.Patch, operation);
-        }
 
 
         /// <summary>
@@ -166,12 +92,7 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public PathItemBuilder Parameter(Parameter parameter)
         {
-            if (this.parameters == null)
-            {
-                this.parameters = new List<Parameter>();
-            }
-
-            this.parameters.Add(parameter);
+            parameters.Add(parameter);
             return this;
         }
 

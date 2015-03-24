@@ -9,8 +9,6 @@ namespace Nancy.Swagger.Modules
             : base(SwaggerConfig.ResourceListingPath)
         {
             Get["/"] = _ => converter.GetSwaggerJson().ToJson();
-
-            Get["/{resourcePath*}"] = _ => converter.GetApiDeclaration("/" + _.resourcePath).ToJson();
         }
     }
 }
