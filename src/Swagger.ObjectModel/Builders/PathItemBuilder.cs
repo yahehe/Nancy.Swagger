@@ -60,6 +60,7 @@ namespace Swagger.ObjectModel.Builders
                     item.Options = operation;
                     break;
             }
+
             return item;
         }
         /// <summary>
@@ -75,7 +76,7 @@ namespace Swagger.ObjectModel.Builders
         {
             var builder = new OperationBuilder();
             action(builder);
-            this.operation = builder.Build();
+            builder.Build(this.operation);
             return this;
         }
 

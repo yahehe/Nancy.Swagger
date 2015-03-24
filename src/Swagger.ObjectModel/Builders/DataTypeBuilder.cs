@@ -7,7 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Swagger.ObjectModel
+namespace Swagger.ObjectModel.Builders
 {
     using System.Collections.Generic;
 
