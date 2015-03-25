@@ -10,7 +10,11 @@
 
 namespace Swagger.ObjectModel.Builders
 {
+    using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
 
     /// <summary>
     /// The schema builder.
@@ -37,7 +41,45 @@ namespace Swagger.ObjectModel.Builders
         /// </summary>
         private object example;
 
-        private IDictionary<string, Schema> properties;
+        private IDictionary<string, SchemaBuilder> properties = new Dictionary<string, SchemaBuilder>();
+
+        private List<string> required = new List<string>();
+
+        private List<string> allOf = new List<string>();
+
+        private Schema providedSchema;
+
+        public SchemaBuilder(Schema provided)
+        {
+            this.providedSchema = provided;
+        }
+
+        public SchemaBuilder()
+        {
+        }
+
+        /// <summary>
+        /// Access a <see cref="SwaggerModelPropertyDataBuilder{TProperty}"/> for a given property of the model.
+        /// </summary>
+        /// <param name="expression">An <see cref="Expression{TDelegate}"/> for accessing the property.</param>
+        /// <returns>The <see cref="SwaggerModelPropertyDataBuilder{TProperty}"/> instance.</returns>
+        public SchemaBuilder Property<TModel, TProperty>(Expression<Func<TModel, TProperty>> expression)
+        {
+            var member = expression.Body as MemberExpression;
+            if (member == null)
+            {
+                throw new ArgumentException("Expression is not a member access", "expression");
+            }
+
+            if (this.properties == null)
+            {
+                this.properties = new Dictionary<string, SchemaBuilder>();
+            }
+
+            var builder = new SchemaBuilder();
+            this.properties.Add(member.Member.Name, builder);
+            return builder;
+        }
 
         /// <summary>
         /// The build.
@@ -53,20 +95,18 @@ namespace Swagger.ObjectModel.Builders
             schema.ReadOnly = this.readOnly;
             schema.ExternalDocumentation = this.documentation;
             schema.Example = this.example;
-            schema.Properties = this.properties;
+
+            if (this.properties != null)
+            {
+                schema.Properties = this.properties.ToDictionary(x => x.Key, x => x.Value.Build());
+            }
+
+            schema.AllOf = this.allOf;
+            schema.Required = this.required;
 
             return schema;
         }
 
-        /// <summary>
-        /// The discriminator.
-        /// </summary>
-        /// <param name="discriminator">
-        /// The discriminator.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SchemaBuilder"/>.
-        /// </returns>
         public SchemaBuilder Discriminator(string discriminator)
         {
             this.discriminator = discriminator;

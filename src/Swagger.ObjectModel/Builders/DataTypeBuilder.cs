@@ -17,6 +17,8 @@ namespace Swagger.ObjectModel.Builders
     public abstract class DataTypeBuilder<TBuilder, T>
         where TBuilder : DataTypeBuilder<TBuilder, T> where T : DataType, new()
     {
+        protected T data;
+
         /// <summary>
         /// The maximum.
         /// </summary>
@@ -106,6 +108,38 @@ namespace Swagger.ObjectModel.Builders
         /// The unique items.
         /// </summary>
         private bool? uniqueItems;
+
+        protected virtual T Data
+        {
+            get
+            {
+                if (this.data == null)
+                {
+                    this.data = new T();
+                }
+
+                this.data.Maximum = this.maximum;
+                this.data.Minimum = this.minimum;
+                this.data.Type = this.type;
+                this.data.CollectionFormat = this.collectionFormat;
+                this.data.Default = this.defaultValue;
+                this.data.Enum = this.@enum;
+                this.data.ExclusiveMaximum = this.exclusiveMax;
+                this.data.ExclusiveMinimum = this.exclusiveMin;
+                this.data.Format = this.format;
+                this.data.Items = this.items;
+                this.data.MaxItems = this.maxItems;
+                this.data.MaxLength = this.maxLength;
+                this.data.MinItems = this.minItems;
+                this.data.MinLength = this.minLength;
+                this.data.MultipleOf = this.multipleOf;
+                this.data.Pattern = this.pattern;
+                this.data.Ref = this.reference;
+                this.data.UniqueItems = this.uniqueItems;
+
+                return this.data;
+            }
+        }
 
         /// <summary>
         /// The build.
