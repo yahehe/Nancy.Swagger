@@ -17,7 +17,7 @@ namespace Swagger.ObjectModel.Builders
     public abstract class DataTypeBuilder<TBuilder, T>
         where TBuilder : DataTypeBuilder<TBuilder, T> where T : DataType, new()
     {
-        protected T data;
+        private T data = new T();
 
         /// <summary>
         /// The maximum.
@@ -109,15 +109,10 @@ namespace Swagger.ObjectModel.Builders
         /// </summary>
         private bool? uniqueItems;
 
-        protected virtual T Data
+        protected virtual T DataTypeInstance
         {
             get
             {
-                if (this.data == null)
-                {
-                    this.data = new T();
-                }
-
                 this.data.Maximum = this.maximum;
                 this.data.Minimum = this.minimum;
                 this.data.Type = this.type;

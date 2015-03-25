@@ -20,7 +20,7 @@ namespace Nancy.Swagger.Services
 
             foreach (var model in this.RetrieveSwaggerModels())
             {
-                builder.Definition(model.ModelType.Name, model.);
+                //builder.Definition(model.ModelType.Name, model.);
             }
 
             builder.Info(new Info()

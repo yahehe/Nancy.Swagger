@@ -670,7 +670,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SwaggerRootBuilder"/>.
         /// </returns>
-        public SwaggerRootBuilder Definition(string name, SchemaBuilder definition)
+        public SwaggerRootBuilder Definition<T>(string name, SchemaBuilder<T> definition)
         {
             return this.Definition(name, definition.Build());
         }

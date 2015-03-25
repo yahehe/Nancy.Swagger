@@ -19,7 +19,7 @@ namespace Swagger.ObjectModel.Builders
     /// <summary>
     /// The schema builder.
     /// </summary>
-    public class SchemaBuilder : DataTypeBuilder<SchemaBuilder, Schema>
+    public class SchemaBuilder<TModel> : DataTypeBuilder<SchemaBuilder<TModel>, Schema>
     {
         /// <summary>
         /// The discriminator.
@@ -41,43 +41,46 @@ namespace Swagger.ObjectModel.Builders
         /// </summary>
         private object example;
 
-        private IDictionary<string, SchemaBuilder> properties = new Dictionary<string, SchemaBuilder>();
+        private IDictionary<string, Schema> properties = new Dictionary<string, Schema>();
 
         private List<string> required = new List<string>();
 
         private List<string> allOf = new List<string>();
 
-        private Schema providedSchema;
-
-        public SchemaBuilder(Schema provided)
+        protected override Schema DataTypeInstance
         {
-            this.providedSchema = provided;
-        }
+            get
+            {
+                base.DataTypeInstance.Discriminator = this.discriminator;
+                base.DataTypeInstance.ReadOnly = this.readOnly;
+                base.DataTypeInstance.ExternalDocumentation = this.documentation;
+                base.DataTypeInstance.Example = this.example;
+                base.DataTypeInstance.Properties = this.properties;
+                base.DataTypeInstance.AllOf = this.allOf;
+                base.DataTypeInstance.Required = this.required;
 
-        public SchemaBuilder()
-        {
+                return base.DataTypeInstance;
+            }
         }
 
         /// <summary>
-        /// Access a <see cref="SwaggerModelPropertyDataBuilder{TProperty}"/> for a given property of the model.
+        /// Access a <see cref="SchemaBuilder{TProperty}"/> for a given property of the model.
         /// </summary>
         /// <param name="expression">An <see cref="Expression{TDelegate}"/> for accessing the property.</param>
-        /// <returns>The <see cref="SwaggerModelPropertyDataBuilder{TProperty}"/> instance.</returns>
-        public SchemaBuilder Property<TModel, TProperty>(Expression<Func<TModel, TProperty>> expression)
+        /// <returns>The <see cref="SchemaBuilder{TProperty}"/> instance.</returns>
+        public SchemaBuilder<TProperty> Property<TProperty>(Expression<Func<TModel, TProperty>> expression)
         {
             var member = expression.Body as MemberExpression;
             if (member == null)
             {
                 throw new ArgumentException("Expression is not a member access", "expression");
             }
+            
+            var builder = new SchemaBuilder<TProperty>();
+            this.properties.Add(member.Member.Name, builder.DataTypeInstance);
 
-            if (this.properties == null)
-            {
-                this.properties = new Dictionary<string, SchemaBuilder>();
-            }
+            builder.Type(typeof(TProperty).Name);
 
-            var builder = new SchemaBuilder();
-            this.properties.Add(member.Member.Name, builder);
             return builder;
         }
 
@@ -89,25 +92,10 @@ namespace Swagger.ObjectModel.Builders
         /// </returns>
         public override Schema Build()
         {
-            var schema = this.BuildBase();
-
-            schema.Discriminator = this.discriminator;
-            schema.ReadOnly = this.readOnly;
-            schema.ExternalDocumentation = this.documentation;
-            schema.Example = this.example;
-
-            if (this.properties != null)
-            {
-                schema.Properties = this.properties.ToDictionary(x => x.Key, x => x.Value.Build());
-            }
-
-            schema.AllOf = this.allOf;
-            schema.Required = this.required;
-
-            return schema;
+            return this.DataTypeInstance;
         }
 
-        public SchemaBuilder Discriminator(string discriminator)
+        public SchemaBuilder<TModel> Discriminator(string discriminator)
         {
             this.discriminator = discriminator;
             return this;
@@ -119,7 +107,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SchemaBuilder"/>.
         /// </returns>
-        public SchemaBuilder IsReadOnly()
+        public SchemaBuilder<TModel> IsReadOnly()
         {
             this.readOnly = true;
             return this;
@@ -134,7 +122,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SchemaBuilder"/>.
         /// </returns>
-        public SchemaBuilder ExternalDocumentation(ExternalDocumentation documentation)
+        public SchemaBuilder<TModel> ExternalDocumentation(ExternalDocumentation documentation)
         {
             this.documentation = documentation;
             return this;
@@ -149,7 +137,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SchemaBuilder"/>.
         /// </returns>
-        public SchemaBuilder ExternalDocumentation(ExternalDocumentationBuilder documentation)
+        public SchemaBuilder<TModel> ExternalDocumentation(ExternalDocumentationBuilder documentation)
         {
             this.documentation = documentation.Build();
             return this;
@@ -164,7 +152,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="SchemaBuilder"/>.
         /// </returns>
-        public SchemaBuilder Example(object example)
+        public SchemaBuilder<TModel> Example(object example)
         {
             this.example = example;
             return this;

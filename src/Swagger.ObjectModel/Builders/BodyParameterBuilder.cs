@@ -103,10 +103,23 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="BodyParameterBuilder"/>.
         /// </returns>
-        public BodyParameterBuilder Schema(Action<SchemaBuilder> schema)
+        public BodyParameterBuilder Schema<T>(Action<SchemaBuilder<T>> schema)
         {
-            var builder = new SchemaBuilder();
+            var builder = new SchemaBuilder<T>();
             schema(builder);
+            this.schema = builder.Build();
+            return this;
+        }
+
+        /// <summary>
+        /// Add The schema defining the type used for the body parameter.
+        /// </summary>
+        /// <returns>
+        /// The <see cref="BodyParameterBuilder"/>.
+        /// </returns>
+        public BodyParameterBuilder Schema<T>()
+        {
+            var builder = new SchemaBuilder<T>();
             this.schema = builder.Build();
             return this;
         }

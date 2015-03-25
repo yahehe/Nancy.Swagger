@@ -90,10 +90,26 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="ResponseBuilder"/>.
         /// </returns>
-        public ResponseBuilder Schema(Action<SchemaBuilder> schema)
+        public ResponseBuilder Schema<T>(Action<SchemaBuilder<T>> schema)
         {
-            var builder = new SchemaBuilder();
+            var builder = new SchemaBuilder<T>();
             schema(builder);
+            this.schema = builder.Build();
+            return this;
+        }
+
+        /// <summary>
+        /// The schema.
+        /// </summary>
+        /// <param name="schema">
+        /// The schema.
+        /// </param>
+        /// <returns>
+        /// The <see cref="ResponseBuilder"/>.
+        /// </returns>
+        public ResponseBuilder Schema<T>()
+        {
+            var builder = new SchemaBuilder<T>();
             this.schema = builder.Build();
             return this;
         }
