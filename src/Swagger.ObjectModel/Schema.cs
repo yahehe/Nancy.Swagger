@@ -1,5 +1,6 @@
 ﻿namespace Swagger.ObjectModel
 {
+    using System;
     using System.Collections.Generic;
 
     using Swagger.ObjectModel.Attributes;
@@ -54,6 +55,17 @@
         /// </summary>
         [SwaggerProperty("allOf")]
         public IList<string> AllOf { get; set; }
+
+        /// <summary>
+        /// The System.Type of the object
+        /// </summary>
+        public Type ClrType { get; set; }
+
+        /// <summary>
+        /// A brief description of this schema.
+        /// </summary>
+        [SwaggerProperty("description")]
+        public string Description { get; set; }
     
     }
 }

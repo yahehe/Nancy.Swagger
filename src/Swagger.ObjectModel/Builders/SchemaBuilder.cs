@@ -14,7 +14,6 @@ namespace Swagger.ObjectModel.Builders
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Reflection;
 
     /// <summary>
     /// The schema builder.
@@ -47,6 +46,8 @@ namespace Swagger.ObjectModel.Builders
 
         private List<string> allOf = new List<string>();
 
+        private string description;
+
         protected override Schema DataTypeInstance
         {
             get
@@ -58,6 +59,7 @@ namespace Swagger.ObjectModel.Builders
                 base.DataTypeInstance.Properties = this.properties;
                 base.DataTypeInstance.AllOf = this.allOf;
                 base.DataTypeInstance.Required = this.required;
+                base.DataTypeInstance.Description = this.description;
 
                 return base.DataTypeInstance;
             }
@@ -95,67 +97,120 @@ namespace Swagger.ObjectModel.Builders
             return this.DataTypeInstance;
         }
 
+        #region Building
+
         public SchemaBuilder<TModel> Discriminator(string discriminator)
         {
             this.discriminator = discriminator;
             return this;
         }
 
-        /// <summary>
-        /// The is read only.
-        /// </summary>
-        /// <returns>
-        /// The <see cref="SchemaBuilder"/>.
-        /// </returns>
+        private SchemaBuilder<TModel> Description(string description)
+        {
+            this.description = description;
+            return this;
+        }
+
         public SchemaBuilder<TModel> IsReadOnly()
         {
             this.readOnly = true;
             return this;
         }
 
-        /// <summary>
-        /// The external documentation.
-        /// </summary>
-        /// <param name="documentation">
-        /// The documentation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SchemaBuilder"/>.
-        /// </returns>
+
         public SchemaBuilder<TModel> ExternalDocumentation(ExternalDocumentation documentation)
         {
             this.documentation = documentation;
             return this;
         }
 
-        /// <summary>
-        /// The external documentation.
-        /// </summary>
-        /// <param name="documentation">
-        /// The documentation.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SchemaBuilder"/>.
-        /// </returns>
         public SchemaBuilder<TModel> ExternalDocumentation(ExternalDocumentationBuilder documentation)
         {
             this.documentation = documentation.Build();
             return this;
         }
 
-        /// <summary>
-        /// The example.
-        /// </summary>
-        /// <param name="example">
-        /// The example.
-        /// </param>
-        /// <returns>
-        /// The <see cref="SchemaBuilder"/>.
-        /// </returns>
         public SchemaBuilder<TModel> Example(object example)
         {
             this.example = example;
             return this;
+        }
+
+        #endregion
+
+        private static bool IsImplicitlyRequired(Type type)
+        {
+            return type.IsValueType && !IsNullable(type);
+        }
+
+        private static bool IsNullable(Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        public static IEnumerable<Model> ToModel<T>(T modelType, IEnumerable<Schema> knownModels = null)
+        {
+            var modelProperties = typeof(T).GetProperties();
+            var classProperties = modelProperties.Where(x => !Primitive.IsPrimitive(x.PropertyType) && !x.PropertyType.IsEnum && !x.PropertyType.IsGenericType);
+
+            var modelsData = knownModels ?? Enumerable.Empty<Schema>();
+
+            foreach (var property in classProperties)
+            {
+                var properties = property.GetType().GetProperties();
+
+                var existingSchemaForClassProperty = modelsData.FirstOrDefault(x => x.ClrType == property.GetType());
+
+                var id = existingSchemaForClassProperty == null
+                    ? property.GetType().Name
+                    : SwaggerConfig.ModelIdConvention(existingSchemaForClassProperty.ClrType);
+
+                var description = existingSchemaForClassProperty == null
+                    ? null
+                    : existingSchemaForClassProperty.Description;
+
+                var required = existingSchemaForClassProperty == null
+                    ? new List<string>()
+                    : existingSchemaForClassProperty.Properties
+                        .Where(p => p.Value.Required.Contains(p.Key) || IsImplicitlyRequired(p.Value.ClrType))
+                        .Select(p => p.Key)
+                        .OrderBy(name => name)
+                        .ToList();
+
+                var builderType = typeof(SchemaBuilder<>);
+                var constructed = builderType.MakeGenericType(new[] { property.GetType() });
+                var builder = (SchemaBuilder<>)Activator.CreateInstance(constructed);
+                
+                var modelproperties = existingSchemaForClassProperty == null
+                                          ? properties.OrderBy(x => x.Name).Select(x=>ToModel(x)).ToDictionary()
+                                          : existingSchemaForClassProperty.Properties;
+
+                yield return new Model
+                {
+                    Id = id,
+                    Description = description,
+                    Required = required,
+                    Properties = modelproperties
+                };
+            }
+
+            var topLevelModel = new Model
+            {
+                Id = SwaggerConfig.ModelIdConvention(model.ModelType),
+                Description = model.Description,
+                Required = model.Properties
+                    .Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                    .Select(p => p.Name)
+                    .OrderBy(name => name)
+                    .ToList(),
+                Properties = model.Properties
+                    .OrderBy(p => p.Name)
+                    .ToDictionary(p => p.Name, ToModelProperty)
+
+                // TODO: SubTypes and Discriminator
+            };
+
+            yield return topLevelModel;
         }
     }
 }
