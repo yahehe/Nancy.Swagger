@@ -1,5 +1,7 @@
 ﻿namespace Swagger.ObjectModel
 {
+    using System.Collections.Generic;
+
     using Swagger.ObjectModel.Attributes;
 
     /// <summary>
@@ -34,5 +36,24 @@
         /// </summary>
         [SwaggerProperty("example")]
         public object Example { get; set; }
+
+        /// <summary>
+        /// Collection of child members
+        /// </summary>
+        [SwaggerProperty("properties")]
+        public IDictionary<string, Schema> Properties { get; set; }
+
+        /// <summary>
+        /// An object instance is valid against this keyword if its property set contains all elements in this keyword's array value.
+        /// </summary>
+        [SwaggerProperty("required")]
+        public IList<string> Required { get; set; }
+
+        /// <summary>
+        /// An instance validates successfully against this keyword if it validates successfully against all schemas defined by this keyword's value.
+        /// </summary>
+        [SwaggerProperty("allOf")]
+        public IList<string> AllOf { get; set; }
+    
     }
 }

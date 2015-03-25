@@ -56,11 +56,7 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SwaggerMetadataConverterForTesting.cs" />
-    <Compile Include="Services\SwaggerMetadataConverterTests.cs" />
     <Compile Include="SwaggerExtensionsTests.cs" />
-    <Compile Include="SwaggerModelDataBuilderTests.cs" />
-    <Compile Include="SwaggerModelPropertyDataBuilderTests.cs" />
     <Compile Include="SwaggerModelPropertyDataTests.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="TestModel.cs" />
@@ -77,6 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -78,6 +78,8 @@
     <Compile Include="..\..\etc\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ModelDataProviders\AddressModelDataProvider.cs" />
+    <Compile Include="ModelDataProviders\UserModelDataProvider.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Modules\HomeMetadataModule.cs" />

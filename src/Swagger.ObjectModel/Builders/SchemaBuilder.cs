@@ -10,6 +10,8 @@
 
 namespace Swagger.ObjectModel.Builders
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// The schema builder.
     /// </summary>
@@ -35,6 +37,8 @@ namespace Swagger.ObjectModel.Builders
         /// </summary>
         private object example;
 
+        private IDictionary<string, Schema> properties;
+
         /// <summary>
         /// The build.
         /// </summary>
@@ -44,10 +48,13 @@ namespace Swagger.ObjectModel.Builders
         public override Schema Build()
         {
             var schema = this.BuildBase();
+
             schema.Discriminator = this.discriminator;
             schema.ReadOnly = this.readOnly;
             schema.ExternalDocumentation = this.documentation;
             schema.Example = this.example;
+            schema.Properties = this.properties;
+
             return schema;
         }
 

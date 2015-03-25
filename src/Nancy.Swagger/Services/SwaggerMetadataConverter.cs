@@ -12,20 +12,29 @@ namespace Nancy.Swagger.Services
         public SwaggerRoot GetSwaggerJson()
         {
             var builder = new SwaggerRootBuilder();
-            foreach (var kvp in RetrieveSwaggerRouteData())
+
+            foreach (var pathItem in this.RetrieveSwaggerPaths())
             {
-                builder.Path(kvp.Key, kvp.Value);
+                builder.Path(pathItem.Key, pathItem.Value);
             }
+
+            foreach (var model in this.RetrieveSwaggerModels())
+            {
+                builder.Definition(model.ModelType.Name, model.);
+            }
+
             builder.Info(new Info()
                          {
                              Title = "No title set",
                              Version = "0.1"
                          });
+
             return builder.Build();
         }
 
-        protected abstract IDictionary<string, PathItem> RetrieveSwaggerRouteData();
+        protected abstract IDictionary<string, PathItem> RetrieveSwaggerPaths();
 
+        protected abstract IList<SwaggerModelData> RetrieveSwaggerModels();
 
         private static Type GetType(Type type)
         {
