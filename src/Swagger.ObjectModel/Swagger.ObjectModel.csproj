@@ -54,6 +54,7 @@
     <Compile Include="Builders\ApiKeySecuritySchemeBuilder.cs" />
     <Compile Include="Builders\BasicSecuritySchemeBuilder.cs" />
     <Compile Include="Builders\BodyParameterBuilder.cs" />
+    <Compile Include="Builders\SwaggerBuilderConfig.cs" />
     <Compile Include="Builders\ContactBuilder.cs" />
     <Compile Include="Builders\InfoBuilder.cs" />
     <Compile Include="Builders\LicenseBuilder.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Tag.cs" />
     <Compile Include="SimpleJson.cs" />
     <Compile Include="SwaggerModel.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

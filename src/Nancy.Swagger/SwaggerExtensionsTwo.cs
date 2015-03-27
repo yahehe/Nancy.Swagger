@@ -173,45 +173,6 @@ namespace Nancy.Swagger
                 && !typeof(string).IsAssignableFrom(type);
         }
 
-        public static string ToCamelCase(this string val)
-        {
-            if (string.IsNullOrEmpty(val))
-            {
-                return val;
-            }
-
-            var sb = new StringBuilder();
-            var nextToUpper = true;
-            foreach (var c in val.Trim())
-            {
-                if (char.IsLetter(c))
-                {
-                    if (sb.Length == 0)
-                    {
-                        sb.Append(char.ToLower(c));
-                    }
-                    else
-                    {
-                        sb.Append(nextToUpper ? char.ToUpper(c) : c);
-                    }
-                    nextToUpper = false;
-                }
-                else
-                {
-                    if (char.IsDigit(c))
-                    {
-                        if (sb.Length == 0)
-                        {
-                            sb.Append("_");
-                        }
-                        sb.Append(nextToUpper ? char.ToUpper(c) : c);
-                    }
-                    nextToUpper = true;
-                }
-            }
-
-            return sb.ToString();
-        }
 
         internal static bool IsImplicitlyRequired(this Type type)
         {

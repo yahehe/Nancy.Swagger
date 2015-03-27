@@ -148,7 +148,40 @@ namespace Swagger.ObjectModel.Builders
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
-        public static IEnumerable<Model> ToModel<T>(T modelType, IEnumerable<Schema> knownModels = null)
+        private static bool IsClassProperty(Type propertyType)
+        {
+            return !Primitive.IsPrimitive(propertyType) && !propertyType.IsEnum && !propertyType.IsGenericType;
+        }
+
+        public static Schema ToSchema<T>(T modelType)
+        {
+            var modelProperties = typeof(T).GetProperties();
+            
+            var schema = new Schema();
+
+            foreach (var modelProperty in modelProperties)
+            {
+                var propertyType = modelProperty.GetType();
+                var property = new Schema();
+
+                var id = SwaggerBuilderConfig.ModelIdConvention(propertyType);
+                string description = null;
+                var required = IsImplicitlyRequired(propertyType);
+                var properties = propertyType.GetProperties().ToDictionary(prop => prop.Name, ToSchema);
+
+                property.Required = required;
+                property.Properties = new Dictionary<string, Schema>();
+                schema.Properties.Add(modelProperty.Name, property);
+            }
+            
+        }
+
+        private static Schema FromClass<T>(T classType)
+        {
+            
+        }
+
+        public static IEnumerable<Schema> ToModel<T>(T modelType, IEnumerable<Schema> knownModels = null)
         {
             var modelProperties = typeof(T).GetProperties();
             var classProperties = modelProperties.Where(x => !Primitive.IsPrimitive(x.PropertyType) && !x.PropertyType.IsEnum && !x.PropertyType.IsGenericType);
@@ -177,13 +210,8 @@ namespace Swagger.ObjectModel.Builders
                         .OrderBy(name => name)
                         .ToList();
 
-                var builderType = typeof(SchemaBuilder<>);
-                var constructed = builderType.MakeGenericType(new[] { property.GetType() });
-                var builder = (SchemaBuilder<>)Activator.CreateInstance(constructed);
                 
-                var modelproperties = existingSchemaForClassProperty == null
-                                          ? properties.OrderBy(x => x.Name).Select(x=>ToModel(x)).ToDictionary()
-                                          : existingSchemaForClassProperty.Properties;
+                var modelproperties = properties.OrderBy(x => x.Name).ToDictionary(x => x.Name, x => ToModel(x.GetType()))
 
                 yield return new Model
                 {
