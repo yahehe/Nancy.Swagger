@@ -36,6 +36,11 @@ namespace Swagger.ObjectModel.ApiDeclaration
         /// <summary>
         /// The OPTIONS HTTP method.
         /// </summary>
-        [SwaggerEnumValue("OPTIONS")] Options
+        [SwaggerEnumValue("OPTIONS")] Options,
+
+        /// <summary>
+        /// The OPTIONS HTTP method.
+        /// </summary>
+        [SwaggerEnumValue("HEAD")] Head
     }
 }

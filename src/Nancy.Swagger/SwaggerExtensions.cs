@@ -287,6 +287,8 @@ namespace Nancy.Swagger
                     return HttpMethod.Post;
                 case "PUT":
                     return HttpMethod.Put;
+                case "HEAD":
+                    return HttpMethod.Head;
                 default:
                     throw new NotSupportedException(string.Format("HTTP method '{0}' is not supported.", method));
             }
