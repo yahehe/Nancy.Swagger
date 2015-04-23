@@ -40,19 +40,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Nancy, Version=0.23.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nancy, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Nancy.0.23.2\lib\net40\Nancy.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.1.2.0\lib\net40\Nancy.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Hosting.Aspnet">
-      <HintPath>..\..\packages\Nancy.Hosting.Aspnet.0.23.2\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
-    </Reference>
-    <Reference Include="Nancy.Metadata.Module, Version=0.23.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Nancy.Hosting.Aspnet, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\Nancy.MetaData.0.23.2\lib\net40\Nancy.Metadata.Module.dll</HintPath>
+      <HintPath>..\..\packages\Nancy.Hosting.Aspnet.1.2.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
     </Reference>
-    <Reference Include="Nancy.Validation.DataAnnotations">
-      <HintPath>..\..\packages\Nancy.Validation.DataAnnotations.0.23.2\lib\net40\Nancy.Validation.DataAnnotations.dll</HintPath>
+    <Reference Include="Nancy.Metadata.Modules">
+      <HintPath>..\..\packages\Nancy.Metadata.Modules.1.2.0\lib\net40\Nancy.Metadata.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Validation.DataAnnotations, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Nancy.Validation.DataAnnotations.1.2.0\lib\net40\Nancy.Validation.DataAnnotations.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

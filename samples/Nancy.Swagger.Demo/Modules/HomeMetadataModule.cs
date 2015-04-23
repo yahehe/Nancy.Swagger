@@ -1,4 +1,4 @@
-﻿using Nancy.Metadata.Module;
+﻿using Nancy.Metadata.Modules;
 using Nancy.Swagger.Demo.Models;
 
 namespace Nancy.Swagger.Demo.Modules
