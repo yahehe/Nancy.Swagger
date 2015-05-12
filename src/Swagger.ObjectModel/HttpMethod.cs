@@ -13,37 +13,43 @@ namespace Swagger.ObjectModel
         /// <summary>
         /// The GET HTTP method.
         /// </summary>
-        [SwaggerEnumValue("get")] Get,
+        [SwaggerEnumValue("GET")]
+        Get,
 
         /// <summary>
         /// The POST HTTP method.
         /// </summary>
-        [SwaggerEnumValue("post")] Post,
+        [SwaggerEnumValue("POST")]
+        Post,
 
         /// <summary>
         /// The PUT HTTP method.
         /// </summary>
-        [SwaggerEnumValue("put")] Put,
+        [SwaggerEnumValue("PUT")]
+        Put,
 
         /// <summary>
         /// The PATCH HTTP method.
         /// </summary>
-        [SwaggerEnumValue("patch")] Patch,
+        [SwaggerEnumValue("PATCH")]
+        Patch,
 
         /// <summary>
         /// The DELETE HTTP method.
         /// </summary>
-        [SwaggerEnumValue("delete")] Delete,
+        [SwaggerEnumValue("DELETE")]
+        Delete,
 
         /// <summary>
         /// The OPTIONS HTTP method.
         /// </summary>
-        [SwaggerEnumValue("options")] Options,
+        [SwaggerEnumValue("OPTIONS")]
+        Options,
 
         /// <summary>
         /// The HEAD HTTP method.
         /// </summary>
-        [SwaggerEnumValue("head")]
-        Head,
+        [SwaggerEnumValue("HEAD")]
+        Head
     }
 }

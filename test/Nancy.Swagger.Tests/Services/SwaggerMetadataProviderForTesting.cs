@@ -5,9 +5,9 @@ using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Tests.Services
 {
-    public class SwaggerMetadataConverterForTesting : SwaggerMetadataConverter
+    public class SwaggerMetadataProviderForTesting : SwaggerMetadataProvider
     {
-        public SwaggerMetadataConverterForTesting()
+        public SwaggerMetadataProviderForTesting()
         {
             RouteDataAccessor = new Dictionary<string, PathItem>();
         }

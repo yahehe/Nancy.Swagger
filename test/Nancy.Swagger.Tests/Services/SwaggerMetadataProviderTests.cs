@@ -1,22 +1,25 @@
-﻿using Should;
+﻿using Nancy.Swagger.Services;
+using Should;
 using Xunit;
 
 namespace Nancy.Swagger.Tests.Services
 {
-    public class SwaggerMetadataConverterTests
+    public class SwaggerMetadataProviderTests
     {
-        private readonly SwaggerMetadataConverterForTesting converter;
+        private readonly ISwaggerMetadataConverter converter;
+        private readonly SwaggerMetadataProviderForTesting provider;
 
-        public SwaggerMetadataConverterTests()
-        {
-            converter = new SwaggerMetadataConverterForTesting();
+        public SwaggerMetadataProviderTests()
+        {   
+            provider = new SwaggerMetadataProviderForTesting();
+            converter = new DefaultSwaggerMetadataConverter(provider);
         }
 
         [Fact]
         public void ShouldExcludePrimitiveTypesFromApiDeclarationModels()
         {
             // Arrange
-            converter.RouteDataAccessor = new[]
+            provider.RouteDataAccessor = new[]
                 {
                     new SwaggerRouteData { ResourcePath = "/test", OperationModel = typeof(string) }
                 };
@@ -32,7 +35,7 @@ namespace Nancy.Swagger.Tests.Services
         public void ShouldIncludComplexTypesInApiDeclarationModels()
         {
             // Arrange
-            converter.RouteDataAccessor = new[]
+            provider.RouteDataAccessor = new[]
                 {
                     new SwaggerRouteData { ResourcePath = "/test", OperationModel = typeof(TestModel) }
                 };

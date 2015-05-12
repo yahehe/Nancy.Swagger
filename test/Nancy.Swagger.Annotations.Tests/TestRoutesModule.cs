@@ -33,104 +33,104 @@ namespace Nancy.Swagger.Annotations.Tests
             Get["/model-with-duplicate-typename"] = _ => GetModelWithDuplicateTypeName();
         }
 
-        [SwaggerRoute(HttpMethod.Get, "/model-with-duplicate-typename")]
-        [SwaggerRoute(Response = typeof(InOtherNamespace.TestModel))]
+        [Route(HttpMethod.Get, "/model-with-duplicate-typename")]
+        [Route(Response = typeof(InOtherNamespace.TestModel))]
         private dynamic GetModelWithDuplicateTypeName()
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Get, "/allowmultipleparam")]
+        [Route(HttpMethod.Get, "/allowmultipleparam")]
         private dynamic GetWithAllowMultipleParam(
-            [SwaggerRouteParam(ParameterIn.Query, "ids")] int[] ids)
+            [RouteParam(ParameterIn.Query, "ids")] int[] ids)
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute("GetNamedRoute")]
-        [SwaggerRoute(Response = typeof(int[]))]
+        [Route("GetNamedRoute")]
+        [Route(Response = typeof(int[]))]
         private static dynamic GetNamedRoute()
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Get, "/models")]
-        [SwaggerRoute(Response = typeof(TestModel[]))]
+        [Route(HttpMethod.Get, "/models")]
+        [Route(Response = typeof(TestModel[]))]
         private static dynamic GetModels()
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Get, "/models/{id}")]
-        [SwaggerRoute(Response = typeof(TestModel))]
+        [Route(HttpMethod.Get, "/models/{id}")]
+        [Route(Response = typeof(TestModel))]
         private static dynamic GetModel(
-            [SwaggerRouteParam(ParameterIn.Path, "id")] int id
+            [RouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Options, "/models/{id}")]
+        [Route(HttpMethod.Options, "/models/{id}")]
         private dynamic OptionsModel(
-            [SwaggerRouteParam(ParameterIn.Path, "id")] int id
+            [RouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Delete, "/models/{id}")]
+        [Route(HttpMethod.Delete, "/models/{id}")]
         private dynamic DeleteModel(
-            [SwaggerRouteParam(ParameterIn.Path, "id")] int id
+            [RouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Patch, "/models/{id}")]
+        [Route(HttpMethod.Patch, "/models/{id}")]
         private dynamic PatchModel(
-            [SwaggerRouteParam(ParameterIn.Body)] TestModel testModel
+            [RouteParam(ParameterIn.Body)] TestModel testModel
         )
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Put, "/models/{id}")]
+        [Route(HttpMethod.Put, "/models/{id}")]
         private dynamic PutModel(
-            [SwaggerRouteParam(ParameterIn.Body)] TestModel testModel
+            [RouteParam(ParameterIn.Body)] TestModel testModel
         )
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Post, "/models/{id}")]
+        [Route(HttpMethod.Post, "/models/{id}")]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.ImATeapot, "I'm a teapot")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Model = typeof(string))]
         [SwaggerResponse(HttpStatusCode.OK, Message = "Everything OK", Model = typeof(TestModel))]
         private dynamic PostModel(
-            [SwaggerRouteParam(ParameterIn.Body, Required = true)] TestModel testModel
+            [RouteParam(ParameterIn.Body, Required = true)] TestModel testModel
         )
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Get, "/strings/{id}")]
-        [SwaggerRoute(Response = typeof(string))]
-        [SwaggerRoute(Produces = new[] { "application/json" })]
-        [SwaggerRoute(Consumes = new[] { "application/json", "application/xml" })]
+        [Route(HttpMethod.Get, "/strings/{id}")]
+        [Route(Response = typeof(string))]
+        [Route(Produces = new[] { "application/json" })]
+        [Route(Consumes = new[] { "application/json", "application/xml" })]
         private static dynamic GetStringById(
-            [SwaggerRouteParam(ParameterIn.Path, "id", Required = true)] int id,
-            [SwaggerRouteParam(ParameterIn.Query, "q")]
-            [SwaggerRouteParam(Description = "Query")] string query
+            [RouteParam(ParameterIn.Path, "id", Required = true)] int id,
+            [RouteParam(ParameterIn.Query, "q")]
+            [RouteParam(Description = "Query")] string query
         )
         {
             throw new NotImplementedException();
         }
 
-        [SwaggerRoute(HttpMethod.Get, "/strings")]
-        [SwaggerRoute(Notes = "Some notes")]
-        [SwaggerRoute(Summary = "Some summary")]
-        [SwaggerRoute(Response = typeof(string[]))]
+        [Route(HttpMethod.Get, "/strings")]
+        [Route(Notes = "Some notes")]
+        [Route(Summary = "Some summary")]
+        [Route(Response = typeof(string[]))]
         private static dynamic GetStrings()
         {
             throw new NotImplementedException();

@@ -9,12 +9,12 @@ using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations
 {
-    public class SwaggerAnnotationsConverter : SwaggerMetadataConverter
+    public class SwaggerAnnotationsProvider : SwaggerMetadataProvider
     {
         private NancyContext _context;
         private INancyModuleCatalog _moduleCatalog;
 
-        public SwaggerAnnotationsConverter(INancyModuleCatalog moduleCatalog, NancyContext context)
+        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, NancyContext context)
         {
             _moduleCatalog = moduleCatalog;
             _context = context;
@@ -52,7 +52,7 @@ namespace Nancy.Swagger.Annotations
                 Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList()
             };
 
-            var modelAttr = type.GetCustomAttribute<SwaggerModelAttribute>();
+            var modelAttr = type.GetCustomAttribute<ModelAttribute>();
             if (modelAttr != null)
             {
                 modelData.Description = modelAttr.Description;
@@ -69,7 +69,7 @@ namespace Nancy.Swagger.Annotations
                 Name = pi.Name
             };
 
-            foreach (var attr in pi.GetCustomAttributes<SwaggerModelPropertyAttribute>())
+            foreach (var attr in pi.GetCustomAttributes<ModelPropertyAttribute>())
             {
                 modelProperty.Name = attr.Name ?? modelProperty.Name;
                 modelProperty.Description = attr.Description ?? modelProperty.Description;
@@ -91,7 +91,7 @@ namespace Nancy.Swagger.Annotations
                 //ParameterModel = pi.ParameterType
             };
 
-            var paramAttrs = pi.GetCustomAttributes<SwaggerRouteParamAttribute>();
+            var paramAttrs = pi.GetCustomAttributes<RouteParamAttribute>();
             if (!paramAttrs.Any())
             {
                 parameter.Description = "Warning: no annotation found for this parameter";
@@ -156,7 +156,7 @@ namespace Nancy.Swagger.Annotations
                 return data;
             }
 
-            foreach (var attr in handler.GetCustomAttributes<SwaggerRouteAttribute>())
+            foreach (var attr in handler.GetCustomAttributes<RouteAttribute>())
             {
                 operation.Summary = attr.Summary ?? operation.Summary;
                 operation.Description = attr.Notes ?? operation.Description;
@@ -194,7 +194,7 @@ namespace Nancy.Swagger.Annotations
 
         private IEnumerable<Tuple<string, PathItem>> ToSwaggerRouteData(INancyModule module)
         {
-            Func<IEnumerable<SwaggerRouteAttribute>, RouteId> getRouteId = (attrs) =>
+            Func<IEnumerable<RouteAttribute>, RouteId> getRouteId = (attrs) =>
             {
                 return attrs.Select(attr => RouteId.Create(module, attr))
                             .FirstOrDefault(routeId => routeId.IsValid);
@@ -205,7 +205,7 @@ namespace Nancy.Swagger.Annotations
                 module.GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
                     .Select(methodInfo => new
                     {
-                        RouteId = getRouteId(methodInfo.GetCustomAttributes<SwaggerRouteAttribute>()),
+                        RouteId = getRouteId(methodInfo.GetCustomAttributes<RouteAttribute>()),
                         MethodInfo = methodInfo
                     })
                     .Where(x => x.RouteId.IsValid)

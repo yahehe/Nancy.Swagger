@@ -3,9 +3,9 @@
 namespace Nancy.Swagger.Annotations.Attributes
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = true)]
-    public class SwaggerModelAttribute : Attribute
+    public class ModelAttribute : Attribute
     {
-        public SwaggerModelAttribute(string description)
+        public ModelAttribute(string description)
         {
             Description = description;
         }
