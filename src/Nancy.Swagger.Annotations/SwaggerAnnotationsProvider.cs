@@ -20,7 +20,7 @@ namespace Nancy.Swagger.Annotations
             _context = context;
         }
 
-        protected override IDictionary<string, PathItem> RetrieveSwaggerRouteData()
+        protected override IDictionary<string, PathItem> RetrieveSwaggerPaths()
         {
             var pathItems = new Dictionary<string, PathItem>();
             foreach (var pair in _moduleCatalog
@@ -38,6 +38,15 @@ namespace Nancy.Swagger.Annotations
                 }
             }
             return pathItems;
+        }
+
+
+        protected override IList<SwaggerModelData> RetrieveSwaggerModels()
+        {
+            return RetrieveSwaggerPaths()
+                    .GetDistinctModelTypes()
+                    .Select(CreateSwaggerModelData)
+                    .ToList();
         }
 
         private SwaggerModelData CreateSwaggerModelData(Type type)
@@ -160,7 +169,7 @@ namespace Nancy.Swagger.Annotations
             {
                 operation.Summary = attr.Summary ?? operation.Summary;
                 operation.Description = attr.Notes ?? operation.Description;
-                // data.OperationModel = attr.Response ?? data.OperationModel;
+                operation.OperationModel = attr.Response ?? operation.OperationModel;
                 operation.Consumes = attr.Consumes ?? operation.Consumes;
                 operation.Consumes = attr.Produces ?? operation.Produces;
             }

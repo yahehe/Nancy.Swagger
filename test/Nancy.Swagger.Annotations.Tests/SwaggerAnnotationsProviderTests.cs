@@ -16,7 +16,8 @@ namespace Nancy.Swagger.Annotations.Tests
         {
             var bootstrapper = new ConfigurableBootstrapper(with =>
             {
-                with.ApplicationStartup((container, pipelines) => {
+                with.ApplicationStartup((container, pipelines) =>
+                {
                     container.Register<ISwaggerMetadataProvider, SwaggerAnnotationsProvider>();
                 });
 

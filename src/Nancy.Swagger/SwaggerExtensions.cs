@@ -262,5 +262,62 @@ namespace Nancy.Swagger
                     throw new NotSupportedException(string.Format("HTTP method '{0}' is not supported.", method));
             }
         }
+
+        public static IEnumerable<Type> GetDistinctModelTypes(this IDictionary<string, PathItem> routeData)
+        {
+            return GetOperationModels(routeData)
+                .Select(GetType)
+                .Where(type => !Primitive.IsPrimitive(type))
+                .Distinct();
+        }
+
+        private static Type GetType(Type type)
+        {
+            if (type.IsContainer())
+            {
+                return type.GetElementType() ?? type.GetGenericArguments().First();
+            }
+
+            return type;
+        }
+
+        private static IEnumerable<Type> GetOperationModels(IDictionary<string, PathItem> metadata)
+        {
+            return metadata
+                .SelectMany(d => ReadOperations(d.Value))
+                .Select(d => d.OperationModel);
+        }
+
+        private static IEnumerable<Operation> ReadOperations(PathItem pathItem)
+        {
+            if (pathItem.Delete != null)
+            {
+                yield return pathItem.Delete;
+            }
+            if (pathItem.Get != null)
+            {
+                yield return pathItem.Get;
+            }
+            if (pathItem.Head != null)
+            {
+                yield return pathItem.Head;
+            }
+            if (pathItem.Options != null)
+            {
+                yield return pathItem.Options;
+            }
+            if (pathItem.Patch != null)
+            {
+                yield return pathItem.Patch;
+            }
+            if (pathItem.Post != null)
+            {
+                yield return pathItem.Post;
+            }
+            if (pathItem.Put != null)
+            {
+                yield return pathItem.Put;
+            }
+        }
     }
 }
