@@ -68,7 +68,6 @@ namespace Nancy.Swagger.Tests
             );
         }
 
-
         [Theory]
         [InlineData(null, null)]
         [InlineData("", "")]

@@ -1,6 +1,5 @@
 ﻿using Should;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Tests
 {
@@ -8,7 +7,7 @@ namespace Nancy.Swagger.Tests
     {
         public static void ShouldEqual(this DataType actual, DataType expected, string userMessage = null)
         {
-            actual.Default.ShouldEqual(expected.Default, userMessage.Append("DefaultValue"));
+            actual.Default.ShouldEqual(expected.Default, userMessage.Append("Default"));
             actual.Enum.ShouldEqual(expected.Enum, userMessage.Append("Enum"));
             actual.Format.ShouldEqual(expected.Format, userMessage.Append("Format"));
             actual.Items.ShouldEqual(expected.Items, userMessage.Append("Items"));
