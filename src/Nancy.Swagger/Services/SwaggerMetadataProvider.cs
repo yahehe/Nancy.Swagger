@@ -7,7 +7,7 @@ using Swagger.ObjectModel.Builders;
 namespace Nancy.Swagger.Services
 {
     [SwaggerApi]
-    public abstract class SwaggerMetadataConverter : ISwaggerMetadataConverter
+    public abstract class SwaggerMetadataProvider : ISwaggerMetadataProvider
     {
         public SwaggerRoot GetSwaggerJson()
         {

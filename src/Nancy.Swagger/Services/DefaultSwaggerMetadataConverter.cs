@@ -6,13 +6,13 @@ using Swagger.ObjectModel;
 namespace Nancy.Swagger.Services
 {
     [SwaggerApi]
-    public class DefaultSwaggerMetadataConverter : SwaggerMetadataConverter
+    public class DefaultSwaggerMetadataProvider : SwaggerMetadataProvider
     {
         private readonly IRouteCacheProvider _routeCacheProvider;
 
         private readonly ISwaggerModelCatalog _modelCatalog;
 
-        public DefaultSwaggerMetadataConverter(
+        public DefaultSwaggerMetadataProvider(
             IRouteCacheProvider routeCacheProvider,
             ISwaggerModelCatalog modelCatalog)
         {

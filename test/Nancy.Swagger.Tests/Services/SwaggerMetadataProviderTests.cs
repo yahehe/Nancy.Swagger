@@ -6,13 +6,13 @@ namespace Nancy.Swagger.Tests.Services
 {
     public class SwaggerMetadataProviderTests
     {
-        private readonly ISwaggerMetadataConverter converter;
+        private readonly ISwaggerMetadataProvider converter;
         private readonly SwaggerMetadataProviderForTesting provider;
 
         public SwaggerMetadataProviderTests()
         {   
             provider = new SwaggerMetadataProviderForTesting();
-            converter = new DefaultSwaggerMetadataConverter(provider);
+            converter = new DefaultSwaggerMetadataProvider(provider);
         }
 
         [Fact]
