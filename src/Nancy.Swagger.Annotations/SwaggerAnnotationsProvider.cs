@@ -114,9 +114,9 @@ namespace Nancy.Swagger.Annotations
         private Tuple<string, PathItem> CreateSwaggerRouteData(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
         {
             var operation = new Operation()
-                            {
-                                OperationId = route.Description.Name
-                            };
+            {
+                OperationId = route.Description.Name
+            };
 
 
             var data = Tuple.Create(route.Description.Path, new PathItem());

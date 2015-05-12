@@ -60,7 +60,7 @@ namespace Nancy.Swagger.Annotations
             return routeId;
         }
 
-        public static RouteId Create(INancyModule module, SwaggerRouteAttribute swaggerRouteAttribute)
+        public static RouteId Create(INancyModule module, RouteAttribute swaggerRouteAttribute)
         {
             var routeId = new RouteId { Module = module };
 

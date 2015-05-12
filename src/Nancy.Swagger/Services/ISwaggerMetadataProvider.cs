@@ -3,7 +3,7 @@
 namespace Nancy.Swagger.Services
 {
     [SwaggerApi]
-    public interface ISwaggerMetadataConverter
+    public interface ISwaggerMetadataProvider
     {
         SwaggerRoot GetSwaggerJson();
     }

@@ -4,7 +4,7 @@ namespace Nancy.Swagger.Modules
 {
     public class SwaggerModule : NancyModule
     {
-        public SwaggerModule(ISwaggerMetadataConverter converter)
+        public SwaggerModule(ISwaggerMetadataProvider converter)
             : base(SwaggerConfig.ResourceListingPath)
         {
             Get["/"] = _ => converter.GetSwaggerJson().ToJson();

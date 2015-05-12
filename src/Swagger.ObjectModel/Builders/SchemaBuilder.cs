@@ -77,7 +77,7 @@ namespace Swagger.ObjectModel.Builders
             {
                 throw new ArgumentException("Expression is not a member access", "expression");
             }
-            
+
             var builder = new SchemaBuilder<TProperty>();
             this.properties.Add(member.Member.Name, builder.DataTypeInstance);
 
@@ -156,7 +156,7 @@ namespace Swagger.ObjectModel.Builders
         public static Schema ToSchema<T>(T modelType)
         {
             var modelProperties = typeof(T).GetProperties();
-            
+
             var schema = new Schema();
 
             foreach (var modelProperty in modelProperties)
@@ -173,12 +173,12 @@ namespace Swagger.ObjectModel.Builders
                 property.Properties = new Dictionary<string, Schema>();
                 schema.Properties.Add(modelProperty.Name, property);
             }
-            
+
         }
 
         private static Schema FromClass<T>(T classType)
         {
-            
+
         }
 
         public static IEnumerable<Schema> ToModel<T>(T modelType, IEnumerable<Schema> knownModels = null)
@@ -210,8 +210,8 @@ namespace Swagger.ObjectModel.Builders
                         .OrderBy(name => name)
                         .ToList();
 
-                
-                var modelproperties = properties.OrderBy(x => x.Name).ToDictionary(x => x.Name, x => ToModel(x.GetType()))
+
+                var modelproperties = properties.OrderBy(x => x.Name).ToDictionary(x => x.Name, x => ToModel(x.GetType()));
 
                 yield return new Model
                 {
