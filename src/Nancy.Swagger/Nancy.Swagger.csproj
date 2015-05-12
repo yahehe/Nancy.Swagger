@@ -54,7 +54,7 @@
     </Compile>
     <Compile Include="ISwaggerModelCatalog.cs" />
     <Compile Include="Modules\SwaggerModule.cs" />
-    <Compile Include="Services\DefaultSwaggerMetadataConverter.cs" />
+    <Compile Include="Services\DefaultSwaggerMetadataProvider.cs" />
     <Compile Include="Services\DefaultSwaggerModelCatalog.cs" />
     <Compile Include="Services\ISwaggerModelDataProvider.cs" />
     <Compile Include="Services\ISwaggerMetadataProvider.cs" />
@@ -68,6 +68,7 @@
     <Compile Include="SwaggerRegistrations.cs" />
     <Compile Include="SwaggerConfig.cs" />
     <Compile Include="SwaggerExtensions.cs" />
+    <Compile Include="Services\SwaggerRouteData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

@@ -18,9 +18,9 @@ namespace Nancy.Swagger.Services
             this.modelCatalog = modelCatalog;
         }
 
-        protected override IDictionary<string, PathItem> RetrieveSwaggerPaths()
+        protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
         {
-            var pathItems = new Dictionary<string, PathItem>();
+            var pathItems = new Dictionary<string, SwaggerRouteData>();
             foreach (var routeDescription in this.routeCacheProvider.GetCache()
                                                              .SelectMany(x => x.Value)
                                                              .Select(x => x.Item2))
@@ -28,14 +28,14 @@ namespace Nancy.Swagger.Services
                 var pathItem = routeDescription.Metadata.Retrieve<PathItem>();
                 if (pathItem != null)
                 {
-                    PathItem entry;
+                    SwaggerRouteData entry;
                     if (pathItems.TryGetValue(routeDescription.Path, out entry))
                     {
-                        pathItems[routeDescription.Path] = entry.Combine(pathItem);
+                        pathItems[routeDescription.Path] = entry.Combine(new SwaggerRouteData(routeDescription.Path, pathItem));
                     }
                     else
                     {
-                        pathItems.Add(routeDescription.Path, pathItem);
+                        pathItems.Add(routeDescription.Path, new SwaggerRouteData(routeDescription.Path, pathItem));
                     }
                 }
             }

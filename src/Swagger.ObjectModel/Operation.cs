@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Swagger.ObjectModel
 {
     using System.Collections.Generic;
@@ -93,7 +92,5 @@ namespace Swagger.ObjectModel
         /// </summary>
         [SwaggerProperty("security")]
         public IDictionary<SecuritySchemes, IEnumerable<string>> SecurityRequirements { get; set; }
-
-        public Type OperationModel { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nancy.Routing;
+using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
 using Swagger.ObjectModel.Builders;
 
@@ -263,7 +264,7 @@ namespace Nancy.Swagger
             }
         }
 
-        public static IEnumerable<Type> GetDistinctModelTypes(this IDictionary<string, PathItem> routeData)
+        public static IEnumerable<Type> GetDistinctModelTypes(this IDictionary<string, SwaggerRouteData> routeData)
         {
             return GetOperationModels(routeData)
                 .Select(GetType)
@@ -281,43 +282,9 @@ namespace Nancy.Swagger
             return type;
         }
 
-        private static IEnumerable<Type> GetOperationModels(IDictionary<string, PathItem> metadata)
+        private static IEnumerable<Type> GetOperationModels(IDictionary<string, SwaggerRouteData> metadata)
         {
-            return metadata
-                .SelectMany(d => ReadOperations(d.Value))
-                .Select(d => d.OperationModel);
-        }
-
-        private static IEnumerable<Operation> ReadOperations(PathItem pathItem)
-        {
-            if (pathItem.Delete != null)
-            {
-                yield return pathItem.Delete;
-            }
-            if (pathItem.Get != null)
-            {
-                yield return pathItem.Get;
-            }
-            if (pathItem.Head != null)
-            {
-                yield return pathItem.Head;
-            }
-            if (pathItem.Options != null)
-            {
-                yield return pathItem.Options;
-            }
-            if (pathItem.Patch != null)
-            {
-                yield return pathItem.Patch;
-            }
-            if (pathItem.Post != null)
-            {
-                yield return pathItem.Post;
-            }
-            if (pathItem.Put != null)
-            {
-                yield return pathItem.Put;
-            }
+            return metadata.SelectMany(d => d.Value.Types.Values);
         }
     }
 }

@@ -20,21 +20,21 @@ namespace Nancy.Swagger.Annotations
             _context = context;
         }
 
-        protected override IDictionary<string, PathItem> RetrieveSwaggerPaths()
+        protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
         {
-            var pathItems = new Dictionary<string, PathItem>();
+            var pathItems = new Dictionary<string, SwaggerRouteData>();
             foreach (var pair in _moduleCatalog
                 .GetAllModules(_context)
                 .SelectMany(ToSwaggerRouteData))
             {
-                PathItem entry;
-                if (pathItems.TryGetValue(pair.Item1, out entry))
+                SwaggerRouteData entry;
+                if (pathItems.TryGetValue(pair.Path, out entry))
                 {
-                    pathItems[pair.Item1] = entry.Combine(pair.Item2);
+                    pathItems[pair.Path] = entry.Combine(pair);
                 }
                 else
                 {
-                    pathItems.Add(pair.Item1, pair.Item2);
+                    pathItems.Add(pair.Path, pair);
                 }
             }
             return pathItems;
@@ -120,7 +120,7 @@ namespace Nancy.Swagger.Annotations
             return parameter;
         }
 
-        private Tuple<string, PathItem> CreateSwaggerRouteData(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
+        private SwaggerRouteData CreateSwaggerRouteData(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
         {
             var operation = new Operation()
             {
@@ -128,30 +128,31 @@ namespace Nancy.Swagger.Annotations
             };
 
 
-            var data = Tuple.Create(route.Description.Path, new PathItem());
+            var data = new SwaggerRouteData(route.Description.Path, new PathItem());
 
+            var method = route.Description.Method.ToHttpMethod();
             switch (route.Description.Method.ToLowerInvariant())
             {
                 case "get":
-                    data.Item2.Get = operation;
+                    data.PathItem.Get = operation;
                     break;
                 case "post":
-                    data.Item2.Post = operation;
+                    data.PathItem.Post = operation;
                     break;
                 case "patch":
-                    data.Item2.Patch = operation;
+                    data.PathItem.Patch = operation;
                     break;
                 case "delete":
-                    data.Item2.Delete = operation;
+                    data.PathItem.Delete = operation;
                     break;
                 case "put":
-                    data.Item2.Put = operation;
+                    data.PathItem.Put = operation;
                     break;
                 case "head":
-                    data.Item2.Head = operation;
+                    data.PathItem.Head = operation;
                     break;
                 case "options":
-                    data.Item2.Options = operation;
+                    data.PathItem.Options = operation;
                     break;
             }
 
@@ -165,13 +166,19 @@ namespace Nancy.Swagger.Annotations
                 return data;
             }
 
+            Type model = null;
             foreach (var attr in handler.GetCustomAttributes<RouteAttribute>())
             {
                 operation.Summary = attr.Summary ?? operation.Summary;
                 operation.Description = attr.Notes ?? operation.Description;
-                operation.OperationModel = attr.Response ?? operation.OperationModel;
+                model = attr.Response ?? model;
                 operation.Consumes = attr.Consumes ?? operation.Consumes;
                 operation.Consumes = attr.Produces ?? operation.Produces;
+            }
+
+            if (model != null)
+            {
+                data.Types.Add(method, model);
             }
 
             operation.Responses = handler.GetCustomAttributes<SwaggerResponseAttribute>()
@@ -201,7 +208,7 @@ namespace Nancy.Swagger.Annotations
             return data;
         }
 
-        private IEnumerable<Tuple<string, PathItem>> ToSwaggerRouteData(INancyModule module)
+        private IEnumerable<SwaggerRouteData> ToSwaggerRouteData(INancyModule module)
         {
             Func<IEnumerable<RouteAttribute>, RouteId> getRouteId = (attrs) =>
             {

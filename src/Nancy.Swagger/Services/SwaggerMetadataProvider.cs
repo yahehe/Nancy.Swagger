@@ -15,13 +15,13 @@ namespace Nancy.Swagger.Services
 
             foreach (var pathItem in this.RetrieveSwaggerPaths())
             {
-                builder.Path(pathItem.Key, pathItem.Value);
+                builder.Path(pathItem.Key, pathItem.Value.PathItem);
             }
 
-            foreach (var model in this.RetrieveSwaggerModels())
-            {
-                //builder.Definition(model.ModelType.Name, model.);
-            }
+            //foreach (var model in this.RetrieveSwaggerModels())
+            //{
+            //    builder.Definition(model.ModelType.Name, model.);
+            //}
 
             builder.Info(new Info()
                          {
@@ -32,7 +32,7 @@ namespace Nancy.Swagger.Services
             return builder.Build();
         }
 
-        protected abstract IDictionary<string, PathItem> RetrieveSwaggerPaths();
+        protected abstract IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths();
 
         protected abstract IList<SwaggerModelData> RetrieveSwaggerModels();
 
