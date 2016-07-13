@@ -272,6 +272,22 @@ namespace Nancy.Swagger
                 .Distinct();
         }
 
+        public static void AddResponseSchema<T>(this OperationBuilder operationBuilder, ISwaggerModelCatalog modelCatalog)
+        {
+            Type t = typeof(T);
+            SwaggerModelData model = modelCatalog.GetModelForType<T>();
+            Schema schema = new Schema(); ;
+            if (model != null)
+            {
+                schema = model.GetSchema();
+            }
+            else if (t.IsPrimitive || t == typeof(string))
+            {
+                schema.Type = t.Name.ToLower();
+            }
+            operationBuilder.Response(r => r.Description("default").Schema(schema));
+        }
+
         private static Type GetType(Type type)
         {
             if (type.IsContainer())
