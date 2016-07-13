@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Swagger.ObjectModel;
 using Swagger.ObjectModel.Builders;
 
@@ -10,21 +11,32 @@ namespace Nancy.Swagger.Services
     [SwaggerApi]
     public abstract class SwaggerMetadataProvider : ISwaggerMetadataProvider
     {
-        private static Info info = new Info()
+        private static Info _info = new Info()
         {
             Title = "No title set",
             Version = "0.1",
             Description = ""
         };
 
-        public static void SetInfo(string title, string version, string desc)
+        private static SecuritySchemeBuilder _securitySchemeBuilder = null;
+        private static string _securitySchemaType = string.Empty;
+
+        public static void SetInfo(string title, string version, string desc, Contact contact = null, string termsOfService = null)
         {
-            info = new Info()
+            _info = new Info()
             {
                 Title = title,
                 Version = version,
-                Description = desc
+                Description = desc,
+                Contact = contact,
+                TermsOfService = termsOfService
             };
+        }
+
+        public static void SetSecuritySchemeBuilder(SecuritySchemeBuilder builder, string type)
+        {
+            _securitySchemeBuilder = builder;
+            _securitySchemaType = type;
         }
 
         public SwaggerRoot GetSwaggerJson()
@@ -41,7 +53,7 @@ namespace Nancy.Swagger.Services
             //    builder.Definition(model.ModelType.Name, model.);
             //}
 
-            builder.Info(info);
+            builder.Info(_info);
             
             foreach (var model in RetrieveSwaggerModels())
             {
@@ -49,6 +61,11 @@ namespace Nancy.Swagger.Services
                 String name = model.ModelType.Name;
                 if (t != model.ModelType) name = t.Name + "[]";
                 builder.Definition(name, model.GetSchema());
+            }
+
+            if (_securitySchemeBuilder != null)
+            {
+                builder.SecurityDefinition(_securitySchemaType, _securitySchemeBuilder.Build());
             }
 
             return builder.Build();
