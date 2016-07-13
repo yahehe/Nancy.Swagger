@@ -15,7 +15,7 @@ namespace Nancy.Swagger
         /// <summary>
         /// The default resource listing path, <c>api-docs</c>.
         /// </summary>
-        public const string DefaultResourceListingPath = "api-docs";
+        public const string DefaultResourceListingPath = null;
 
         static SwaggerConfig()
         {
