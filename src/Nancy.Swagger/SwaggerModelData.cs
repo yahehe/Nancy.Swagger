@@ -71,7 +71,7 @@ namespace Nancy.Swagger
             {
                 s.Type = "object";
                 s.Ref = DefintionsRefLocation + this.ModelType.Name;
-                s.Required = sModel.Required as IList<string>;
+                s.Required = (sModel.Required as IList<string>)?.Select(x => x.ToCamelCase()).ToList();
                 s.Description = sModel.Description;
                 s.Properties = new Dictionary<string, Schema>();
                 foreach (var member in sModel.Properties)

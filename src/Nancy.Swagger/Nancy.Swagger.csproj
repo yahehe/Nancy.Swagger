@@ -55,12 +55,15 @@
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ISwaggerModelCatalog.cs" />
+    <Compile Include="Modules\SwaggerMetadataModule.cs" />
     <Compile Include="Modules\SwaggerModule.cs" />
     <Compile Include="Services\DefaultSwaggerMetadataProvider.cs" />
     <Compile Include="Services\DefaultSwaggerModelCatalog.cs" />
     <Compile Include="Services\ISwaggerModelDataProvider.cs" />
     <Compile Include="Services\ISwaggerMetadataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\RouteUtils\HttpResponseMetadata.cs" />
+    <Compile Include="Services\RouteUtils\SwaggerRouteDescriber.cs" />
     <Compile Include="Services\SwaggerMetadataProvider.cs" />
     <Compile Include="SwaggerApiAttribute.cs" />
     <Compile Include="SwaggerModelData.cs" />

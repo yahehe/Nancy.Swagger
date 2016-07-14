@@ -116,6 +116,8 @@ namespace Nancy.Swagger
                         .OrderBy(name => name)
                         .ToList();
 
+                if (!required.Any()) required = null;
+
                 var modelproperties = modelDataForClassProperty == null
                     ? properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, ToModelProperty)
                     : modelDataForClassProperty.Properties.OrderBy(x => x.Name)
@@ -146,6 +148,8 @@ namespace Nancy.Swagger
                 // TODO: SubTypes and Discriminator
             };
 
+            if (!topLevelModel.Required.Any()) topLevelModel.Required = null;
+            
             yield return topLevelModel;
         }
 
@@ -276,7 +280,7 @@ namespace Nancy.Swagger
         {
             Type t = typeof(T);
             SwaggerModelData model = modelCatalog.GetModelForType<T>();
-            Schema schema = new Schema(); ;
+            Schema schema = new Schema();
             if (model != null)
             {
                 schema = model.GetSchema();
