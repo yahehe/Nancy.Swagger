@@ -52,8 +52,7 @@ namespace Nancy.Swagger
         public Schema GetSchema()
         {
             Schema s = new Schema();
-            IEnumerable<Model> sModels = this.ToModel();
-            Model sModel = sModels.FirstOrDefault();
+            Model sModel = this.ToModel(null, false).FirstOrDefault();
 
             if (sModel == null) return s;
 
@@ -85,8 +84,13 @@ namespace Nancy.Swagger
         private Schema GenerateSchemaForProperty(ModelProperty property)
         {
             Schema schema = new Schema();
-            schema.Type = property.Type.ToCamelCase();
-            if (schema.Type.Equals("array"))
+            schema.Type = property.Type?.ToCamelCase();
+
+            if (schema.Type == null)
+            {
+                schema.Ref = DefintionsRefLocation + property.Ref;
+            }
+            else if (schema.Type.Equals("array"))
             {
                 schema.Items = new Item();
                 if (!string.IsNullOrEmpty(property.Items.Type))
