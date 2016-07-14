@@ -8,5 +8,7 @@ namespace Nancy.Swagger
     public interface ISwaggerModelCatalog : IEnumerable<SwaggerModelData>
     {
         SwaggerModelData GetModelForType<T>();
+        SwaggerModelData AddModel<T>();
+        void AddModels(params Type[] types);
     }
 }

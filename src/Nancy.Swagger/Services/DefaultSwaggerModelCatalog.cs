@@ -14,11 +14,43 @@ namespace Nancy.Swagger.Services
             AddRange(dataProviders.Select(p => p.GetModelData()));
         }
 
+        public SwaggerModelData AddModel<T>()
+        {
+            SwaggerModelData model = SwaggerModelData.ForType<T>(with => { });
+            Add(model);
+            return model;
+        }
+
+        public void AddModels(params Type[] types)
+        {
+            foreach (var t in types)
+            {
+                if (GetModelForType(t, false) == null)
+                {
+                    SwaggerModelData model = new SwaggerModelData(t);
+                    Add(model);
+                }
+            }
+        }
+
         public SwaggerModelData GetModelForType<T>()
         {
             Type t = typeof(T);
+            return GetModelForType(t);
+        }
+
+        private SwaggerModelData GetModelForType(Type t, bool addIfNotSet = true)
+        {
+            if (t.IsPrimitive || t == typeof(string)) return null;
+
             SwaggerModelData model = this.FirstOrDefault(x => x.ModelType == t);
+            if (model == null && addIfNotSet)
+            {
+                AddModels(t);
+                model = this.FirstOrDefault(x => x.ModelType == t);
+            }
             return model;
         }
+            
     }
 }
