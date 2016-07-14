@@ -7,7 +7,7 @@ namespace Nancy.Swagger.Demo.Modules
     {
         public HomeModule()
         {
-            Get["Home", "/"] = _ => "Hello Swagger!";
+            Get["Home", "/"] = _ => Response.AsRedirect("/docs/index.html");
 
             Get["GetUsers", "/users"] = _ => new[] { new User { Name = "Vincent Vega", Age = 45 } };
 

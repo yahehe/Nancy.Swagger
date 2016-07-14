@@ -6,11 +6,11 @@ using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Demo.Modules
 {
-    public class AnotherMetadataModule : SwaggerMetadataModule
+    public class ServiceDetailsMetadataModule : SwaggerMetadataModule
     {
-        public AnotherMetadataModule(ISwaggerModelCatalog modelCatalog) :base (modelCatalog)
+        public ServiceDetailsMetadataModule(ISwaggerModelCatalog modelCatalog) :base (modelCatalog)
         {
-            RouteDescriber.DescribeRoute("AnotherHome", "", "Get Home", new[]
+            RouteDescriber.DescribeRoute("ServiceHome", "", "Get Home", new[]
             {
                 new HttpResponseMetadata {Code = 200, Message = "OK"}
             });

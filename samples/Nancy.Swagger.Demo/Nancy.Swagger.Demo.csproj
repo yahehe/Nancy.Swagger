@@ -84,9 +84,9 @@
     <Compile Include="Models\Address.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Models\ServiceDetails.cs" />
-    <Compile Include="Modules\AnotherMetadataModule.cs" />
+    <Compile Include="Modules\ServiceDetailsMetadataModule.cs" />
     <Compile Include="Modules\HomeMetadataModule.cs" />
-    <Compile Include="Modules\AnotherModule.cs" />
+    <Compile Include="Modules\ServiceDetailsModule.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Role.cs" />
