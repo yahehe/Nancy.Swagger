@@ -278,20 +278,34 @@ namespace Nancy.Swagger
                 .Distinct();
         }
 
-        public static void AddResponseSchema<T>(this OperationBuilder operationBuilder, ISwaggerModelCatalog modelCatalog)
+        public static OperationBuilder AddResponseSchema<T>(this OperationBuilder operationBuilder, ISwaggerModelCatalog modelCatalog)
         {
-            Type t = typeof(T);
-            SwaggerModelData model = modelCatalog.GetModelForType<T>();
-            Schema schema = new Schema();
+            var schema = GetSchema<T>(modelCatalog);
+            operationBuilder.Response(r => r.Description("default").Schema(schema));
+            return operationBuilder;
+        }
+
+        public static BodyParameter AddBodySchema<T>(this BodyParameter bodyParameter, ISwaggerModelCatalog modelCatalog)
+        {
+            var schema = GetSchema<T>(modelCatalog);
+            bodyParameter.Schema = schema;
+            return bodyParameter;
+        }
+
+        private static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog)
+        {
+            var t = typeof (T);
+            var model = modelCatalog.GetModelForType<T>();
+            var schema = new Schema();
             if (model != null)
             {
                 schema = model.GetSchema();
             }
-            else if (t.IsPrimitive || t == typeof(string))
+            else if (t.IsPrimitive || t == typeof (string))
             {
                 schema.Type = t.Name.ToLower();
             }
-            operationBuilder.Response(r => r.Description("default").Schema(schema));
+            return schema;
         }
 
         private static Type GetType(Type type)

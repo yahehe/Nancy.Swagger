@@ -16,10 +16,12 @@ namespace Nancy.Swagger.Modules
     public class SwaggerMetadataModule : MetadataModule<PathItem>
     {
         protected SwaggerRouteDescriber RouteDescriber;
+        protected ISwaggerModelCatalog ModelCatalog;
 
         public SwaggerMetadataModule(ISwaggerModelCatalog modelCatalog)
         {
             RouteDescriber = new SwaggerRouteDescriber(Describe, modelCatalog);
+            ModelCatalog = modelCatalog;
         }
 
     }
