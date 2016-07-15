@@ -75,6 +75,7 @@
     <Compile Include="SwaggerConfig.cs" />
     <Compile Include="SwaggerExtensions.cs" />
     <Compile Include="Services\SwaggerRouteData.cs" />
+    <Compile Include="SwaggerSchemaFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Swagger.ObjectModel\Swagger.ObjectModel.csproj">

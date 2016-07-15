@@ -1,4 +1,5 @@
-﻿using Nancy.Metadata.Modules;
+﻿using System;
+using Nancy.Metadata.Modules;
 using Nancy.Swagger.Demo.Models;
 using Swagger.ObjectModel;
 
@@ -6,8 +7,9 @@ namespace Nancy.Swagger.Demo.Modules
 {
     public class HomeMetadataModule : MetadataModule<PathItem>
     {
-        public HomeMetadataModule()
+        public HomeMetadataModule(ISwaggerModelCatalog modelCatalog)
         {
+            modelCatalog.AddModels(typeof(User), typeof(Address), typeof(Role));
             Describe["GetUsers"] = description => description.AsSwagger(
                 with => with.Operation(
                     op => op.OperationId("GetUsers")

@@ -11,7 +11,6 @@ namespace Nancy.Swagger
     [SwaggerApi]
     public class SwaggerModelData
     {
-        private const string DefintionsRefLocation = "#/definitions/";
 
         public SwaggerModelData(Type type)
         {
@@ -51,60 +50,11 @@ namespace Nancy.Swagger
 
         public Schema GetSchema()
         {
-            Schema s = new Schema();
-            Model sModel = this.ToModel(null, false).FirstOrDefault();
+            var sModel = this.ToModel(null, false).FirstOrDefault();
 
-            if (sModel == null) return s;
-
-            if (typeof (IEnumerable).IsAssignableFrom(this.ModelType))
-            {
-                s.Type = "array";
-                s.Items = new Item();
-                Type t = ModelType;
-                Type subType = t.GetGenericArguments().FirstOrDefault();
-                s.Items.Type = "object";
-                s.Items.Ref = DefintionsRefLocation + subType?.Name;
-                s.Ref = DefintionsRefLocation + subType?.Name + "[]";
-            }
-            else
-            {
-                s.Type = "object";
-                s.Ref = DefintionsRefLocation + this.ModelType.Name;
-                s.Required = (sModel.Required as IList<string>)?.Select(x => x.ToCamelCase()).ToList();
-                s.Description = sModel.Description;
-                s.Properties = new Dictionary<string, Schema>();
-                foreach (var member in sModel.Properties)
-                {
-                    s.Properties.Add(member.Key.ToCamelCase(), GenerateSchemaForProperty(member.Value));
-                }
-            }
-            return s;
-        }
-
-        private Schema GenerateSchemaForProperty(ModelProperty property)
-        {
-            Schema schema = new Schema();
-            schema.Type = property.Type?.ToCamelCase();
-
-            if (schema.Type == null)
-            {
-                schema.Ref = DefintionsRefLocation + property.Ref;
-            }
-            else if (schema.Type.Equals("array"))
-            {
-                schema.Items = new Item();
-                if (!string.IsNullOrEmpty(property.Items.Type))
-                {
-                    schema.Items.Type = property.Items.Type;
-                }
-                else
-                {
-                    schema.Items.Type = "object";
-                    schema.Items.Ref = DefintionsRefLocation + property.Items.Ref;
-                }
-
-            }
-            return schema;
+            if (sModel == null) return new Schema();
+            
+            return sModel.CreateSchema(ModelType);
         }
     }
 }
