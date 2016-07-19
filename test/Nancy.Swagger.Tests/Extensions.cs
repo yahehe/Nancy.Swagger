@@ -1,6 +1,5 @@
 ﻿using Should;
 using Swagger.ObjectModel;
-using Swagger.ObjectModel.ApiDeclaration;
 
 namespace Nancy.Swagger.Tests
 {
@@ -8,7 +7,7 @@ namespace Nancy.Swagger.Tests
     {
         public static void ShouldEqual(this DataType actual, DataType expected, string userMessage = null)
         {
-            actual.DefaultValue.ShouldEqual(expected.DefaultValue, userMessage.Append("DefaultValue"));
+            actual.Default.ShouldEqual(expected.Default, userMessage.Append("Default"));
             actual.Enum.ShouldEqual(expected.Enum, userMessage.Append("Enum"));
             actual.Format.ShouldEqual(expected.Format, userMessage.Append("Format"));
             actual.Items.ShouldEqual(expected.Items, userMessage.Append("Items"));
@@ -19,31 +18,6 @@ namespace Nancy.Swagger.Tests
             actual.UniqueItems.ShouldEqual(expected.UniqueItems, userMessage.Append("UniqueItems"));
         }
 
-        public static void ShouldEqual(this Parameter actual, Parameter expected, string userMessage = null)
-        {
-            (actual as DataType).ShouldEqual(expected, userMessage);
-
-            actual.Description.ShouldEqual(expected.Description, userMessage.Append("DefaultValue"));
-            actual.Name.ShouldEqual(expected.Name, userMessage.Append("Name"));
-            actual.ParamType.ShouldEqual(expected.ParamType, userMessage.Append("ParamType"));
-            actual.Required.ShouldEqual(expected.Required, userMessage.Append("Required"));
-        }
-
-        public static void ShouldEqual(this Operation actual, Operation expected, string userMessage = null)
-        {
-            (actual as DataType).ShouldEqual(expected, userMessage);
-
-            actual.Authorizations.ShouldEqual(expected.Authorizations, userMessage.Append("Authorizations"));
-            actual.Consumes.ShouldEqual(expected.Consumes, userMessage.Append("Consumes"));
-            actual.Deprecated.ShouldEqual(expected.Deprecated, userMessage.Append("Deprecated"));
-            actual.Method.ShouldEqual(expected.Method, userMessage.Append("Method"));
-            actual.Notes.ShouldEqual(expected.Notes, userMessage.Append("Notes"));
-            actual.Nickname.ShouldEqual(expected.Nickname, userMessage.Append("Nickname"));
-            actual.Parameters.ShouldEqual(expected.Parameters, userMessage.Append("Parameters"));
-            actual.Produces.ShouldEqual(expected.Produces, userMessage.Append("Produces"));
-            actual.Summary.ShouldEqual(expected.Summary, userMessage.Append("Summary"));
-        }
-
         public static void ShouldEqual(this ModelProperty actual, ModelProperty expected, string userMessage = null)
         {
             (actual as DataType).ShouldEqual(expected, userMessage);
@@ -51,7 +25,7 @@ namespace Nancy.Swagger.Tests
             actual.Description.ShouldEqual(expected.Description, userMessage.Append("Description"));
         }
 
-        public static void ShouldEqual(this Items actual, Items expected, string userMessage = null)
+        public static void ShouldEqual(this Item actual, Item expected, string userMessage = null)
         {
             if (actual == null)
             {

@@ -1,5 +1,5 @@
-﻿using Swagger.ObjectModel.ApiDeclaration;
-using System;
+﻿using System;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations.Attributes
 {

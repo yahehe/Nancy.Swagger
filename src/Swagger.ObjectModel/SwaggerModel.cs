@@ -4,19 +4,40 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using Swagger.ObjectModel.Attributes;
+
 using Swagger.ObjectModel.Reflection;
 
 namespace Swagger.ObjectModel
 {
+    using Swagger.ObjectModel.Attributes;
+
     /// <summary>
-    /// The base class for all Swagger models with logic
-    /// to serialize it according to the Swagger schema.
+    /// The base class for all Swagger models with logic to serialize it according to the Swagger schema.
     /// </summary>
     [SwaggerData]
     public class SwaggerModel
     {
         private static readonly IJsonSerializerStrategy SerializerStrategy = new SwaggerSerializerStrategy();
+
+        /// <summary>
+        /// Gets or sets the references to a globally defined object
+        /// </summary>
+        /// <remarks>
+        /// The value MUST be a model's id.
+        /// </remarks>
+        [SwaggerProperty("$ref")]
+        public string Ref { get; set; }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>
+        /// A string that represents the current object.
+        /// </returns>
+        public override string ToString()
+        {
+            return this.ToJson();
+        }
 
         /// <summary>
         /// Returns a valid JSON representation of
@@ -105,7 +126,7 @@ namespace Swagger.ObjectModel
             private static dynamic ToObject(IDictionary source)
             {
                 var expando = new ExpandoObject();
-                var expandoCollection = (ICollection<KeyValuePair<string, object>>) expando;
+                var expandoCollection = (ICollection<KeyValuePair<string, object>>)expando;
 
                 foreach (string key in source.Keys)
                 {

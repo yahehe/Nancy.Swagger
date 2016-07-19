@@ -53,9 +53,9 @@
     <Compile Include="..\..\etc\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ApiDeclaration\ModelPropertyTests.cs" />
     <Compile Include="SwaggerPropertyConventionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SwaggerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Swagger.ObjectModel\Swagger.ObjectModel.csproj">

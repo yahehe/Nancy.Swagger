@@ -1,11 +1,176 @@
 ﻿{
-    "swaggerVersion": "1.2",
-    "apis": [
-        {
-            "path": "/api-docs"
+    "swagger": "2.0",
+    "info": {
+        "title": "No title set",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api-docs": {
+            "get": {
+                "summary": "Warning: no annotated method found for this route",
+                "description": "[example]",
+                "operationId": ""
+            },
+            "parameters": []
         },
-        {
-            "path": "/testroutes"
+        "/testroutes/anonymoushandler": {
+            "get": {
+                "summary": "Warning: no annotated method found for this route",
+                "description": "[example]",
+                "operationId": ""
+            },
+            "parameters": []
+        },
+        "/testroutes/not-annotated/get": {
+            "get": {
+                "summary": "Warning: no annotated method found for this route",
+                "description": "[example]",
+                "operationId": ""
+            },
+            "parameters": []
+        },
+        "/testroutes/strings": {
+            "get": {
+                "summary": "Some summary",
+                "description": "Some notes",
+                "operationId": "",
+                "parameters": [],
+                "responses": {}
+            },
+            "parameters": []
+        },
+        "/testroutes/strings/{id}": {
+            "get": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Query"
+                    }
+                ],
+                "responses": {}
+            },
+            "parameters": []
+        },
+        "/testroutes/models": {
+            "get": {
+                "operationId": "",
+                "parameters": [],
+                "responses": {}
+            },
+            "parameters": []
+        },
+        "/testroutes/models/{id}": {
+            "get": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {}
+            },
+            "put": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "testModel",
+                        "in": "body"
+                    }
+                ],
+                "responses": {}
+            },
+            "post": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "testModel",
+                        "in": "body",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Everything OK"
+                    },
+                    "500": {
+                        "description": "InternalServerError"
+                    },
+                    "404": {
+                        "description": "NotFound"
+                    },
+                    "418": {
+                        "description": "I'm a teapot"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {}
+            },
+            "options": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path"
+                    }
+                ],
+                "responses": {}
+            },
+            "patch": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "testModel",
+                        "in": "body"
+                    }
+                ],
+                "responses": {}
+            },
+            "parameters": []
+        },
+        "/testroutes/namedroute": {
+            "get": {
+                "operationId": "GetNamedRoute",
+                "parameters": [],
+                "responses": {}
+            },
+            "parameters": []
+        },
+        "/testroutes/allowmultipleparam": {
+            "get": {
+                "operationId": "",
+                "parameters": [
+                    {
+                        "name": "ids",
+                        "in": "query"
+                    }
+                ],
+                "responses": {}
+            },
+            "parameters": []
+        },
+        "/testroutes/model-with-duplicate-typename": {
+            "get": {
+                "operationId": "",
+                "parameters": [],
+                "responses": {}
+            },
+            "parameters": []
         }
-    ]
+    }
 }

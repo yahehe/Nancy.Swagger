@@ -1,33 +1,33 @@
-﻿using Swagger.ObjectModel.ApiDeclaration;
-using System;
+﻿using System;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations.Attributes
 {
     [AttributeUsage(AttributeTargets.Parameter, Inherited = true, AllowMultiple = true)]
     public class RouteParamAttribute : SwaggerDataTypeAttribute
     {
-        private ParameterType? _paramType;
+        private ParameterIn? paramIn;
 
         public RouteParamAttribute()
             : base(null)
         {
         }
 
-        public RouteParamAttribute(ParameterType paramType, string name = null)
+        public RouteParamAttribute(ParameterIn paramIn, string name = null)
             : base(name)
         {
-            ParamType = paramType;
+            this.ParamIn = paramIn;
         }
 
-        public ParameterType ParamType
+        public ParameterIn ParamIn
         {
-            get { return _paramType.GetValueOrDefault(); }
-            set { _paramType = value; }
+            get { return this.paramIn.GetValueOrDefault(); }
+            set { this.paramIn = value; }
         }
 
-        public ParameterType? GetNullableParamType()
+        public ParameterIn? GetNullableParamType()
         {
-            return _paramType;
+            return this.paramIn;
         }
     }
 }
