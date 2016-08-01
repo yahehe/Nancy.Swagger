@@ -63,6 +63,11 @@ namespace Nancy.Swagger.Services
                 builder.Definition(name, model.GetSchema());
             }
 
+            foreach (var tag in RetrieveSwaggerTags())
+            {
+                builder.Tag(tag);
+            }
+
             if (_securitySchemeBuilder != null)
             {
                 builder.SecurityDefinition(_securitySchemaType, _securitySchemeBuilder.Build());
@@ -74,6 +79,8 @@ namespace Nancy.Swagger.Services
         protected abstract IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths();
 
         protected abstract IList<SwaggerModelData> RetrieveSwaggerModels();
+
+        protected abstract IList<Tag> RetrieveSwaggerTags();
 
         private static Type GetType(Type type)
         {

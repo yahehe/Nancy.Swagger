@@ -58,7 +58,10 @@
     <Compile Include="Modules\SwaggerMetadataModule.cs" />
     <Compile Include="Modules\SwaggerModule.cs" />
     <Compile Include="Services\DefaultSwaggerMetadataProvider.cs" />
+    <Compile Include="Services\DefaultSwaggerTagCatalog.cs" />
     <Compile Include="Services\DefaultSwaggerModelCatalog.cs" />
+    <Compile Include="Services\ISwaggerTagProvider.cs" />
+    <Compile Include="Services\ISwaggerTagCatalog.cs" />
     <Compile Include="Services\ISwaggerModelDataProvider.cs" />
     <Compile Include="Services\ISwaggerMetadataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

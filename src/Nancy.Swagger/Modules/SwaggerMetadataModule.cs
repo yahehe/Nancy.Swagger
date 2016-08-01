@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nancy.Metadata.Modules;
+using Nancy.Swagger.Services;
 using Nancy.Swagger.Services.RouteUtils;
 using Swagger.ObjectModel;
 
@@ -17,11 +18,13 @@ namespace Nancy.Swagger.Modules
     {
         protected SwaggerRouteDescriber RouteDescriber;
         protected ISwaggerModelCatalog ModelCatalog;
+        protected ISwaggerTagCatalog TagCatalog;
 
-        public SwaggerMetadataModule(ISwaggerModelCatalog modelCatalog)
+        public SwaggerMetadataModule(ISwaggerModelCatalog modelCatalog, ISwaggerTagCatalog tagCatalog)
         {
-            RouteDescriber = new SwaggerRouteDescriber(Describe, modelCatalog);
+            RouteDescriber = new SwaggerRouteDescriber(Describe, modelCatalog, tagCatalog);
             ModelCatalog = modelCatalog;
+            TagCatalog = tagCatalog;
         }
 
     }
