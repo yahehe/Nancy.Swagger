@@ -49,6 +49,12 @@ namespace Nancy.Swagger.Annotations
                     .ToList();
         }
 
+        protected override IList<Tag> RetrieveSwaggerTags()
+        {
+            //Tag list is empty for now
+            return new List<Tag>();
+        }
+
         private SwaggerModelData CreateSwaggerModelData(Type type)
         {
             // Only use properties which have a pulbic getter and setter
