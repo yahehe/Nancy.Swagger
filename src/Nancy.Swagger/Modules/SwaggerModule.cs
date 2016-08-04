@@ -8,7 +8,8 @@ namespace Nancy.Swagger.Modules
         public SwaggerModule(ISwaggerMetadataProvider converter)
             : base(SwaggerConfig.ResourceListingPath)
         {
-            Get["/"] = _ => converter.GetSwaggerJson().ToJson();
+            Get["/api-docs"] = _ => converter.GetSwaggerJson().ToJson();
+            Get["/swagger.json"] = _ => converter.GetSwaggerJson().ToJson();
         }
     }
 }

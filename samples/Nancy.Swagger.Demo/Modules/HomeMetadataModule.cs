@@ -1,16 +1,20 @@
-﻿using Nancy.Metadata.Modules;
+﻿using System;
+using Nancy.Metadata.Modules;
 using Nancy.Swagger.Demo.Models;
+using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Demo.Modules
 {
     public class HomeMetadataModule : MetadataModule<PathItem>
     {
-        public HomeMetadataModule()
+        public HomeMetadataModule(ISwaggerModelCatalog modelCatalog)
         {
+            modelCatalog.AddModels(typeof(User), typeof(Address), typeof(Role));
             Describe["GetUsers"] = description => description.AsSwagger(
                 with => with.Operation(
                     op => op.OperationId("GetUsers")
+                            .Tag("Users")
                             .Summary("The list of users")
                             .Description("This returns a list of users from our awesome app")
                             .Response(r => r.Schema<User>().Description("The list of users"))));
@@ -23,6 +27,7 @@ namespace Nancy.Swagger.Demo.Modules
                     with.Operation(
                         op =>
                         op.OperationId("PostUsers")
+                          .Tag("Users")
                           .Summary("Create a User")
                           .Description("Creates a user with the shown schema for our awesome app")
                           .Response(201, r => r.Description("Created a User"))

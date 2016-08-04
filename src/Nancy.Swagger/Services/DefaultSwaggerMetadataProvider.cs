@@ -12,10 +12,13 @@ namespace Nancy.Swagger.Services
 
         private readonly ISwaggerModelCatalog modelCatalog;
 
-        public DefaultSwaggerMetadataProvider(IRouteCacheProvider routeCacheProvider, ISwaggerModelCatalog modelCatalog)
+        private readonly ISwaggerTagCatalog tagCatalog;
+
+        public DefaultSwaggerMetadataProvider(IRouteCacheProvider routeCacheProvider, ISwaggerModelCatalog modelCatalog, ISwaggerTagCatalog tagCatalog)
         {
             this.routeCacheProvider = routeCacheProvider;
             this.modelCatalog = modelCatalog;
+            this.tagCatalog = tagCatalog;
         }
 
         protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
@@ -46,6 +49,11 @@ namespace Nancy.Swagger.Services
         protected override IList<SwaggerModelData> RetrieveSwaggerModels()
         {
             return this.modelCatalog.ToList();
+        }
+
+        protected override IList<Tag> RetrieveSwaggerTags()
+        {
+            return this.tagCatalog.ToList();
         }
     }
 }

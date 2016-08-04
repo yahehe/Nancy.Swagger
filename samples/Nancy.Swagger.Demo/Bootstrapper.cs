@@ -1,4 +1,6 @@
 ﻿using Nancy.Conventions;
+using Nancy.Swagger.Services;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Demo
 {
@@ -7,6 +9,15 @@ namespace Nancy.Swagger.Demo
 
     public class Bootstrapper : DefaultNancyBootstrapper
     {
+        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        {
+            SwaggerMetadataProvider.SetInfo("Nancy Swagger Example", "v0", "Our awesome service", new Contact()
+            {
+                EmailAddress = "exampleEmail@example.com"
+            });
+            base.ApplicationStartup(container, pipelines);
+        }
+
         protected override void ConfigureConventions(NancyConventions nancyConventions)
         {
             nancyConventions.StaticContentsConventions.AddDirectory("docs", "swagger-ui");

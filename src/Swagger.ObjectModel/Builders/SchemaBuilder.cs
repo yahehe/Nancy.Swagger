@@ -8,6 +8,9 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+
 namespace Swagger.ObjectModel.Builders
 {
     using System;
@@ -59,8 +62,24 @@ namespace Swagger.ObjectModel.Builders
                 base.DataTypeInstance.AllOf = this.allOf;
                 base.DataTypeInstance.Required = this.required;
                 base.DataTypeInstance.Description = this.description;
+                
+                //Handles Swagger Validation, which requires at least one item in these lists.
+                Schema schema = base.DataTypeInstance;
+                if (!schema.AllOf.Any()) schema.AllOf = null;
+                if (!schema.Required.Any()) schema.Required = null;
+                if (!schema.Properties.Any()) schema.Properties = null;
 
-                return base.DataTypeInstance;
+                //Temp fix to allow {builder}.Schema<T> calls in MetadataModules to automatically point to definition models in /swagger.json.
+                Type modelType = typeof (TModel);
+                if (modelType.IsPrimitive || modelType == typeof (string))
+                {
+                    schema.Type = schema.Type ?? modelType.Name;
+                }
+                else
+                {
+                    schema.Ref = schema.Ref ?? "#/definitions/" + modelType.Name;
+                }
+                return schema;
             }
         }
 

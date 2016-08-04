@@ -84,50 +84,54 @@ namespace Nancy.Swagger
             return dataType;
         }
 
-        public static IEnumerable<Model> ToModel(this SwaggerModelData model, IEnumerable<SwaggerModelData> knownModels = null)
+        public static IEnumerable<Model> ToModel(this SwaggerModelData model, IEnumerable<SwaggerModelData> knownModels = null, bool getSubModels = true)
         {
             var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum && !x.Type.IsGenericType);
 
             var modelsData = knownModels ?? Enumerable.Empty<SwaggerModelData>();
-
-            foreach (var swaggerModelPropertyData in classProperties)
+            if (getSubModels)
             {
-                var properties = GetPropertiesFromType(swaggerModelPropertyData.Type);
-
-                var modelDataForClassProperty =
-                    modelsData.FirstOrDefault(x => x.ModelType == swaggerModelPropertyData.Type);
-
-                var id = modelDataForClassProperty == null
-                    ? swaggerModelPropertyData.Type.Name
-                    : SwaggerConfig.ModelIdConvention(modelDataForClassProperty.ModelType);
-
-                var description = modelDataForClassProperty == null
-                    ? swaggerModelPropertyData.Description
-                    : modelDataForClassProperty.Description;
-
-                var required = modelDataForClassProperty == null
-                    ? properties.Where(p => p.Required || p.Type.IsImplicitlyRequired())
-                        .Select(p => p.Name)
-                        .OrderBy(name => name)
-                        .ToList()
-                    : modelDataForClassProperty.Properties
-                        .Where(p => p.Required || p.Type.IsImplicitlyRequired())
-                        .Select(p => p.Name)
-                        .OrderBy(name => name)
-                        .ToList();
-
-                var modelproperties = modelDataForClassProperty == null
-                    ? properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, ToModelProperty)
-                    : modelDataForClassProperty.Properties.OrderBy(x => x.Name)
-                        .ToDictionary(p => p.Name, ToModelProperty);
-
-                yield return new Model
+                foreach (var swaggerModelPropertyData in classProperties)
                 {
-                    Id = id,
-                    Description = description,
-                    Required = required,
-                    Properties = modelproperties
-                };
+                    var properties = GetPropertiesFromType(swaggerModelPropertyData.Type);
+
+                    var modelDataForClassProperty =
+                        modelsData.FirstOrDefault(x => x.ModelType == swaggerModelPropertyData.Type);
+
+                    var id = modelDataForClassProperty == null
+                        ? swaggerModelPropertyData.Type.Name
+                        : SwaggerConfig.ModelIdConvention(modelDataForClassProperty.ModelType);
+
+                    var description = modelDataForClassProperty == null
+                        ? swaggerModelPropertyData.Description
+                        : modelDataForClassProperty.Description;
+
+                    var required = modelDataForClassProperty == null
+                        ? properties.Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                            .Select(p => p.Name)
+                            .OrderBy(name => name)
+                            .ToList()
+                        : modelDataForClassProperty.Properties
+                            .Where(p => p.Required || p.Type.IsImplicitlyRequired())
+                            .Select(p => p.Name)
+                            .OrderBy(name => name)
+                            .ToList();
+
+                    if (!required.Any()) required = null;
+
+                    var modelproperties = modelDataForClassProperty == null
+                        ? properties.OrderBy(x => x.Name).ToDictionary(p => p.Name, ToModelProperty)
+                        : modelDataForClassProperty.Properties.OrderBy(x => x.Name)
+                            .ToDictionary(p => p.Name, ToModelProperty);
+
+                    yield return new Model
+                    {
+                        Id = id,
+                        Description = description,
+                        Required = required,
+                        Properties = modelproperties
+                    };
+                }
             }
 
             var topLevelModel = new Model
@@ -146,6 +150,8 @@ namespace Nancy.Swagger
                 // TODO: SubTypes and Discriminator
             };
 
+            if (!topLevelModel.Required.Any()) topLevelModel.Required = null;
+            
             yield return topLevelModel;
         }
 
@@ -270,6 +276,36 @@ namespace Nancy.Swagger
                 .Select(GetType)
                 .Where(type => !Primitive.IsPrimitive(type))
                 .Distinct();
+        }
+
+        public static OperationBuilder AddResponseSchema<T>(this OperationBuilder operationBuilder, ISwaggerModelCatalog modelCatalog)
+        {
+            var schema = GetSchema<T>(modelCatalog);
+            operationBuilder.Response(r => r.Description("default").Schema(schema));
+            return operationBuilder;
+        }
+
+        public static BodyParameter AddBodySchema<T>(this BodyParameter bodyParameter, ISwaggerModelCatalog modelCatalog)
+        {
+            var schema = GetSchema<T>(modelCatalog);
+            bodyParameter.Schema = schema;
+            return bodyParameter;
+        }
+
+        private static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog)
+        {
+            var t = typeof (T);
+            var model = modelCatalog.GetModelForType<T>();
+            var schema = new Schema();
+            if (model != null)
+            {
+                schema = model.GetSchema();
+            }
+            else if (t.IsPrimitive || t == typeof (string))
+            {
+                schema.Type = t.Name.ToLower();
+            }
+            return schema;
         }
 
         private static Type GetType(Type type)
