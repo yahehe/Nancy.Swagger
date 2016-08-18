@@ -43,6 +43,20 @@ namespace Nancy.Swagger.Demo.Modules
                 customerSubTag
             });
 
+            RouteDescriber.DescribeRouteWithParams("GetCustomer", "", "Get Customer", new HttpResponseMetadata[] 
+            {
+                new HttpResponseMetadata<ServiceCustomer> {Code = 200, Message = "OK"},
+                new HttpResponseMetadata<IEnumerable<ServiceCustomer>> {Code = 202, Message = "Multiple Customers Found"},
+                new HttpResponseMetadata {Code = 404, Message = "No Customers Found"},
+
+            }, new[]
+            {
+                new Parameter{Name = "name", In = ParameterIn.Path, Required = true, Description = "The customer's name", Default = "Jack", Type = "string" }
+            }, new[]
+            {
+                customerSubTag
+            });
+
             RouteDescriber.DescribeRouteWithParams<ServiceCustomer>("PostNewCustomer", "", "Add a new customer", new[]
             {
                 new HttpResponseMetadata { Code = 200, Message = "Customer Added"},
