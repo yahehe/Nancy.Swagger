@@ -55,7 +55,15 @@ namespace Nancy.Swagger.Services.RouteUtils
                     {
                         foreach (var metadata in responsesMetadatas)
                         {
-                            op.Response(metadata.Code, r => r.Description(string.IsNullOrEmpty(metadata.Message) ? "N/A" : metadata.Message));
+                            var schema = metadata.GetSchema(_modelCatalog);
+                            if (schema != null)
+                            {
+                                op.Response(metadata.Code, r => r.Description(string.IsNullOrEmpty(metadata.Message) ? "N/A" : metadata.Message).Schema(schema));
+                            }
+                            else
+                            {
+                                op.Response(metadata.Code, r => r.Description(string.IsNullOrEmpty(metadata.Message) ? "N/A" : metadata.Message));
+                            }
                         }
                     }
 

@@ -292,7 +292,7 @@ namespace Nancy.Swagger
             return bodyParameter;
         }
 
-        private static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog)
+        public static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog)
         {
             var t = typeof (T);
             var model = modelCatalog.GetModelForType<T>();

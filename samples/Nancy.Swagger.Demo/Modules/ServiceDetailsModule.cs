@@ -22,13 +22,15 @@ namespace Nancy.Swagger.Demo.Modules
                     new ServiceCustomer() {CustomerName = "Jack"},
                     new ServiceCustomer() {CustomerName = "Jill"}
                 }
-            } ;
+            };
 
             Get["GetCustomers", "/customers"] = _ => new[]
             {
                 new ServiceCustomer() {CustomerName = "Jack"},
                 new ServiceCustomer() {CustomerName = "Jill"}
             };
+
+            Get["GetCustomer", "/customers/{name}"] = _ => new ServiceCustomer() {CustomerName = "Jack"};
 
             Post["PostNewCustomer", "/customer/{service}"] = parameters =>
             {
