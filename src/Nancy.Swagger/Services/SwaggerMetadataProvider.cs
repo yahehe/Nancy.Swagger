@@ -18,8 +18,7 @@ namespace Nancy.Swagger.Services
             Description = ""
         };
 
-        private static SecuritySchemeBuilder _securitySchemeBuilder = null;
-        private static string _securitySchemaType = string.Empty;
+        private static IDictionary<string, SecuritySchemeBuilder> _securitySchemes;
 
         public static void SetInfo(string title, string version, string desc, Contact contact = null, string termsOfService = null)
         {
@@ -33,10 +32,25 @@ namespace Nancy.Swagger.Services
             };
         }
 
-        public static void SetSecuritySchemeBuilder(SecuritySchemeBuilder builder, string type)
+        public static void AddSecuritySchemeBuilder(SecuritySchemeBuilder builder, string name)
         {
-            _securitySchemeBuilder = builder;
-            _securitySchemaType = type;
+            if (_securitySchemes == null)
+            {
+                _securitySchemes = new Dictionary<string, SecuritySchemeBuilder>();
+            }
+
+            if (_securitySchemes.ContainsKey(name))
+            {
+                _securitySchemes.Remove(name);
+            }
+
+            _securitySchemes.Add(name, builder);
+        }
+
+        public static void SetSecuritySchemeBuilder(SecuritySchemeBuilder builder, string name)
+        {
+            _securitySchemes = null;
+            AddSecuritySchemeBuilder(builder, name);
         }
 
         public SwaggerRoot GetSwaggerJson()
@@ -68,9 +82,10 @@ namespace Nancy.Swagger.Services
                 builder.Tag(tag);
             }
 
-            if (_securitySchemeBuilder != null)
+
+            foreach (var securityScheme in _securitySchemes)
             {
-                builder.SecurityDefinition(_securitySchemaType, _securitySchemeBuilder.Build());
+                builder.SecurityDefinition(securityScheme.Key, securityScheme.Value.Build());
             }
 
             return builder.Build();
