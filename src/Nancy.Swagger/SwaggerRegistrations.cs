@@ -8,7 +8,7 @@ namespace Nancy.Swagger
     {
         public SwaggerRegistrations()
         {
-            RegisterWithDefault<ISwaggerMetadataProvider>(typeof(DefaultSwaggerMetadataProvider));
+            //RegisterWithDefault<ISwaggerMetadataProvider>(typeof(DefaultSwaggerMetadataProvider));
             RegisterWithDefault<ISwaggerMetadataConverter>(typeof(DefaultSwaggerMetadataConverter));
             RegisterWithDefault<ISwaggerModelCatalog>(typeof(DefaultSwaggerModelCatalog));
             RegisterAll<ISwaggerModelDataProvider>();

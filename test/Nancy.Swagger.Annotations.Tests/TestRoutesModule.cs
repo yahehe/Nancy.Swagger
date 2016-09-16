@@ -103,10 +103,10 @@ namespace Nancy.Swagger.Annotations.Tests
         }
 
         [Route(HttpMethod.Post, "/models/{id}")]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.ImATeapot, "I'm a teapot")]
-        [SwaggerResponse(HttpStatusCode.InternalServerError, Model = typeof(string))]
-        [SwaggerResponse(HttpStatusCode.OK, Message = "Everything OK", Model = typeof(TestModel))] 
+        [Response(HttpStatusCode.NotFound)]
+        [Response(HttpStatusCode.ImATeapot, "I'm a teapot")]
+        [Response(HttpStatusCode.InternalServerError, Model = typeof(string))]
+        [Response(HttpStatusCode.OK, Message = "Everything OK", Model = typeof(TestModel))] 
         private dynamic PostModel(
             [RouteParam(ParameterType.Body, Required = true)] TestModel testModel
         )
