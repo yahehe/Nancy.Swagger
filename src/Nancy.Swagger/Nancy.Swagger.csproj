@@ -70,6 +70,7 @@
     <Compile Include="Services\RouteUtils\SwaggerRouteDescriber.cs" />
     <Compile Include="Services\SwaggerMetadataProvider.cs" />
     <Compile Include="SwaggerApiAttribute.cs" />
+    <Compile Include="SwaggerTypeMapping.cs" />
     <Compile Include="SwaggerModelData.cs" />
     <Compile Include="SwaggerModelDataBuilder.cs" />
     <Compile Include="SwaggerModelPropertyData.cs" />
