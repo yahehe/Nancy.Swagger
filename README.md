@@ -1,4 +1,4 @@
-# Nancy.Swagger [![Build status](https://ci.appveyor.com/api/projects/status/e2lguy45ws6uilb7)](https://ci.appveyor.com/project/khellang/nancy-swagger)
+# Nancy.Swagger [![Build status](https://ci.appveyor.com/api/projects/status/jm2q8t8y4u18n03r)](https://ci.appveyor.com/project/yahehe/nancy-swagger)
 
 Nancy plugin for generated API documentation in Swagger format.
 
