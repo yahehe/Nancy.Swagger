@@ -10,7 +10,9 @@ namespace Nancy.Swagger
         {
             RegisterWithDefault<ISwaggerMetadataProvider>(typeof(DefaultSwaggerMetadataProvider));
             RegisterWithDefault<ISwaggerModelCatalog>(typeof(DefaultSwaggerModelCatalog));
+            RegisterWithDefault<ISwaggerTagCatalog>(typeof(DefaultSwaggerTagCatalog));
             RegisterAll<ISwaggerModelDataProvider>();
+            RegisterAll<ISwaggerTagProvider>();
         }
     }
 }

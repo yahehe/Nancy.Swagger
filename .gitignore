@@ -8,6 +8,7 @@
 *.suo
 *.user
 *.sln.docstates
+*.vs
 
 # Build results
 [Dd]ebug/
@@ -211,3 +212,5 @@ $RECYCLE.BIN/
 
 
 swagger-ui/
+
+*FodyWeavers.xml

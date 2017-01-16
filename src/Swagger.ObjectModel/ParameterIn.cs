@@ -35,7 +35,7 @@ namespace Swagger.ObjectModel
         /// <summary>
         /// Denotes a form parameter.
         /// </summary>
-        [SwaggerEnumValue("form")]
+        [SwaggerEnumValue("formData")]
         Form
     }
 }

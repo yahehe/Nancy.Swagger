@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Swagger.ObjectModel;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Nancy.Swagger
 {
     [SwaggerApi]
     public class SwaggerModelData
     {
+
         public SwaggerModelData(Type type)
         {
             ModelType = type;
@@ -41,6 +46,15 @@ namespace Nancy.Swagger
                     Name = property.Name,
                     Type = property.PropertyType
                 });
+        }
+
+        public Schema GetSchema()
+        {
+            var sModel = this.ToModel(null, false).FirstOrDefault();
+
+            if (sModel == null) return new Schema();
+            
+            return sModel.CreateSchema(ModelType);
         }
     }
 }
