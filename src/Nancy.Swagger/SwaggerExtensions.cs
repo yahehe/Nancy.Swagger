@@ -32,6 +32,11 @@ namespace Nancy.Swagger
         {
             var dataType = new T();
 
+            if (SwaggerTypeMapping.IsMappedType(type))
+            {
+                type = SwaggerTypeMapping.GetMappedType(type);
+            }
+
             if (type == null)
             {
                 dataType.Type = "void";
