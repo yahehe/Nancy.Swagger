@@ -18,7 +18,7 @@ namespace Nancy.Swagger.Services
             Description = ""
         };
 
-        private static IDictionary<string, SecuritySchemeBuilder> _securitySchemes;
+        private static IDictionary<string, SecuritySchemeBuilder> _securitySchemes = new Dictionary<string, SecuritySchemeBuilder>();
 
         public static void SetInfo(string title, string version, string desc, Contact contact = null, string termsOfService = null)
         {

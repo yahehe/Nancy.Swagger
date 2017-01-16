@@ -129,7 +129,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>xcopy "$(SolutionDir)lib\swagger-ui\dist" "$(ProjectDir)swagger-ui" /S /I /Y</PreBuildEvent>
+    <PreBuildEvent>xcopy "$(SolutionDir)lib\swagger-ui" "$(ProjectDir)swagger-ui" /S /I /Y</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
