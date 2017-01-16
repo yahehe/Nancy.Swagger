@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Services
 {
+    [SwaggerApi]
     public interface ISwaggerMetadataProvider
     {
-        IList<SwaggerModelData> RetrieveSwaggerModelData();
-
-        IList<SwaggerRouteData> RetrieveSwaggerRouteData();
+        SwaggerRoot GetSwaggerJson();
     }
 }

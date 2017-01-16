@@ -5,12 +5,10 @@ namespace Nancy.Swagger.Modules
     [SwaggerApi]
     public class SwaggerModule : NancyModule
     {
-        public SwaggerModule(ISwaggerMetadataConverter converter)
+        public SwaggerModule(ISwaggerMetadataProvider converter)
             : base(SwaggerConfig.ResourceListingPath)
         {
-            Get["/"] = _ => converter.GetResourceListing().ToJson();
-
-            Get["/{resourcePath*}"] = _ => converter.GetApiDeclaration("/" + _.resourcePath).ToJson();
+            Get["/"] = _ => converter.GetSwaggerJson().ToJson();
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using Nancy.Routing;
+﻿using System.Diagnostics;
+using Nancy.Routing;
 using Nancy.Swagger.Annotations.Attributes;
-using Swagger.ObjectModel.ApiDeclaration;
-using System.Diagnostics;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations
 {

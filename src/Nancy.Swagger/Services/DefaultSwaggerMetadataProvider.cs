@@ -1,36 +1,51 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Nancy.Routing;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Services
 {
     [SwaggerApi]
     public class DefaultSwaggerMetadataProvider : SwaggerMetadataProvider
     {
-        private readonly IRouteCacheProvider _routeCacheProvider;
+        private readonly IRouteCacheProvider routeCacheProvider;
 
-        private readonly ISwaggerModelCatalog _modelCatalog;
+        private readonly ISwaggerModelCatalog modelCatalog;
 
-        public DefaultSwaggerMetadataProvider(
-            IRouteCacheProvider routeCacheProvider,
-            ISwaggerModelCatalog modelCatalog)
+        public DefaultSwaggerMetadataProvider(IRouteCacheProvider routeCacheProvider, ISwaggerModelCatalog modelCatalog)
         {
-            _routeCacheProvider = routeCacheProvider;
-            _modelCatalog = modelCatalog;
+            this.routeCacheProvider = routeCacheProvider;
+            this.modelCatalog = modelCatalog;
         }
 
-        public override IList<SwaggerRouteData> RetrieveSwaggerRouteData()
+        protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
         {
-            return _routeCacheProvider
-                .GetCache()
-                .RetrieveMetadata<SwaggerRouteData>()
-                .OfType<SwaggerRouteData>()
-                .ToList(); // filter nulls
+            var pathItems = new Dictionary<string, SwaggerRouteData>();
+            foreach (var routeDescription in this.routeCacheProvider.GetCache()
+                                                             .SelectMany(x => x.Value)
+                                                             .Select(x => x.Item2))
+            {
+                var pathItem = routeDescription.Metadata.Retrieve<PathItem>();
+                if (pathItem != null)
+                {
+                    SwaggerRouteData entry;
+                    if (pathItems.TryGetValue(routeDescription.Path, out entry))
+                    {
+                        pathItems[routeDescription.Path] = entry.Combine(new SwaggerRouteData(routeDescription.Path, pathItem));
+                    }
+                    else
+                    {
+                        pathItems.Add(routeDescription.Path, new SwaggerRouteData(routeDescription.Path, pathItem));
+                    }
+                }
+            }
+
+            return pathItems;
         }
 
-        public override IList<SwaggerModelData> RetrieveSwaggerModelData()
+        protected override IList<SwaggerModelData> RetrieveSwaggerModels()
         {
-            return _modelCatalog.ToList();
+            return this.modelCatalog.ToList();
         }
     }
 }

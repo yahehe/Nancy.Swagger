@@ -1,7 +1,7 @@
-﻿using Nancy.ModelBinding;
+﻿using System;
+using Nancy.ModelBinding;
 using Nancy.Swagger.Annotations.Attributes;
-using Swagger.ObjectModel.ApiDeclaration;
-using System;
+using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations.Tests
 {
@@ -19,7 +19,7 @@ namespace Nancy.Swagger.Annotations.Tests
             Get["/strings/{id}"] = _ => GetStringById(_.id, Request.Query.q);
 
             // Non-primitive response
-            Get["/models"] = _ => GetModels();            
+            Get["/models"] = _ => GetModels();
             Get["/models/{id}"] = _ => GetModel(_.id);
             Post["/models/{id}"] = _ => PostModel(this.Bind<TestModel>());
             Put["/models/{id}"] = _ => PutModel(this.Bind<TestModel>());
@@ -34,7 +34,7 @@ namespace Nancy.Swagger.Annotations.Tests
         }
 
         [Route(HttpMethod.Get, "/model-with-duplicate-typename")]
-        [Route(Response=typeof(InOtherNamespace.TestModel))]
+        [Route(Response = typeof(InOtherNamespace.TestModel))]
         private dynamic GetModelWithDuplicateTypeName()
         {
             throw new NotImplementedException();
@@ -42,7 +42,7 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [Route(HttpMethod.Get, "/allowmultipleparam")]
         private dynamic GetWithAllowMultipleParam(
-            [RouteParam(ParameterType.Query, "ids")] int[] ids)
+            [RouteParam(ParameterIn.Query, "ids")] int[] ids)
         {
             throw new NotImplementedException();
         }
@@ -64,15 +64,15 @@ namespace Nancy.Swagger.Annotations.Tests
         [Route(HttpMethod.Get, "/models/{id}")]
         [Route(Response = typeof(TestModel))]
         private static dynamic GetModel(
-            [RouteParam(ParameterType.Path, "id")] int id
+            [RouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
         }
 
-        [Route(HttpMethod.Options, "/models/{id}")]        
+        [Route(HttpMethod.Options, "/models/{id}")]
         private dynamic OptionsModel(
-            [RouteParam(ParameterType.Path, "id")] int id
+            [RouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
@@ -80,24 +80,24 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [Route(HttpMethod.Delete, "/models/{id}")]
         private dynamic DeleteModel(
-            [RouteParam(ParameterType.Path, "id")] int id
+            [RouteParam(ParameterIn.Path, "id")] int id
         )
         {
             throw new NotImplementedException();
         }
 
-        [Route(HttpMethod.Patch, "/models/{id}")] 
+        [Route(HttpMethod.Patch, "/models/{id}")]
         private dynamic PatchModel(
-            [RouteParam(ParameterType.Body)] TestModel testModel
+            [RouteParam(ParameterIn.Body)] TestModel testModel
         )
         {
             throw new NotImplementedException();
         }
 
-        [Route(HttpMethod.Put, "/models/{id}")] 
+        [Route(HttpMethod.Put, "/models/{id}")]
         private dynamic PutModel(
-            [RouteParam(ParameterType.Body)] TestModel testModel
-        )        
+            [RouteParam(ParameterIn.Body)] TestModel testModel
+        )
         {
             throw new NotImplementedException();
         }
@@ -106,9 +106,9 @@ namespace Nancy.Swagger.Annotations.Tests
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.ImATeapot, "I'm a teapot")]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Model = typeof(string))]
-        [SwaggerResponse(HttpStatusCode.OK, Message = "Everything OK", Model = typeof(TestModel))] 
+        [SwaggerResponse(HttpStatusCode.OK, Message = "Everything OK", Model = typeof(TestModel))]
         private dynamic PostModel(
-            [RouteParam(ParameterType.Body, Required = true)] TestModel testModel
+            [RouteParam(ParameterIn.Body, Required = true)] TestModel testModel
         )
         {
             throw new NotImplementedException();
@@ -116,11 +116,11 @@ namespace Nancy.Swagger.Annotations.Tests
 
         [Route(HttpMethod.Get, "/strings/{id}")]
         [Route(Response = typeof(string))]
-        [Route(Produces = new[] { "application/json" } )]
-        [Route(Consumes = new[] { "application/json", "application/xml" })]        
+        [Route(Produces = new[] { "application/json" })]
+        [Route(Consumes = new[] { "application/json", "application/xml" })]
         private static dynamic GetStringById(
-            [RouteParam(ParameterType.Path, "id", Required = true)] int id,
-            [RouteParam(ParameterType.Query, "q")]
+            [RouteParam(ParameterIn.Path, "id", Required = true)] int id,
+            [RouteParam(ParameterIn.Query, "q")]
             [RouteParam(Description = "Query")] string query
         )
         {
