@@ -2,7 +2,7 @@
 
 Nancy plugin for generated API documentation in Swagger format.
 
-The Swagger specification (v1.2) can be found [here](https://github.com/wordnik/swagger-spec/blob/master/versions/1.2.md).
+The Swagger specification (v2.0) can be found [here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
 
 ### NuGet Packages
 
