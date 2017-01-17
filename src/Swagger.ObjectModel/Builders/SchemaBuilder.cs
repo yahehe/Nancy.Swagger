@@ -9,6 +9,7 @@
 
 
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Swagger.ObjectModel.Builders
@@ -71,7 +72,7 @@ namespace Swagger.ObjectModel.Builders
 
                 //Temp fix to allow {builder}.Schema<T> calls in MetadataModules to automatically point to definition models in /swagger.json.
                 Type modelType = typeof (TModel);
-                if (modelType.IsPrimitive || modelType == typeof (string))
+                if (modelType.GetTypeInfo().IsPrimitive || modelType == typeof (string))
                 {
                     schema.Type = schema.Type ?? modelType.Name;
                 }
