@@ -13,8 +13,8 @@ namespace Nancy.Swagger
     {
         private static readonly List<SwaggerTypeMapping> TypeMappings = new List<SwaggerTypeMapping>();
 
-        public Type SourceType { get; }
-        public Type TargetType { get; }
+        public Type SourceType { get; private set; }
+        public Type TargetType { get; private set;  }
 
         private SwaggerTypeMapping(Type sourceType, Type targetType)
         {
