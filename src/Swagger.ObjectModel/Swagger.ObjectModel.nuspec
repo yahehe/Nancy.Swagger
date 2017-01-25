@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <id>Swagger.ObjectModel</id>
+    <version>$version$-alpha</version>
+    <title>Swagger.ObjectModel</title>
+    <authors>Kristian Hellang and Contributors</authors>
+    <owners>Kristian Hellang and Contributors</owners>
     <licenseUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/khellang/Nancy.Swagger</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/etc/logo.png</iconUrl>
@@ -14,4 +14,9 @@
     <copyright>Copyright © Kristian Hellang 2014</copyright>
     <tags>Swagger</tags>
   </metadata>
+  <files>
+    <file src="bin\Release\Net40\Swagger.ObjectModel*" target="lib\Net40" />
+    <file src="bin\Release\Net45\Swagger.ObjectModel*" target="lib\Net45" />
+    <file src="bin\Release\Net462\Swagger.ObjectModel*" target="lib\Net462" />
+  </files>
 </package>

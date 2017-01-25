@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>$id$</id>
-    <version>$version$</version>
-    <title>$title$</title>
-    <authors>$author$</authors>
-    <owners>$author$</owners>
+    <id>Nancy.Swagger</id>
+    <version>$version$-alpha</version>
+    <title>Nancy.Swagger</title>
+    <authors>Kristian Hellang and Contributors</authors>
+    <owners>Kristian Hellang and Contributors</owners>
     <licenseUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/khellang/Nancy.Swagger</projectUrl>
     <iconUrl>http://nancyfx.org/nancy-nuget.png</iconUrl>
@@ -18,4 +18,9 @@
 	  <dependency id="Swagger.ObjectModel" version="$version$" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="bin\Release\Net40\Nancy.Swagger*" target="lib\Net40" />
+    <file src="bin\Release\Net45\Nancy.Swagger*" target="lib\Net45" />
+    <file src="bin\Release\Net462\Nancy.Swagger*" target="lib\Net462" />
+  </files>
 </package>
