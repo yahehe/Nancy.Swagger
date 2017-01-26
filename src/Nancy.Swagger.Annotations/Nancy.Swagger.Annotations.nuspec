@@ -4,14 +4,14 @@
     <id>Nancy.Swagger.Annotations</id>
     <version>$version$-alpha</version>
     <title>Nancy.Swagger.Annotations</title>
-    <authors>Kristian Hellang and Contributors</authors>
-    <owners>Kristian Hellang and Contributors</owners>
-    <licenseUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/khellang/Nancy.Swagger</projectUrl>
+    <authors>Kristian Hellang, Ciaran Downey, and Contributors</authors>
+    <owners>Kristian Hellang, Ciaran Downey, and Contributors</owners>
+    <licenseUrl>https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/yahehe/Nancy.Swagger</projectUrl>
     <iconUrl>http://nancyfx.org/nancy-nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Provides Swagger data by annotating modules and routes.</description>
-    <copyright>Copyright © Kristian Hellang 2014</copyright>
+    <copyright>Original: Copyright © Kristian Hellang 2014, Continued: Copyright © Ciaran Downey 2017</copyright>
     <tags>Nancy Swagger Annotations</tags>
     <dependencies>
       <dependency id="Nancy.Swagger" version="$version$" />

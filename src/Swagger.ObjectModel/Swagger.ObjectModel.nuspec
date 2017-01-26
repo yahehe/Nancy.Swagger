@@ -4,14 +4,14 @@
     <id>Swagger.ObjectModel</id>
     <version>$version$-alpha</version>
     <title>Swagger.ObjectModel</title>
-    <authors>Kristian Hellang and Contributors</authors>
-    <owners>Kristian Hellang and Contributors</owners>
-    <licenseUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/khellang/Nancy.Swagger</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/khellang/Nancy.Swagger/master/etc/logo.png</iconUrl>
+    <authors>Kristian Hellang, Ciaran Downey, and Contributors</authors>
+    <owners>Kristian Hellang, Ciaran Downey, and Contributors</owners>
+    <licenseUrl>https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/yahehe/Nancy.Swagger</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/etc/logo.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A .NET object model for the Swagger spec.</description>
-    <copyright>Copyright © Kristian Hellang 2014</copyright>
+    <copyright>Original: Copyright © Kristian Hellang 2014, Continued: Copyright © Ciaran Downey 2017</copyright>
     <tags>Swagger</tags>
   </metadata>
   <files>
