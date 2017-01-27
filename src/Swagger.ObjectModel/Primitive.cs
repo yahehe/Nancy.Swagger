@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace Swagger.ObjectModel
 {
     /// <summary>
     /// Represents a primitive Swagger data type.
     /// </summary>
-    [PublicAPI]
     public class Primitive
     {
         private static readonly IDictionary<Type, Primitive> Primitives = new Dictionary<Type, Primitive>

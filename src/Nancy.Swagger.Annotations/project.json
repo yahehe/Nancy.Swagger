@@ -1,0 +1,32 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "Nancy": "2.0.0-barneyrubble",
+    "Nancy.Metadata.Modules": "2.0.0-barneyrubble",
+    "Swagger.ObjectModel": {
+      "version": "1.0.0",
+      "target": "project"
+    },
+    "Nancy.Swagger": {
+      "version": "1.0.0",
+      "target": "project"
+    },
+    "System.Reflection": "4.1.0"
+  },
+
+  "frameworks": {
+    "net452": {
+      "frameworkAssemblies": {
+        "System.Net": "",
+        "System.Net.Http": "",
+        "System.Text.RegularExpressions": "",
+        "System.Threading.Tasks": ""
+      }
+    },
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  }
+}

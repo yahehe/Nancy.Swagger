@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Swagger.ObjectModel;
 
@@ -13,11 +14,11 @@ namespace Nancy.Swagger
 
         public static Schema CreateSchema(this Model sModel, Type t)
         {
-            if (typeof (IEnumerable).IsAssignableFrom(t))
+            if (typeof (IEnumerable).GetTypeInfo().IsAssignableFrom(t))
             {
                 return new EnumerableSchema(t, sModel);
             }
-            if (t.IsEnum)
+            if (t.GetTypeInfo().IsEnum)
             {
                 return new EnumSchema(t, sModel);
             }
@@ -30,7 +31,7 @@ namespace Nancy.Swagger
             {
                 Type = "array";
                 Items = new Item();
-                Type subType = t.GetGenericArguments().FirstOrDefault();
+                Type subType = t.GetTypeInfo().GetGenericArguments().FirstOrDefault();
                 Items.Type = "object";
                 Items.Ref = DefintionsRefLocation + subType?.Name;
                 Ref = DefintionsRefLocation + subType?.Name + "[]";
@@ -44,7 +45,7 @@ namespace Nancy.Swagger
                 Type = "string";
                 Ref = DefintionsRefLocation + t.Name;
                 Description = sModel.Description;
-                Enum = t.GetEnumNames();
+                Enum = t.GetTypeInfo().GetEnumNames();
             }
         }
 

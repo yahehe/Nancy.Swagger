@@ -67,7 +67,7 @@ namespace Nancy.Swagger.Annotations
                 Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList()
             };
 
-            var modelAttr = type.GetTypeInfo().GetCustomAttribute<ModelAttribute>();
+            var modelAttr = type.GetCustomAttribute<ModelAttribute>();
             if (modelAttr != null)
             {
                 modelData.Description = modelAttr.Description;

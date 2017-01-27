@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Nancy2.Swagger</id>
+    <version>0.1.0-alpha</version>
+    <title>Nancy.Swagger.NetCore</title>
+    <authors>Kristian Hellang, Ciaran Downey, and Contributors</authors>
+    <owners>Kristian Hellang, Ciaran Downey, and Contributors</owners>
+    <licenseUrl>https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/yahehe/Nancy.Swagger</projectUrl>
+    <iconUrl>http://nancyfx.org/nancy-nuget.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Generated API documentation for Nancy using Swagger.</description>
+    <copyright>Original: Copyright © Kristian Hellang 2014, Continued: Copyright © Ciaran Downey 2017</copyright>
+    <tags>Nancy Swagger</tags>
+    <dependencies>
+	  <dependency id="Nancy" version="0.23.0" />
+	  <dependency id="Swagger.ObjectModel.NetCore" version="0.1.0-alpha" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="bin\Release\Net40\Nancy.Swagger*" target="lib\Net40" />
+    <file src="bin\Release\Net45\Nancy.Swagger*" target="lib\Net45" />
+    <file src="bin\Release\Net462\Nancy.Swagger*" target="lib\Net462" />
+  </files>
+</package>
