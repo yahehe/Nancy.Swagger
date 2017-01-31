@@ -1,0 +1,35 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "Swagger.ObjectModel": {
+      "version": "1.0.0",
+      "target": "project"
+    },
+    "Nancy.Swagger": {
+      "version": "1.0.0",
+      "target": "project"
+    },
+    "Nancy.Swagger.Annotations": {
+      "version": "1.0.0",
+      "target": "project"
+    },
+    "Should": "1.1.20",
+    "xunit": "1.9.2",
+    "xunit.extensions": "1.9.2",
+    "ApprovalTests": "3.0.13",
+    "Nancy.Testing": "2.0.0-barneyrubble"
+  },
+
+  "frameworks": {
+    "net452": {
+      "frameworkAssemblies": {
+        "System.Net": "",
+        "System.Net.Http": "",
+        "System.Text.RegularExpressions": "",
+        "System.Threading.Tasks": ""
+      }
+    }
+  }
+}

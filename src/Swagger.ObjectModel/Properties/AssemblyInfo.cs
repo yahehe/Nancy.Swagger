@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Swagger.ObjectModel.NetCore")]
 [assembly: AssemblyTrademark("")]
+[assembly: InternalsVisibleTo("Swagger.ObjectModel.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from

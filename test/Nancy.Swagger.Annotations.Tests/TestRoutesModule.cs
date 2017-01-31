@@ -11,26 +11,26 @@ namespace Nancy.Swagger.Annotations.Tests
             : base("testroutes")
         {
             // Routes without metadata
-            Get["/anonymoushandler"] = _ => null;
-            Get["/not-annotated/get"] = _ => HandlerWithoutAnnotations();
+            Get("/anonymoushandler", _ => (object) null);
+            Get("/not-annotated/get", _ => HandlerWithoutAnnotations());
 
             // Primitive response
-            Get["/strings"] = _ => GetStrings();
-            Get["/strings/{id}"] = _ => GetStringById(_.id, Request.Query.q);
+            Get("/strings", _ => GetStrings());
+            Get("/strings/{id}", _ => GetStringById(_.id, Request.Query.q));
 
             // Non-primitive response
-            Get["/models"] = _ => GetModels();
-            Get["/models/{id}"] = _ => GetModel(_.id);
-            Post["/models/{id}"] = _ => PostModel(this.Bind<TestModel>());
-            Put["/models/{id}"] = _ => PutModel(this.Bind<TestModel>());
-            Delete["/models/{id}"] = _ => DeleteModel(_.id);
-            Patch["/models/{id}"] = _ => PatchModel(this.Bind<TestModel>());
-            Options["/models/{id}"] = _ => OptionsModel(_.id);
+            Get("/models", _ => GetModels());
+            Get("/models/{id}", _ => GetModel(_.id));
+            Post("/models/{id}", _ => PostModel(this.Bind<TestModel>()));
+            Put("/models/{id}", _ => PutModel(this.Bind<TestModel>()));
+            Delete("/models/{id}", _ => DeleteModel(_.id));
+            Patch("/models/{id}", _ => PatchModel(this.Bind<TestModel>()));
+            Options("/models/{id}", _ => OptionsModel(_.id));
 
             // Misc other cases
-            Get["GetNamedRoute", "/namedroute"] = _ => GetNamedRoute();
-            Get["/allowmultipleparam"] = _ => GetWithAllowMultipleParam(Request.Query.ids);
-            Get["/model-with-duplicate-typename"] = _ => GetModelWithDuplicateTypeName();
+            Get("GetNamedRoute", _ => GetNamedRoute(), null, "/namedroute");
+            Get("/allowmultipleparam", _ => GetWithAllowMultipleParam(Request.Query.ids));
+            Get("/model-with-duplicate-typename", _ => GetModelWithDuplicateTypeName());
         }
 
         [Route(HttpMethod.Get, "/model-with-duplicate-typename")]
