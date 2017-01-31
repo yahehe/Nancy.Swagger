@@ -4,15 +4,12 @@
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "Swagger.ObjectModel": {
-      "version": "1.0.0",
       "target": "project"
     },
     "Nancy.Swagger": {
-      "version": "1.0.0",
       "target": "project"
     },
     "Nancy.Swagger.Annotations": {
-      "version": "1.0.0",
       "target": "project"
     },
     "Should": "1.1.20",

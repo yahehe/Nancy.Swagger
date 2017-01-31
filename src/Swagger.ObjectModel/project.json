@@ -1,5 +1,27 @@
 {
-  "version": "1.0.0-*",
+  "version": "2.2.0-*",
+  "authors": [
+    "Kristian Hellang",
+    "Ciaran Downey",
+    "Contributors"
+  ],
+  "description": "A .NET object model for the Swagger spec.",
+  "packOptions": {
+    "title": "Swagger.ObjectModel",
+    "owners": [
+      "Kristian Hellang",
+      "Ciaran Downey",
+      "Contributors"
+    ],
+    "projectUrl": "https://github.com/yahehe/Nancy.Swagger",
+    "iconUrl": "https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/etc/logo.png",
+    "licenseUrl": "https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/LICENSE<",
+    "requireLicenseAcceptance": false,
+    "copyright": "Original: Copyright © Kristian Hellang 2014, Continued: Copyright © Ciaran Downey 2017",
+    "tags": [
+      "Swagger"
+    ]
+  },
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",

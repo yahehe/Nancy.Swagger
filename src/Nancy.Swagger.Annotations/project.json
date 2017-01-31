@@ -1,16 +1,38 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "2.2.0-*",
+  "description": "Provides Swagger data by annotating modules and routes.",
+  "authors": [
+    "Kristian Hellang",
+    "Ciaran Downey",
+    "Contributors"
+  ],
+  "packOptions": {
+    "title": "Nancy.Swagger.Annotations",
+    "owners": [
+      "Kristian Hellang",
+      "Ciaran Downey",
+      "Contributors"
+    ],
+    "projectUrl": "https://github.com/yahehe/Nancy.Swagger",
+    "iconUrl": "http://nancyfx.org/nancy-nuget.png",
+    "licenseUrl": "https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/LICENSE<",
+    "requireLicenseAcceptance": false,
+    "copyright": "Original: Copyright © Kristian Hellang 2014, Continued: Copyright © Ciaran Downey 2017",
+    "tags": [
+      "Nancy",
+      "Swagger",
+      "Annotations"
+    ]
+  },
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "Nancy": "2.0.0-barneyrubble",
     "Nancy.Metadata.Modules": "2.0.0-barneyrubble",
     "Swagger.ObjectModel": {
-      "version": "1.0.0",
       "target": "project"
     },
     "Nancy.Swagger": {
-      "version": "1.0.0",
       "target": "project"
     },
     "System.Reflection": "4.1.0"
