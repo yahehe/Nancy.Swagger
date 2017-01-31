@@ -35,7 +35,7 @@ namespace Nancy.Swagger.Demo.Modules
         [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(User))]
         [Route(Produces = new[] { "application/json" })]
         [Route(Consumes = new[] { "application/json", "application/xml" })]
-        private User PostUser([RouteParam(ParameterIn.Body, BodyParamType = typeof(User))] User user)
+        private User PostUser([RouteParam(ParameterIn.Body)] User user)
         {
             return user;
         } 

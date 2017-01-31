@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices.ComTypes;
 using Nancy.Conventions;
+using Nancy.Swagger.Annotations;
 using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
 
@@ -18,6 +19,8 @@ namespace Nancy.Swagger.Demo
             });
 
             base.ApplicationStartup(container, pipelines);
+
+            SwaggerAnnotationsConfig.ShowOnlyAnnotatedRoutes = true;
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)

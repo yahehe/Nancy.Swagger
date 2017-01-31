@@ -16,9 +16,9 @@ namespace Nancy.Swagger.Demo.Modules
 
             Get("/customers", _ => GetServiceCustomers(), null, "GetCustomers");
 
-            Get("/customers/{name}", _ => GetServiceCustomer(), null, "GetCustomer");
+            Get("/customers/{name}", parameters => GetServiceCustomer(parameters.name), null, "GetCustomer");
 
-            Post("/customer/{service}", parameters => PostServiceCustomer(this.Bind<ServiceCustomer>()), null, "PostNewCustomer");
+            Post("/customer/{service}", parameters => PostServiceCustomer(parameters.service, this.Bind<ServiceCustomer>()), null, "PostNewCustomer");
 
 
         }
@@ -69,9 +69,9 @@ namespace Nancy.Swagger.Demo.Modules
         [Route("GetCustomer")]
         [Route(HttpMethod.Get, "/customers/{name}")]
         [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(ServiceCustomer))]
-        private ServiceCustomer GetServiceCustomer()
+        private ServiceCustomer GetServiceCustomer([RouteParam(ParameterIn.Path)] string name)
         {
-            return new ServiceCustomer() { CustomerName = "Jack" };
+            return new ServiceCustomer() { CustomerName = name };
         }
 
         [Route("PostNewCustomer")]
@@ -79,7 +79,9 @@ namespace Nancy.Swagger.Demo.Modules
         [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(ServiceCustomer))]
         [Route(Produces = new[] { "application/json" })]
         [Route(Consumes = new[] { "application/json", "application/xml" })]
-        private ServiceCustomer PostServiceCustomer([RouteParam(ParameterIn.Body, BodyParamType = typeof(ServiceCustomer))] ServiceCustomer customer)
+        private ServiceCustomer PostServiceCustomer(
+            [RouteParam(ParameterIn.Path)] string service, 
+            [RouteParam(ParameterIn.Body)] ServiceCustomer customer)
         {
             return customer;
         }

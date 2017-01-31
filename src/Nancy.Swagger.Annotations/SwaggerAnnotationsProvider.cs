@@ -115,7 +115,6 @@ namespace Nancy.Swagger.Annotations
             }
 
             var bodyParam = new BodyParameter();
-            var bodyType = (Type) null;
 
             foreach (var attr in paramAttrs)
             {
@@ -128,14 +127,15 @@ namespace Nancy.Swagger.Annotations
                 bodyParam.In = attr.GetNullableParamType() ?? parameter.In;
                 bodyParam.Required = attr.GetNullableRequired() ?? parameter.Required;
                 bodyParam.Description = attr.Description ?? parameter.Description;
-                bodyType = attr.BodyParamType;
             }
 
-            if (bodyParam.In == ParameterIn.Body)
+            if (parameter.In == ParameterIn.Body)
             {
-                bodyParam.AddBodySchema(bodyType, _modelCatalog);
+                bodyParam.AddBodySchema(pi.ParameterType, _modelCatalog);
                 return bodyParam;
             }
+
+            parameter.Type = Primitive.IsPrimitive(pi.ParameterType) ? Primitive.FromType(pi.ParameterType).Type : "string";
 
             return parameter;
         }
@@ -226,6 +226,12 @@ namespace Nancy.Swagger.Annotations
             return data;
         }
 
+        private bool ShowRoute(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
+        {
+            var routeId = RouteId.Create(module, route);
+            return routeHandlers.ContainsKey(routeId) || !SwaggerAnnotationsConfig.ShowOnlyAnnotatedRoutes;
+        }
+
         private IEnumerable<SwaggerRouteData> ToSwaggerRouteData(INancyModule module)
         {
             Func<IEnumerable<RouteAttribute>, RouteId> getRouteId = (attrs) =>
@@ -248,7 +254,7 @@ namespace Nancy.Swagger.Annotations
                         x => x.MethodInfo
                     );
 
-            return module.Routes
+            return module.Routes.Where(route => ShowRoute(module, route, routeHandlers))
                 .Select(route => CreateSwaggerRouteData(module, route, routeHandlers));
         }
     }
