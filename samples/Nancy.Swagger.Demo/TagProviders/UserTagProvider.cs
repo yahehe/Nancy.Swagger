@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
+using Nancy.Swagger.Services;
 
 namespace Nancy.Swagger.Demo.TagProviders
 {

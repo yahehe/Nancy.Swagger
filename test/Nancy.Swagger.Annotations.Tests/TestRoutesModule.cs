@@ -28,7 +28,7 @@ namespace Nancy.Swagger.Annotations.Tests
             Options("/models/{id}", _ => OptionsModel(_.id));
 
             // Misc other cases
-            Get("GetNamedRoute", _ => GetNamedRoute(), null, "/namedroute");
+            Get("/namedroute", _ => GetNamedRoute(), null, "GetNamedRoute");
             Get("/allowmultipleparam", _ => GetWithAllowMultipleParam(Request.Query.ids));
             Get("/model-with-duplicate-typename", _ => GetModelWithDuplicateTypeName());
         }

@@ -40,7 +40,7 @@ namespace Nancy.Swagger.Services
             return GetModelForType(t);
         }
 
-        private SwaggerModelData GetModelForType(Type t, bool addIfNotSet = true)
+        public SwaggerModelData GetModelForType(Type t, bool addIfNotSet = true)
         {
             if (t.GetTypeInfo().IsPrimitive || t == typeof(string)) return null;
 

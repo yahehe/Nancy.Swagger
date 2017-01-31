@@ -25,6 +25,11 @@ namespace Nancy.Swagger.Annotations.Attributes
             set { this.paramIn = value; }
         }
 
+        public Type BodyParamType
+        {
+            get; set; 
+        }
+
         public ParameterIn? GetNullableParamType()
         {
             return this.paramIn;

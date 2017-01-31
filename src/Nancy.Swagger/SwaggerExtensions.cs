@@ -293,21 +293,30 @@ namespace Nancy.Swagger
 
         public static BodyParameter AddBodySchema<T>(this BodyParameter bodyParameter, ISwaggerModelCatalog modelCatalog)
         {
-            var schema = GetSchema<T>(modelCatalog);
+            return bodyParameter.AddBodySchema(typeof(T), modelCatalog);
+        }
+
+        public static BodyParameter AddBodySchema(this BodyParameter bodyParameter, Type type, ISwaggerModelCatalog modelCatalog)
+        {
+            var schema = GetSchema(modelCatalog, type);
             bodyParameter.Schema = schema;
             return bodyParameter;
         }
 
         public static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog)
         {
-            var t = typeof (T);
-            var model = modelCatalog.GetModelForType<T>();
+            return GetSchema(modelCatalog, typeof(T));
+        }
+
+        public static Schema GetSchema(ISwaggerModelCatalog modelCatalog, Type t)
+        {
+            var model = modelCatalog.GetModelForType(t);
             var schema = new Schema();
             if (model != null)
             {
                 schema = model.GetSchema();
             }
-            else if (t.GetTypeInfo().IsPrimitive || t == typeof (string))
+            else if (t.GetTypeInfo().IsPrimitive || t == typeof(string))
             {
                 schema.Type = t.Name.ToLower();
             }

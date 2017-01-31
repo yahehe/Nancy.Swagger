@@ -13,11 +13,13 @@ namespace Nancy.Swagger.Annotations
     {
         private NancyContext _context;
         private INancyModuleCatalog _moduleCatalog;
+        private ISwaggerModelCatalog _modelCatalog;
 
-        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, NancyContext context)
+        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, NancyContext context, ISwaggerModelCatalog modelCatalog)
         {
             _moduleCatalog = moduleCatalog;
             _context = context;
+            _modelCatalog = modelCatalog;
         }
 
         protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
@@ -43,10 +45,7 @@ namespace Nancy.Swagger.Annotations
 
         protected override IList<SwaggerModelData> RetrieveSwaggerModels()
         {
-            return RetrieveSwaggerPaths()
-                    .GetDistinctModelTypes()
-                    .Select(CreateSwaggerModelData)
-                    .ToList();
+            return _modelCatalog.ToList();
         }
 
         protected override IList<Tag> RetrieveSwaggerTags()
@@ -115,12 +114,27 @@ namespace Nancy.Swagger.Annotations
                 return parameter;
             }
 
+            var bodyParam = new BodyParameter();
+            var bodyType = (Type) null;
+
             foreach (var attr in paramAttrs)
             {
                 parameter.Name = attr.Name ?? parameter.Name;
                 parameter.In = attr.GetNullableParamType() ?? parameter.In;
                 parameter.Required = attr.GetNullableRequired() ?? parameter.Required;
                 parameter.Description = attr.Description ?? parameter.Description;
+
+                bodyParam.Name = attr.Name ?? parameter.Name;
+                bodyParam.In = attr.GetNullableParamType() ?? parameter.In;
+                bodyParam.Required = attr.GetNullableRequired() ?? parameter.Required;
+                bodyParam.Description = attr.Description ?? parameter.Description;
+                bodyType = attr.BodyParamType;
+            }
+
+            if (bodyParam.In == ParameterIn.Body)
+            {
+                bodyParam.AddBodySchema(bodyType, _modelCatalog);
+                return bodyParam;
             }
 
             return parameter;
@@ -195,12 +209,10 @@ namespace Nancy.Swagger.Annotations
                         Description = attr.Message
                     };
 
-                    //if (attr.Model != null)
-                    //{
-                    //    msg.ResponseModel = Primitive.IsPrimitive(attr.Model)
-                    //                            ? Primitive.FromType(attr.Model).Type
-                    //                            : SwaggerConfig.ModelIdConvention(attr.Model);
-                    //}
+                    if (attr.Model != null)
+                    {
+                        msg.Schema = _modelCatalog.GetModelForType(attr.Model)?.GetSchema();
+                    }
 
                     return Tuple.Create((int)attr.Code, msg);
                 })
