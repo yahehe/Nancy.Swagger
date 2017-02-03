@@ -37,5 +37,7 @@ namespace Nancy.Swagger.Annotations.Attributes
         public string[] Produces { get; set; }
 
         public string[] Consumes { get; set; }
+
+        public string[] Tags { get; set; }
     }
 }
