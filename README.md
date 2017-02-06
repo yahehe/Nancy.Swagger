@@ -10,9 +10,12 @@ Documentation for Nancy.Swagger can be found in the [wiki pages](https://github.
 
 ### NuGet Packages
 
-Versions 2.2.0+ of this code uses Nancy2 and is designed for .NET 4.5.2 and .NET Standard 1.6
-Version 2.1.1 is designed for Nancy, for .Net 4.0+, and creates a Swagger 2.0 document
-Version 0.* is designed for Nancy, but creates a Swagger 1.2 document
+Versions 2.2.0+ of this code uses Nancy v2 and is designed for .NET 4.5.2 and .NET Standard 1.6.
+
+Version 2.1.1 is designed for Nancy v1.4.3 on .Net 4.0+, and creates a Swagger 2.0 document.
+
+Version 0.* is designed for Nancy v1.4.3, but creates a Swagger 1.2 document.
+ - If for some reason you need to make a change against this version of Nancy.Swagger, you can checkout the 1.4.3-stable branch.
 
 The code in this repository contains the code for the following NuGet packages:
  - https://www.nuget.org/packages/Swagger.ObjectModel
