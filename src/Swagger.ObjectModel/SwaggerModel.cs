@@ -98,7 +98,7 @@ namespace Swagger.ObjectModel
             // Serialized properties should use name from SwaggerPropertyAttribute if it exists.
             internal override IDictionary<string, ReflectionUtils.GetDelegate> GetterValueFactory(Type type)
             {
-                if (!type.IsDefined<SwaggerDataAttribute>())
+                if (!type.GetTypeInfo().IsDefined<SwaggerDataAttribute>())
                 {
                     return base.GetterValueFactory(type);
                 }
@@ -112,7 +112,7 @@ namespace Swagger.ObjectModel
             // Serialized properties should use name from SwaggerPropertyAttribute if it exists.
             internal override IDictionary<string, KeyValuePair<Type, ReflectionUtils.SetDelegate>> SetterValueFactory(Type type)
             {
-                if (!type.IsDefined<SwaggerDataAttribute>())
+                if (!type.GetTypeInfo().IsDefined<SwaggerDataAttribute>())
                 {
                     return base.SetterValueFactory(type);
                 }

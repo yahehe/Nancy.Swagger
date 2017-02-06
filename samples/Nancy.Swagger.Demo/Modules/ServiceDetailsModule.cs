@@ -7,9 +7,9 @@ namespace Nancy.Swagger.Demo.Modules
     {
         public ServiceDetailsModule() : base("/service")
         {
-            Get["ServiceHome", "/"] = _ => "Hello again, Swagger!";
+            Get("/", _ => "Hello again, Swagger!", null, "ServiceHome");
 
-            Get["GetDetails", "/details"] = _ => new ServiceDetails()
+            Get("/details", _ => new ServiceDetails()
             {
                 Name = "Nancy Swagger Service",
                 Owner = new ServiceOwner()
@@ -22,28 +22,22 @@ namespace Nancy.Swagger.Demo.Modules
                     new ServiceCustomer() {CustomerName = "Jack"},
                     new ServiceCustomer() {CustomerName = "Jill"}
                 }
-            };
+            }, null, "GetDetails");
 
-            Get["GetCustomers", "/customers"] = _ => new[]
+            Get("/customers", _ => new[]
             {
                 new ServiceCustomer() {CustomerName = "Jack"},
                 new ServiceCustomer() {CustomerName = "Jill"}
-            };
+            }, null, "GetCustomers");
 
-            Get["GetCustomer", "/customers/{name}"] = _ => new ServiceCustomer() {CustomerName = "Jack"};
+            Get("/customers/{name}", _ => new ServiceCustomer() {CustomerName = "Jack"}, null, "GetCustomer");
 
-            Post["PostNewCustomer", "/customer/{service}"] = parameters =>
+            Post("/customer/{service}", parameters =>
             {
-                var result = this.BindAndValidate<ServiceCustomer>();
-
-                if (!ModelValidationResult.IsValid)
-                {
-                    return Negotiate.WithModel(new { Message = parameters.service + " failed to add user." })
-                        .WithStatusCode(HttpStatusCode.UnprocessableEntity);
-                }
+                var result = this.Bind<ServiceCustomer>();
                 return result;
 
-            };
+            }, null, "PostNewCustomer");
 
 
         }

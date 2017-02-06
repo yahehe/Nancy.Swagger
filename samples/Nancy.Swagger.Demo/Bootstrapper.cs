@@ -1,4 +1,5 @@
-﻿using Nancy.Conventions;
+﻿using System.Runtime.InteropServices.ComTypes;
+using Nancy.Conventions;
 using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
 
@@ -15,12 +16,17 @@ namespace Nancy.Swagger.Demo
             {
                 EmailAddress = "exampleEmail@example.com"
             });
+
             base.ApplicationStartup(container, pipelines);
         }
 
         protected override void ConfigureConventions(NancyConventions nancyConventions)
         {
-            nancyConventions.StaticContentsConventions.AddDirectory("docs", "swagger-ui/dist");
+            base.ConfigureConventions(nancyConventions);
+
+            nancyConventions.StaticContentsConventions.Add(
+                StaticContentConventionBuilder.AddDirectory("/swagger-ui/dist")
+            );
         }
 
         /// <summary>

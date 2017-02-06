@@ -7,22 +7,16 @@ namespace Nancy.Swagger.Demo.Modules
     {
         public HomeModule()
         {
-            Get["Home", "/"] = _ => Response.AsRedirect("/docs/index.html");
+            Get("/", _ => Response.AsRedirect("/swagger-ui/dist/index.html"), null, "Home");
 
-            Get["GetUsers", "/users"] = _ => new[] { new User { Name = "Vincent Vega", Age = 45 } };
+            Get("/users", _ => new[] { new User { Name = "Vincent Vega", Age = 45 } }, null, "GetUsers");
 
-            Post["PostUsers", "/users"] = _ =>
+            Post("/users", _ =>
             {
-                var result = this.BindAndValidate<User>();
-
-                if (!ModelValidationResult.IsValid)
-                {
-                    return Negotiate.WithModel(new { Message = "Oops" })
-                        .WithStatusCode(HttpStatusCode.UnprocessableEntity);
-                }
+                var result = this.Bind<User>();
 
                 return Negotiate.WithModel(result).WithStatusCode(HttpStatusCode.Created);
-            };
+            }, null, "PostUsers");
         }
     }
 }

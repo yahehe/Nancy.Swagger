@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Nancy.Routing;
 using Nancy.Swagger.Services;
@@ -58,7 +59,7 @@ namespace Nancy.Swagger
             {
                 dataType.Type = "array";
 
-                var itemsType = type.GetElementType() ?? type.GetGenericArguments().FirstOrDefault();
+                var itemsType = type.GetElementType() ?? type.GetTypeInfo().GetGenericArguments().FirstOrDefault();
 
                 if (Primitive.IsPrimitive(itemsType))
                 {
@@ -91,7 +92,7 @@ namespace Nancy.Swagger
 
         public static IEnumerable<Model> ToModel(this SwaggerModelData model, IEnumerable<SwaggerModelData> knownModels = null, bool getSubModels = true)
         {
-            var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.IsEnum && !x.Type.IsGenericType);
+            var classProperties = model.Properties.Where(x => !Primitive.IsPrimitive(x.Type) && !x.Type.GetTypeInfo().IsEnum && !x.Type.GetTypeInfo().IsGenericType);
 
             var modelsData = knownModels ?? Enumerable.Empty<SwaggerModelData>();
             if (getSubModels)
@@ -184,7 +185,7 @@ namespace Nancy.Swagger
 
         private static IList<SwaggerModelPropertyData> GetPropertiesFromType(Type type)
         {
-            return type.GetProperties()
+            return type.GetTypeInfo().GetProperties()
                 .Select(property => new SwaggerModelPropertyData
                 {
                     Name = property.Name,
@@ -194,7 +195,7 @@ namespace Nancy.Swagger
 
         public static bool IsContainer(this Type type)
         {
-            return typeof(IEnumerable).IsAssignableFrom(type)
+            return typeof(IEnumerable).GetTypeInfo().IsAssignableFrom(type)
                 && !typeof(string).IsAssignableFrom(type);
         }
 
@@ -240,12 +241,12 @@ namespace Nancy.Swagger
 
         internal static bool IsImplicitlyRequired(this Type type)
         {
-            return type.IsValueType && !IsNullable(type);
+            return type.GetTypeInfo().IsValueType && !IsNullable(type);
         }
 
         internal static bool IsNullable(Type type)
         {
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+            return type.GetTypeInfo().IsGenericType && type.GetTypeInfo().GetGenericTypeDefinition() == typeof(Nullable<>);
         }
 
         public static HttpMethod ToHttpMethod(this string method)
@@ -283,6 +284,20 @@ namespace Nancy.Swagger
                 .Distinct();
         }
 
+        /// <summary>
+        /// This forces the response builder to use Nancy.Swagger's created schema
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="responseBuilder"></param>
+        /// <param name="modelCatalog"></param>
+        /// <returns></returns>
+        public static ResponseBuilder Schema<T>(this ResponseBuilder responseBuilder, ISwaggerModelCatalog modelCatalog)
+        {
+            var schema = GetSchema<T>(modelCatalog);
+            responseBuilder.Schema(schema);
+            return responseBuilder;
+        }
+
         public static OperationBuilder AddResponseSchema<T>(this OperationBuilder operationBuilder, ISwaggerModelCatalog modelCatalog)
         {
             var schema = GetSchema<T>(modelCatalog);
@@ -292,21 +307,30 @@ namespace Nancy.Swagger
 
         public static BodyParameter AddBodySchema<T>(this BodyParameter bodyParameter, ISwaggerModelCatalog modelCatalog)
         {
-            var schema = GetSchema<T>(modelCatalog);
+            return bodyParameter.AddBodySchema(typeof(T), modelCatalog);
+        }
+
+        public static BodyParameter AddBodySchema(this BodyParameter bodyParameter, Type type, ISwaggerModelCatalog modelCatalog)
+        {
+            var schema = GetSchema(modelCatalog, type);
             bodyParameter.Schema = schema;
             return bodyParameter;
         }
 
         public static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog)
         {
-            var t = typeof (T);
-            var model = modelCatalog.GetModelForType<T>();
+            return GetSchema(modelCatalog, typeof(T));
+        }
+
+        public static Schema GetSchema(ISwaggerModelCatalog modelCatalog, Type t)
+        {
+            var model = modelCatalog.GetModelForType(t);
             var schema = new Schema();
             if (model != null)
             {
                 schema = model.GetSchema();
             }
-            else if (t.IsPrimitive || t == typeof (string))
+            else if (t.GetTypeInfo().IsPrimitive || t == typeof(string))
             {
                 schema.Type = t.Name.ToLower();
             }
@@ -317,7 +341,7 @@ namespace Nancy.Swagger
         {
             if (type.IsContainer())
             {
-                return type.GetElementType() ?? type.GetGenericArguments().First();
+                return type.GetElementType() ?? type.GetTypeInfo().GetGenericArguments().First();
             }
 
             return type;

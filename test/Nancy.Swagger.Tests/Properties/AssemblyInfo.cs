@@ -1,9 +1,20 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyTitle("Nancy.Swagger.Tests")]
 [assembly: AssemblyProduct("Nancy.Swagger.Tests")]
+[assembly: AssemblyTrademark("")]
 
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components.  If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly: Guid("e78a16dc-7119-4a14-8346-ecee26c338b2")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("d73db66d-01ab-4223-a4a0-7687f544a0f5")]
