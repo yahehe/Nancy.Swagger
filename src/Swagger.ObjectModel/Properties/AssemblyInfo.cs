@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Swagger.ObjectModel.NetCore")]
+[assembly: AssemblyProduct("Swagger.ObjectModel")]
 [assembly: AssemblyTrademark("")]
 [assembly: InternalsVisibleTo("Swagger.ObjectModel.Tests")]
 
