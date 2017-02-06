@@ -13,11 +13,13 @@ namespace Nancy.Swagger.Annotations
     {
         private NancyContext _context;
         private INancyModuleCatalog _moduleCatalog;
+        private ISwaggerModelCatalog _modelCatalog;
 
-        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, NancyContext context)
+        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, NancyContext context, ISwaggerModelCatalog modelCatalog)
         {
             _moduleCatalog = moduleCatalog;
             _context = context;
+            _modelCatalog = modelCatalog;
         }
 
         protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
@@ -43,10 +45,7 @@ namespace Nancy.Swagger.Annotations
 
         protected override IList<SwaggerModelData> RetrieveSwaggerModels()
         {
-            return RetrieveSwaggerPaths()
-                    .GetDistinctModelTypes()
-                    .Select(CreateSwaggerModelData)
-                    .ToList();
+            return _modelCatalog.ToList();
         }
 
         protected override IList<Tag> RetrieveSwaggerTags()
@@ -67,7 +66,7 @@ namespace Nancy.Swagger.Annotations
                 Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList()
             };
 
-            var modelAttr = type.GetCustomAttribute<ModelAttribute>();
+            var modelAttr = type.GetTypeInfo().GetCustomAttribute<ModelAttribute>();
             if (modelAttr != null)
             {
                 modelData.Description = modelAttr.Description;
@@ -115,13 +114,28 @@ namespace Nancy.Swagger.Annotations
                 return parameter;
             }
 
+            var bodyParam = new BodyParameter();
+
             foreach (var attr in paramAttrs)
             {
                 parameter.Name = attr.Name ?? parameter.Name;
                 parameter.In = attr.GetNullableParamType() ?? parameter.In;
                 parameter.Required = attr.GetNullableRequired() ?? parameter.Required;
                 parameter.Description = attr.Description ?? parameter.Description;
+
+                bodyParam.Name = attr.Name ?? parameter.Name;
+                bodyParam.In = attr.GetNullableParamType() ?? parameter.In;
+                bodyParam.Required = attr.GetNullableRequired() ?? parameter.Required;
+                bodyParam.Description = attr.Description ?? parameter.Description;
             }
+
+            if (parameter.In == ParameterIn.Body)
+            {
+                bodyParam.AddBodySchema(pi.ParameterType, _modelCatalog);
+                return bodyParam;
+            }
+
+            parameter.Type = Primitive.IsPrimitive(pi.ParameterType) ? Primitive.FromType(pi.ParameterType).Type : "string";
 
             return parameter;
         }
@@ -195,12 +209,10 @@ namespace Nancy.Swagger.Annotations
                         Description = attr.Message
                     };
 
-                    //if (attr.Model != null)
-                    //{
-                    //    msg.ResponseModel = Primitive.IsPrimitive(attr.Model)
-                    //                            ? Primitive.FromType(attr.Model).Type
-                    //                            : SwaggerConfig.ModelIdConvention(attr.Model);
-                    //}
+                    if (attr.Model != null)
+                    {
+                        msg.Schema = _modelCatalog.GetModelForType(attr.Model)?.GetSchema();
+                    }
 
                     return Tuple.Create((int)attr.Code, msg);
                 })
@@ -212,6 +224,12 @@ namespace Nancy.Swagger.Annotations
                 .ToList();
 
             return data;
+        }
+
+        private bool ShowRoute(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
+        {
+            var routeId = RouteId.Create(module, route);
+            return routeHandlers.ContainsKey(routeId) || !SwaggerAnnotationsConfig.ShowOnlyAnnotatedRoutes;
         }
 
         private IEnumerable<SwaggerRouteData> ToSwaggerRouteData(INancyModule module)
@@ -236,7 +254,7 @@ namespace Nancy.Swagger.Annotations
                         x => x.MethodInfo
                     );
 
-            return module.Routes
+            return module.Routes.Where(route => ShowRoute(module, route, routeHandlers))
                 .Select(route => CreateSwaggerRouteData(module, route, routeHandlers));
         }
     }

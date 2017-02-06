@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Swagger.ObjectModel;
 using Swagger.ObjectModel.Builders;
@@ -101,7 +102,7 @@ namespace Nancy.Swagger.Services
         {
             if (type.IsContainer())
             {
-                return type.GetElementType() ?? type.GetGenericArguments().First();
+                return type.GetElementType() ?? type.GetTypeInfo().GetGenericArguments().First();
             }
 
             return type;

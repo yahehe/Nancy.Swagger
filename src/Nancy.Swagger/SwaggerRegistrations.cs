@@ -6,7 +6,7 @@ namespace Nancy.Swagger
     [SwaggerApi]
     public class SwaggerRegistrations : Registrations
     {
-        public SwaggerRegistrations()
+        public SwaggerRegistrations(ITypeCatalog typeCatalog) : base(typeCatalog)
         {
             RegisterWithDefault<ISwaggerMetadataProvider>(typeof(DefaultSwaggerMetadataProvider));
             RegisterWithDefault<ISwaggerModelCatalog>(typeof(DefaultSwaggerModelCatalog));

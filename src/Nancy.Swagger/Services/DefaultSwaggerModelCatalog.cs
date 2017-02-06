@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Services
@@ -39,9 +40,9 @@ namespace Nancy.Swagger.Services
             return GetModelForType(t);
         }
 
-        private SwaggerModelData GetModelForType(Type t, bool addIfNotSet = true)
+        public SwaggerModelData GetModelForType(Type t, bool addIfNotSet = true)
         {
-            if (t.IsPrimitive || t == typeof(string)) return null;
+            if (t.GetTypeInfo().IsPrimitive || t == typeof(string)) return null;
 
             SwaggerModelData model = this.FirstOrDefault(x => x.ModelType == t);
             if (model == null && addIfNotSet)

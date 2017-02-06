@@ -72,6 +72,7 @@ namespace Nancy.Swagger.Annotations
             {
                 routeId.Method = swaggerRouteAttribute.Method;
                 routeId.Path = module.ModulePath.EnsureForwardSlash() + swaggerRouteAttribute.Path;
+                routeId.Path = routeId.Path.Replace("//", "/");
             }
 
             return routeId;

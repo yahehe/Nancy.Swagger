@@ -210,7 +210,9 @@ $RECYCLE.BIN/
 # Approval testing received files
 *.received.json
 
+# Dotnet/Project.json
+**/project.lock.json
 
+# Misc
 swagger-ui/
-
 *FodyWeavers.xml

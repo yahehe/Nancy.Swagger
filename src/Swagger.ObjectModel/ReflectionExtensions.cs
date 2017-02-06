@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Swagger.ObjectModel
 {
-    internal static class ReflectionExtensions
+    public static class ReflectionExtensions
     {
         public static TAttribute GetCustomAttribute<TAttribute>(this ICustomAttributeProvider provider, bool inherits = true)
             where TAttribute : Attribute
