@@ -29,6 +29,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 In = attr.GetNullableParamType() ?? In;
                 Required = attr.GetNullableRequired() ?? Required;
                 Description = attr.Description ?? Description;
+                Default = attr.DefaultValue ?? Default;
             }
 
             Type = Primitive.IsPrimitive(pi.ParameterType) ? Primitive.FromType(pi.ParameterType).Type : "string";

@@ -12,8 +12,10 @@ namespace Nancy.Swagger.Demo.Modules
         private const string ServiceTagName = "Service Details";
         private const string ServiceTagDescription = "Operations for handling the service";
 
-        public ServiceDetailsModule(ISwaggerTagCatalog tagCatalog) : base("/service")
+        public ServiceDetailsModule(ISwaggerModelCatalog modelCatalog, ISwaggerTagCatalog tagCatalog) : base("/service")
         {
+            modelCatalog.AddModel<ServiceOwner>();
+
             tagCatalog.AddTag(new Tag()
             {
                 Name = ServiceTagName,
@@ -87,9 +89,9 @@ namespace Nancy.Swagger.Demo.Modules
         [Route(Summary = "Get Service Customer")]
         [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(ServiceCustomer))]
         [Route(Tags = new[] { ServiceTagName })]
-        private ServiceCustomer GetServiceCustomer([RouteParam(ParameterIn.Path)] string name)
+        private ServiceCustomer GetServiceCustomer([RouteParam(ParameterIn.Path, DefaultValue = "Jack")] string name)
         {
-            return new ServiceCustomer() { CustomerName = name };
+            return new ServiceCustomer() { CustomerName = name, CustomerEmail = name + "@my-service.com" };
         }
 
         [Route("PostNewCustomer")]
@@ -100,7 +102,7 @@ namespace Nancy.Swagger.Demo.Modules
         [Route(Consumes = new[] { "application/json", "application/xml" })]
         [Route(Tags = new[] { ServiceTagName })]
         private ServiceCustomer PostServiceCustomer(
-            [RouteParam(ParameterIn.Path)] string service, 
+            [RouteParam(ParameterIn.Path, DefaultValue = "my-service")] string service, 
             [RouteParam(ParameterIn.Body)] ServiceCustomer customer)
         {
             return customer;

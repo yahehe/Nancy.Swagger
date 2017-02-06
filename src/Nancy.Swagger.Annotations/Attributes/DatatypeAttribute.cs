@@ -16,6 +16,8 @@ namespace Nancy.Swagger.Annotations.Attributes
 
         public string Description { get; set; }
 
+        public string DefaultValue { get; set; }
+
         public string[] Enum { get; set; }
 
         public long Maximum

@@ -48,7 +48,7 @@ namespace Nancy.Swagger.Annotations
 
         protected override IList<SwaggerModelData> RetrieveSwaggerModels()
         {
-            return _modelCatalog.ToList();
+            return _modelCatalog.Select(AnnotateSwaggerModelData).ToList();
         }
 
         protected override IList<Tag> RetrieveSwaggerTags()
@@ -56,47 +56,14 @@ namespace Nancy.Swagger.Annotations
             return _tagCatalog.ToList();
         }
 
-        private SwaggerModelData CreateSwaggerModelData(Type type)
+        private SwaggerModelData AnnotateSwaggerModelData(SwaggerModelData originalModel)
         {
-            // Only use properties which have a pulbic getter and setter
-            var typeProperties = type.GetProperties()
-                                        .Where(pi => pi.CanWrite && pi.GetSetMethod(true).IsPublic)
-                                        .Where(pi => pi.CanRead && pi.GetGetMethod(true).IsPublic);
-
-            var modelData = new SwaggerModelData(type)
-            {
-                Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList()
-            };
+            var type = originalModel.ModelType;
 
             var modelAttr = type.GetTypeInfo().GetCustomAttribute<ModelAttribute>();
-            if (modelAttr != null)
-            {
-                modelData.Description = modelAttr.Description;
-            }
 
-            return modelData;
-        }
-
-        private SwaggerModelPropertyData CreateSwaggerModelPropertyData(PropertyInfo pi)
-        {
-            var modelProperty = new SwaggerModelPropertyData
-            {
-                Type = pi.PropertyType,
-                Name = pi.Name
-            };
-
-            foreach (var attr in pi.GetCustomAttributes<ModelPropertyAttribute>())
-            {
-                modelProperty.Name = attr.Name ?? modelProperty.Name;
-                modelProperty.Description = attr.Description ?? modelProperty.Description;
-                modelProperty.Minimum = attr.GetNullableMinimum() ?? modelProperty.Minimum;
-                modelProperty.Maximum = attr.GetNullableMaximum() ?? modelProperty.Maximum;
-                modelProperty.Required = attr.GetNullableRequired() ?? modelProperty.Required;
-                modelProperty.UniqueItems = attr.GetNullableUniqueItems() ?? modelProperty.UniqueItems;
-                modelProperty.Enum = attr.Enum ?? modelProperty.Enum;
-            }
-
-            return modelProperty;
+            //If the type is not annotated, use the default model.
+            return modelAttr == null ? originalModel : new AnnotatedModel(originalModel.ModelType, modelAttr);
         }
 
         private SwaggerRouteData CreateSwaggerRouteData(INancyModule module, Route route, Dictionary<RouteId, MethodInfo> routeHandlers)
