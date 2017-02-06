@@ -284,6 +284,20 @@ namespace Nancy.Swagger
                 .Distinct();
         }
 
+        /// <summary>
+        /// This forces the response builder to use Nancy.Swagger's created schema
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="responseBuilder"></param>
+        /// <param name="modelCatalog"></param>
+        /// <returns></returns>
+        public static ResponseBuilder Schema<T>(this ResponseBuilder responseBuilder, ISwaggerModelCatalog modelCatalog)
+        {
+            var schema = GetSchema<T>(modelCatalog);
+            responseBuilder.Schema(schema);
+            return responseBuilder;
+        }
+
         public static OperationBuilder AddResponseSchema<T>(this OperationBuilder operationBuilder, ISwaggerModelCatalog modelCatalog)
         {
             var schema = GetSchema<T>(modelCatalog);
