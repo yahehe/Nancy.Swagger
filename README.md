@@ -21,6 +21,10 @@ The code in this repository contains the code for the following NuGet packages:
  - https://www.nuget.org/packages/Swagger.ObjectModel
  - https://www.nuget.org/packages/Nancy.Swagger
  - https://www.nuget.org/packages/Nancy.Swagger.Annotations
+ 
+### How to Contribute
+
+Simply fork/clone this repository and start making whatever improvements you want! We'll try to make sure there are 'newbie' tickets available for those looking to start contributing.
 
 ### CI NuGet Feed
 
