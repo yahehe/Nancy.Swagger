@@ -68,6 +68,18 @@ namespace Nancy.Swagger.Demo.Modules
             {
                 customerSubTag
             });
+
+            RouteDescriber.DescribeRouteWithParams<SwaggerFile>("PostCustomerReview", "", "Add a customer's review", new[]
+            {
+                new HttpResponseMetadata<SwaggerFile> { Code = 200, Message = "Review Added"},
+            }, new[]
+            {
+                new Parameter{Name = "name", In = ParameterIn.Path, Required = true, Description = "The customer's name", Default = "Jill", Type = "string" },
+                new Parameter{Name = "file", In = ParameterIn.Form,  Required = true, Description = "The customer's review", Type = "file"},
+            }, new[]
+            {
+                customerSubTag
+            });
         }
     }
 

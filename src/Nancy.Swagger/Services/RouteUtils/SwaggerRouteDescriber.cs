@@ -77,6 +77,10 @@ namespace Nancy.Swagger.Services.RouteUtils
                             {
                                 param.Type = "string";
                             }
+                            if(param.Type == "file")
+                            {
+                                op.ConsumeMimeTypes(new []{ "multipart/form-data", "application/x-www-form-urlencoded" });
+                            }
                             op.Parameter(param);
                         }
                     }

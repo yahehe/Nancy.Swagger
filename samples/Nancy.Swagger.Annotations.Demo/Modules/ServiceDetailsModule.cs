@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using HttpMultipartParser;
 using Nancy.ModelBinding;
 using Nancy.Swagger.Annotations.Attributes;
 using Nancy.Swagger.Demo.Models;
@@ -31,8 +35,9 @@ namespace Nancy.Swagger.Demo.Modules
             Get("/customers/{name}", parameters => GetServiceCustomer(parameters.name), null, "GetCustomer");
 
             Post("/customer/{service}", parameters => PostServiceCustomer(parameters.service, this.Bind<ServiceCustomer>()), null, "PostNewCustomer");
-
-
+            
+            Post("/customer/{name}/file", parameters => PostCustomerReview(parameters.name, null), null, "PostCustomerReview");
+            
         }
 
 
@@ -106,6 +111,27 @@ namespace Nancy.Swagger.Demo.Modules
             [RouteParam(ParameterIn.Body)] ServiceCustomer customer)
         {
             return customer;
+        }
+
+        [Route("PostCustomerReview")]
+        [Route(HttpMethod.Post, "/customer/{name}/file")]
+        [Route(Summary = "Post Customer Review")]
+        [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(SwaggerFile))]
+        [Route(Tags = new[] { ServiceTagName })]
+        [Route(Consumes = new[] { "multipart/form-data" })]
+        private string PostCustomerReview(
+            [RouteParam(ParameterIn.Path, DefaultValue = "Jill")] string name,
+            [RouteParam(ParameterIn.Form)] SwaggerFile file) //'file' is unused, but needed for the swagger doc
+        {
+
+            var parsed = new MultipartFormDataParser(Request.Body);
+            var uploadedFile = parsed.Files.FirstOrDefault()?.Data;
+            if (uploadedFile == null)
+            {
+                return "File Parsing Failed";
+            }
+            var reader = new StreamReader(uploadedFile);
+            return reader.ReadToEnd();
         }
     }
 }

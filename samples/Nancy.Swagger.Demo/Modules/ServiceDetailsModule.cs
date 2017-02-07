@@ -1,5 +1,8 @@
-﻿using Nancy.ModelBinding;
+﻿using System.IO;
+using HttpMultipartParser;
+using Nancy.ModelBinding;
 using Nancy.Swagger.Demo.Models;
+using System.Linq;
 
 namespace Nancy.Swagger.Demo.Modules
 {
@@ -39,6 +42,17 @@ namespace Nancy.Swagger.Demo.Modules
 
             }, null, "PostNewCustomer");
 
+            Post("/customer/{name}/file", async parameters =>
+            {
+                var parsed = new MultipartFormDataParser(Request.Body);
+                var file = parsed.Files.FirstOrDefault()?.Data;
+                if(file == null)
+                {
+                    return "File Parsing Failed";
+                }
+                var reader = new StreamReader(file);
+                return await reader.ReadToEndAsync();
+            }, null, "PostCustomerReview");
 
         }
     }
