@@ -327,7 +327,7 @@ namespace Nancy.Swagger
             if (SwaggerTypeMapping.IsMappedType(t))
             {
                 t = SwaggerTypeMapping.GetMappedType(t);
-			}
+            }
             var model = modelCatalog.GetModelForType(t);
             var schema = new Schema();
             if (model != null)
