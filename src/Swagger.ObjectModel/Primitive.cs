@@ -25,6 +25,9 @@ namespace Swagger.ObjectModel
             { typeof(string), new Primitive("string") },
             { typeof(byte), new Primitive("string", "byte") },
             { typeof(DateTime), new Primitive("string", "date-time") },
+
+            // Misc
+            { typeof(SwaggerFile), new Primitive("file") },
         };
 
         private Primitive(string type, string format = null)

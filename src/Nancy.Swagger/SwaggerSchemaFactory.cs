@@ -32,9 +32,22 @@ namespace Nancy.Swagger
                 Type = "array";
                 Items = new Item();
                 Type subType = t.GetTypeInfo().GetGenericArguments().FirstOrDefault();
-                Items.Type = "object";
-                Items.Ref = DefintionsRefLocation + subType?.Name;
-                Ref = DefintionsRefLocation + subType?.Name + "[]";
+                if (subType != null && Primitive.IsPrimitive(subType))
+                {
+                    var primitive = Primitive.FromType(subType);
+                    Items.Type = primitive.Type;
+                    if (!string.IsNullOrEmpty(primitive.Format))
+                    {
+                        Items.Format = primitive.Format;
+                    }
+                }
+                else
+                {
+                    Items.Type = "object";
+                    Items.Ref = DefintionsRefLocation + subType?.Name;
+
+                    Ref = DefintionsRefLocation + subType?.Name + "[]";
+                }
             }
         }
 

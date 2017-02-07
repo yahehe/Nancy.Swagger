@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nancy.Swagger.Annotations.Attributes;
+using Nancy.Swagger;
 
 namespace Nancy.Swagger.Annotations.SwaggerObjects
 {
@@ -17,7 +18,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 
             if (attr.Model != null)
             {
-                Schema = modelCatalog.GetModelForType(attr.Model)?.GetSchema();
+                Schema = SwaggerExtensions.GetSchema(modelCatalog, attr.Model);
             }
         }
     }

@@ -47,7 +47,7 @@ namespace Nancy.Swagger.Services
 
         public SwaggerModelData GetModelForType(Type t, bool addIfNotSet = true)
         {
-            if (t.GetTypeInfo().IsPrimitive || t == typeof(string)) return null;
+            if (Primitive.IsPrimitive(t)) return null;
 
             var model = this.FirstOrDefault(x => x.ModelType == t);
             if (model == null && addIfNotSet)

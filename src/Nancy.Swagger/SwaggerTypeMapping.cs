@@ -24,7 +24,10 @@ namespace Nancy.Swagger
 
         public static void AddTypeMapping(Type source, Type target)
         {
-            TypeMappings.Add(new SwaggerTypeMapping(source, target));
+            if (!IsMappedType(source))
+            {
+                TypeMappings.Add(new SwaggerTypeMapping(source, target));
+            }
         }
 
         public static bool IsMappedType(Type type)

@@ -324,15 +324,25 @@ namespace Nancy.Swagger
 
         public static Schema GetSchema(ISwaggerModelCatalog modelCatalog, Type t)
         {
+            if (SwaggerTypeMapping.IsMappedType(t))
+            {
+                t = SwaggerTypeMapping.GetMappedType(t);
+			}
             var model = modelCatalog.GetModelForType(t);
             var schema = new Schema();
             if (model != null)
             {
                 schema = model.GetSchema();
             }
-            else if (t.GetTypeInfo().IsPrimitive || t == typeof(string))
+            else if (Primitive.IsPrimitive(t))
             {
-                schema.Type = t.Name.ToLower();
+                var primitive = Primitive.FromType(t);
+
+                schema.Type = primitive.Type.ToLower();
+                if (!string.IsNullOrEmpty(primitive.Format))
+                {
+                    schema.Format = primitive.Format.ToLower();
+                }
             }
             return schema;
         }
