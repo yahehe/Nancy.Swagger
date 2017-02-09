@@ -12,6 +12,8 @@ namespace Nancy.Swagger.Demo.Modules
     {
         public HomeModule()
         {
+            Head("/", _ => HttpStatusCode.OK, null, "Head");
+
             Get("/", _ => Response.AsRedirect("/swagger-ui/dist/index.html"), null, "Home");
 
             Get("/users", _ => GetUsers(), null, "GetUsers");
@@ -21,6 +23,15 @@ namespace Nancy.Swagger.Demo.Modules
                 var user = this.Bind<User>();
                 return PostUser(user);
             });
+        }
+
+        [Route("Head")]
+        [Route(HttpMethod.Head, "/")]
+        [Route(Summary = "Example head method")]
+        [SwaggerResponse(HttpStatusCode.OK)]
+        private Response Head()
+        {
+            return HttpStatusCode.OK;
         }
 
         [Route("GetUsers")]

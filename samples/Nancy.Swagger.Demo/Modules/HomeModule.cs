@@ -7,6 +7,8 @@ namespace Nancy.Swagger.Demo.Modules
     {
         public HomeModule()
         {
+            Head("/", _ => HttpStatusCode.OK, null, "Head");
+
             Get("/", _ => Response.AsRedirect("/swagger-ui/dist/index.html"), null, "Home");
 
             Get("/users", _ => new[] { new User { Name = "Vincent Vega", Age = 45 } }, null, "GetUsers");
