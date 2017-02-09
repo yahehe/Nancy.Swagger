@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2.2.1-*",
+  "version": "2.2.0-*",
   "description": "Generated API documentation for Nancy using Swagger.",
   "authors": [
     "Kristian Hellang",
