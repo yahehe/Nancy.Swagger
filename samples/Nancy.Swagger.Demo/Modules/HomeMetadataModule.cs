@@ -12,6 +12,12 @@ namespace Nancy.Swagger.Demo.Modules
         public HomeMetadataModule(ISwaggerModelCatalog modelCatalog)
         {
             modelCatalog.AddModels(typeof(User), typeof(IEnumerable<User>), typeof(Address), typeof(Role));
+            Describe["Head"] = description => description.AsSwagger(
+                with => with.Operation(
+                    op => op.OperationId("Head")
+                        .Tag("Head method")
+                        .Summary("an example head method")
+                        .Response(r => r.Description("OK"))));
             Describe["GetUsers"] = description => description.AsSwagger(
                 with => with.Operation(
                     op => op.OperationId("GetUsers")
