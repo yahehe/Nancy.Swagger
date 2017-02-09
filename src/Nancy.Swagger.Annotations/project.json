@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2.2.1-*",
+  "version": "2.2.0-*",
   "description": "Provides Swagger data by annotating modules and routes.",
   "authors": [
     "Kristian Hellang",
