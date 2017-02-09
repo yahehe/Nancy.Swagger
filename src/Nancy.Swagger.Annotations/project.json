@@ -1,5 +1,5 @@
 ﻿{
-  "version": "2.2.0-*",
+  "version": "2.2.1-*",
   "description": "Provides Swagger data by annotating modules and routes.",
   "authors": [
     "Kristian Hellang",
@@ -26,29 +26,20 @@
   },
 
   "dependencies": {
-    "NETStandard.Library": "1.6.0",
-    "Nancy": "2.0.0-barneyrubble",
-    "Nancy.Metadata.Modules": "2.0.0-barneyrubble",
-    "Swagger.ObjectModel": {
-      "target": "project"
-    },
     "Nancy.Swagger": {
       "target": "project"
-    },
-    "System.Reflection": "4.1.0"
+    }
   },
 
   "frameworks": {
     "net452": {
-      "frameworkAssemblies": {
-        "System.Net": "",
-        "System.Net.Http": "",
-        "System.Text.RegularExpressions": "",
-        "System.Threading.Tasks": ""
-      }
     },
     "netstandard1.6": {
-      "imports": "dnxcore50"
+      "imports": "dnxcore50",
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.Reflection": "4.1.0"
+      }
     }
   }
 }

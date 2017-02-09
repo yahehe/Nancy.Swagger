@@ -1,15 +1,11 @@
 ﻿{
   "dependencies": {
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
-    "Nancy": "2.0.0-barneyrubble",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
     "Microsoft.Extensions.Logging.Console": "1.0.0",
     "Microsoft.AspNetCore.Owin": "1.1.0",
     "HttpMultipartParser":  "2.2.3",
-    "Swagger.ObjectModel": {
-      "target": "project"
-    },
     "Nancy.Swagger": {
       "target": "project"
     }
@@ -22,10 +18,6 @@
   "frameworks": {
     "net452": {
       "frameworkAssemblies": {
-        "System.Net": "",
-        "System.Net.Http": "",
-        "System.Text.RegularExpressions": "",
-        "System.Threading.Tasks": "",
         "System.ComponentModel.DataAnnotations": "4.0.0.0"
       }
     }
