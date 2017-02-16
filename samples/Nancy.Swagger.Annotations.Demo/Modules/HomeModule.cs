@@ -14,7 +14,7 @@ namespace Nancy.Swagger.Demo.Modules
         {
             Head("/", _ => HttpStatusCode.OK, null, "Head");
 
-            Get("/", _ => Response.AsRedirect("/swagger-ui/dist/index.html"), null, "Home");
+            Get("/", _ => GetPetStoreUrl(), null, "Home");
 
             Get("/users", _ => GetUsers(), null, "GetUsers");
 
@@ -23,6 +23,12 @@ namespace Nancy.Swagger.Demo.Modules
                 var user = this.Bind<User>();
                 return PostUser(user);
             });
+        }
+
+        private Response GetPetStoreUrl()
+        {
+            var port = Request.Url.Port ?? 80;
+            return Response.AsRedirect($"http://petstore.swagger.io/?url=http://localhost:{port}/api-docs");
         }
 
         [Route("Head")]
