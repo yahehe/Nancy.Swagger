@@ -63,6 +63,7 @@ namespace Swagger.ObjectModel.Builders
 
             return item;
         }
+
         /// <summary>
         /// Defines the operation for the path and method;
         /// </summary>
@@ -80,7 +81,18 @@ namespace Swagger.ObjectModel.Builders
             return this;
         }
 
-
+        /// <summary>
+        /// Add a parameter for this operation
+        /// </summary>
+        /// <param name="op">The Operation Builder</param>
+        /// <returns>
+        /// The <see cref="PathItemBuilder"/>.
+        /// </returns>
+        public PathItemBuilder Operation(OperationBuilder op)
+        {
+            op.Build(this.operation);
+            return this;
+        }
 
         /// <summary>
         /// Add a parameter for this operation
