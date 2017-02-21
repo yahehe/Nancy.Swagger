@@ -40,87 +40,89 @@ namespace Nancy.Swagger.Services.RouteUtils
             _modelCatalog.AddModels(types);
         }
 
-        private void BuildDescription(string description, string notes, string summary,
+        private OperationBuilder BuildDescription(string description, string notes, string summary,
             IEnumerable<HttpResponseMetadata> responsesMetadatas, IEnumerable<Parameter> parameters,
             IEnumerable<Tag> tags = null, Func < OperationBuilder, Action> addModel = null)
         {
+            OperationBuilder op = new OperationBuilder();
+
+            op.OperationId(description).Summary(summary).Description(notes);
+
+            if (responsesMetadatas != null)
+            {
+                foreach (var metadata in responsesMetadatas)
+                {
+                    var schema = metadata.GetSchema(_modelCatalog);
+                    if (schema != null)
+                    {
+                        op.Response(metadata.Code, r => r.Description(string.IsNullOrEmpty(metadata.Message) ? "N/A" : metadata.Message).Schema(schema));
+                    }
+                    else
+                    {
+                        op.Response(metadata.Code, r => r.Description(string.IsNullOrEmpty(metadata.Message) ? "N/A" : metadata.Message));
+                    }
+                }
+            }
+
+            addModel?.Invoke(op);
+
+            if (parameters != null)
+            {
+                foreach (var param in parameters)
+                {
+                    if (string.IsNullOrEmpty(param.Type) && param.In != ParameterIn.Body)
+                    {
+                        param.Type = "string";
+                    }
+                    if (param.Type == "file")
+                    {
+                        op.ConsumeMimeTypes(new[] { "multipart/form-data", "application/x-www-form-urlencoded" });
+                    }
+                    op.Parameter(param);
+                }
+            }
+
+            if (_baseTag != null)
+            {
+                op.Tag(_baseTag.Name);
+            }
+
+            if (tags != null)
+            {
+                foreach (var tag in tags)
+                {
+                    if (!_tagCatalog.Contains(tag)) _tagCatalog.AddTag(tag);
+
+                    op.Tag(tag.Name);
+                }
+            }
+
             _routeMetadataBuilder[description] = desc => desc.AsSwagger(with =>
             {
-                with.Operation(op =>
-                {
-                    op.OperationId(description)
-                        .Summary(summary)
-                        .Description(notes);
-                    if (responsesMetadatas != null)
-                    {
-                        foreach (var metadata in responsesMetadatas)
-                        {
-                            var schema = metadata.GetSchema(_modelCatalog);
-                            if (schema != null)
-                            {
-                                op.Response(metadata.Code, r => r.Description(string.IsNullOrEmpty(metadata.Message) ? "N/A" : metadata.Message).Schema(schema));
-                            }
-                            else
-                            {
-                                op.Response(metadata.Code, r => r.Description(string.IsNullOrEmpty(metadata.Message) ? "N/A" : metadata.Message));
-                            }
-                        }
-                    }
-
-                    addModel?.Invoke(op);
-
-                    if (parameters != null)
-                    {
-                        foreach (var param in parameters)
-                        {
-                            if (string.IsNullOrEmpty(param.Type) && param.In != ParameterIn.Body)
-                            {
-                                param.Type = "string";
-                            }
-                            if(param.Type == "file")
-                            {
-                                op.ConsumeMimeTypes(new []{ "multipart/form-data", "application/x-www-form-urlencoded" });
-                            }
-                            op.Parameter(param);
-                        }
-                    }
-
-                    if (_baseTag != null)
-                    {
-                        op.Tag(_baseTag.Name);
-                    }
-
-                    if (tags != null)
-                    {
-                        foreach (var tag in tags)
-                        {
-                            if (!_tagCatalog.Contains(tag)) _tagCatalog.AddTag(tag);
-
-                            op.Tag(tag.Name);
-                        }
-                    }
-                });
+                with.Operation(op);
             });
+
+            return op;
         }
 
-        public void DescribeRoute(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responseMetadatas, IEnumerable<Tag> tags = null, Func<OperationBuilder, Action> addModel = null)
+        public OperationBuilder DescribeRoute(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responseMetadatas, IEnumerable<Tag> tags = null, Func<OperationBuilder, Action> addModel = null)
         {
-            BuildDescription(description, notes, summary, responseMetadatas, null, tags, addModel);
+            return BuildDescription(description, notes, summary, responseMetadatas, null, tags, addModel);
         }
 
-        public void DescribeRoute<T>(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responseMetadatas, IEnumerable<Tag> tags = null)
+        public OperationBuilder DescribeRoute<T>(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responseMetadatas, IEnumerable<Tag> tags = null)
         {
-            DescribeRoute(description, notes, summary, responseMetadatas, tags, AddModel<T>);
+            return DescribeRoute(description, notes, summary, responseMetadatas, tags, AddModel<T>);
         }
 
-        public void DescribeRouteWithParams(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responsesMetadatas, IEnumerable<Parameter> parameters, IEnumerable<Tag> tags = null, Func<OperationBuilder, Action> addModel = null)
+        public OperationBuilder DescribeRouteWithParams(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responsesMetadatas, IEnumerable<Parameter> parameters, IEnumerable<Tag> tags = null, Func<OperationBuilder, Action> addModel = null)
         {
-            BuildDescription(description, notes, summary, responsesMetadatas, parameters, tags, addModel);
+            return BuildDescription(description, notes, summary, responsesMetadatas, parameters, tags, addModel);
         }
 
-        public void DescribeRouteWithParams<T>(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responsesMetadatas, IEnumerable<Parameter> parameters, IEnumerable<Tag> tags = null)
+        public OperationBuilder DescribeRouteWithParams<T>(string description, string notes, string summary, IEnumerable<HttpResponseMetadata> responsesMetadatas, IEnumerable<Parameter> parameters, IEnumerable<Tag> tags = null)
         {
-            DescribeRouteWithParams(description, notes, summary, responsesMetadatas, parameters, tags, AddModel<T>);
+            return DescribeRouteWithParams(description, notes, summary, responsesMetadatas, parameters, tags, AddModel<T>);
         }
 
         private Action AddModel<T>(OperationBuilder op)

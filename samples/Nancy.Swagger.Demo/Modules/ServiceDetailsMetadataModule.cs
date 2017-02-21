@@ -79,7 +79,10 @@ namespace Nancy.Swagger.Demo.Modules
             }, new[]
             {
                 customerSubTag
-            });
+            })
+            //If you need to add something that is not a parameter to DescribeRoute, 
+            //the function will return the OperationBuilder so you can add it.
+            .ProduceMimeTypes(new[] { "multipart/form-data", "application/x-www-form-urlencoded" });
         }
     }
 
