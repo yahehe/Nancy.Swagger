@@ -12,24 +12,22 @@ namespace Nancy.Swagger.Annotations
 {
     public class SwaggerAnnotationsProvider : SwaggerMetadataProvider
     {
-        private NancyContext _context;
         private INancyModuleCatalog _moduleCatalog;
         private ISwaggerModelCatalog _modelCatalog;
         private ISwaggerTagCatalog _tagCatalog;
 
-        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, NancyContext context, ISwaggerModelCatalog modelCatalog, ISwaggerTagCatalog tagCatalog)
+        public SwaggerAnnotationsProvider(INancyModuleCatalog moduleCatalog, ISwaggerModelCatalog modelCatalog, ISwaggerTagCatalog tagCatalog)
         {
             _moduleCatalog = moduleCatalog;
-            _context = context;
             _modelCatalog = modelCatalog;
             _tagCatalog = tagCatalog;
         }
 
-        protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
+        protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths(NancyContext context)
         {
             var pathItems = new Dictionary<string, SwaggerRouteData>();
             foreach (var pair in _moduleCatalog
-                .GetAllModules(_context)
+                .GetAllModules(context)
                 .SelectMany(ToSwaggerRouteData))
             {
                 SwaggerRouteData entry;

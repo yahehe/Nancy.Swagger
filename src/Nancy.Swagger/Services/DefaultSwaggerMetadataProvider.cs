@@ -21,7 +21,7 @@ namespace Nancy.Swagger.Services
             this.tagCatalog = tagCatalog;
         }
 
-        protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths()
+        protected override IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths(NancyContext context)
         {
             var pathItems = new Dictionary<string, SwaggerRouteData>();
             foreach (var routeDescription in this.routeCacheProvider.GetCache()

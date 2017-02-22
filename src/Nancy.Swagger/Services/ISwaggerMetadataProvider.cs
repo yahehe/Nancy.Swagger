@@ -5,6 +5,6 @@ namespace Nancy.Swagger.Services
     [SwaggerApi]
     public interface ISwaggerMetadataProvider
     {
-        SwaggerRoot GetSwaggerJson();
+        SwaggerRoot GetSwaggerJson(NancyContext context);
     }
 }

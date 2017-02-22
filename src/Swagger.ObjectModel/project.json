@@ -37,6 +37,16 @@
         "System.Dynamic.Runtime": "4.0.11",
         "System.Runtime.Serialization.Primitives": "4.1.1"
       }
+    },
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.1"
+        },
+        "System.Runtime.Serialization.Primitives": "4.1.1"
+      },
+      "imports": "dnxcore50"
     }
   }
 

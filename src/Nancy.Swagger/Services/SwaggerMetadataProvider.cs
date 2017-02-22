@@ -54,11 +54,11 @@ namespace Nancy.Swagger.Services
             AddSecuritySchemeBuilder(builder, name);
         }
 
-        public SwaggerRoot GetSwaggerJson()
+        public SwaggerRoot GetSwaggerJson(NancyContext context)
         {
             var builder = new SwaggerRootBuilder();
 
-            foreach (var pathItem in this.RetrieveSwaggerPaths())
+            foreach (var pathItem in this.RetrieveSwaggerPaths(context))
             {
                 builder.Path(pathItem.Key, pathItem.Value.PathItem);
             }
@@ -92,7 +92,7 @@ namespace Nancy.Swagger.Services
             return builder.Build();
         }
 
-        protected abstract IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths();
+        protected abstract IDictionary<string, SwaggerRouteData> RetrieveSwaggerPaths(NancyContext context);
 
         protected abstract IList<SwaggerModelData> RetrieveSwaggerModels();
 
