@@ -39,6 +39,15 @@
       "imports": "dnxcore50",
       "NETStandard.Library": "1.6.0",
       "System.Reflection": "4.1.0"
+    },
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.1"
+        }
+      },
+      "imports": "dnxcore50"
     }
   }
 }

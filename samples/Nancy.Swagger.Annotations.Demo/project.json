@@ -8,7 +8,9 @@
     "HttpMultipartParser": "2.2.3",
     "Nancy.Swagger.Annotations": {
       "target": "project"
-    }
+    },
+    "Nancy": "2.0.0-clinteastwood",
+    "Nancy.Swagger": "2.2.0-*"
   },
 
   "tools": {
@@ -16,6 +18,15 @@
   },
 
   "frameworks": {
+    "netcoreapp1.0": {
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.1"
+        }
+      },
+      "imports": "dnxcore50"
+    },
     "net452": {
       "frameworkAssemblies": {
         "System.ComponentModel.DataAnnotations": "4.0.0.0"
