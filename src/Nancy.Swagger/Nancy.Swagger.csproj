@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Generated API documentation for Nancy using Swagger.</Description>
+    <VersionPrefix>2.2.0</VersionPrefix>
+    <Authors>Kristian Hellang;Ciaran Downey;Contributors</Authors>
+    <TargetFrameworks>net452;netstandard1.6;netcoreapp1.0</TargetFrameworks>
+    <AssemblyName>Nancy.Swagger</AssemblyName>
+    <PackageId>Nancy.Swagger</PackageId>
+    <PackageTags>Nancy;Swagger</PackageTags>
+    <PackageIconUrl>http://nancyfx.org/nancy-nuget.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/yahehe/Nancy.Swagger</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/yahehe/Nancy.Swagger/master/LICENSE</PackageLicenseUrl>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <RuntimeFrameworkVersion Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">1.0.4</RuntimeFrameworkVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Swagger.ObjectModel\Swagger.ObjectModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Nancy" Version="2.0.0-barneyrubble" />
+    <PackageReference Include="Nancy.Metadata.Modules" Version="2.0.0-barneyrubble" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+</Project>
