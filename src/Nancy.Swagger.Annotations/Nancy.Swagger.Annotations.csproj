@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Provides Swagger data by annotating modules and routes.</Description>
-    <VersionPrefix>2.2.0</VersionPrefix>
+    <VersionPrefix>2.2.$(APPVEYOR_BUILD_NUMBER)</VersionPrefix>
     <Authors>Kristian Hellang;Ciaran Downey;Contributors</Authors>
     <TargetFrameworks>net452;netstandard1.6;netcoreapp1.0</TargetFrameworks>
     <AssemblyName>Nancy.Swagger.Annotations</AssemblyName>
