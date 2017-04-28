@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F2196CF4-15EE-4790-8891-277DAF6BE526}"
 EndProject
@@ -14,28 +14,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "etc", "etc", "{EA3F2EA3-B5D
 		etc\CommonAssemblyInfo.cs = etc\CommonAssemblyInfo.cs
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nancy.Swagger", "src\Nancy.Swagger\Nancy.Swagger.xproj", "{680E2637-8298-4874-8FF4-D6CCAE721667}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Swagger.ObjectModel", "src\Swagger.ObjectModel\Swagger.ObjectModel.xproj", "{F39C565D-2A75-4DE5-8918-517085FD22D2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7AB59EB5-65D2-4339-B1D6-E21169AF7018}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nancy.Swagger.Annotations", "src\Nancy.Swagger.Annotations\Nancy.Swagger.Annotations.xproj", "{D3ED31C1-8A38-436B-86A9-55F7A8BD1D98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Swagger", "src\Nancy.Swagger\Nancy.Swagger.csproj", "{680E2637-8298-4874-8FF4-D6CCAE721667}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Swagger.ObjectModel.Tests", "test\Swagger.ObjectModel.Tests\Swagger.ObjectModel.Tests.xproj", "{555D9B4B-13C5-48D5-A8BE-21B5DBE17E1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swagger.ObjectModel", "src\Swagger.ObjectModel\Swagger.ObjectModel.csproj", "{F39C565D-2A75-4DE5-8918-517085FD22D2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nancy.Swagger.Tests", "test\Nancy.Swagger.Tests\Nancy.Swagger.Tests.xproj", "{D73DB66D-01AB-4223-A4A0-7687F544A0F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Swagger.Annotations", "src\Nancy.Swagger.Annotations\Nancy.Swagger.Annotations.csproj", "{D3ED31C1-8A38-436B-86A9-55F7A8BD1D98}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nancy.Swagger.Annotations.Tests", "test\Nancy.Swagger.Annotations.Tests\Nancy.Swagger.Annotations.Tests.xproj", "{41A15D66-32B0-4E0B-B5CD-FCC4DCEECB96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swagger.ObjectModel.Tests", "test\Swagger.ObjectModel.Tests\Swagger.ObjectModel.Tests.csproj", "{555D9B4B-13C5-48D5-A8BE-21B5DBE17E1E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nancy.Swagger.Demo", "samples\Nancy.Swagger.Demo\Nancy.Swagger.Demo.xproj", "{A0856D27-2EC2-4AA7-B485-6228462A3906}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Swagger.Tests", "test\Nancy.Swagger.Tests\Nancy.Swagger.Tests.csproj", "{D73DB66D-01AB-4223-A4A0-7687F544A0F5}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nancy.Swagger.Annotations.Demo", "samples\Nancy.Swagger.Annotations.Demo\Nancy.Swagger.Annotations.Demo.xproj", "{C5C753F1-1CFD-456D-B51F-85F0D8228F3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Swagger.Annotations.Tests", "test\Nancy.Swagger.Annotations.Tests\Nancy.Swagger.Annotations.Tests.csproj", "{41A15D66-32B0-4E0B-B5CD-FCC4DCEECB96}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Nancy.Swagger.Autofac.Demo", "samples\Nancy.Swagger.Autofac.Demo\Nancy.Swagger.Autofac.Demo.xproj", "{E8ADAF5D-37A6-4FFB-9F09-CF8FDD4FFA04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Swagger.Demo", "samples\Nancy.Swagger.Demo\Nancy.Swagger.Demo.csproj", "{A0856D27-2EC2-4AA7-B485-6228462A3906}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Swagger.Annotations.Demo", "samples\Nancy.Swagger.Annotations.Demo\Nancy.Swagger.Annotations.Demo.csproj", "{C5C753F1-1CFD-456D-B51F-85F0D8228F3F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nancy.Swagger.Autofac.Demo", "samples\Nancy.Swagger.Autofac.Demo\Nancy.Swagger.Autofac.Demo.csproj", "{E8ADAF5D-37A6-4FFB-9F09-CF8FDD4FFA04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

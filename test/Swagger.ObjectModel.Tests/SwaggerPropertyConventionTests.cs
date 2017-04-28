@@ -10,6 +10,8 @@ using Xunit.Sdk;
 namespace Swagger.ObjectModel.Tests
 {
     using Swagger.ObjectModel.Attributes;
+    using Xunit;
+    using Xunit.Abstractions;
 
     public class SwaggerPropertyConventionTests
     {
@@ -19,7 +21,7 @@ namespace Swagger.ObjectModel.Tests
         /// This allows us to rename properties and enum values without worrying about breaking the Swagger JSON schema.
         /// </summary>
         /// <param name="member">The member to test.</param>
-        [SwaggerPropertyConventionTest]
+        [Theory]
         public void SwaggerDtoPropertiesShouldHaveSwaggerPropertyAttribute(MemberInfo member)
         {
             var swaggerProperty = member.GetCustomAttribute<SwaggerPropertyAttribute>();
@@ -45,38 +47,6 @@ namespace Swagger.ObjectModel.Tests
             return member.DeclaringType != null
                 ? string.Join(".", member.DeclaringType.Name, member.Name)
                 : member.Name;
-        }
-
-        private class SwaggerPropertyConventionTestAttribute : TheoryAttribute
-        {
-            protected override IEnumerable<ITestCommand> EnumerateTestCommands(IMethodInfo method)
-            {
-                return typeof (SwaggerDataAttribute).Assembly.GetTypes()
-                    .Where(type => type.IsDefined<SwaggerDataAttribute>())
-                    .SelectMany(GetMemberInfo)
-                    .GroupBy(GetDisplayName)
-                    .Select(x => x.First())
-                    .Select(member => new SwaggerPropertyTestCommand(method, member));
-            }
-
-            private static IEnumerable<MemberInfo> GetMemberInfo(Type type)
-            {
-                if (type.IsEnum)
-                {
-                    return type.GetFields(BindingFlags.Public | BindingFlags.Static);
-                }
-
-                return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            }
-
-            private class SwaggerPropertyTestCommand : TheoryCommand
-            {
-                public SwaggerPropertyTestCommand(IMethodInfo testMethod, MemberInfo member)
-                    : base(testMethod, new object[] { member })
-                {
-                    DisplayName = GetDisplayName(member);
-                }
-            }
         }
     }
 }

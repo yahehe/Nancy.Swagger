@@ -3,7 +3,6 @@ using Swagger.ObjectModel;
 
 using System.Linq;
 using Xunit;
-using Xunit.Extensions;
 
 namespace Nancy.Swagger.Tests
 {
