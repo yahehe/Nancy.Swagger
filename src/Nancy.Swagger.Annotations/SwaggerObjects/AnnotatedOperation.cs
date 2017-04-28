@@ -45,7 +45,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 .ToDictionary(x => x.StatusCode.ToString(), y => (global::Swagger.ObjectModel.Response) y);
 
 
-            Parameters = handler.GetParameters()
+            Parameters = handler.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any())
                 .Select(CreateSwaggerParameterData)
                 .ToList();
 
