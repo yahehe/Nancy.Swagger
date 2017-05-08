@@ -128,9 +128,9 @@ namespace Swagger.ObjectModel
                 var expando = new ExpandoObject();
                 var expandoCollection = (ICollection<KeyValuePair<string, object>>)expando;
 
-                foreach (string key in source.Keys)
+                foreach (var key in source.Keys)
                 {
-                    expandoCollection.Add(new KeyValuePair<string, object>(key, source[key]));
+                    expandoCollection.Add(new KeyValuePair<string, object>(key.ToString(), source[key]));
                 }
 
                 return expando;
