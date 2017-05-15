@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <Description>Generated API documentation for Nancy using Swagger.</Description>
+    <APPVEYOR_BUILD_NUMBER Condition="'$(APPVEYOR_BUILD_NUMBER)' == ''">1</APPVEYOR_BUILD_NUMBER>
     <VersionPrefix>2.2.$(APPVEYOR_BUILD_NUMBER)</VersionPrefix>
     <Authors>Kristian Hellang;Ciaran Downey;Contributors</Authors>
     <TargetFrameworks>net452;netstandard1.6;netcoreapp1.0</TargetFrameworks>
