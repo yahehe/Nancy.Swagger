@@ -80,7 +80,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="ParameterBuilder"/>.
         /// </returns>
-        private ParameterBuilder Name(string name)
+        public ParameterBuilder Name(string name)
         {
             this.name = name;
             return this;
@@ -95,7 +95,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="ParameterBuilder"/>.
         /// </returns>
-        private ParameterBuilder In(ParameterIn parameterIn)
+        public ParameterBuilder In(ParameterIn parameterIn)
         {
             if (parameterIn == ParameterIn.Body)
             {
@@ -115,7 +115,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="ParameterBuilder"/>.
         /// </returns>
-        private ParameterBuilder Description(string description)
+        public ParameterBuilder Description(string description)
         {
             this.description = description;
             return this;
@@ -127,7 +127,7 @@ namespace Swagger.ObjectModel.Builders
         /// <returns>
         /// The <see cref="ParameterBuilder"/>.
         /// </returns>
-        private ParameterBuilder IsRequired()
+        public ParameterBuilder IsRequired()
         {
             this.required = true;
             return this;
