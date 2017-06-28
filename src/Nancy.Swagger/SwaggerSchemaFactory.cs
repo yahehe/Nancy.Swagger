@@ -10,9 +10,9 @@ namespace Nancy.Swagger
 {
     public static class SwaggerSchemaFactory
     {
-        private const string DefintionsRefLocation = "#/definitions/";
+        private const string DefinitionsRefLocation = "#/definitions/";
 
-        public static Schema CreateSchema(this Model sModel, Type t)
+        public static Schema CreateSchema(this Model sModel, Type t, bool isDefinition)
         {
             if (typeof (IEnumerable).GetTypeInfo().IsAssignableFrom(t))
             {
@@ -20,9 +20,9 @@ namespace Nancy.Swagger
             }
             if (t.GetTypeInfo().IsEnum)
             {
-                return new EnumSchema(t, sModel);
+                return new EnumSchema(t, sModel, isDefinition);
             }
-            return new ObjectSchema(t, sModel);
+            return new ObjectSchema(t, sModel, isDefinition);
         }
 
         private class EnumerableSchema : Schema
@@ -44,36 +44,48 @@ namespace Nancy.Swagger
                 else
                 {
                     Items.Type = "object";
-                    Items.Ref = DefintionsRefLocation + subType?.Name;
+                    Items.Ref = DefinitionsRefLocation + subType?.Name;
 
-                    Ref = DefintionsRefLocation + subType?.Name + "[]";
+                    Ref = DefinitionsRefLocation + subType?.Name + "[]";
                 }
             }
         }
 
         private class EnumSchema : Schema
         {
-            public EnumSchema(Type t, Model sModel)
+            public EnumSchema(Type t, Model sModel, bool isDefinition)
             {
-                Type = "string";
-                Ref = DefintionsRefLocation + t.Name;
-                Description = sModel.Description;
-                Enum = t.GetTypeInfo().GetEnumNames();
+                if (isDefinition)
+                {
+                    Type = "string";
+                    Description = sModel.Description;
+                    Enum = t.GetTypeInfo().GetEnumNames();
+                }
+                else
+                {
+                    Ref = DefinitionsRefLocation + t.Name;
+                }
             }
         }
 
         private class ObjectSchema : Schema
         {
-            public ObjectSchema(Type t, Model sModel)
+            public ObjectSchema(Type t, Model sModel, bool isDefinition)
             {
-                Type = "object";
-                Ref = DefintionsRefLocation + t.Name;
-                Required = (sModel.Required as IList<string>)?.Select(x => x.ToCamelCase()).ToList();
-                Description = sModel.Description;
-                Properties = new Dictionary<string, Schema>();
-                foreach (var member in sModel.Properties)
+                if (isDefinition)
                 {
-                    Properties.Add(member.Key.ToCamelCase(), GenerateSchemaForProperty(member.Value));
+                    Type = "object";
+                    Required = (sModel.Required as IList<string>)?.Select(x => x.ToCamelCase()).ToList();
+                    Description = sModel.Description;
+                    Properties = new Dictionary<string, Schema>();
+                    foreach (var member in sModel.Properties)
+                    {
+                        Properties.Add(member.Key.ToCamelCase(), GenerateSchemaForProperty(member.Value));
+                    }
+                }
+                else
+                {
+                    Ref = DefinitionsRefLocation + SwaggerConfig.ModelIdConvention(t);
                 }
             }
         }
@@ -85,7 +97,7 @@ namespace Nancy.Swagger
 
             if (schema.Type == null)
             {
-                schema.Ref = DefintionsRefLocation + property.Ref;
+                schema.Ref = DefinitionsRefLocation + property.Ref;
             }
             else if (schema.Type.Equals("array"))
             {
@@ -97,7 +109,7 @@ namespace Nancy.Swagger
                 else
                 {
                     schema.Items.Type = "object";
-                    schema.Items.Ref = DefintionsRefLocation + property.Items.Ref;
+                    schema.Items.Ref = DefinitionsRefLocation + property.Items.Ref;
                 }
 
             }

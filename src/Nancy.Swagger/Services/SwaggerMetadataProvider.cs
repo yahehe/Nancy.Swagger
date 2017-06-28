@@ -72,10 +72,7 @@ namespace Nancy.Swagger.Services
             
             foreach (var model in RetrieveSwaggerModels())
             {
-                Type t = GetType(model.ModelType);
-                String name = model.ModelType.Name;
-                if (t != model.ModelType) name = t.Name + "[]";
-                builder.Definition(name, model.GetSchema());
+                builder.Definition(SwaggerConfig.ModelIdConvention(model.ModelType), model.GetSchema(true));
             }
 
             foreach (var tag in RetrieveSwaggerTags())
