@@ -55,27 +55,15 @@ namespace Nancy.Swagger
         /// And so on.</remarks>
         public static string DefaultModelIdConvention(Type type)
         {
-            //var id = type.Name;
-            //var fullName = type.FullName;
-            //var idx = fullName.LastIndexOf('.');
-            //while (_resolvedModelIds.GetOrAdd(id, type) != type)
-            //{
-            //    idx = fullName.LastIndexOf('.', idx - 1);
-            //    id = idx <= 0 ? fullName : fullName.Substring(idx).Replace(".", "");
-            //}
-
-            //return id;
-
-
             if (type.IsContainer())
             {
-                return (type.GetElementType() ?? type.GetTypeInfo().GetGenericArguments().First()).Name + "[]";
+                return DefaultModelIdConvention(type.GetElementType() ?? type.GetTypeInfo().GetGenericArguments().First()) + "[]";
             }
 
             var typeInfo = type.GetTypeInfo();
             if (typeInfo.IsGenericType)
             {
-                // Format the generic type name to something like: GenericOfAgurment1AndArgument2
+                // Format the generic type name to something like: GenericOfArgument1AndArgument2
                 Type genericType = type.GetGenericTypeDefinition();
                 Type[] genericArguments = type.GetGenericArguments();
                 string genericTypeName = genericType.Name;
@@ -86,7 +74,16 @@ namespace Nancy.Swagger
                 return String.Format(CultureInfo.InvariantCulture, "{0}Of{1}", genericTypeName, String.Join("And", argumentTypeNames));
             }
 
-            return type.Name;
+            var id = type.Name;
+            var fullName = type.FullName;
+            var idx = fullName.LastIndexOf('.');
+            while (_resolvedModelIds.GetOrAdd(id, type) != type)
+            {
+                idx = fullName.LastIndexOf('.', idx - 1);
+                id = idx <= 0 ? fullName : fullName.Substring(idx).Replace(".", "");
+            }
+
+            return id;
         }
 
         /// <summary>

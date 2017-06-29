@@ -45,8 +45,6 @@ namespace Nancy.Swagger
                 {
                     Items.Type = "object";
                     Items.Ref = DefinitionsRefLocation + subType?.Name;
-
-                    Ref = DefinitionsRefLocation + subType?.Name + "[]";
                 }
             }
         }
