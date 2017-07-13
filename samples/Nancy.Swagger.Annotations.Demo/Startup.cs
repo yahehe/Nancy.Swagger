@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Nancy.Owin;
+using Nancy.TinyIoc;
+using System.IO;
 
 namespace Nancy.Swagger.NetCore.Demo
 {
@@ -29,7 +31,33 @@ namespace Nancy.Swagger.NetCore.Demo
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseOwin(x => x.UseNancy());
+            app.UseOwin(x => x.UseNancy(o =>
+            {
+                o.Bootstrapper = new StandaloneOutputBootstrapper("swagger.json");
+            }));
+        }
+
+        private class StandaloneOutputBootstrapper : Swagger.Demo.Bootstrapper
+        {
+            private bool hasRun = false;
+            private readonly string jsonPath;
+
+            public StandaloneOutputBootstrapper(string jsonPath)
+            {
+                this.jsonPath = jsonPath;
+            }
+
+            protected override void ConfigureRequestContainer(TinyIoCContainer container, NancyContext context)
+            {
+                base.ConfigureRequestContainer(container, context);
+
+                if (!hasRun)
+                {
+                    var swagger = Standalone.Generate(container, context);
+                    File.WriteAllText(jsonPath, swagger.ToJson());
+                    hasRun = true;
+                }
+            }
         }
     }
 }
