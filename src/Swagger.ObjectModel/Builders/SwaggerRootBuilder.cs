@@ -654,7 +654,10 @@ namespace Swagger.ObjectModel.Builders
                 this.definitions = new Dictionary<string, Schema>();
             }
 
-            this.definitions.Add(name, definition);
+            if (!this.definitions.ContainsKey(name))
+            {
+                this.definitions.Add(name, definition);
+            }
             return this;
         }
 
