@@ -83,7 +83,14 @@ namespace Swagger.ObjectModel
                     var dictionary = value as IDictionary;
                     if (dictionary != null)
                     {
-                        value = ToObject(dictionary);
+                        if (dictionary is IDictionary<SecuritySchemes, IEnumerable<string>> security)
+                        {
+                            value = ToArray(security);
+                        }
+                        else
+                        {
+                            value = ToObject(dictionary);
+                        }
                     }
 
                     var fieldName = MapClrMemberNameToJsonFieldName(getter.Key);
@@ -134,6 +141,18 @@ namespace Swagger.ObjectModel
                 }
 
                 return expando;
+            }
+
+            private static IEnumerable<dynamic> ToArray(IDictionary<SecuritySchemes, IEnumerable<string>> source)
+            {
+                foreach (SecuritySchemes key in source.Keys)
+                {
+                    var expando = new ExpandoObject();
+                    var expandoCollection = (ICollection<KeyValuePair<string, object>>)expando;
+                    expandoCollection.Add(new KeyValuePair<string, object>(key.ToString(), source[key]));
+
+                    yield return expando;
+                }
             }
 
             private static KeyValuePair<Type, ReflectionUtils.SetDelegate> GetPropertyKeyValuePair(PropertyInfo x)
