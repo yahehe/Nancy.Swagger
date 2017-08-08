@@ -9,7 +9,8 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 {
     public class AnnotatedResponse : global::Swagger.ObjectModel.Response
     {
-        public int StatusCode { get; set; }
+        private int StatusCode { get; set; }
+        public int GetStatusCode() => StatusCode;
 
         public AnnotatedResponse(SwaggerResponseAttribute attr, ISwaggerModelCatalog modelCatalog)
         {
@@ -18,7 +19,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 
             if (attr.Model != null)
             {
-                Schema = SwaggerExtensions.GetSchema(modelCatalog, attr.Model);
+                Schema = SwaggerExtensions.GetSchema(modelCatalog, attr.Model, false);
             }
         }
     }

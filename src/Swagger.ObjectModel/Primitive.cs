@@ -17,6 +17,7 @@ namespace Swagger.ObjectModel
             // Numbers
             { typeof(float), new Primitive("number", "float") },
             { typeof(double), new Primitive("number", "double") },
+            { typeof(decimal), new Primitive("number", "decimal") },
 
             // Boolean
             { typeof(bool), new Primitive("boolean") },

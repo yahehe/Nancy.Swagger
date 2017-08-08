@@ -296,14 +296,14 @@ namespace Nancy.Swagger
         /// <returns></returns>
         public static ResponseBuilder Schema<T>(this ResponseBuilder responseBuilder, ISwaggerModelCatalog modelCatalog)
         {
-            var schema = GetSchema<T>(modelCatalog);
+            var schema = GetSchema<T>(modelCatalog, false);
             responseBuilder.Schema(schema);
             return responseBuilder;
         }
 
         public static OperationBuilder AddResponseSchema<T>(this OperationBuilder operationBuilder, ISwaggerModelCatalog modelCatalog)
         {
-            var schema = GetSchema<T>(modelCatalog);
+            var schema = GetSchema<T>(modelCatalog, false);
             operationBuilder.Response(r => r.Description("default").Schema(schema));
             return operationBuilder;
         }
@@ -315,17 +315,17 @@ namespace Nancy.Swagger
 
         public static BodyParameter AddBodySchema(this BodyParameter bodyParameter, Type type, ISwaggerModelCatalog modelCatalog)
         {
-            var schema = GetSchema(modelCatalog, type);
+            var schema = GetSchema(modelCatalog, type, false);
             bodyParameter.Schema = schema;
             return bodyParameter;
         }
 
-        public static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog)
+        public static Schema GetSchema<T>(ISwaggerModelCatalog modelCatalog, bool isDefinition)
         {
-            return GetSchema(modelCatalog, typeof(T));
+            return GetSchema(modelCatalog, typeof(T), isDefinition);
         }
 
-        public static Schema GetSchema(ISwaggerModelCatalog modelCatalog, Type t)
+        public static Schema GetSchema(ISwaggerModelCatalog modelCatalog, Type t, bool isDefinition)
         {
             if (SwaggerTypeMapping.IsMappedType(t))
             {
@@ -335,7 +335,7 @@ namespace Nancy.Swagger
             var schema = new Schema();
             if (model != null)
             {
-                schema = model.GetSchema();
+                schema = model.GetSchema(isDefinition);
             }
             else if (Primitive.IsPrimitive(t))
             {

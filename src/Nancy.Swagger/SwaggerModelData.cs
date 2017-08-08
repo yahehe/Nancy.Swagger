@@ -48,13 +48,13 @@ namespace Nancy.Swagger
                 });
         }
 
-        public Schema GetSchema()
+        public Schema GetSchema(bool isDefinition)
         {
             var sModel = this.ToModel(null, false).FirstOrDefault();
 
             if (sModel == null) return new Schema();
             
-            return sModel.CreateSchema(ModelType);
+            return sModel.CreateSchema(ModelType, isDefinition);
         }
     }
 }

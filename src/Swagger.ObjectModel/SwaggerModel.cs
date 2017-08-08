@@ -112,7 +112,8 @@ namespace Swagger.ObjectModel
 
                 return ReflectionUtils.GetProperties(type)
                     .Where(x => x.CanRead)
-                    .Where(x => !ReflectionUtils.GetGetterMethodInfo(x).IsStatic)
+                    .Where(x => !ReflectionUtils.GetGetterMethodInfo(x).IsStatic
+                            && ReflectionUtils.GetGetterMethodInfo(x).IsPublic)
                     .ToDictionary(GetMemberName, ReflectionUtils.GetGetMethod);
             }
 
