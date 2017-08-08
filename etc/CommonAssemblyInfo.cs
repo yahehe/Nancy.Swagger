@@ -1,8 +1,8 @@
 using System.Reflection;
 
-[assembly: AssemblyCompany("Kristian Hellang and Contributors")]
-[assembly: AssemblyCopyright("Copyright © Kristian Hellang 2014")]
+[assembly: AssemblyCompany("Ciaran Downey and Contributors")]
+[assembly: AssemblyCopyright("Copyright Ciaran Downey 2017")]
 
-[assembly: AssemblyVersion("0.1.0")]
-[assembly: AssemblyFileVersion("0.1.0")]
-[assembly: AssemblyInformationalVersion("0.1.0-alpha2")]
+[assembly: AssemblyVersion("0.2.0")]
+[assembly: AssemblyFileVersion("0.2.0")]
+[assembly: AssemblyInformationalVersion("0.2.0-alpha")]
