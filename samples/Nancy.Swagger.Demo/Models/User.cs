@@ -16,7 +16,7 @@ namespace Nancy.Swagger.Demo.Models
 
         public Address Address { get; set; }
 
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
 
         public IList<string> Tags { get; set; }
     }
