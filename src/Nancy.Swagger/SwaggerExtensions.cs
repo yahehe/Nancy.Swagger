@@ -54,7 +54,7 @@ namespace Nancy.Swagger
 
                 return dataType;
             }
-            if (IsNullable(type))
+            if (type.IsNullable())
             {
                 type = Nullable.GetUnderlyingType(type);
             }
@@ -245,10 +245,10 @@ namespace Nancy.Swagger
 
         internal static bool IsImplicitlyRequired(this Type type)
         {
-            return type.GetTypeInfo().IsValueType && !IsNullable(type);
+            return type.GetTypeInfo().IsValueType && !type.IsNullable();
         }
 
-        internal static bool IsNullable(Type type)
+        internal static bool IsNullable(this Type type)
         {
             return type.GetTypeInfo().IsGenericType && type.GetTypeInfo().GetGenericTypeDefinition() == typeof(Nullable<>);
         }

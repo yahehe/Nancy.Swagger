@@ -22,7 +22,7 @@ namespace Nancy.Swagger
             {
                 return new EnumSchema(t, sModel, isDefinition);
             }
-            if (SwaggerExtensions.IsNullable(t) && Nullable.GetUnderlyingType(t).GetTypeInfo().IsEnum)
+            if (t.IsNullable() && Nullable.GetUnderlyingType(t).GetTypeInfo().IsEnum)
             {
                 return new EnumSchema(Nullable.GetUnderlyingType(t), sModel, isDefinition);
             }
