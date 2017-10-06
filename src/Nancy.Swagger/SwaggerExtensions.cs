@@ -54,6 +54,10 @@ namespace Nancy.Swagger
 
                 return dataType;
             }
+            if (IsNullable(type))
+            {
+                type = Nullable.GetUnderlyingType(type);
+            }
 
             if (type.IsContainer())
             {
