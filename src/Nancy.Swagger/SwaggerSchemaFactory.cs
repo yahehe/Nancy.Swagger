@@ -92,6 +92,7 @@ namespace Nancy.Swagger
         {
             Schema schema = new Schema();
             schema.Type = property.Type?.ToCamelCase();
+            schema.Description = property.Description;
 
             if (schema.Type == null)
             {
