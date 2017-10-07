@@ -21,7 +21,7 @@ namespace Nancy.Swagger.Services.RouteUtils
     {
         public override Schema GetSchema(ISwaggerModelCatalog modelCatalog)
         {
-            return SwaggerExtensions.GetSchema<T>(modelCatalog);
+            return SwaggerExtensions.GetSchema<T>(modelCatalog, false);
         }
     }
 }

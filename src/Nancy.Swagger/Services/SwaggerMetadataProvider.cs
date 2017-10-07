@@ -63,19 +63,16 @@ namespace Nancy.Swagger.Services
                 builder.Path(pathItem.Key, pathItem.Value.PathItem);
             }
 
-            //foreach (var model in this.RetrieveSwaggerModels())
-            //{
-            //    builder.Definition(model.ModelType.Name, model.);
-            //}
-
             builder.Info(_info);
             
             foreach (var model in RetrieveSwaggerModels())
             {
-                Type t = GetType(model.ModelType);
-                String name = model.ModelType.Name;
-                if (t != model.ModelType) name = t.Name + "[]";
-                builder.Definition(name, model.GetSchema());
+                // arrays do not have to be defined in definitions, they are already being declared fully inline
+                // either they should use #ref or they shouldn't be in definitions
+                if (model.ModelType.IsContainer())
+                    continue;
+
+                builder.Definition(SwaggerConfig.ModelIdConvention(model.ModelType), model.GetSchema(true));
             }
 
             foreach (var tag in RetrieveSwaggerTags())
