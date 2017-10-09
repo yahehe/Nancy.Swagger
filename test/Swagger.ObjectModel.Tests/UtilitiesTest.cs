@@ -20,7 +20,7 @@ namespace Swagger.ObjectModel.Tests
 
             // Assert
             actual_empty.ShouldEqual(emptyString);
-            actual_null.ShouldNotBeNull();
+            actual_null.ShouldEqual(actual_null);
             actual_whitespace.ShouldEqual(whiteSpaceString);            
         }
 
