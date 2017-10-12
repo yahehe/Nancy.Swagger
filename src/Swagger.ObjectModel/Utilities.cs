@@ -4,12 +4,7 @@ using System.Text;
 namespace Swagger.ObjectModel
 {
     public static class Utilities
-    {
-        /// <summary>
-        /// convert a string to camelcase with special rules.
-        /// </summary>
-        /// <param name="val">the string need to be convertd</param>
-        /// <returns></returns>
+    {        
         public static string ToCamelCase(string val)
         {
             if (String.IsNullOrWhiteSpace(val))
