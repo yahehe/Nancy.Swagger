@@ -4,10 +4,10 @@ using System.Text;
 namespace Swagger.ObjectModel
 {
     public static class Utilities
-    {
+    {        
         public static string ToCamelCase(string val)
         {
-            if (String.IsNullOrEmpty(val))
+            if (String.IsNullOrWhiteSpace(val))
             {
                 return val;
             }
