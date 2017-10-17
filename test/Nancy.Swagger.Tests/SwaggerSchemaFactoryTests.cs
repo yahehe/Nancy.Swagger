@@ -18,7 +18,7 @@ namespace Nancy.Swagger.Tests
             var schema = model.CreateSchema(typeof(IEnumerable<int>), false);
             var item = schema.Items;
             Assert.Equal("array", schema.Type);
-            Assert.Equal("int", item.Type);
+            Assert.Equal("integer", item.Type);
         }
 
         [Fact]
@@ -29,7 +29,6 @@ namespace Nancy.Swagger.Tests
             var schema = model.CreateSchema(typeof(IEnumerable<>), false);
             var item = schema.Items;
             Assert.Equal("array", schema.Type);
-            Assert.Null(item.Type);
         }
 
         [Fact]
@@ -98,12 +97,15 @@ namespace Nancy.Swagger.Tests
         public void ObjectType_WithDefinition_ShouldCreateObjectSchema()
         {            
             var description = "Sample description";
-            var model = new Model { Description = description };
+            var model = new Model {
+                Description = description,
+                Properties = new Dictionary<string, ModelProperty>()
+            };
 
             var schema = model.CreateSchema(typeof(Schema), true);
             Assert.Equal("object", schema.Type);
             Assert.Equal(description, schema.Description);
-            Assert.Empty(schema.Required);
+            Assert.Null(schema.Required);
             Assert.Empty(schema.Properties);
             Assert.Null(schema.Ref);
         }
