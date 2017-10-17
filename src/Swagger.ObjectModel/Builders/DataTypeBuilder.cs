@@ -438,6 +438,12 @@ namespace Swagger.ObjectModel.Builders
             return (TBuilder)this;
         }
 
+        public TBuilder Reference(string reference)
+        {
+            this.reference = reference;
+            return (TBuilder)this;
+        }
+
         /// <summary>
         /// The is unique items.
         /// </summary>
