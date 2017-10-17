@@ -60,7 +60,7 @@ namespace Nancy.Swagger
 
         public static void ResetMappedTypes()
         {
-            TypeMappings.RemoveAll((type) => true);
+            TypeMappings.Clear();
         }
     }
 }
