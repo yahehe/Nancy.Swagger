@@ -21,7 +21,6 @@ namespace Swagger.ObjectModel.Tests
         /// This allows us to rename properties and enum values without worrying about breaking the Swagger JSON schema.
         /// </summary>
         /// <param name="member">The member to test.</param>
-        [Theory]
         public void SwaggerDtoPropertiesShouldHaveSwaggerPropertyAttribute(MemberInfo member)
         {
             var swaggerProperty = member.GetCustomAttribute<SwaggerPropertyAttribute>();
