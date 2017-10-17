@@ -2,7 +2,7 @@
 
 Nancy plugin for generated API documentation in Swagger format.
 
-The Swagger specification (v2.0) can be found [here](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md).
+The Swagger/OpenAPI specification (v3.0.0) can be found [here](https://swagger.io/specification/).
 
 ### Documentation
 
@@ -10,9 +10,13 @@ Documentation for Nancy.Swagger can be found in the [wiki pages](https://github.
 
 ### NuGet Packages
 
-Versions 2.2.0+ of this code uses Nancy v2 and is designed for .NET 4.5.2 and .NET Standard 1.6.
 
-Version 2.1.1 is designed for Nancy v1.4.3 on .Net 4.0+, and creates a Swagger 2.0 document.
+Version 3.* of this code uses Nancy v2 and generates a Swagger 3 (OpenAPI) document; (.NET 4.5.2, .NET Standard 1.6).
+ - This version is under development.
+
+Version 2.2.* of this code uses Nancy v2 and generates a Swagger 2 document; (.NET 4.5.2, .NET Standard 1.6).
+
+Version 2.1.1 is designed for Nancy v1.4.3 and creates a Swagger 2.0 document; (.NET 4.0).
 
 Version 0.* is designed for Nancy v1.4.3, but creates a Swagger 1.2 document.
  - If for some reason you need to make a change against this version of Nancy.Swagger, you can checkout the 1.4.3-stable branch.

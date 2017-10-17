@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Description>Provides Swagger data by annotating modules and routes.</Description>
     <APPVEYOR_BUILD_NUMBER Condition="'$(APPVEYOR_BUILD_NUMBER)' == ''">1</APPVEYOR_BUILD_NUMBER>
-    <VersionPrefix>2.2.$(APPVEYOR_BUILD_NUMBER)</VersionPrefix>
+    <VersionPrefix>3.0.$(APPVEYOR_BUILD_NUMBER)</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>Kristian Hellang;Ciaran Downey;Contributors</Authors>
     <TargetFrameworks>net452;netstandard1.6;netcoreapp1.0</TargetFrameworks>

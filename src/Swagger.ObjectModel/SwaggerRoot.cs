@@ -20,7 +20,7 @@ namespace Swagger.ObjectModel
         /// <summary>
         /// The swagger version.
         /// </summary>
-        private const string Version = "2.0";
+        private const string Version = "3.0.0";
 
         /// <summary>
         /// Specifies the Swagger Specification version being used.
@@ -29,8 +29,8 @@ namespace Swagger.ObjectModel
         /// <remarks>
         /// The value MUST be an existing Swagger specification version.
         /// </remarks>
-        [SwaggerProperty("swagger", true)]
-        public string SwaggerVersion
+        [SwaggerProperty("openapi", true)]
+        public string OpenAPIVersion
         {
             get
             {
