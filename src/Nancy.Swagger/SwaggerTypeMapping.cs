@@ -57,5 +57,10 @@ namespace Nancy.Swagger
 
             return returnType;
         }
+
+        public static void ResetMappedTypes()
+        {
+            TypeMappings.Clear();
+        }
     }
 }
