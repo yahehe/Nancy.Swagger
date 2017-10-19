@@ -24,7 +24,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenNotSetAnythings()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Build());
         }
 
         [Fact]
@@ -32,20 +32,20 @@ namespace Swagger.ObjectModel.Tests.Builders
         {
             Info info = null;
 
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Info(info).Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Info(info).Build());
         }
 
         [Fact]
         public void Should_AbleToSetInfo()
         {
-            var info = new Info { Version="1.0" };
+            var info = new Info { Version = "1.0" };
             var pathItem = new PathItem { Get = new Operation() };
 
             var swaggerRoot = builder.Info(info)
-                                     .Path("/endpoint",pathItem)
+                                     .Path("/endpoint", pathItem)
                                      .Build();
 
-            Assert.Equal(info,swaggerRoot.Info);            
+            Assert.Equal(info, swaggerRoot.Info);
         }
 
         [Fact]
@@ -57,9 +57,9 @@ namespace Swagger.ObjectModel.Tests.Builders
             var swaggerRoot = builder.Info(info)
                                      .Path("/endpoint", pathItem)
                                      .Build();
-            
+
             Assert.True(swaggerRoot.Paths.Keys.Contains("/endpoint"));
-            Assert.Equal(pathItem ,swaggerRoot.Paths["/endpoint"]);
+            Assert.Equal(pathItem, swaggerRoot.Paths["/endpoint"]);
         }
 
         [Fact]
@@ -71,14 +71,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var swaggerRoot = builder.Info(info)
                                      .Path("/endpoint", pathItem)
                                      .Build();
-            
+
             Assert.Equal(pathItem.Build().Get, swaggerRoot.Paths["/endpoint"].Get);
         }
 
         [Fact]
         public void Should_AbleToSetPathWithEndPointName()
         {
-            var info = new Info { Version = "1.0" };            
+            var info = new Info { Version = "1.0" };
 
             var swaggerRoot = builder.Info(info)
                                      .Path("/endpoint")
@@ -97,7 +97,7 @@ namespace Swagger.ObjectModel.Tests.Builders
                                      .Path("endpoint", pathItem)
                                      .Build();
 
-            Assert.True(swaggerRoot.Paths.Keys.Contains("/endpoint"));            
+            Assert.True(swaggerRoot.Paths.Keys.Contains("/endpoint"));
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace Swagger.ObjectModel.Tests.Builders
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().Host(host).Build();
 
-            Assert.Equal(host,swaggerRoot.Host);
+            Assert.Equal(host, swaggerRoot.Host);
         }
 
         [Fact]
@@ -127,15 +127,15 @@ namespace Swagger.ObjectModel.Tests.Builders
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().BasePath(basePath).Build();
 
-            Assert.Equal(string.Concat("/",basePath), swaggerRoot.BasePath);
+            Assert.Equal(string.Concat("/", basePath), swaggerRoot.BasePath);
         }
 
         [Fact]
         public void Should_AbleToSetScheme()
-        {            
+        {
             var swaggerRoot = GetBasicSwaggerRootBuilder().Scheme(Schemes.Http).Build();
 
-            Assert.True(swaggerRoot.Schemes.Contains(Schemes.Http));
+            Assert.Contains(Schemes.Http, swaggerRoot.Schemes);
         }
 
         [Fact]
@@ -145,17 +145,17 @@ namespace Swagger.ObjectModel.Tests.Builders
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().ConsumeMimeType(mimeType).Build();
 
-            Assert.True(swaggerRoot.Consumes.Contains(mimeType));
+            Assert.Contains(mimeType, swaggerRoot.Consumes);
         }
 
         [Fact]
         public void Should_AbleToSetConsumeMimeTypes()
         {
-            var mimeTypes = new List<string>() { "application/json" , "application/xml" };
+            var mimeTypes = new List<string>() { "application/json", "application/xml" };
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().ConsumeMimeTypes(mimeTypes).Build();
 
-            Assert.Equal(mimeTypes,swaggerRoot.Consumes);
+            Assert.Equal(mimeTypes, swaggerRoot.Consumes);
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace Swagger.ObjectModel.Tests.Builders
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().ProduceMimeType(mimeType).Build();
 
-            Assert.True(swaggerRoot.Produces.Contains(mimeType));
+            Assert.Contains(mimeType, swaggerRoot.Produces);
         }
 
         [Fact]
@@ -181,17 +181,17 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_AbleToSetParameter()
         {
-            var parameter = new Parameter() { Name="para" , In = ParameterIn.Query };
+            var parameter = new Parameter() { Name = "para", In = ParameterIn.Query };
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().Parameter(parameter).Build();
 
-            Assert.True(swaggerRoot.Parameters.ContainsKey(parameter.Name));            
+            Assert.True(swaggerRoot.Parameters.ContainsKey(parameter.Name));
         }
 
         [Fact]
         public void Should_AbleToSetParameterWithBuilder()
         {
-           var parameter = new ParameterBuilder().Name("para").In(ParameterIn.Query); 
+            var parameter = new ParameterBuilder().Name("para").In(ParameterIn.Query);
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().Parameter(parameter).Build();
 
@@ -213,10 +213,10 @@ namespace Swagger.ObjectModel.Tests.Builders
         {
             var response = new Response() { Description = "desc" };
 
-            var swaggerRoot = GetBasicSwaggerRootBuilder().Response("name",response).Build();
+            var swaggerRoot = GetBasicSwaggerRootBuilder().Response("name", response).Build();
 
             Assert.True(swaggerRoot.Responses.ContainsKey("name"));
-            Assert.Equal(response,swaggerRoot.Responses["name"]);
+            Assert.Equal(response, swaggerRoot.Responses["name"]);
         }
 
         [Fact]
@@ -235,7 +235,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         {
             var securityScheme = new SecurityScheme();
 
-            var swaggerRoot = GetBasicSwaggerRootBuilder().SecurityDefinition("name",securityScheme).Build();
+            var swaggerRoot = GetBasicSwaggerRootBuilder().SecurityDefinition("name", securityScheme).Build();
 
             Assert.True(swaggerRoot.SecurityDefinitions.ContainsKey("name"));
             Assert.Equal(securityScheme, swaggerRoot.SecurityDefinitions["name"]);
@@ -254,7 +254,7 @@ namespace Swagger.ObjectModel.Tests.Builders
 
         [Fact]
         public void Should_AbleToSetSecurityRequirement()
-        {            
+        {
             var swaggerRoot = GetBasicSwaggerRootBuilder().SecurityRequirement(SecuritySchemes.ApiKey).Build();
 
             Assert.True(swaggerRoot.Security.ContainsKey(SecuritySchemes.ApiKey));
@@ -267,8 +267,8 @@ namespace Swagger.ObjectModel.Tests.Builders
             var externalDocumentation = new ExternalDocumentation() { Url = "url" };
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().ExternalDocumentation(externalDocumentation).Build();
-            
-            Assert.Equal(externalDocumentation , swaggerRoot.ExternalDocumentation);
+
+            Assert.Equal(externalDocumentation, swaggerRoot.ExternalDocumentation);
         }
 
         [Fact]
@@ -284,11 +284,11 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_AbleToSetTag()
         {
-            var tag = new Tag() { Name="name" };
+            var tag = new Tag() { Name = "name" };
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().Tag(tag).Build();
 
-            Assert.True(swaggerRoot.Tags.Contains(tag));
+            Assert.Contains(tag, swaggerRoot.Tags);
         }
 
         [Fact]
@@ -298,7 +298,7 @@ namespace Swagger.ObjectModel.Tests.Builders
 
             var swaggerRoot = GetBasicSwaggerRootBuilder().Tag(tag).Build();
 
-            Assert.Equal(tag.Build().Name,swaggerRoot.Tags.FirstOrDefault().Name);            
+            Assert.Equal(tag.Build().Name, swaggerRoot.Tags.FirstOrDefault().Name);
         }
 
         [Fact]
@@ -322,6 +322,5 @@ namespace Swagger.ObjectModel.Tests.Builders
 
             Assert.Equal(schema.Build(), swaggerRoot.Definitions[name]);
         }
-
     }
 }

@@ -12,26 +12,26 @@ namespace Swagger.ObjectModel.Tests.Builders
         public ParameterBuilderTest()
         {
             this.builder = new ParameterBuilder();
-            this.name= "name";
+            this.name = "name";
         }
 
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenNameIsNotSet()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Build());         
+            Assert.Throws<RequiredFieldException>(() => builder.Build());
         }
 
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenNameIsNullOrWhiteSpace()
-        {            
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Name("").Build());
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Name(null).Build());
+        {
+            Assert.Throws<RequiredFieldException>(() => builder.Name("").Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Name(null).Build());
         }
 
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenParameterInIsNotSet()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Name(name).Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Name(name).Build());
         }
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         {
             var parameter = builder.Name(name).In(ParameterIn.Path).Build();
 
-            Assert.Equal(true, parameter.Required);
+            Assert.True(parameter.Required);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         {
             var parameter = builder.Name(name).In(ParameterIn.Query).IsRequired().Build();
 
-            Assert.Equal(true, parameter.Required);
+            Assert.True(parameter.Required);
         }
 
         [Theory]
@@ -58,13 +58,13 @@ namespace Swagger.ObjectModel.Tests.Builders
         {
             var parameter = builder.Name(name).In(parameterIn).Build();
 
-            Assert.Equal(false, parameter.Required.HasValue);
+            Assert.False(parameter.Required.HasValue);
         }
 
         [Fact]
         public void Should_ThrowInvalidOperationException_WhenParameterInIsBody()
         {
-            Assert.Throws(typeof(InvalidOperationException), () => builder.Name(name).In(ParameterIn.Body).Build());
+            Assert.Throws<InvalidOperationException>(() => builder.Name(name).In(ParameterIn.Body).Build());
         }
 
         [Fact]

@@ -15,7 +15,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenSchemeIsNotSet()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Build());
         }
 
         [Theory]
@@ -25,9 +25,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         public void Should_AbleToSetSecurityScheme(SecuritySchemes schemes)
         {
             var result = builder.SecurityScheme(schemes).Build();
-
-            Assert.NotNull(result);
-            Assert.Equal(schemes, result.Key);            
+            Assert.Equal(schemes, result.Key);
         }
 
         [Theory]
@@ -38,8 +36,6 @@ namespace Swagger.ObjectModel.Tests.Builders
             string scopeName = "scopeName";
 
             var result = builder.SecurityScheme(schemes).SecurityScheme(scopeName).Build();
-
-            Assert.NotNull(result);
             Assert.Empty(result.Value);
         }
 
@@ -50,9 +46,7 @@ namespace Swagger.ObjectModel.Tests.Builders
 
             var result = builder.SecurityScheme(SecuritySchemes.Oauth2).SecurityScheme(scopeName).Build();
 
-            Assert.NotNull(result);
             Assert.NotEmpty(result.Value);
         }
-
     }
 }

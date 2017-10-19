@@ -17,20 +17,19 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_ThrowRequiredFieldException_When_NameIsNotSet()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Build());            
+            Assert.Throws<RequiredFieldException>(() => builder.Build());
         }
-
 
         [Fact]
         public void Should_ThrowRequiredFieldException_When_NameIsNullOrWhiteSpace()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Name(null).Build());
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Name("").Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Name(null).Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Name("").Build());
         }
 
         [Fact]
         public void Should_AbleToSetName()
-        {            
+        {
             var tag = builder.Name(name).Build();
 
             Assert.Equal(name, tag.Name);
@@ -49,19 +48,19 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_AbleToSetExternalDocumentation()
         {
-            var externalDocumentation = new ExternalDocumentation();        
+            var externalDocumentation = new ExternalDocumentation();
 
             var tag = builder.Name(name)
                              .ExternalDocumentation(externalDocumentation)
                              .Build();
-            
-            Assert.Equal(externalDocumentation, tag.ExternalDocumentation);            
+
+            Assert.Equal(externalDocumentation, tag.ExternalDocumentation);
         }
 
         [Fact]
         public void Should_AbleToSetExternalDocumentationWithBuilder()
         {
-            var exBuilder = new ExternalDocumentationBuilder().Url("url") ;
+            var exBuilder = new ExternalDocumentationBuilder().Url("url");
 
             var tag = builder.Name(name)
                              .ExternalDocumentation(exBuilder)

@@ -13,17 +13,17 @@ namespace Swagger.ObjectModel.Tests.Builders
             var operationBuilder = new OperationBuilder().Response(r => r.Description("N/A"));
 
             var pathItem = new PathItemBuilder(HttpMethod.Get).Operation(operationBuilder).Build();
-                        
+
             Assert.Equal(operationBuilder.Build().Responses, pathItem.Get.Responses);
         }
 
         [Fact]
         public void Should_AbleToSetOperationWithAction()
-        {            
+        {
             var pathItem = new PathItemBuilder(HttpMethod.Get)
                                     .Operation(x => x.Response(r => r.Description("N/A")))
                                     .Build();
-            
+
             Assert.Equal("N/A", pathItem.Get.Responses["default"].Description);
         }
 
@@ -36,7 +36,7 @@ namespace Swagger.ObjectModel.Tests.Builders
                                     .Parameter(parameter)
                                     .Build();
 
-            Assert.Equal(1, pathItem.Parameters.Count());
+            Assert.Single(pathItem.Parameters);
             Assert.Equal(parameter, pathItem.Parameters.FirstOrDefault());
         }
 
@@ -49,7 +49,7 @@ namespace Swagger.ObjectModel.Tests.Builders
                                     .Parameter(pBuilder)
                                     .Build();
 
-            Assert.Equal(1, pathItem.Parameters.Count());
+            Assert.Single(pathItem.Parameters);
             Assert.Equal(pBuilder.Build().Name, pathItem.Parameters.FirstOrDefault().Name);
             Assert.Equal(pBuilder.Build().In, pathItem.Parameters.FirstOrDefault().In);
         }
@@ -58,7 +58,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         public void Should_AbleToSetMultiParameters()
         {
             var parameters = new List<Parameter>();
-            parameters.Add(new Parameter { Name = "first parameter"  });
+            parameters.Add(new Parameter { Name = "first parameter" });
             parameters.Add(new Parameter { Name = "second parameter" });
 
             var pathItem = new PathItemBuilder(HttpMethod.Get)
@@ -73,7 +73,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         public void Should_SetOpeationToGet_WhenHttpMethodIsGet()
         {
             var pathItem = new PathItemBuilder(HttpMethod.Get).Build();
-            
+
             Assert.NotNull(pathItem.Get);
             Assert.Null(pathItem.Post);
             Assert.Null(pathItem.Put);
@@ -87,7 +87,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         public void Should_SetOpeationToPost_WhenHttpMethodIsPost()
         {
             var pathItem = new PathItemBuilder(HttpMethod.Post).Build();
-            
+
             Assert.NotNull(pathItem.Post);
             Assert.Null(pathItem.Get);
             Assert.Null(pathItem.Put);

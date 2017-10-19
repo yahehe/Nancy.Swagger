@@ -16,32 +16,32 @@ namespace Swagger.ObjectModel.Tests.Builders
 
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenUrlIsNullOrEmpty()
-        {                           
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Url("").Build());
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Url(null).Build());            
+        {
+            Assert.Throws<RequiredFieldException>(() => builder.Url("").Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Url(null).Build());
         }
 
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenUrlIsNotSet()
-        {         
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Build());
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Description("desc").Build());            
+        {
+            Assert.Throws<RequiredFieldException>(() => builder.Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Description("desc").Build());
         }
 
         [Fact]
         public void Should_AbleToSetUrl()
-        {            
+        {
             var externalDocumentation = builder.Url(url).Build();
-         
+
             Assert.NotNull(externalDocumentation);
             Assert.Equal(url, externalDocumentation.Url);
         }
 
         [Fact]
         public void Should_AbleToSetDescription()
-        {            
+        {
             string description = "description";
-         
+
             var externalDocumentation = builder.Url(url)
                                                .Description(description)
                                                .Build();
