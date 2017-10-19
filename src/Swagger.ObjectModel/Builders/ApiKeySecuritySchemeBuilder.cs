@@ -33,7 +33,7 @@ namespace Swagger.ObjectModel.Builders
                 throw new RequiredFieldException("In");
             }
 
-            return new SecurityScheme { Type = SecuritySchemes.ApiKey, Name = this.name, In = this.securityIn };
+            return new SecurityScheme { Type = SecuritySchemes.ApiKey, Name = this.name, In = this.securityIn, Description = this.description };
         }
 
         /// <summary>
