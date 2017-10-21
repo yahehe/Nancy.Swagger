@@ -14,21 +14,21 @@ namespace Swagger.ObjectModel.Tests.Builders
         [InlineData("title", null)]
         public void Should_ThrowRequiredFieldException_WhenTitleOrVersionIsEmptyOrWhiteSpace(string title, string version)
         {
-            Assert.Throws(typeof(RequiredFieldException), () => new InfoBuilder(title, version).Build());
+            Assert.Throws<RequiredFieldException>(() => new InfoBuilder(title, version).Build());
         }
 
         [Theory]
-        [InlineData("title", "1.0","description")]
+        [InlineData("title", "1.0", "description")]
         [InlineData("title", "1.0", "")]
-        public void Should_AbleToSetDescription(string title, string version,string descrption)
+        public void Should_AbleToSetDescription(string title, string version, string descrption)
         {
             var info = new InfoBuilder(title, version).Description(descrption).Build();
 
             Assert.Equal(title, info.Title);
             Assert.Equal(version, info.Version);
-            Assert.Equal(descrption, info.Description);         
+            Assert.Equal(descrption, info.Description);
         }
-       
+
         [Theory]
         [InlineData("title", "1.0", "terms of service")]
         [InlineData("title", "1.0", "")]

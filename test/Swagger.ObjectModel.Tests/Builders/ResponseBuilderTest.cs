@@ -17,14 +17,14 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenDescriptionIsNotSet()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Build());
         }
 
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenDescriptionIsNullOrWhiteSpace()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Description("").Build());
-            Assert.Throws(typeof(RequiredFieldException), () => builder.Description(null).Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Description("").Build());
+            Assert.Throws<RequiredFieldException>(() => builder.Description(null).Build());
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace Swagger.ObjectModel.Tests.Builders
                                 .Schema<int>()
                                 .Build();
 
-            Assert.Equal(new SchemaBuilder<int>().Build().Type, response.Schema.Type);            
+            Assert.Equal(new SchemaBuilder<int>().Build().Type, response.Schema.Type);
         }
 
         [Fact]
@@ -92,7 +92,7 @@ namespace Swagger.ObjectModel.Tests.Builders
                                   .Build();
 
             Assert.Equal(1, response.Headers.Count);
-            Assert.Equal(hBuilder.Build().Default,response.Headers[headerName].Default);
+            Assert.Equal(hBuilder.Build().Default, response.Headers[headerName].Default);
         }
 
         [Fact]

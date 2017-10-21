@@ -24,9 +24,9 @@ namespace Swagger.ObjectModel.Tests.Builders
         [Fact]
         public void Should_ThrowRequiredFieldException_WhenResponsesIsNotSet()
         {
-            Assert.Throws(typeof(RequiredFieldException), () => new OperationBuilder().Build());
+            Assert.Throws<RequiredFieldException>(() => new OperationBuilder().Build());
         }
-      
+
         [Fact]
         public void Should_AbleToSetResponseWithStringAndAction()
         {
@@ -158,7 +158,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var operation = GetBasicBuilderWithResponse().ConsumeMimeType(mimeType).Build();
 
             Assert.NotNull(operation.Consumes);
-            Assert.True(operation.Consumes.Contains(mimeType));
+            Assert.Contains(mimeType, operation.Consumes);
         }
 
         [Fact]
@@ -180,7 +180,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var operation = GetBasicBuilderWithResponse().ProduceMimeType(mimeType).Build();
 
             Assert.NotNull(operation.Produces);
-            Assert.True(operation.Produces.Contains(mimeType));
+            Assert.Contains(mimeType, operation.Produces);
         }
 
         [Fact]
@@ -202,7 +202,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var operation = GetBasicBuilderWithResponse().Parameter(parameter).Build();
 
             Assert.NotNull(operation.Parameters);
-            Assert.True(operation.Parameters.Contains(parameter));
+            Assert.Contains(parameter, operation.Parameters);
         }
 
         [Fact]
@@ -236,7 +236,7 @@ namespace Swagger.ObjectModel.Tests.Builders
                                     .BodyParameter(x => x.Name("name").Schema(new Schema()))
                                     .Build();
 
-            Assert.NotNull(operation.Parameters);            
+            Assert.NotNull(operation.Parameters);
         }
 
         [Fact]
@@ -245,14 +245,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var operation = GetBasicBuilderWithResponse().Scheme(Schemes.Http).Build();
 
             Assert.NotNull(operation.Schemes);
-            Assert.True(operation.Schemes.Contains(Schemes.Http));
+            Assert.Contains(Schemes.Http, operation.Schemes);
         }
 
         [Fact]
         public void Should_AbleToSetIsDeprecated()
         {
             var operation = GetBasicBuilderWithResponse().IsDeprecated().Build();
-            
+
             Assert.True(operation.Deprecated);
         }
 
@@ -260,7 +260,7 @@ namespace Swagger.ObjectModel.Tests.Builders
         public void Should_AbleToSetSecurityRequirementWithKeyValuePair()
         {
             var security = new KeyValuePair<SecuritySchemes, IEnumerable<string>>(SecuritySchemes.ApiKey, new List<string> { "string" });
-                       
+
             var operation = GetBasicBuilderWithResponse().SecurityRequirement(security).Build();
 
             Assert.NotNull(operation.SecurityRequirements);

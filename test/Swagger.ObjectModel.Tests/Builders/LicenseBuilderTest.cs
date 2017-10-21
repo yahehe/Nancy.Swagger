@@ -4,13 +4,13 @@ using Xunit;
 namespace Swagger.ObjectModel.Tests.Builders
 {
     public class LicenseBuilderTest
-    {                     
+    {
         [Theory]
-        [InlineData("")]        
+        [InlineData("")]
         [InlineData(null)]
         public void Should_ThrowRequiredFieldException_When_NameIsNullOrWhiteSpace(string name)
-        {            
-            Assert.Throws(typeof(RequiredFieldException), () => new LicenseBuilder(name).Build());
+        {
+            Assert.Throws<RequiredFieldException>(() => new LicenseBuilder(name).Build());
         }
 
         [Theory]
@@ -22,6 +22,6 @@ namespace Swagger.ObjectModel.Tests.Builders
             var license = new LicenseBuilder(name).Url(url).Build();
 
             Assert.Equal(url, license.Url);
-        }        
+        }
     }
 }

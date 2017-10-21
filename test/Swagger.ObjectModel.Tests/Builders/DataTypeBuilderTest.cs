@@ -1,6 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
 using Swagger.ObjectModel.Builders;
+using System.Linq;
 using Xunit;
 
 namespace Swagger.ObjectModel.Tests.Builders
@@ -32,14 +31,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Maximum);
+            Assert.Null(result.Maximum);
         }
 
         [Fact]
         public void Maximum_ShouldBeSettable()
-        {            
+        {
             var maxValue = int.MaxValue;
-        
+
             var result = builder.Maximum(maxValue).Build();
 
             Assert.NotNull(result);
@@ -52,14 +51,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Minimum);
+            Assert.Null(result.Minimum);
         }
 
         [Fact]
         public void Minimum_ShouldBeSettable()
-        {            
+        {
             var minValue = int.MinValue;
-        
+
             var result = builder.Minimum(minValue).Build();
 
             Assert.NotNull(result);
@@ -72,14 +71,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Type);
+            Assert.Null(result.Type);
         }
 
         [Fact]
         public void Type_ShouldBeSettable()
-        {            
+        {
             var type = "int";
-        
+
             var result = builder.Type(type).Build();
 
             Assert.NotNull(result);
@@ -92,7 +91,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.CollectionFormat);
+            Assert.Null(result.CollectionFormat);
         }
 
         [Fact]
@@ -112,14 +111,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Default);
+            Assert.Null(result.Default);
         }
 
         [Fact]
         public void Default_ShouldBeSettable()
         {
             var obj = new object();
-            
+
             var result = builder.Default(obj).Build();
 
             Assert.NotNull(result);
@@ -132,14 +131,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Enum);
+            Assert.Null(result.Enum);
         }
 
         [Fact]
         public void Enum_ShouldBeSettable()
         {
             var enumValue = "enum";
-            
+
             var result = builder.Enum(enumValue).Build();
 
             Assert.NotNull(result);
@@ -152,7 +151,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.ExclusiveMaximum);
+            Assert.Null(result.ExclusiveMaximum);
         }
 
         [Fact]
@@ -161,7 +160,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.IsExclusiveMaximum().Build();
 
             Assert.NotNull(result);
-            Assert.Equal(true, result.ExclusiveMaximum);
+            Assert.True(result.ExclusiveMaximum);
         }
 
         [Fact]
@@ -170,7 +169,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.ExclusiveMinimum);
+            Assert.Null(result.ExclusiveMinimum);
         }
 
         [Fact]
@@ -179,7 +178,7 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.IsExclusiveMinimum().Build();
 
             Assert.NotNull(result);
-            Assert.Equal(true, result.ExclusiveMinimum);
+            Assert.True(result.ExclusiveMinimum);
         }
 
         [Fact]
@@ -188,14 +187,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Format);
+            Assert.Null(result.Format);
         }
 
         [Fact]
         public void Format_ShouldBeSettable()
         {
             var format = "mm-dd-yyyy";
-            
+
             var result = builder.Format(format).Build();
 
             Assert.NotNull(result);
@@ -208,14 +207,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Items);
+            Assert.Null(result.Items);
         }
 
         [Fact]
         public void Items_ShouldBeSettable()
         {
             var item = new Item();
-            
+
             var result = builder.Items(item).Build();
 
             Assert.NotNull(result);
@@ -228,14 +227,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.MaxItems);
+            Assert.Null(result.MaxItems);
         }
 
         [Fact]
         public void MaxItems_ShouldBeSettable()
         {
             var maxItems = 2;
-            
+
             var result = builder.MaxItems(maxItems).Build();
 
             Assert.NotNull(result);
@@ -248,14 +247,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.MaxLength);
+            Assert.Null(result.MaxLength);
         }
 
         [Fact]
         public void MaxLength_ShouldBeSettable()
         {
             var maxLength = 2;
-            
+
             var result = builder.MaxLength(maxLength).Build();
 
             Assert.NotNull(result);
@@ -268,14 +267,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.MinItems);
+            Assert.Null(result.MinItems);
         }
 
         [Fact]
         public void MinItems_ShouldBeSettable()
         {
             var minItems = 2;
-            
+
             var result = builder.MinItems(minItems).Build();
 
             Assert.NotNull(result);
@@ -288,14 +287,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.MultipleOf);
+            Assert.Null(result.MultipleOf);
         }
 
         [Fact]
         public void MultipleOf_ShouldBeSettable()
         {
             var multipleOf = 2;
-            
+
             var result = builder.MultipleOf(multipleOf).Build();
 
             Assert.NotNull(result);
@@ -308,14 +307,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Pattern);
+            Assert.Null(result.Pattern);
         }
 
         [Fact]
         public void Pattern_ShouldBeSettable()
         {
             var pattern = "mm-dd-yyyy";
-            
+
             var result = builder.Pattern(pattern).Build();
 
             Assert.NotNull(result);
@@ -328,14 +327,14 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.Ref);
+            Assert.Null(result.Ref);
         }
 
         [Fact]
         public void Reference_ShouldBeSettable()
         {
             var reference = "#ref";
-            
+
             var result = builder.Reference(reference).Build();
 
             Assert.NotNull(result);
@@ -348,16 +347,16 @@ namespace Swagger.ObjectModel.Tests.Builders
             var result = builder.Build();
 
             Assert.NotNull(result);
-            Assert.Equal(null, result.UniqueItems);
+            Assert.Null(result.UniqueItems);
         }
 
         [Fact]
         public void UniqueItems_ShouldBeSettable()
-        {            
+        {
             var result = builder.IsUniqueItems().Build();
 
             Assert.NotNull(result);
-            Assert.Equal(true, result.UniqueItems);
+            Assert.True(result.UniqueItems);
         }
     }
 }
