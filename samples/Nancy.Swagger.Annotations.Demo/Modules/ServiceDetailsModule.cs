@@ -16,6 +16,7 @@ namespace Nancy.Swagger.Demo.Modules
         private const string ServiceTagName = "Service Details";
         private const string ServiceTagDescription = "Operations for handling the service";
 
+
         public ServiceDetailsModule(ISwaggerModelCatalog modelCatalog, ISwaggerTagCatalog tagCatalog) : base("/service")
         {
             modelCatalog.AddModel<ServiceOwner>();
@@ -32,12 +33,20 @@ namespace Nancy.Swagger.Demo.Modules
 
             Get("/customers", _ => GetServiceCustomers(), null, "GetCustomers");
 
+            //shows massaging multiple query params into single handler parameter.
+            Get("/customerspaged", _ => GetServiceCustomersPaged(GetRequestPaging()), null, "GetCustomersPaged");
+
             Get("/customers/{name}", parameters => GetServiceCustomer(parameters.name), null, "GetCustomer");
 
             Post("/customer/{service}", parameters => PostServiceCustomer(parameters.service, this.Bind<ServiceCustomer>()), null, "PostNewCustomer");
             
             Post("/customer/{name}/file", parameters => PostCustomerReview(parameters.name, null), null, "PostCustomerReview");
-            
+               
+        }
+
+        private object GetRequestPaging()
+        {
+            return new object(); //faking it, we would retun an object which reflects skip & take query params.
         }
 
 
@@ -88,6 +97,22 @@ namespace Nancy.Swagger.Demo.Modules
                 new ServiceCustomer() {CustomerName = "Jill"}
             };
         }
+
+        //Shows multiple attribute usage on handler parameter
+        [Route("GetCustomersPaged")]
+        [Route(HttpMethod.Get, "/customerspaged")]
+        [Route(Summary = "Get Service Customers")]
+        [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(IEnumerable<ServiceCustomer>))]
+        [Route(Tags = new[] { ServiceTagName })]
+        private ServiceCustomer[] GetServiceCustomersPaged([RouteParam(ParameterIn.Query, Name ="Skip", DefaultValue = "0")] [RouteParam(ParameterIn.Query, Name = "Take", DefaultValue = "10")] object paging)
+        {
+            return new[]
+            {
+                new ServiceCustomer() {CustomerName = "Jack"},
+                new ServiceCustomer() {CustomerName = "Jill"}
+            };
+        }
+
 
         [Route("GetCustomer")]
         [Route(HttpMethod.Get, "/customers/{name}")]

@@ -44,21 +44,37 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 .Select(CreateSwaggerResponseObject)
                 .ToDictionary(x => x.GetStatusCode().ToString(), y => (global::Swagger.ObjectModel.Response) y);
 
+            var infos = handler.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any()).ToList();
 
-            Parameters = handler.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any())
-                .Select(CreateSwaggerParameterData)
-                .ToList();
+            Parameters = CreateSwaggerParameters(infos);
+
+            //Parameters = handler.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any())
+            //    .Select(CreateSwaggerParameterData)
+            //    .ToList();
 
         }
 
-        private Parameter CreateSwaggerParameterData(ParameterInfo pi)
+        private IEnumerable<Parameter> CreateSwaggerParameters(IEnumerable<ParameterInfo> infos)
         {
-            var param = (Parameter)new AnnotatedParameter(pi);
-            if (param.In == ParameterIn.Body)
+            var result = new List<Parameter>();
+            foreach (var info in infos)
             {
-                param = new AnnotatedBodyParameter(pi, _modelCatalog);
+                var paramAttrs = info.GetCustomAttributes<RouteParamAttribute>();
+                //Body param trumps all other attributes.
+                var bodyParamAttr = paramAttrs.FirstOrDefault(x => x.ParamIn == ParameterIn.Body);
+                if (bodyParamAttr != null)
+                {
+                    result.Add(new AnnotatedBodyParameter(info, _modelCatalog));
+                    continue;
+                }
+                var nonBodyAttrs = paramAttrs.Where(x => x.ParamIn != ParameterIn.Body);
+
+                foreach (var attr in nonBodyAttrs)
+                {
+                    result.Add(new AnnotatedParameter(info, attr));
+                }
             }
-            return param;
+            return result;
         }
 
         private AnnotatedResponse CreateSwaggerResponseObject(SwaggerResponseAttribute attr)

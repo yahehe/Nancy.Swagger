@@ -10,28 +10,13 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 {
     public class AnnotatedParameter : Parameter
     {
-        public AnnotatedParameter(ParameterInfo pi)
+        public AnnotatedParameter(ParameterInfo pi, RouteParamAttribute attr)
         {
-            Name = pi.Name;
-
-            var paramAttrs = pi.GetCustomAttributes<RouteParamAttribute>();
-            if (!paramAttrs.Any())
-            {
-                Description = "Warning: no annotation found for this parameter";
-                In = ParameterIn.Query; // Required, so use query as fallback
-
-                return;
-            }
-
-            foreach (var attr in paramAttrs)
-            {
-                Name = attr.Name ?? Name;
-                In = attr.GetNullableParamType() ?? In;
-                Required = attr.GetNullableRequired() ?? Required;
-                Description = attr.Description ?? Description;
-                Default = attr.DefaultValue ?? Default;
-            }
-
+            Name = attr.Name ?? pi.Name;
+            In = attr.GetNullableParamType() ?? In;
+            Required = attr.GetNullableRequired() ?? Required;
+            Description = attr.Description ?? Description;
+            Default = attr.DefaultValue ?? Default;
             Type = Primitive.IsPrimitive(pi.ParameterType) ? Primitive.FromType(pi.ParameterType).Type : "string";
         }
     }
