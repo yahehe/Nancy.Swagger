@@ -16,8 +16,24 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                                         .Where(pi => pi.CanWrite && pi.GetSetMethod(true).IsPublic)
                                         .Where(pi => pi.CanRead && pi.GetGetMethod(true).IsPublic);
 
-            Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList();
+            Properties = GetSwaggerModelProperties(typeProperties);
             Description = modelAttr.Description;
+        }
+
+        private IList<SwaggerModelPropertyData> GetSwaggerModelProperties(IEnumerable<PropertyInfo> properties)
+        {
+            var result = new List<SwaggerModelPropertyData>();
+            //filter out ignored properties.
+            foreach(var prop in properties)
+            {
+                var attr = prop.GetCustomAttribute<ModelPropertyAttribute>();
+                if ((attr != null) && attr.Ignore)
+                {
+                    continue;
+                }
+                result.Add(CreateSwaggerModelPropertyData(prop));
+            }
+            return result;
         }
 
         private SwaggerModelPropertyData CreateSwaggerModelPropertyData(PropertyInfo pi)
