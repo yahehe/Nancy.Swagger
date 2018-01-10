@@ -48,10 +48,6 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 
             Parameters = CreateSwaggerParameters(infos);
 
-            //Parameters = handler.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any())
-            //    .Select(CreateSwaggerParameterData)
-            //    .ToList();
-
         }
 
         private IEnumerable<Parameter> CreateSwaggerParameters(IEnumerable<ParameterInfo> infos)
@@ -67,8 +63,8 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                     result.Add(new AnnotatedBodyParameter(info, _modelCatalog));
                     continue;
                 }
-                var nonBodyAttrs = paramAttrs.Where(x => x.ParamIn != ParameterIn.Body);
 
+                var nonBodyAttrs = paramAttrs.Where(x => x.ParamIn != ParameterIn.Body);
                 foreach (var attr in nonBodyAttrs)
                 {
                     result.Add(new AnnotatedParameter(info, attr));
