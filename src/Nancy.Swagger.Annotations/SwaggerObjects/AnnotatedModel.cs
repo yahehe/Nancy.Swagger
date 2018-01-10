@@ -12,8 +12,10 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
         public AnnotatedModel(Type type, ModelAttribute modelAttr) : base(type)
         {
             // Only use properties which have a public getter and setter
+            // If the ModelAttribute has ShowReadOnlyProps the the prop just needs
+            // a public getter.
             var typeProperties = type.GetProperties()
-                                        .Where(pi => pi.CanWrite && pi.GetSetMethod(true).IsPublic)
+                                        .Where(pi => modelAttr.ShowReadOnlyProps || ( pi.CanWrite && pi.GetSetMethod(true).IsPublic) )
                                         .Where(pi => pi.CanRead && pi.GetGetMethod(true).IsPublic);
 
             Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList();
