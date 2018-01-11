@@ -18,7 +18,9 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                                         .Where(pi => modelAttr.ShowReadOnlyProps || ( pi.CanWrite && pi.GetSetMethod(true).IsPublic) )
                                         .Where(pi => pi.CanRead && pi.GetGetMethod(true).IsPublic);
 
-            Properties = typeProperties.Select(CreateSwaggerModelPropertyData).ToList();
+            Properties = typeProperties.Where(prop => !prop.GetCustomAttribute<ModelPropertyAttribute>()?.Ignore ?? true)
+                                       .Select(CreateSwaggerModelPropertyData).ToList();
+
             Description = modelAttr.Description;
         }
 

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Nancy.Swagger.Annotations.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Nancy.Swagger.Demo.Models
 {
+    [Model("User")]
     public class User
     {
         [Required]
@@ -19,5 +21,8 @@ namespace Nancy.Swagger.Demo.Models
         public Role Role { get; set; }
 
         public IList<string> Tags { get; set; }
+
+        [ModelProperty(Ignore = true)]
+        public string IgnoreMe { get; set; }
     }
 }

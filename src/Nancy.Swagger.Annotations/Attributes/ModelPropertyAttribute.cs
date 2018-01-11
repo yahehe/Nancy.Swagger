@@ -14,5 +14,10 @@ namespace Nancy.Swagger.Annotations.Attributes
             : base(name)
         {
         }
+
+        /// <summary>
+        /// Ignore this property when generating swagger model.
+        /// </summary>
+        public bool Ignore { get; set; }
     }
 }
