@@ -15,10 +15,12 @@ namespace Nancy.Swagger.Demo.Modules
     {
         private const string ServiceTagName = "Service Details";
         private const string ServiceTagDescription = "Operations for handling the service";
+        private const string WidgetsTagName = "Available Widgets";
 
         public ServiceDetailsModule(ISwaggerModelCatalog modelCatalog, ISwaggerTagCatalog tagCatalog) : base("/service")
         {
             modelCatalog.AddModel<ServiceOwner>();
+            modelCatalog.AddModel<Widget>();
 
             tagCatalog.AddTag(new Tag()
             {
@@ -29,6 +31,8 @@ namespace Nancy.Swagger.Demo.Modules
             Get("/", _ => GetHome(), null, "ServiceHome");
 
             Get("/details", _ => GetServiceDetails(), null, "GetDetails");
+
+            Get("/widgets", _ => GetWidgets(), null, "GetWidgets");
 
             Get("/customers", _ => GetServiceCustomers(), null, "GetCustomers");
 
@@ -74,7 +78,22 @@ namespace Nancy.Swagger.Demo.Modules
                 }
             };
         }
-        
+
+        [Route("GetWidgets")]
+        [Route(HttpMethod.Get, "/widgets")]
+        [Route(Summary = "Get List of Widgets available")]
+        [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(List<Widget>))]
+        [Route(Tags = new[] { WidgetsTagName })]
+        private List<Widget> GetWidgets()
+        {
+            return new List<Widget>()
+            {
+                new Widget("FooWidget", 1.23),
+                new Widget("BarWidget", 4.56)
+            };
+        }
+
+
         [Route("GetCustomers")]
         [Route(HttpMethod.Get, "/customers")]
         [Route(Summary = "Get Service Customers")]
