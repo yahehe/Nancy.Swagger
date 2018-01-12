@@ -18,6 +18,14 @@ namespace Nancy.Swagger.Demo
                 EmailAddress = "exampleEmail@example.com"
             });
 
+            SwaggerMetadataProvider.SetSwaggerRoot(
+                externalDocumentation: new ExternalDocumentation {
+                    Description = "GitHub",
+                    Url = "https://github.com/yahehe/Nancy.Swagger"
+                }, 
+                schemes: new[] { Schemes.Http } 
+            );
+
             base.ApplicationStartup(container, pipelines);
 
             SwaggerAnnotationsConfig.ShowOnlyAnnotatedRoutes = true;

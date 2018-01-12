@@ -19,6 +19,8 @@ namespace Nancy.Swagger.Services
             Description = ""
         };
 
+        private static SwaggerRoot _swaggerRoot = null;
+
         private static IDictionary<string, SecuritySchemeBuilder> _securitySchemes = new Dictionary<string, SecuritySchemeBuilder>();
 
         public static void SetInfo(string title, string version, string desc, Contact contact = null, string termsOfService = null)
@@ -54,9 +56,56 @@ namespace Nancy.Swagger.Services
             AddSecuritySchemeBuilder(builder, name);
         }
 
+        /// <summary>
+        /// Allows other root level swagger values to be set.
+        /// </summary>
+        public static void SetSwaggerRoot(string host = null, string basePath = null, IEnumerable<Schemes> schemes = null, 
+            IEnumerable<string> consumes = null, IEnumerable<string> produces = null, ExternalDocumentation externalDocumentation = null)
+        {
+            _swaggerRoot = new SwaggerRoot
+            {
+                Host = host,
+                BasePath = basePath,
+                Schemes = schemes,
+                Consumes = consumes,
+                Produces = produces,
+                ExternalDocumentation = externalDocumentation
+            };
+        }
+
         public SwaggerRoot GetSwaggerJson(NancyContext context)
         {
             var builder = new SwaggerRootBuilder();
+
+            if (_swaggerRoot?.Host != null)
+            {
+                builder.Host(_swaggerRoot.Host);
+            }
+
+            if (_swaggerRoot?.BasePath != null)
+            {
+                builder.BasePath(_swaggerRoot.BasePath);
+            }
+
+            if (_swaggerRoot?.Schemes != null)
+            {
+                _swaggerRoot.Schemes.ToList().ForEach(x => builder.Scheme(x));
+            }
+
+            if (_swaggerRoot?.Consumes != null)
+            {
+                builder.ConsumeMimeTypes(_swaggerRoot.Consumes);
+            }
+
+            if (_swaggerRoot?.Produces != null)
+            {
+                builder.ProduceMimeTypes(_swaggerRoot.Produces);
+            }
+
+            if (_swaggerRoot?.ExternalDocumentation != null)
+            {
+                builder.ExternalDocumentation(_swaggerRoot.ExternalDocumentation);
+            }
 
             foreach (var pathItem in this.RetrieveSwaggerPaths(context))
             {
