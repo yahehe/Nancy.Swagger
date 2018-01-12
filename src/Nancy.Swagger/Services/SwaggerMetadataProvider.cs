@@ -75,7 +75,7 @@ namespace Nancy.Swagger.Services
                 builder.Definition(SwaggerConfig.ModelIdConvention(model.ModelType), model.GetSchema(true));
             }
 
-            foreach (var tag in RetrieveSwaggerTags())
+            foreach (var tag in RetrieveSwaggerTags().OrderBy(x => x.Name))
             {
                 builder.Tag(tag);
             }
