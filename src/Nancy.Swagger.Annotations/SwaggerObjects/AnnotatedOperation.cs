@@ -45,11 +45,8 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 .ToDictionary(x => x.GetStatusCode().ToString(), y => (global::Swagger.ObjectModel.Response) y);
 
             var paramsList = new List<Parameter>();
-            //first check if any RouteParamAttributes are on the Method.
             CreateSwaggerParametersFromMethodAttributes(handler, paramsList);
-            //then check for RouteParamAttributes on themethod parameters
             CreateSwaggerParametersFromParameters(handler, paramsList);
-
             Parameters = paramsList;
 
         }
@@ -61,44 +58,44 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
             {
                 if (string.IsNullOrEmpty(attrib.Name))
                     throw new ArgumentNullException("Name", "RouteParam name cannot be null when used on method.");
-                //we can only have 1 body parameter
                 if (attrib.ParamIn == ParameterIn.Body)
                 {
-                    //if we already have a body parameter then ignore any subsequent ones.
                     if (paramsList.Where(x => x.GetType() == typeof(AnnotatedBodyParameter)).Any())
                     {
-                        continue;
+                        throw new ArgumentException("A method can only have one Body RouteParamAttribute");
                     }
-                    if ((attrib.ParamType == null))
-                        throw new ArgumentNullException("ParamType", "ParamType for Body must bespecified when RouteParam used on method.");
+
+                    if (attrib.ParamType == null)
+                    {
+                        throw new ArgumentNullException("ParamType", "ParamType for Body must be specified when RouteParam used on method.");
+                    }
 
                     paramsList.Add(new AnnotatedBodyParameter(attrib.Name, attrib.ParamType, attrib, _modelCatalog));
                 }
-                //ignore duplicate named parameters.
-                if (!paramsList.Any(x => x.Name.Equals(attrib.Name)))
+                if (paramsList.Any(x => x.Name.Equals(attrib.Name)))
                 {
-                    paramsList.Add(new AnnotatedParameter(attrib.Name, attrib.ParamType, attrib));
+                    throw new ArgumentException($"Duplicate RouteParamAttribute name : {attrib.Name}");
                 }
+                paramsList.Add(new AnnotatedParameter(attrib.Name, attrib.ParamType, attrib));
             }
         }
 
         private void CreateSwaggerParametersFromParameters(MethodInfo info, List<Parameter> paramsList)
         {
-            //get parameters that have RouteParamAttrbutes 
             var infos = info.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any()).ToList();
 
             foreach (var paramInfo in infos)
             {
                 var paramAttrs = paramInfo.GetCustomAttributes<RouteParamAttribute>(true);
-                //Body param trumps all other attributes.
+
                 var bodyParamAttr = paramAttrs.FirstOrDefault(x => x.ParamIn == ParameterIn.Body);
                 if (bodyParamAttr != null)
                 {
-                    //Attribute on method parameter will replace one specified on the method.
                     var existingBodyParam = paramsList.FirstOrDefault(x => x.GetType() == typeof(AnnotatedBodyParameter));
+
                     if (existingBodyParam != null)
                     {
-                        paramsList.Remove(existingBodyParam);
+                        throw new ArgumentException("A method can only have one Body RouteParamAttribute");
                     }
                     paramsList.Add(new AnnotatedBodyParameter(paramInfo.Name, paramInfo.ParameterType, bodyParamAttr, _modelCatalog));
                     continue;
