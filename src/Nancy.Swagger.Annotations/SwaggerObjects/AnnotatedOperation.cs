@@ -57,7 +57,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
             foreach (var attrib in routeParamsAttributes)
             {
                 if (string.IsNullOrEmpty(attrib.Name))
-                    throw new ArgumentNullException("Name", "RouteParam name cannot be null when used on method.");
+                    throw new ArgumentNullException("Name", "RouteParamAttribute name cannot be null when used on method.");
                 if (attrib.ParamIn == ParameterIn.Body)
                 {
                     if (paramsList.Where(x => x.GetType() == typeof(AnnotatedBodyParameter)).Any())
@@ -67,7 +67,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 
                     if (attrib.ParamType == null)
                     {
-                        throw new ArgumentNullException("ParamType", "ParamType for Body must be specified when RouteParam used on method.");
+                        throw new ArgumentNullException("ParamType", "ParamType for Body must be specified when RouteParamAttribute used on method.");
                     }
 
                     paramsList.Add(new AnnotatedBodyParameter(attrib.Name, attrib.ParamType, attrib, _modelCatalog));
