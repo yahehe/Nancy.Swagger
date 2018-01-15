@@ -71,6 +71,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                     }
 
                     paramsList.Add(new AnnotatedBodyParameter(attrib.Name, attrib.ParamType, attrib, _modelCatalog));
+                    continue;
                 }
                 if (paramsList.Any(x => x.Name.Equals(attrib.Name)))
                 {
