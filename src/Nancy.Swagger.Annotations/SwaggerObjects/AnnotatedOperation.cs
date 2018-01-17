@@ -44,33 +44,70 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 .Select(CreateSwaggerResponseObject)
                 .ToDictionary(x => x.GetStatusCode().ToString(), y => (global::Swagger.ObjectModel.Response) y);
 
-            var infos = handler.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any()).ToList();
-
-            Parameters = CreateSwaggerParameters(infos);
+            var paramsList = new List<Parameter>();
+            CreateSwaggerParametersFromMethodAttributes(handler, paramsList);
+            CreateSwaggerParametersFromParameters(handler, paramsList);
+            Parameters = paramsList;
 
         }
 
-        private IEnumerable<Parameter> CreateSwaggerParameters(IEnumerable<ParameterInfo> infos)
+        private void CreateSwaggerParametersFromMethodAttributes(MethodInfo info, List<Parameter> paramsList)
         {
-            var result = new List<Parameter>();
-            foreach (var info in infos)
+            var routeParamsAttributes = info.GetCustomAttributes<RouteParamAttribute>(true);
+            foreach (var attrib in routeParamsAttributes)
             {
-                var paramAttrs = info.GetCustomAttributes<RouteParamAttribute>();
-                //Body param trumps all other attributes.
+                if (string.IsNullOrEmpty(attrib.Name))
+                    throw new ArgumentNullException("Name", "RouteParamAttribute name cannot be null when used on method.");
+                if (attrib.ParamIn == ParameterIn.Body)
+                {
+                    if (paramsList.Where(x => x.GetType() == typeof(AnnotatedBodyParameter)).Any())
+                    {
+                        throw new ArgumentException("A method can only have one Body RouteParamAttribute");
+                    }
+
+                    if (attrib.ParamType == null)
+                    {
+                        throw new ArgumentNullException("ParamType", "ParamType for Body must be specified when RouteParamAttribute used on method.");
+                    }
+
+                    paramsList.Add(new AnnotatedBodyParameter(attrib.Name, attrib.ParamType, attrib, _modelCatalog));
+                    continue;
+                }
+                if (paramsList.Any(x => x.Name.Equals(attrib.Name)))
+                {
+                    throw new ArgumentException($"Duplicate RouteParamAttribute name : {attrib.Name}");
+                }
+                paramsList.Add(new AnnotatedParameter(attrib.Name, attrib.ParamType, attrib));
+            }
+        }
+
+        private void CreateSwaggerParametersFromParameters(MethodInfo info, List<Parameter> paramsList)
+        {
+            var infos = info.GetParameters().Where(x => x.GetCustomAttributes<RouteParamAttribute>().Any()).ToList();
+
+            foreach (var paramInfo in infos)
+            {
+                var paramAttrs = paramInfo.GetCustomAttributes<RouteParamAttribute>(true);
+
                 var bodyParamAttr = paramAttrs.FirstOrDefault(x => x.ParamIn == ParameterIn.Body);
                 if (bodyParamAttr != null)
                 {
-                    result.Add(new AnnotatedBodyParameter(info, _modelCatalog));
+                    var existingBodyParam = paramsList.FirstOrDefault(x => x.GetType() == typeof(AnnotatedBodyParameter));
+
+                    if (existingBodyParam != null)
+                    {
+                        throw new ArgumentException("A method can only have one Body RouteParamAttribute");
+                    }
+                    paramsList.Add(new AnnotatedBodyParameter(paramInfo.Name, paramInfo.ParameterType, bodyParamAttr, _modelCatalog));
                     continue;
                 }
 
                 var nonBodyAttrs = paramAttrs.Where(x => x.ParamIn != ParameterIn.Body);
                 foreach (var attr in nonBodyAttrs)
                 {
-                    result.Add(new AnnotatedParameter(info, attr));
+                    paramsList.Add(new AnnotatedParameter(paramInfo.Name, paramInfo.ParameterType, attr));
                 }
             }
-            return result;
         }
 
         private AnnotatedResponse CreateSwaggerResponseObject(SwaggerResponseAttribute attr)

@@ -3,7 +3,7 @@ using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations.Attributes
 {
-    [AttributeUsage(AttributeTargets.Parameter, Inherited = true, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Parameter, Inherited = true, AllowMultiple = true)]
     public class RouteParamAttribute : SwaggerDataTypeAttribute
     {
         private ParameterIn? paramIn;
@@ -17,6 +17,7 @@ namespace Nancy.Swagger.Annotations.Attributes
             : base(name)
         {
             this.ParamIn = paramIn;
+            this.ParamType = typeof(string);
         }
 
         public ParameterIn ParamIn
@@ -29,5 +30,7 @@ namespace Nancy.Swagger.Annotations.Attributes
         {
             return this.paramIn;
         }
+
+        public Type ParamType { get; set; }
     }
 }

@@ -10,14 +10,14 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 {
     public class AnnotatedParameter : Parameter
     {
-        public AnnotatedParameter(ParameterInfo pi, RouteParamAttribute attr)
+        public AnnotatedParameter(string name, Type paramType, RouteParamAttribute attr)
         {
-            Name = attr.Name ?? pi.Name;
+            Name = attr.Name ?? name;
             In = attr.GetNullableParamType() ?? In;
             Required = attr.GetNullableRequired() ?? Required;
             Description = attr.Description ?? Description;
             Default = attr.DefaultValue ?? Default;
-            Type = Primitive.IsPrimitive(pi.ParameterType) ? Primitive.FromType(pi.ParameterType).Type : "string";
+            Type = Primitive.IsPrimitive(paramType) ? Primitive.FromType(paramType).Type : "string";
         }
     }
 }
