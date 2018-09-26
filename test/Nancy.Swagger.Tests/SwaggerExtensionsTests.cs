@@ -37,6 +37,32 @@ namespace Nancy.Swagger.Tests
         }
 
         [Fact]
+        public void ToModelProperty_Primitive_ShouldHaveFormatSet()
+        {
+            new SwaggerModelPropertyData { Type = typeof(long) }
+                .ToModelProperty()
+                .ShouldEqual(
+                    new ModelProperty
+                    {
+                        Type = "integer",
+                        Format = "int64"
+                    });
+        }
+
+        [Fact]
+        public void ToModelProperty_NullablePrimitive_ShouldHaveFormatSet()
+        {
+            new SwaggerModelPropertyData { Type = typeof(long?) }
+                .ToModelProperty()
+                .ShouldEqual(
+                    new ModelProperty
+                    {
+                        Type = "integer",
+                        Format = "int64"
+                    });
+        }
+
+        [Fact]
         public void ToModelProperty_PrimitiveCollection_ShouldHaveTypeArrayAndItemsTypeSet()
         {
             new SwaggerModelPropertyData

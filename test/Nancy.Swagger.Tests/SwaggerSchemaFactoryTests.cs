@@ -45,7 +45,7 @@ namespace Nancy.Swagger.Tests
 
         [Fact]
         public void EnumType_WithDefinition_ShouldCreateEnumSchema()
-        {            
+        {
             var description = "Sample description";
             var model = new Model { Description = description };
             var enumType = typeof(HttpStatusCode);
@@ -60,7 +60,7 @@ namespace Nancy.Swagger.Tests
 
         [Fact]
         public void EnumType_WithoutDefinition_ShouldCreateEnumSchema()
-        {            
+        {
             var model = new Model();
             var enumType = typeof(HttpStatusCode);
 
@@ -70,7 +70,7 @@ namespace Nancy.Swagger.Tests
 
         [Fact]
         public void NullableEnumType_WithDefinition_ShouldCreateEnumSchema()
-        {            
+        {
             var description = "Sample description";
             var model = new Model { Description = description };
             var enumType = typeof(HttpStatusCode);
@@ -85,7 +85,7 @@ namespace Nancy.Swagger.Tests
 
         [Fact]
         public void NullableEnumType_WithoutDefinition_ShouldCreateEnumSchema()
-        {            
+        {
             var model = new Model();
             var enumType = typeof(HttpStatusCode);
 
@@ -95,9 +95,10 @@ namespace Nancy.Swagger.Tests
 
         [Fact]
         public void ObjectType_WithDefinition_ShouldCreateObjectSchema()
-        {            
+        {
             var description = "Sample description";
-            var model = new Model {
+            var model = new Model
+            {
                 Description = description,
                 Properties = new Dictionary<string, ModelProperty>()
             };
@@ -111,8 +112,38 @@ namespace Nancy.Swagger.Tests
         }
 
         [Fact]
+        public void ObjectType_WithDefinition_ShouldCreateObjectSchema_WithPropertiesTypeAndFormat()
+        {
+            var description = "Sample description";
+            var model = new Model
+            {
+                Description = description,
+                Properties = new Dictionary<string, ModelProperty>
+                {
+                    {  "longInt", new ModelProperty { Type = "integer", Format = "int64" }},
+                    {  "decimalNumber", new ModelProperty { Type = "number", Format = "decimal" }}
+                }
+            };
+
+
+            var schema = model.CreateSchema(typeof(Schema), true);
+            Assert.Equal("object", schema.Type);
+            Assert.Equal(description, schema.Description);
+            Assert.Null(schema.Required);
+            Assert.NotEmpty(schema.Properties);
+            Assert.Null(schema.Ref);
+
+            foreach (var modelProperty in model.Properties)
+            {
+                Assert.Contains(modelProperty.Key, schema.Properties.Keys);
+                Assert.Equal(modelProperty.Value.Type, schema.Properties[modelProperty.Key].Type);
+                Assert.Equal(modelProperty.Value.Format, schema.Properties[modelProperty.Key].Format);
+            }
+        }
+
+        [Fact]
         public void ObjectType_WithoutDefinition_ShouldCreateObjectSchema()
-        {            
+        {
             var model = new Model();
 
             var schema = model.CreateSchema(typeof(Schema), false);

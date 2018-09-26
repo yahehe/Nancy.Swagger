@@ -45,6 +45,10 @@ namespace Nancy.Swagger
                 return dataType;
             }
 
+            if (type.IsNullable())
+            {
+                type = Nullable.GetUnderlyingType(type);
+            }
             if (Primitive.IsPrimitive(type))
             {
                 var primitive = Primitive.FromType(type);
@@ -54,10 +58,7 @@ namespace Nancy.Swagger
 
                 return dataType;
             }
-            if (type.IsNullable())
-            {
-                type = Nullable.GetUnderlyingType(type);
-            }
+ 
 
             if (type.IsContainer())
             {
