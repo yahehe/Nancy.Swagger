@@ -1,21 +1,26 @@
-using Should;
 using Xunit;
 
 namespace Nancy.Swagger.Tests
 {
     public class SwaggerTypeMappingTests
     {
+        class OriginalType { }
+
+        class AnotherOriginalType { }
+
+        class MappedType { }
+
         [Fact]
         public void ShouldAdd_AndGet_TypeMappings()
         {
             SwaggerTypeMapping.ResetMappedTypes();
 
-            Assert.False(SwaggerTypeMapping.IsMappedType(typeof(long)));
+            Assert.False(SwaggerTypeMapping.IsMappedType(typeof(OriginalType)));
 
-            SwaggerTypeMapping.AddTypeMapping(typeof(long), typeof(double));
+            SwaggerTypeMapping.AddTypeMapping(typeof(OriginalType), typeof(MappedType));
 
-            Assert.True(SwaggerTypeMapping.IsMappedType(typeof(long)));
-            Assert.Equal(typeof(double), SwaggerTypeMapping.GetMappedType(typeof(long)));
+            Assert.True(SwaggerTypeMapping.IsMappedType(typeof(OriginalType)));
+            Assert.Equal(typeof(MappedType), SwaggerTypeMapping.GetMappedType(typeof(OriginalType)));
         }
 
         [Fact]
@@ -23,15 +28,15 @@ namespace Nancy.Swagger.Tests
         {
             SwaggerTypeMapping.ResetMappedTypes();
 
-            Assert.False(SwaggerTypeMapping.IsMappedType(typeof(long)));
+            Assert.False(SwaggerTypeMapping.IsMappedType(typeof(OriginalType)));
 
-            SwaggerTypeMapping.AddTypeMapping(typeof(int), typeof(long));
-            SwaggerTypeMapping.AddTypeMapping(typeof(long), typeof(double));
+            SwaggerTypeMapping.AddTypeMapping(typeof(AnotherOriginalType), typeof(OriginalType));
+            SwaggerTypeMapping.AddTypeMapping(typeof(OriginalType), typeof(MappedType));
 
-            Assert.True(SwaggerTypeMapping.IsMappedType(typeof(int)));
-            Assert.True(SwaggerTypeMapping.IsMappedType(typeof(long)));
+            Assert.True(SwaggerTypeMapping.IsMappedType(typeof(AnotherOriginalType)));
+            Assert.True(SwaggerTypeMapping.IsMappedType(typeof(OriginalType)));
 
-            Assert.Equal(typeof(double), SwaggerTypeMapping.GetMappedType(typeof(int)));
+            Assert.Equal(typeof(MappedType), SwaggerTypeMapping.GetMappedType(typeof(AnotherOriginalType)));
         }
     }
 }
