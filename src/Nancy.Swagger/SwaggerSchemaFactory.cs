@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Swagger.ObjectModel;
 
 namespace Nancy.Swagger
@@ -96,6 +95,7 @@ namespace Nancy.Swagger
         {
             Schema schema = new Schema();
             schema.Type = property.Type?.ToCamelCase();
+            schema.Format = property.Format?.ToCamelCase();
             schema.Description = property.Description;
 
             if (schema.Type == null)

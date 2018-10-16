@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Nancy.Swagger.Annotations.Attributes;
 using Swagger.ObjectModel;
 
@@ -17,7 +13,15 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
             Required = attr.GetNullableRequired() ?? Required;
             Description = attr.Description ?? Description;
             Default = attr.DefaultValue ?? Default;
-            Type = Primitive.IsPrimitive(paramType) ? Primitive.FromType(paramType).Type : "string";
+            if (Primitive.IsPrimitive(paramType))
+            {
+                Type = Primitive.FromType(paramType).Type;
+                Format = Primitive.FromType(paramType).Format;
+            }
+            else
+            {
+                Type = "string";
+            }
         }
     }
 }
