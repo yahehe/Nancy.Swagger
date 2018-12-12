@@ -50,5 +50,15 @@ namespace Swagger.ObjectModel.Tests.Builders
             Assert.Equal(url, externalDocumentation.Url);
             Assert.Equal(description, externalDocumentation.Description);
         }
+
+        [Fact]
+        public void Should_AssignableFromSwaggerModel()
+        {         
+            var externalDocumentation = builder.Url(url)
+                                               .Build();
+
+            Assert.NotNull(externalDocumentation);
+            Assert.IsAssignableFrom<SwaggerModel>(externalDocumentation);
+        }
     }
 }

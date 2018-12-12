@@ -5,7 +5,7 @@
     /// <summary>
     /// The external documentation.
     /// </summary>
-    public class ExternalDocumentation
+    public class ExternalDocumentation : SwaggerModel
     {
         /// <summary>
         /// A short description of the target documentation. GFM syntax can be used for rich text representation.

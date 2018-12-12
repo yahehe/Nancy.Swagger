@@ -4,8 +4,6 @@ using Nancy.Swagger.Services;
 
 namespace Nancy.Swagger.Demo.TagProviders
 {
-
-
     public class UserTagProvider : ISwaggerTagProvider
     {
         public Tag GetTag()
@@ -13,7 +11,8 @@ namespace Nancy.Swagger.Demo.TagProviders
             return new Tag()
             {
                 Description = "Operations related to users",
-                Name = "Users"
+                Name = "Users",
+                ExternalDocumentation = new ExternalDocumentation() {Description = "Check our documentation", Url = "http://nancyfx.org/"}
             };
         }
     }
