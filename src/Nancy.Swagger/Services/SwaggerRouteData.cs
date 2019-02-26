@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Swagger.ObjectModel;
+using System.Text.RegularExpressions;
 
 namespace Nancy.Swagger.Services
 {
@@ -8,7 +9,7 @@ namespace Nancy.Swagger.Services
     {
         public SwaggerRouteData(string path, PathItem pathItem)
         {
-            Path = path;
+            Path = RemovePathParameterTypes(path);
             PathItem = pathItem;
             Types = new Dictionary<HttpMethod, Type>();
         }
@@ -29,6 +30,17 @@ namespace Nancy.Swagger.Services
                 combined.Types.Add(kvp.Key, kvp.Value);
             }
             return combined;
+        }
+
+        /// <summary>
+        /// Removes parameter types from Nancy routes - Swagger doesn't expect them.
+        /// Examples: "/service/customers/{name:guid}" becomes "/service/customers/{name}"
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string RemovePathParameterTypes(string path)
+        {
+            return Regex.Replace(path, @":\w+}", "}");
         }
     }
 }

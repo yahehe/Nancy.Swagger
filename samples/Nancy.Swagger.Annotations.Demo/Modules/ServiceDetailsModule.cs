@@ -42,7 +42,7 @@ namespace Nancy.Swagger.Demo.Modules
 
             Get("/customers/{name}", parameters => GetServiceCustomer(parameters.name), null, "GetCustomer");
 
-            Post("/customer/{service}", parameters => PostServiceCustomer(parameters.service, this.Bind<ServiceCustomer>()), null, "PostNewCustomer");
+            Post("/customer/{serviceGuid:guid}", parameters => PostServiceCustomer(parameters.serviceGuid, this.Bind<ServiceCustomer>()), null, "PostNewCustomer");
             
             Post("/customer/{name}/file", parameters => PostCustomerReview(parameters.name, null), null, "PostCustomerReview");
                
@@ -144,14 +144,13 @@ namespace Nancy.Swagger.Demo.Modules
         }
 
         [Route("PostNewCustomer")]
-        [Route(HttpMethod.Post, "/customer/{service}")]
         [Route(Summary = "Post Service Customer")]
         [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(ServiceCustomer))]
         [Route(Produces = new[] { "application/json" })]
         [Route(Consumes = new[] { "application/json", "application/xml" })]
         [Route(Tags = new[] { ServiceTagName })]
         private ServiceCustomer PostServiceCustomer(
-            [RouteParam(ParameterIn.Path, DefaultValue = "my-service")] string service, 
+            [RouteParam(ParameterIn.Path, Description = "The GUID that identifies the service")] string serviceGuid, 
             [RouteParam(ParameterIn.Body)] ServiceCustomer customer)
         {
             return customer;
