@@ -28,6 +28,8 @@ namespace Nancy.Swagger.Autofac.Demo
 
             SwaggerAnnotationsConfig.ShowOnlyAnnotatedRoutes = true;
             this.ApplicationPipelines.AfterRequest.AddItemToEndOfPipeline(x => x.Response.Headers.Add("Access-Control-Allow-Origin", "*"));
+            this.ApplicationPipelines.AfterRequest.AddItemToEndOfPipeline(x => x.Response.Headers.Add("Access-Control-Allow-Headers", "*"));
+            this.ApplicationPipelines.AfterRequest.AddItemToEndOfPipeline(x => x.Response.Headers.Add("Access-Control-Allow-Methods", "*"));
         }
     }
 }
