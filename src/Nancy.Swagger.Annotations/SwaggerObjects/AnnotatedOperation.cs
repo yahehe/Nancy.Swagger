@@ -40,6 +40,14 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 Tags = attr.Tags ?? Tags;
             }
 
+            foreach (var attr in handler.GetCustomAttributes<RouteSecurityAttribute>())
+            {
+                if (SecurityRequirements == null)
+                    SecurityRequirements = new Dictionary<SecuritySchemes, IEnumerable<string>>();
+
+                SecurityRequirements[attr.Scheme] = attr.Scopes ?? new string[0];
+            }
+
             Responses = handler.GetCustomAttributes<SwaggerResponseAttribute>()
                 .Select(CreateSwaggerResponseObject)
                 .ToDictionary(x => x.GetStatusCode().ToString(), y => (global::Swagger.ObjectModel.Response) y);
