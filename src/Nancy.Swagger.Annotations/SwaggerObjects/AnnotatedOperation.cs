@@ -105,9 +105,66 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 var nonBodyAttrs = paramAttrs.Where(x => x.ParamIn != ParameterIn.Body);
                 foreach (var attr in nonBodyAttrs)
                 {
-                    paramsList.Add(new AnnotatedParameter(paramInfo.Name, paramInfo.ParameterType, attr));
+                    paramsList.AddRange(CreateAnnotatedParameter(paramInfo.Name, paramInfo.ParameterType, attr));
                 }
             }
+        }
+
+        private IEnumerable<AnnotatedParameter> CreateAnnotatedParameter(string name, Type paramType, RouteParamAttribute routeParamAttribute)
+        {
+            // Non Query Parameter && Primitive parameter type would default to original behavior, which is to return an instance of AnnotatedParameter
+            if (routeParamAttribute.ParamIn != ParameterIn.Query || Primitive.IsPrimitive(paramType))
+            {
+                return new List<AnnotatedParameter> { new AnnotatedParameter(name, paramType, routeParamAttribute) };
+            }
+
+            List<AnnotatedParameter> result = new List<AnnotatedParameter>();
+            
+            var modelAttr = paramType.GetTypeInfo().GetCustomAttribute<ModelAttribute>();
+            var paramModel = modelAttr != null ? new AnnotatedModel(paramType, modelAttr) : _modelCatalog.GetModelForType(paramType);
+
+            // populate the data type properties into a list of AnnotatedParameter.
+            foreach (var property in paramModel.Properties)
+            {
+                var routeParamProperty = ConvertModelPropertyToQueryStringParamAttribute(property);
+                result.Add(new AnnotatedParameter(
+                                    routeParamProperty.Name,
+                                    routeParamProperty.ParamType ?? Type.GetType("System.Object"),
+                                    routeParamProperty));
+            }
+
+            return result;
+        }
+
+        private RouteParamAttribute ConvertModelPropertyToQueryStringParamAttribute(SwaggerModelPropertyData modelPropertyData)
+        {
+            RouteParamAttribute result = new RouteParamAttribute
+            {
+                Description = modelPropertyData.Description,
+                Enum = modelPropertyData.Enum?.ToArray(),
+                Name = modelPropertyData.Name,
+                Required = modelPropertyData.Required,
+                UniqueItems = modelPropertyData.UniqueItems,
+                ParamType = modelPropertyData.Type,
+                ParamIn = ParameterIn.Query,
+            };
+
+            if (modelPropertyData.DefaultValue != null)
+            {
+                result.DefaultValue = modelPropertyData.DefaultValue.ToString();
+            }
+
+            if (modelPropertyData.Maximum != null)
+            {
+                result.Maximum = modelPropertyData.Maximum.GetValueOrDefault();
+            }
+
+            if (modelPropertyData.Minimum != null)
+            {
+                result.Minimum = modelPropertyData.Minimum.GetValueOrDefault();
+            }
+
+            return result;
         }
 
         private AnnotatedResponse CreateSwaggerResponseObject(SwaggerResponseAttribute attr)
