@@ -39,7 +39,7 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 Produces = attr.Produces ?? Produces;
                 Tags = attr.Tags ?? Tags;
             }
-
+            
             foreach (var attr in handler.GetCustomAttributes<RouteSecurityAttribute>())
             {
                 if (SecurityRequirements == null)
@@ -48,10 +48,17 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 SecurityRequirements[attr.Scheme] = attr.Scopes ?? new string[0];
             }
 
-            Responses = handler.GetCustomAttributes<SwaggerResponseAttribute>()
-                .Select(CreateSwaggerResponseObject)
-                .ToDictionary(x => x.GetStatusCode().ToString(), y => (global::Swagger.ObjectModel.Response) y);
-
+            try
+            {
+                Responses = handler.GetCustomAttributes<SwaggerResponseAttribute>()
+                    .Select(CreateSwaggerResponseObject)
+                    .ToDictionary(x => x.GetStatusCode().ToString(), y => (global::Swagger.ObjectModel.Response)y);
+            }
+            catch (ArgumentException e) when (e.Message == "An item with the same key has already been added.")
+            {
+                throw new Exception($"Duplicated status code found at operation {name}");
+            }
+            
             var paramsList = new List<Parameter>();
             CreateSwaggerParametersFromMethodAttributes(handler, paramsList);
             CreateSwaggerParametersFromParameters(handler, paramsList);
