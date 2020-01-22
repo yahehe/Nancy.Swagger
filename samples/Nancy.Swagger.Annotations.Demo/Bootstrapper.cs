@@ -3,6 +3,7 @@ using Nancy.Conventions;
 using Nancy.Swagger.Annotations;
 using Nancy.Swagger.Services;
 using Swagger.ObjectModel;
+using Swagger.ObjectModel.Builders;
 
 namespace Nancy.Swagger.Demo
 {
@@ -28,6 +29,7 @@ namespace Nancy.Swagger.Demo
 
             base.ApplicationStartup(container, pipelines);
 
+            SwaggerMetadataProvider.SetSecuritySchemeBuilder(new BasicSecuritySchemeBuilder(), "Basic");
             SwaggerAnnotationsConfig.ShowOnlyAnnotatedRoutes = true;
         }
 

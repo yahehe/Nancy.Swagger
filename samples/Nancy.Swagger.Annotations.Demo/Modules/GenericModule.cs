@@ -74,6 +74,7 @@ namespace Nancy.Swagger.Demo.Modules
         [Route(Produces = new[] { "application/json" })]
         [Route(Consumes = new[] { "application/json", "application/xml" })]
         [Route(Tags = new[] { "Generics" })]
+        [RouteSecurity(SecuritySchemes.Basic)]
         private ApiResponse<User> PostUser([RouteParam(ParameterIn.Body)] User user)
         {
             return new ApiResponse<User>(user);

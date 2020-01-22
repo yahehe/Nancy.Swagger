@@ -149,6 +149,7 @@ namespace Nancy.Swagger.Demo.Modules
         [Route(Produces = new[] { "application/json" })]
         [Route(Consumes = new[] { "application/json", "application/xml" })]
         [Route(Tags = new[] { ServiceTagName })]
+        [RouteSecurity(SecuritySchemes.Basic)]
         private ServiceCustomer PostServiceCustomer(
             [RouteParam(ParameterIn.Path, Description = "The GUID that identifies the service")] string serviceGuid, 
             [RouteParam(ParameterIn.Body)] ServiceCustomer customer)
@@ -162,6 +163,7 @@ namespace Nancy.Swagger.Demo.Modules
         [SwaggerResponse(HttpStatusCode.OK, Message = "OK", Model = typeof(SwaggerFile))]
         [Route(Tags = new[] { ServiceTagName })]
         [Route(Consumes = new[] { "multipart/form-data" })]
+        [RouteSecurity(SecuritySchemes.Basic)]
         private string PostCustomerReview(
             [RouteParam(ParameterIn.Path, DefaultValue = "Jill")] string name,
             [RouteParam(ParameterIn.Form)] SwaggerFile file) //'file' is unused, but needed for the swagger doc
