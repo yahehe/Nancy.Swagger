@@ -39,6 +39,14 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 Produces = attr.Produces ?? Produces;
                 Tags = attr.Tags ?? Tags;
             }
+            
+            foreach (var attr in handler.GetCustomAttributes<RouteSecurityAttribute>())
+            {
+                if (SecurityRequirements == null)
+                    SecurityRequirements = new Dictionary<SecuritySchemes, IEnumerable<string>>();
+
+                SecurityRequirements[attr.Scheme] = attr.Scopes ?? new string[0];
+            }
 
             try
             {
