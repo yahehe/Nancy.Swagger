@@ -6,6 +6,9 @@ using Swagger.ObjectModel;
 
 namespace Nancy.Swagger.Annotations.Demo.Modules
 {
+    /// <summary>
+    /// sample to demonstrate annotating querystring routeparam that is non primitive type
+    /// </summary>
     public class CafeModule : NancyModule
     {
         public CafeModule(ISwaggerModelCatalog modelCatalog) : base("/cafe")
@@ -35,6 +38,12 @@ namespace Nancy.Swagger.Annotations.Demo.Modules
                 "GetMenu");
         }
 
+        /// <summary>
+        /// the CafeMenuQuery is a non primitive object that groups the query strings required for the endpoint,
+        /// documentation of those query strings can be done as ModelProperty within the <see cref="CafeMenuQuery">CafeMenuQuery</see> class.
+        /// </summary>
+        /// <param name="cafeMenuQuery"></param>
+        /// <returns></returns>
         [Route("GetMenu")]
         [Route(HttpMethod.Get, "/menu")]
         [Route(Summary = "Get Cafe Menu")]
