@@ -118,27 +118,24 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
                 return new List<AnnotatedParameter> { new AnnotatedParameter(name, paramType, routeParamAttribute) };
             }
 
-            List<AnnotatedParameter> result = new List<AnnotatedParameter>();
+            List<AnnotatedParameter> annotatedParameters = new List<AnnotatedParameter>();
             
             var modelAttr = paramType.GetTypeInfo().GetCustomAttribute<ModelAttribute>();
             var paramModel = modelAttr != null ? new AnnotatedModel(paramType, modelAttr) : _modelCatalog.GetModelForType(paramType);
 
             // populate the data type properties into a list of AnnotatedParameter.
-            foreach (var property in paramModel.Properties)
-            {
+            return paramModel.Properties.Select(property => {
                 var routeParamProperty = ConvertModelPropertyToQueryStringParamAttribute(property);
-                result.Add(new AnnotatedParameter(
-                                    routeParamProperty.Name,
-                                    routeParamProperty.ParamType ?? Type.GetType("System.Object"),
-                                    routeParamProperty));
-            }
-
-            return result;
+                return new AnnotatedParameter(
+                  routeParamProperty.Name,
+                  routeParamProperty.ParamType ?? Type.GetType("System.Object"),
+                  routeParamProperty);
+            });
         }
 
         private RouteParamAttribute ConvertModelPropertyToQueryStringParamAttribute(SwaggerModelPropertyData modelPropertyData)
         {
-            RouteParamAttribute result = new RouteParamAttribute
+            RouteParamAttribute routeParamAttribute = new RouteParamAttribute
             {
                 Description = modelPropertyData.Description,
                 Enum = modelPropertyData.Enum?.ToArray(),
@@ -151,20 +148,20 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
 
             if (modelPropertyData.DefaultValue != null)
             {
-                result.DefaultValue = modelPropertyData.DefaultValue.ToString();
+                routeParamAttribute.DefaultValue = modelPropertyData.DefaultValue.ToString();
             }
 
             if (modelPropertyData.Maximum != null)
             {
-                result.Maximum = modelPropertyData.Maximum.GetValueOrDefault();
+                routeParamAttribute.Maximum = modelPropertyData.Maximum.Value;
             }
 
             if (modelPropertyData.Minimum != null)
             {
-                result.Minimum = modelPropertyData.Minimum.GetValueOrDefault();
+                routeParamAttribute.Minimum = modelPropertyData.Minimum.Value;
             }
 
-            return result;
+            return routeParamAttribute;
         }
 
         private AnnotatedResponse CreateSwaggerResponseObject(SwaggerResponseAttribute attr)
