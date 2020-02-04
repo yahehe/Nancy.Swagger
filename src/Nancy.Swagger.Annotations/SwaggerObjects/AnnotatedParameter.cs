@@ -13,6 +13,10 @@ namespace Nancy.Swagger.Annotations.SwaggerObjects
             Required = attr.GetNullableRequired() ?? Required;
             Description = attr.Description ?? Description;
             Default = attr.DefaultValue ?? Default;
+            Minimum = attr.GetNullableMinimum() ?? Minimum;
+            Maximum = attr.GetNullableMaximum() ?? Maximum;
+            UniqueItems = attr.GetNullableUniqueItems() ?? UniqueItems;
+            Enum = attr.Enum ?? Enum;
             if (Primitive.IsPrimitive(paramType))
             {
                 Type = Primitive.FromType(paramType).Type;
