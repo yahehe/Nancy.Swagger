@@ -204,44 +204,35 @@ namespace Nancy.Swagger
                 && !typeof(string).IsAssignableFrom(type);
         }
 
-        public static string ToCamelCase(this string val)
+        public static string ToCamelCase(this string s)
         {
-            if (string.IsNullOrEmpty(val))
+            if (string.IsNullOrEmpty(s) || !char.IsUpper(s[0]))
             {
-                return val;
+                return s;
+            }
+            char[] chars = s.ToCharArray();
+            for (int i = 0; i < chars.Length; i++)
+            {
+                if (i == 1 && !char.IsUpper(chars[i]))
+                {
+                    break;
+                }
+
+                bool hasNext = (i + 1 < chars.Length);
+                if (i > 0 && hasNext && !char.IsUpper(chars[i + 1]))
+                {
+                    if (char.IsSeparator(chars[i + 1]))
+                    {
+                        chars[i] = char.ToLower(chars[i]);
+                    }
+
+                    break;
+                }
+
+                chars[i] = char.ToLower(chars[i]);
             }
 
-            var sb = new StringBuilder();
-            var nextToUpper = true;
-            foreach (var c in val.Trim())
-            {
-                if (char.IsLetter(c))
-                {
-                    if (sb.Length == 0)
-                    {
-                        sb.Append(char.ToLower(c));
-                    }
-                    else
-                    {
-                        sb.Append(nextToUpper ? char.ToUpper(c) : c);
-                    }
-                    nextToUpper = false;
-                }
-                else
-                {
-                    if (char.IsDigit(c))
-                    {
-                        if (sb.Length == 0)
-                        {
-                            sb.Append("_");
-                        }
-                        sb.Append(nextToUpper ? char.ToUpper(c) : c);
-                    }
-                    nextToUpper = true;
-                }
-            }
-
-            return sb.ToString();
+            return new string(chars);
         }
 
         internal static bool IsImplicitlyRequired(this Type type)
