@@ -204,13 +204,13 @@ namespace Nancy.Swagger
                 && !typeof(string).IsAssignableFrom(type);
         }
 
-        public static string ToCamelCase(this string s)
+        public static string ToCamelCase(this string val)
         {
-            if (string.IsNullOrEmpty(s) || !char.IsUpper(s[0]))
+            if (string.IsNullOrEmpty(val) || !char.IsUpper(val[0]))
             {
-                return s;
+                return val;
             }
-            char[] chars = s.ToCharArray();
+            char[] chars = val.ToCharArray();
             for (int i = 0; i < chars.Length; i++)
             {
                 if (i == 1 && !char.IsUpper(chars[i]))
